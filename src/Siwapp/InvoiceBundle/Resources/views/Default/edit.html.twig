@@ -154,7 +154,7 @@
                 <th colspan="2" class="cell-size-small-medium cell-align-right">{% trans %}Line Total{% endtrans %}</th>
               </tr>
             </thead>
-            <tbody data-prototype="{{ form_widget(form.items.get('prototype'))|e }}">
+            <tbody data-prototype="{{ form_widget(form.items.vars.prototype)|e }}">
               {% for item in form.items %}
               <tr>
                 <td class="btn-group">
