@@ -21,22 +21,22 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RecurringInvoice extends AbstractInvoice
 {
-  /**
-   *   @ORM\OneToMany(targetEntity="Item", mappedBy="recurring_invoice", orphanRemoval=true, cascade={"all"})
-   */
-  private $items;
+    /**
+    *   @ORM\OneToMany(targetEntity="Item", mappedBy="recurring_invoice", orphanRemoval=true, cascade={"all"})
+    */
+    private $items;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="Siwapp\CoreBundle\Entity\Serie")
-   *
-   * unidirectional many-to-one
-   */
-  private $serie;
+    /**
+    * @ORM\ManyToOne(targetEntity="Siwapp\CoreBundle\Entity\Serie")
+    *
+    * unidirectional many-to-one
+    */
+    private $serie;
 
-  public function __construct()
-  {
-    $this->items = new ArrayCollection();
-  }
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     /**
      * @var integer $days_to_due
@@ -55,14 +55,14 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * @var integer $max_occurrences
      *
-     * @ORM\Column(name="max_occurrences", type="integer", nullable="true")
+     * @ORM\Column(name="max_occurrences", type="integer", nullable=true)
      */
     private $max_occurrences;
 
     /**
      * @var integer $must_occurrences
      *
-     * @ORM\Column(name="must_occurrences", type="integer", nullable="true")
+     * @ORM\Column(name="must_occurrences", type="integer", nullable=true)
      */
     private $must_occurrences;
 
@@ -90,7 +90,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * @var date $finishing_date
      *
-     * @ORM\Column(name="finishing_date", type="date", nullable="true")
+     * @ORM\Column(name="finishing_date", type="date", nullable=true)
      * @Assert\Date()
      */
     private $finishing_date;
@@ -98,7 +98,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * @var date $last_execution_date
      *
-     * @ORM\Column(name="last_execution_date", type="date", nullable="true")
+     * @ORM\Column(name="last_execution_date", type="date", nullable=true)
      * @Assert\Date()
      */
     private $last_execution_date;
@@ -117,7 +117,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get days_to_due
      *
-     * @return integer 
+     * @return integer
      */
     public function getDaysToDue()
     {
@@ -137,7 +137,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
@@ -157,7 +157,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get max_occurrences
      *
-     * @return integer 
+     * @return integer
      */
     public function getMaxOccurrences()
     {
@@ -177,7 +177,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get must_occurrences
      *
-     * @return integer 
+     * @return integer
      */
     public function getMustOccurrences()
     {
@@ -197,7 +197,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get period
      *
-     * @return integer 
+     * @return integer
      */
     public function getPeriod()
     {
@@ -217,7 +217,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get period_type
      *
-     * @return string 
+     * @return string
      */
     public function getPeriodType()
     {
@@ -238,7 +238,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get starting_date
      *
-     * @return date 
+     * @return date
      */
     public function getStartingDate()
     {
@@ -259,7 +259,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get finishing_date
      *
-     * @return date 
+     * @return date
      */
     public function getFinishingDate()
     {
@@ -280,7 +280,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get last_execution_date
      *
-     * @return date 
+     * @return date
      */
     public function getLastExecutionDate()
     {
@@ -290,7 +290,7 @@ class RecurringInvoice extends AbstractInvoice
 
     /** ***************** RELATIONSHIP METHODS *********** **/
 
-    /** 
+    /**
      * Add items
      *
      * @param Siwapp\RecurringInvoiceBundle\Entity\Item $item
@@ -303,7 +303,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get items
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getItems()
     {
@@ -358,9 +358,9 @@ class RecurringInvoice extends AbstractInvoice
         $starting_date = $this->getStartingDate();
         $finishing_date = $this->getFinishingDate();
         // TODO : FINISH THIS METHODD!!!
-        if($today > $starting_date) 
+        if($today > $starting_date)
         {
-            $check_date = $finishing_date ? 
+            $check_date = $finishing_date ?
                 ($today > $finishing_date ? $finishing_date: $today) : $today;
 
             switch($this->period_type)
@@ -385,10 +385,10 @@ class RecurringInvoice extends AbstractInvoice
             }
             $must_occurrences = floor($difference / $this->period) +1;
 
-            
+
             // if there's already a must_occurreces and is greater
             // then set this as must_occurences
-            if($this->must_occurrences && 
+            if($this->must_occurrences &&
                $must_occurrences > $this->must_occurrences)
             {
                 $must_occurrences = $this->must_occurrences;
@@ -426,7 +426,7 @@ class RecurringInvoice extends AbstractInvoice
     /**
      * Get serie
      *
-     * @return Siwapp\CoreBundle\Entity\Serie 
+     * @return Siwapp\CoreBundle\Entity\Serie
      */
     public function getSerie()
     {

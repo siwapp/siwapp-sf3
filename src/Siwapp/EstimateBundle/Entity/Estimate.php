@@ -27,11 +27,11 @@ class Estimate extends AbstractInvoice
 
     /**
      * @ORM\ManyToOne(targetEntity="\Siwapp\CoreBundle\Entity\Serie")
-     * 
+     *
      * unidirectional one-to-many
      */
     private $serie;
-    
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -46,7 +46,7 @@ class Estimate extends AbstractInvoice
     /**
      * @var integer $number
      *
-     * @ORM\Column(name="number", type="integer", nullable="true")
+     * @ORM\Column(name="number", type="integer", nullable=true)
      */
     private $number;
 
@@ -71,7 +71,7 @@ class Estimate extends AbstractInvoice
     /**
      * Get draft
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDraft()
     {
@@ -91,7 +91,7 @@ class Estimate extends AbstractInvoice
     /**
      * Get number
      *
-     * @return integer 
+     * @return integer
      */
     public function getNumber()
     {
@@ -111,7 +111,7 @@ class Estimate extends AbstractInvoice
     /**
      * Get sent_by_email
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSentByEmail()
     {
@@ -131,7 +131,7 @@ class Estimate extends AbstractInvoice
     /**
      * Get items
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getItems()
     {
@@ -153,7 +153,7 @@ class Estimate extends AbstractInvoice
         }
     }
 
-    
+
 
     /**
      * Set serie
@@ -168,7 +168,7 @@ class Estimate extends AbstractInvoice
     /**
      * Get serie
      *
-     * @return Siwapp\CoreBundle\Entity\Serie 
+     * @return Siwapp\CoreBundle\Entity\Serie
      */
     public function getSerie()
     {

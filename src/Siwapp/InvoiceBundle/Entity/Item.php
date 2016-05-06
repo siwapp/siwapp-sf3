@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity
  * @ORM\Table(indexes={
- *    @ORM\index(name="invoice_item_desc_idx", columns={"description"})
+ *    @ORM\Index(name="invoice_item_desc_idx", columns={"description"})
  * }, name="InvoiceItem")
  */
 class Item extends AbstractItem
@@ -50,13 +50,13 @@ class Item extends AbstractItem
     /**
      * Get invoice
      *
-     * @return Siwapp\InvoiceBundle\Entity\AbstractInvoice 
+     * @return Siwapp\InvoiceBundle\Entity\AbstractInvoice
      */
     public function getInvoice()
     {
         return $this->invoice;
     }
-    
+
     /**
      * Add taxes
      *
@@ -70,7 +70,7 @@ class Item extends AbstractItem
     /**
      * Get taxes
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTaxes()
     {
@@ -91,7 +91,7 @@ class Item extends AbstractItem
     /** ********** CUSTOM METHODS ********* **/
 
     /** ********** RELATIONSHIP METHODS *** **/
-    
+
     /**
      * setParent
      * Generic method to set the 'owner' of this item

@@ -12,10 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Siwapp\InvoiceBundle\Entity\Invoice
  *
  * @ORM\Table(indexes={
- *    @ORM\index(name="invoice_cstnm_idx", columns={"customer_name"}),
- *    @ORM\index(name="invoice_cstid_idx", columns={"customer_identification"}),
- *    @ORM\index(name="invoice_cstml_idx", columns={"customer_email"}),
- *    @ORM\index(name="invoice_cntct_idx", columns={"contact_person"})
+ *    @ORM\Index(name="invoice_cstnm_idx", columns={"customer_name"}),
+ *    @ORM\Index(name="invoice_cstid_idx", columns={"customer_identification"}),
+ *    @ORM\Index(name="invoice_cstml_idx", columns={"customer_email"}),
+ *    @ORM\Index(name="invoice_cntct_idx", columns={"contact_person"})
  * })
  * @ORM\Entity(repositoryClass="Siwapp\InvoiceBundle\Repository\InvoiceRepository")
  */
@@ -39,7 +39,7 @@ class Invoice extends AbstractInvoice
      */
     private $serie;
 
-  
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -49,42 +49,42 @@ class Invoice extends AbstractInvoice
     /**
      * @var boolean $closed
      *
-     * @ORM\Column(name="closed", type="boolean", nullable="true")
+     * @ORM\Column(name="closed", type="boolean", nullable=true)
      */
     private $closed;
 
     /**
      * @var boolean $sent_by_email
      *
-     * @ORM\Column(name="sent_by_email", type="boolean", nullable="true")
+     * @ORM\Column(name="sent_by_email", type="boolean", nullable=true)
      */
     private $sent_by_email;
 
     /**
      * @var integer $number
      *
-     * @ORM\Column(name="number", type="integer", nullable="true")
+     * @ORM\Column(name="number", type="integer", nullable=true)
      */
     private $number;
 
     /**
      * @var bigint $recurring_invoice_id
      *
-     * @ORM\Column(name="recurring_invoice_id", type="bigint", nullable="true")
+     * @ORM\Column(name="recurring_invoice_id", type="bigint", nullable=true)
      */
     private $recurring_invoice_id;
 
     /**
      * @var date $issue_date
      *
-     * @ORM\Column(name="issue_date", type="date", nullable="true")
+     * @ORM\Column(name="issue_date", type="date", nullable=true)
      */
     private $issue_date;
 
     /**
      * @var date $due_date
      *
-     * @ORM\Column(name="due_date", type="date", nullable="true")
+     * @ORM\Column(name="due_date", type="date", nullable=true)
      * @Assert\Date()
      */
     private $due_date;
@@ -108,7 +108,7 @@ class Invoice extends AbstractInvoice
     /**
      * Get draft
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDraft()
     {
@@ -128,7 +128,7 @@ class Invoice extends AbstractInvoice
     /**
      * Get closed
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getClosed()
     {
@@ -148,7 +148,7 @@ class Invoice extends AbstractInvoice
     /**
      * Get sent_by_email
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSentByEmail()
     {
@@ -168,7 +168,7 @@ class Invoice extends AbstractInvoice
     /**
      * Get number
      *
-     * @return integer 
+     * @return integer
      */
     public function getNumber()
     {
@@ -188,7 +188,7 @@ class Invoice extends AbstractInvoice
     /**
      * Get recurring_invoice_id
      *
-     * @return bigint 
+     * @return bigint
      */
     public function getRecurringInvoiceId()
     {
@@ -209,7 +209,7 @@ class Invoice extends AbstractInvoice
     /**
      * Get issue_date
      *
-     * @return date 
+     * @return date
      */
     public function getIssueDate()
     {
@@ -223,14 +223,14 @@ class Invoice extends AbstractInvoice
      */
     public function setDueDate($dueDate)
     {
-      $this->due_date = $dueDate instanceof \DateTime ? 
+      $this->due_date = $dueDate instanceof \DateTime ?
 	$dueDate : new \DateTime($dueDate);
     }
 
     /**
      * Get due_date
      *
-     * @return date 
+     * @return date
      */
     public function getDueDate()
     {
@@ -239,7 +239,7 @@ class Invoice extends AbstractInvoice
 
     /**
      * Add items
-     * 
+     *
      * @param Siwapp\InvoiceBundle\Entity\Item $item
      */
     public function addItem(\Siwapp\InvoiceBundle\Entity\Item $item)
@@ -250,13 +250,13 @@ class Invoice extends AbstractInvoice
     /**
      * Get items
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getItems()
     {
         return $this->items;
     }
-    
+
     /**
      * Add payments
      *
@@ -270,7 +270,7 @@ class Invoice extends AbstractInvoice
     /**
      * Get payments
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getPayments()
     {
@@ -291,7 +291,7 @@ class Invoice extends AbstractInvoice
     /**
      * Get serie
      *
-     * @return Siwapp\CoreBundle\Entity\Serie 
+     * @return Siwapp\CoreBundle\Entity\Serie
      */
     public function getSerie()
     {
@@ -309,7 +309,7 @@ class Invoice extends AbstractInvoice
     }
 
 
-    
+
     const DRAFT    = 0;
     const CLOSED   = 1;
     const OPENED   = 2;
@@ -364,7 +364,7 @@ class Invoice extends AbstractInvoice
      * TODO: Review this method when serie object are available
      *
      * @author JoeZ99 <jzarate@gmail.com>
-     * 
+     *
      */
     private function checkSerieChanged(\Siwapp\CoreBundle\Entity\Serie $serie)
     {
@@ -381,7 +381,7 @@ class Invoice extends AbstractInvoice
      * @return Siwapp\InvoiceBundle\Invoice $this
      */
     public function checkStatus()
-    {           
+    {
         if($this->status == Invoice::DRAFT)
         {
             return $this;
@@ -411,7 +411,7 @@ class Invoice extends AbstractInvoice
           case Invoice::DRAFT;
             $status = 'draft';
              break;
-          case Invoice::CLOSED; 
+          case Invoice::CLOSED;
             $status = 'closed';
             break;
           case Invoice::OPENED;
@@ -419,7 +419,7 @@ class Invoice extends AbstractInvoice
             break;
           default:
             $status = 'unknown';
-            break;  
+            break;
         }
         return $status;
     }
@@ -451,7 +451,7 @@ class Invoice extends AbstractInvoice
 
 
     /* ********** LIFECYCLE CALLBACKS *********** */
-    
+
     /**
      * @ORM\PrePersist
      */

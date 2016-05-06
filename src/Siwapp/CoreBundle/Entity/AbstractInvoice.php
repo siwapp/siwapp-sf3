@@ -28,35 +28,35 @@ class AbstractInvoice
     /**
      * @var integer $series_id
      *
-     * @ORM\Column(name="series_id", type="integer", nullable="true")
+     * @ORM\Column(name="series_id", type="integer", nullable=true)
      */
     private $series_id;
 
     /**
      * @var integer $customer_id
      *
-     * @ORM\Column(name="customer_id", type="integer", nullable="true")
+     * @ORM\Column(name="customer_id", type="integer", nullable=true)
      */
     private $customer_id;
 
     /**
      * @var string $customer_name
      *
-     * @ORM\Column(name="customer_name", type="string", length=100, nullable="true")
+     * @ORM\Column(name="customer_name", type="string", length=100, nullable=true)
      */
     private $customer_name;
 
     /**
      * @var string $customer_identification
      *
-     * @ORM\Column(name="customer_identification", type="string", length=50, nullable="true")
+     * @ORM\Column(name="customer_identification", type="string", length=50, nullable=true)
      */
     private $customer_identification;
 
     /**
      * @var string $customer_email
      *
-     * @ORM\Column(name="customer_email", type="string", length=100, nullable="true")
+     * @ORM\Column(name="customer_email", type="string", length=100, nullable=true)
      * @Assert\Email()
      */
     private $customer_email;
@@ -64,91 +64,91 @@ class AbstractInvoice
     /**
      * @var text $invoicing_address
      *
-     * @ORM\Column(name="invoicing_address", type="text", nullable="true")
+     * @ORM\Column(name="invoicing_address", type="text", nullable=true)
      */
     private $invoicing_address;
 
     /**
      * @var text $shipping_address
      *
-     * @ORM\Column(name="shipping_address", type="text", nullable="true")
+     * @ORM\Column(name="shipping_address", type="text", nullable=true)
      */
     private $shipping_address;
 
     /**
      * @var string $contact_person
      *
-     * @ORM\Column(name="contact_person", type="string", length=100, nullable="true")
+     * @ORM\Column(name="contact_person", type="string", length=100, nullable=true)
      */
     private $contact_person;
 
     /**
      * @var text $terms
      *
-     * @ORM\Column(name="terms", type="text", nullable="true")
+     * @ORM\Column(name="terms", type="text", nullable=true)
      */
     private $terms;
 
     /**
      * @var text $notes
      *
-     * @ORM\Column(name="notes", type="text", nullable="true")
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
 
     /**
      * @var decimal $base_amount
      *
-     * @ORM\Column(name="base_amount", type="decimal", scale="3", precision="15", nullable="true")
+     * @ORM\Column(name="base_amount", type="decimal", scale=3, precision=15, nullable=true)
      */
     private $base_amount;
 
     /**
      * @var decimal $discount_amount
      *
-     * @ORM\Column(name="discount_amount", type="decimal", scale="3", precision="15", nullable="true")
+     * @ORM\Column(name="discount_amount", type="decimal", scale=3, precision=15, nullable=true)
      */
     private $discount_amount;
 
     /**
      * @var decimal $net_amount
      *
-     * @ORM\Column(name="net_amount", type="decimal", scale="3", precision="15", nullable="true")
+     * @ORM\Column(name="net_amount", type="decimal", scale=3, precision=15, nullable=true)
      */
     private $net_amount;
 
     /**
      * @var decimal $gross_amount
      *
-     * @ORM\Column(name="gross_amount", type="decimal", scale="3", precision="15", nullable="true")
+     * @ORM\Column(name="gross_amount", type="decimal", scale=3, precision=15, nullable=true)
      */
     private $gross_amount;
 
     /**
      * @var decimal $paid_amount
      *
-     * @ORM\Column(name="paid_amount", type="decimal", scale="3", precision="15", nullable="true")
+     * @ORM\Column(name="paid_amount", type="decimal", scale=3, precision=15, nullable=true)
      */
     private $paid_amount;
 
     /**
      * @var decimal $tax_amount
      *
-     * @ORM\Column(name="tax_amount", type="decimal", scale="3", precision="15", nullable="true")
+     * @ORM\Column(name="tax_amount", type="decimal", scale=3, precision=15, nullable=true)
      */
     private $tax_amount;
 
     /**
      * @var smallint $status
      *
-     * @ORM\Column(name="status", type="smallint", nullable="true")
+     * @ORM\Column(name="status", type="smallint", nullable=true)
      */
     protected $status = 0;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -168,7 +168,7 @@ class AbstractInvoice
     /**
      * Get series_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getSeriesId()
     {
@@ -188,7 +188,7 @@ class AbstractInvoice
     /**
      * Get customer_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getCustomerId()
     {
@@ -208,7 +208,7 @@ class AbstractInvoice
     /**
      * Get customer_name
      *
-     * @return string 
+     * @return string
      */
     public function getCustomerName()
     {
@@ -228,7 +228,7 @@ class AbstractInvoice
     /**
      * Get customer_identification
      *
-     * @return string 
+     * @return string
      */
     public function getCustomerIdentification()
     {
@@ -248,7 +248,7 @@ class AbstractInvoice
     /**
      * Get customer_email
      *
-     * @return string 
+     * @return string
      */
     public function getCustomerEmail()
     {
@@ -268,7 +268,7 @@ class AbstractInvoice
     /**
      * Get invoicing_address
      *
-     * @return text 
+     * @return text
      */
     public function getInvoicingAddress()
     {
@@ -288,7 +288,7 @@ class AbstractInvoice
     /**
      * Get shipping_address
      *
-     * @return text 
+     * @return text
      */
     public function getShippingAddress()
     {
@@ -308,7 +308,7 @@ class AbstractInvoice
     /**
      * Get contact_person
      *
-     * @return string 
+     * @return string
      */
     public function getContactPerson()
     {
@@ -328,7 +328,7 @@ class AbstractInvoice
     /**
      * Get terms
      *
-     * @return text 
+     * @return text
      */
     public function getTerms()
     {
@@ -348,7 +348,7 @@ class AbstractInvoice
     /**
      * Get notes
      *
-     * @return text 
+     * @return text
      */
     public function getNotes()
     {
@@ -368,7 +368,7 @@ class AbstractInvoice
     /**
      * Get base_amount
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getBaseAmount()
     {
@@ -388,7 +388,7 @@ class AbstractInvoice
     /**
      * Get discount_amount
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getDiscountAmount()
     {
@@ -408,7 +408,7 @@ class AbstractInvoice
     /**
      * Get net_amount
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getNetAmount()
     {
@@ -428,7 +428,7 @@ class AbstractInvoice
     /**
      * Get gross_amount
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getGrossAmount()
     {
@@ -448,7 +448,7 @@ class AbstractInvoice
     /**
      * Get paid_amount
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getPaidAmount()
     {
@@ -468,7 +468,7 @@ class AbstractInvoice
     /**
      * Get tax_amount
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getTaxAmount()
     {
@@ -488,7 +488,7 @@ class AbstractInvoice
     /**
      * Get status
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatus()
     {
@@ -505,7 +505,7 @@ class AbstractInvoice
      * adds an item and recalculcates amounts
      * it needs to use the 'addItem' of the descendant
      *
-     * @param \Siwapp\CoreBundle\Entity\AbstractItem $item 
+     * @param \Siwapp\CoreBundle\Entity\AbstractItem $item
      * @author JoeZ99 <jzarate@gmail.com>
      */
     public function addNewItem(\Siwapp\CoreBundle\Entity\AbstractItem $item)
@@ -544,7 +544,7 @@ class AbstractInvoice
             unset($this->items[$mixed]);
         }
         $this->setAmounts();
-        
+
     }
 
     /* ** OTHER ** */
@@ -573,7 +573,7 @@ class AbstractInvoice
     /**
      * calculate values over items
      *
-     * Warning!! this method only works when called from a real entity, not 
+     * Warning!! this method only works when called from a real entity, not
      * the abstract.
      *
      * @param string $field
@@ -615,11 +615,11 @@ class AbstractInvoice
         $this->setNetAmount($this->getBaseAmount() - $this->getDiscountAmount());
         $this->setTaxAmount($this->calculate('tax_amount'));
         $rounded_gross = round(
-                               $this->getNetAmount() + $this->getTaxAmount(), 
+                               $this->getNetAmount() + $this->getTaxAmount(),
                                $this->getDecimals()
                                );
         $this->setGrossAmount($rounded_gross);
-        
+
         return $this;
     }
 

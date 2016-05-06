@@ -30,21 +30,21 @@ class Payment
     /**
      * @var date $date
      *
-     * @ORM\Column(name="date", type="date", nullable="true")
+     * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
 
     /**
      * @var decimal $amount
      *
-     * @ORM\Column(name="amount", type="decimal", scale="3", precision="15", nullable="true")
+     * @ORM\Column(name="amount", type="decimal", scale=3, precision=15, nullable=true)
      */
     private $amount;
 
     /**
      * @var text $notes
      *
-     * @ORM\Column(name="notes", type="text", nullable="true")
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
 
@@ -56,13 +56,13 @@ class Payment
     public function setDate($date)
     {
         $this->date = $date instanceof \DateTime ?
-	  $date: new \DateTime($date);
+        $date: new \DateTime($date);
     }
 
     /**
      * Get date
      *
-     * @return date 
+     * @return date
      */
     public function getDate()
     {
@@ -82,7 +82,7 @@ class Payment
     /**
      * Get amount
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getAmount()
     {
@@ -102,7 +102,7 @@ class Payment
     /**
      * Get notes
      *
-     * @return text 
+     * @return text
      */
     public function getNotes()
     {
@@ -122,7 +122,7 @@ class Payment
     /**
      * Get invoice
      *
-     * @return Siwapp\InvoiceBundle\Entity\Invoice 
+     * @return Siwapp\InvoiceBundle\Entity\Invoice
      */
     public function getInvoice()
     {
@@ -132,7 +132,7 @@ class Payment
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

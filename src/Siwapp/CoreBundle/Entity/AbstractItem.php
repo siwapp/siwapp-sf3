@@ -37,12 +37,12 @@ class AbstractItem
   /**
    * @var decimal $discount
    *
-   * @ORM\Column(type="decimal", precision="5", scale="2")
+   * @ORM\Column(type="decimal", precision=5, scale=2)
    */
   private $discount;
 
-  /** 
-   * @var string $description 
+  /**
+   * @var string $description
    *
    * @ORM\Column()
    */
@@ -51,7 +51,7 @@ class AbstractItem
   /**
    * @var decimal $unitary_cost
    *
-   * @ORM\Column(type="decimal", precision="15", scale="3")
+   * @ORM\Column(type="decimal", precision=15, scale=3)
    */
   private $unitary_cost;
 
@@ -68,7 +68,7 @@ class AbstractItem
   /**
    * Get quantity
    *
-   * @return integer 
+   * @return integer
    */
   public function getQuantity()
   {
@@ -88,7 +88,7 @@ class AbstractItem
   /**
    * Get discount
    *
-   * @return decimal 
+   * @return decimal
    */
   public function getDiscount()
   {
@@ -108,7 +108,7 @@ class AbstractItem
   /**
    * Get description
    *
-   * @return string 
+   * @return string
    */
   public function getDescription()
   {
@@ -128,7 +128,7 @@ class AbstractItem
   /**
    * Get unitary cost
    *
-   * @return decimal 
+   * @return decimal
    */
   public function getUnitaryCost()
   {
@@ -145,7 +145,7 @@ class AbstractItem
     $this->unitary_cost = $unitary_cost;
   }
 
-  
+
   /** **************** CUSTOM METHODS ************* */
 
 
@@ -267,7 +267,7 @@ class AbstractItem
         }
         return false;
     }
-    
+
     /**
      * Twig template system needs this to answer true for the specified properties
      */
@@ -286,5 +286,5 @@ class AbstractItem
     }
 
 
-    
+
 }
