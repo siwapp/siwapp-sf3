@@ -23,51 +23,51 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $property_repository = $em->getRepository('SiwappConfigBundle:Property');
-        
+
         $data = $property_repository->getAll();
         $data['taxes'] = $em->getRepository('SiwappCoreBundle:Tax')->findAll();
         $data['series'] = $em->getRepository('SiwappCoreBundle:Serie')->findAll();
-        
-        $form = $this->createForm(new GlobalSettingsType(), $data);
-        
+
+        $form = $this->createForm('Siwapp\ConfigBundle\Form\GlobalSettingsType', $data);
+
         if ($request->getMethod() == 'POST') {
             $form->bindRequest($request);
             if($form->isValid()) {
                 $data = $form->getData();
-				unset($data['series'], $data['taxes']);				
+                unset($data['series'], $data['taxes']);
                 $property_repository->setPropertiesFromArray($data);
             }
         }
-        
+
         return array(
             'form' => $form->createView(),
         );
     }
-    
+
     /**
      * @Route("/my_settings", name="my_settings")
      * @Template()
      */
     public function mySettingsAction(Request $request)
     {
-        
+
     }
-    
+
     /**
      * @Route("/printing_templates", name="printing_templates")
      * @Template()
      */
     public function printingTemplatesAction(Request $request)
     {
-        
+
     }
-    
+
     /**
      * @Route("/modules", name="modules")
      * @Template()
      */
     public function modulesAction(Request $request)
     {
-        
+
     }
 }

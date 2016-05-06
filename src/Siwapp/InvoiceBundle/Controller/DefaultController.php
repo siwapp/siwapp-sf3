@@ -32,12 +32,12 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         $entities = $em->getRepository('SiwappInvoiceBundle:Invoice')->findAll();
-        
+
         return array('entities' => $entities);
     }
-    
+
     /**
      * @Route("/{id}/show", name="invoice_show")
      * @Template
@@ -46,21 +46,21 @@ class DefaultController extends Controller
     {
         return array();
     }
-    
+
     /**
      * @Route("/new", name="invoice_add")
      * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
      */
     public function newAction()
     {
-        $entity = new InvoiceType();
+        $entity = 'Siwapp\InvoiceBundle\Form\InvoiceType';
         $form = $this->createForm($entity);
         return array(
             'form' => $form->createView(),
             'entity' => $entity,
         );
     }
-    
+
     /**
      * @Route("/create", name="invoice_create")
      * @Method("POST")
@@ -70,7 +70,7 @@ class DefaultController extends Controller
     {
         return $this->redirect($this->generateUrl('invoice_edit'));
     }
-    
+
     /**
      * @Route("/{id}/edit", name="invoice_edit")
      * @Template
@@ -84,13 +84,13 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
         $form = $this->createForm(new InvoiceType(), $entity);
-        
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
         );
     }
-    
+
     /**
      * @Route("/{id}/update", name="invoice_update")
      * @Method("POST")
@@ -100,29 +100,29 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
-        
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
-        
+
         $form = $this->createForm(new InvoiceType(), $entity);
         $request = $this->getRequest();
-        
+
         $form->bindRequest($request);
-        
+
         if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
-            
+
             return $this->redirect($this->generateUrl('invoice_edit', array('id' => $id)));
         }
-        
+
         return array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
         );
     }
-    
+
     /**
      * @Route("/{id}/delete", name="invoice_delete")
      */
@@ -130,7 +130,7 @@ class DefaultController extends Controller
     {
         return $this->redirect($this->generateUrl('invoice_index'));
     }
-    
+
     /**
      * @Route("/payments/{invoiceId}", name="invoice_payments")
      * @Template("SiwappInvoiceBundle:Partials:payments.html.twig")
@@ -143,7 +143,7 @@ class DefaultController extends Controller
 
         return array('entities' => $entities, 'invoiceId' => $invoiceId);
     }
-    
+
     /**
      * @Route("/payments/{invoiceId}/add", name="invoice_payment_add")
      * @Method("POST")
@@ -155,7 +155,7 @@ class DefaultController extends Controller
         // Set Flash with message...
         return array('invoiceId' => $invoiceId);
     }
-    
+
     /**
      * @Route("/payments/{invoiceId}/delete", name="invoice_payment_delete")
      * @Method("POST")

@@ -3,22 +3,19 @@
 namespace Siwapp\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class SerieType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name')
             ->add('value')
-            ->add('first_number', 'integer')
-            ->add('enabled', 'checkbox', array('required' => false))
+            ->add('first_number', IntegerType::class)
+            ->add('enabled', CheckboxType::class, array('required' => false))
         ;
-    }
-
-    public function getName()
-    {
-        return 'siwapp_corebundle_serietype';
     }
 }

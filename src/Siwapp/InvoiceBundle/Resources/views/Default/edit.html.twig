@@ -41,11 +41,11 @@
 {% block searchform_container %}{% endblock %}
 
 {% block body %}
-  
+
   {# {% form_theme form "SiwappInvoiceBundle:Form:invoice.html.twig" %} #}
-  
+
   <article class="invoice-like">
-    
+
     <header id="invoice-like-title">
       <h2>Invoice #10</h2>
       <ul id="invoice-like-status" class="unstyled">
@@ -57,16 +57,16 @@
         </li>
       </ul>
     </header>
-    
-    <form action="{{ path('invoice_update', { 'id': entity.id }) }}" method="post" class="form-stacked" {{ form_enctype(form) }}>
-      
+
+    {{ form_start(form, {'path': path('invoice_update', { 'id': 'entity.id' }), 'class': 'form-stacked'}) }}
+
       {{ form_errors(form) }}
-      
+
       <div class="row">
         <div id="invoice-like-customer-data" class="span8">
-          
+
           <h3>{% trans %}Customer Data{% endtrans %}</h3>
-          
+
           <div class="row">
             <div class="span3 clearfix">
               {{ form_label(form.customer_name) }}
@@ -83,7 +83,7 @@
               {{ form_widget(form.contact_person, {'attr': {'class': 'span3'}}) }}
               {{ form_errors(form.contact_person) }}
             </div>
-            
+
             <div class="span8 clearfix">
               {{ form_label(form.customer_email) }}
               <div class="input-prepend">
@@ -92,7 +92,7 @@
               </div>
               {{ form_errors(form.customer_email) }}
             </div>
-            
+
             <div class="span4 clearfix">
               {{ form_label(form.invoicing_address) }}
               {{ form_widget(form.invoicing_address, {'attr': {'class': 'span4 address'}}) }}
@@ -105,13 +105,13 @@
             </div>
           </div><!-- inner row -->
         </div><!-- span10 -->
-        
+
         <div id="invoice-like-properties" class="span4" style="background:pink;">
-          
+
           <h3>{% trans %}Invoice Properties{% endtrans %}</h3>
-          
+
           <div class="form-inline">
-            
+
             <div class="clearfix">
               {{ form_label(form.series_id) }}
               {{ form_widget(form.series_id, {'attr': {'class': 'span2'}}) }}
@@ -132,16 +132,16 @@
               {{ form_widget(form.due_date, {'attr': {'class': 'span2'}}) }}
               {{ form_errors(form.due_date) }}
             </div>
-            
+
           </div><!-- form inline -->
         </div><!-- span5 -->
       </div>
-      
+
       <div class="row">
         <div class="span12">
-          
+
           <h3>{% trans %}Invoice items{% endtrans %}</h3>
-          
+
           <table id="invoice-like-items" class="table table-condensed table-striped align-middle">
             <thead>
               <tr>
@@ -193,13 +193,13 @@
               {# TODO: Action buttons: add/remove items, taxes, sort... #}
             </tbody>
           </table>
-          
+
         </div>
       </div>
-      
+
       <div class="row totals">
         <div class="span6">
-          
+
           <a id="invoice-like-add-item" href="#" class="btn btn-info"><i class="icon-plus icon-white"></i> Add Item</a>
           <script type="text/javascript">
               $('#invoice-like-add-item').live('click', function(event){
@@ -211,7 +211,7 @@
               });
           </script>
           {# TODO: Action buttons: add items. PROTOTYPE MUST BE CUSTOMIZED. #}
-          
+
         </div>
         <div class="span4 offset2">
           <table id="invoice-like-totals" class="table table-condensed table-striped">
@@ -236,7 +236,7 @@
           </table>
         </div>
       </div>
-      
+
       <div id="invoice-like-notes" class="row">
         <div class="span6">
           {{ form_label(form.terms) }}
@@ -249,14 +249,14 @@
           {{ form_errors(form.notes) }}
         </div>
       </div>
-      
+
       {{ form_rest(form) }}
-      
+
       <div>
         <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
       </div>
-    </form>
-    
+    {{ form_end(form) }}
+
   </article>
-  
+
 {% endblock %}

@@ -3,7 +3,10 @@
 namespace Siwapp\InvoiceBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 use Siwapp\CoreBundle\Form\AbstractInvoiceType;
 use Siwapp\InvoiceBundle\Entity\Item;
@@ -12,37 +15,32 @@ use Siwapp\InvoiceBundle\Form\ItemType;
 
 class InvoiceType extends AbstractInvoiceType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        
+
         $builder
-            ->add('draft', 'hidden')
-            ->add('closed', 'hidden')
-            ->add('sent_by_email', 'hidden')
+            ->add('draft', HiddenType::class)
+            ->add('closed', HiddenType::class)
+            ->add('sent_by_email', HiddenType::class)
             ->add('number')
-            ->add('recurring_invoice_id', 'hidden')
-            ->add('issue_date', 'date', array('widget' => 'single_text'))
-            ->add('due_date', 'date', array('widget' => 'single_text'))
+            ->add('recurring_invoice_id', HiddenType::class)
+            ->add('issue_date', DateType::class, array('widget' => 'single_text'))
+            ->add('due_date', DateType::class, array('widget' => 'single_text'))
         ;
-        
-        $builder->add('items', 'collection', array(
-            'type' => new ItemType(),
+
+        $builder->add('items', CollectionType::class, array(
+            'entry_type' => 'Siwapp\InvoiceBundle\Form\ItemType',
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
         ));
     }
-    
+
     public function getDefaultOptions(array $options)
     {
         return array(
             'data_class' => 'Siwapp\InvoiceBundle\Entity\Invoice',
         );
-    }
-
-    public function getName()
-    {
-        return 'siwapp_invoicebundle_invoicetype';
     }
 }
