@@ -26,13 +26,6 @@ class AbstractInvoice
     private $id;
 
     /**
-     * @var integer $series_id
-     *
-     * @ORM\Column(name="series_id", type="integer", nullable=true)
-     */
-    private $series_id;
-
-    /**
      * @var integer $customer_id
      *
      * @ORM\Column(name="customer_id", type="integer", nullable=true)
@@ -153,26 +146,6 @@ class AbstractInvoice
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set series_id
-     *
-     * @param integer $seriesId
-     */
-    public function setSeriesId($seriesId)
-    {
-        $this->series_id = $seriesId;
-    }
-
-    /**
-     * Get series_id
-     *
-     * @return integer
-     */
-    public function getSeriesId()
-    {
-        return $this->series_id;
     }
 
     /**

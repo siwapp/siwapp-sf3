@@ -8,12 +8,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\InvoiceBundle\Entity\Invoice;
+use Siwapp\InvoiceBundle\Entity\Item;
 use Siwapp\InvoiceBundle\Form\InvoiceType;
 
 /**
  * @Route("/invoices")
  */
-class DefaultController extends Controller
+class InvoicesController extends Controller
 {
     /**
      * @Route("/silly", name="silly_index")
@@ -28,7 +30,7 @@ class DefaultController extends Controller
     }
     /**
      * @Route("/", name="invoice_index")
-     * @Template
+     * @Template("SiwappInvoiceBundle:Default:index.html.twig")
      */
     public function indexAction()
     {
@@ -41,7 +43,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/{id}/show", name="invoice_show")
-     * @Template
+     * @Template("SiwappInvoiceBundle:Default:show.html.twig")
      */
     public function showAction($id)
     {
@@ -60,12 +62,18 @@ class DefaultController extends Controller
      */
     public function newAction()
     {
-        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', null, [
+        $invoice = new Invoice();
+        $invoice->addItem(new Item());
+
+        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $invoice, [
             'action' => $this->generateUrl('invoice_create'),
         ]);
+
         return array(
             'form' => $form->createView(),
-            'entity' => null,
+            'entity' => $invoice,
+            // @todo Unhardcode this.
+            'currency' => 'EUR',
         );
     }
 
@@ -81,7 +89,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/{id}/edit", name="invoice_edit")
-     * @Template
+     * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
      */
     public function editAction($id)
     {

@@ -34,6 +34,7 @@ class Invoice extends AbstractInvoice
 
     /**
      * @ORM\ManyToOne(targetEntity="Siwapp\CoreBundle\Entity\Serie")
+     * @ORM\JoinColumn(name="serie_id", referencedColumnName="id")
      *
      * unidirectional many-to-one
      */

@@ -2,6 +2,7 @@
 
 namespace Siwapp\InvoiceBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -37,6 +38,13 @@ class InvoiceType extends AbstractInvoiceType
             'prototype' => true,
             'by_reference' => false,
         ));
+
+        $builder->add('serie', EntityType::class, array(
+            'class' => 'SiwappCoreBundle:Serie',
+            'choice_label' => 'name',
+            'placeholder' => '-',
+        ));
+        $builder->remove('series_id');
     }
 
     public function configureOptions(OptionsResolver $resolver)
