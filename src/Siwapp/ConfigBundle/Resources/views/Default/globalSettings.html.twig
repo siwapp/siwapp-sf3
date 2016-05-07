@@ -5,7 +5,7 @@
 
    {{ form_start(form, {'action': path('global_settings')}) }}
         <details>
-            <summary>Company</summary>
+            <summary>{% trans %}Company{% endtrans %}</summary>
             {{ form_row(form.company_name) }}
             {{ form_row(form.company_address) }}
             {{ form_row(form.company_phone) }}
@@ -16,26 +16,26 @@
             {{ form_row(form.currency) }}
         </details>
         <details>
-            <summary>Legal texts</summary>
+            <summary>{% trans %}Legal texts{% endtrans %}</summary>
             {{ form_row(form.legal_terms) }}
         </details>
         <details>
-            <summary>Invoicing taxes</summary>
+            <summary>{% trans %}Invoicing taxes{% endtrans %}</summary>
             {{ form_row(form.taxes) }}
             <a href="#" class="addTax">Add Tax</a>
         </details>
         <details>
-            <summary>Invoicing series</summary>
+            <summary>{% trans %}Invoicing series{% endtrans %}</summary>
             {{ form_row(form.series) }}
         <a href="#" class="addSerie">Add Serie</a>
         </details>
         <details>
-            <summary>PDF Settings</summary>
+            <summary>{% trans %}PDF Settings{% endtrans %}</summary>
             {{ form_row(form.pdf_size) }}
             {{ form_row(form.pdf_orientation) }}
         </details>
         {{ form_widget(form) }}
-        <input type="submit" value="Save" />
+        <input type="submit" value="{% trans %}Save{% endtrans %}" />
     {{ form_end(form) }}
 
     <script type="text/javascript">
