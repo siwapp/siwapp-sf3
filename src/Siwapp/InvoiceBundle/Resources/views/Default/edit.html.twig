@@ -58,7 +58,7 @@
       </ul>
     </header>
 
-    {{ form_start(form, {'path': path('invoice_update', { 'id': 'entity.id' }), 'class': 'form-stacked'}) }}
+    {{ form_start(form, {'path': entity ? path('invoice_update', { 'id': entity.id }) : path('invoice_add'), 'class': 'form-stacked'}) }}
 
       {{ form_errors(form) }}
 

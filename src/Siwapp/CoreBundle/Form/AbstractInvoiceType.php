@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbstractInvoiceType extends AbstractType
 {
@@ -28,10 +29,10 @@ class AbstractInvoiceType extends AbstractType
         ;
     }
 
-    public function getDefaultOptions(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return array(
+        $resolver->setDefaults([
             'data_class' => 'Siwapp\CoreBundle\Entity\AbstractInvoice',
-        );
+        ]);
     }
 }

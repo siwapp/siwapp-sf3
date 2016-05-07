@@ -53,11 +53,10 @@ class DefaultController extends Controller
      */
     public function newAction()
     {
-        $entity = 'Siwapp\InvoiceBundle\Form\InvoiceType';
-        $form = $this->createForm($entity);
+        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType');
         return array(
             'form' => $form->createView(),
-            'entity' => $entity,
+            'entity' => null,
         );
     }
 
@@ -83,7 +82,7 @@ class DefaultController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
-        $form = $this->createForm(new InvoiceType(), $entity);
+        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $entity);
 
         return array(
             'entity' => $entity,

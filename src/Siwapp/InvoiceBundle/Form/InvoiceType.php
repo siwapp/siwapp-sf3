@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Siwapp\CoreBundle\Form\AbstractInvoiceType;
 use Siwapp\InvoiceBundle\Entity\Item;
@@ -37,10 +38,10 @@ class InvoiceType extends AbstractInvoiceType
         ));
     }
 
-    public function getDefaultOptions(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return array(
+        $resolver->setDefaults([
             'data_class' => 'Siwapp\InvoiceBundle\Entity\Invoice',
-        );
+        ]);
     }
 }

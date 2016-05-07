@@ -4,6 +4,7 @@ namespace Siwapp\InvoiceBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 class PaymentType extends AbstractType
@@ -17,10 +18,10 @@ class PaymentType extends AbstractType
         ;
     }
 
-    public function getDefaultOptions(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return array(
+        $resolver->setDefaults([
             'data_class' => 'Siwapp\InvoiceBundle\Entity\Payment',
-        );
+        ]);
     }
 }

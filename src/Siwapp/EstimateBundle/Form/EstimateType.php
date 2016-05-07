@@ -4,6 +4,7 @@ namespace Siwapp\EstimateBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EstimateType extends AbstractType
 {
@@ -18,10 +19,10 @@ class EstimateType extends AbstractType
         ;
     }
 
-    public function getDefaultOptions(array $options)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return array(
+        $resolver->setDefaults([
             'data_class' => 'Siwapp\EstimateBundle\Entity\Estimate',
-        );
+        ]);
     }
 }
