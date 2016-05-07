@@ -1,13 +1,13 @@
-{% extends "::base.html.twig" %}
+{% extends "SiwappCoreBundle::base.html.twig" %}
 
 {% block stylesheets %}
 {{ parent() }}
-<link rel="stylesheet/less" href="{{ asset('css/bundle/dashboard.less') }}" type="text/css" media="screen" title="Dashboard Styles" charset="utf-8" />
+<link rel="stylesheet/less" href="{{ asset('bundles/siwappcore/css/bundle/dashboard.less') }}" type="text/css" media="screen" title="Dashboard Styles" charset="utf-8" />
 {% endblock %}
 
 {% block javascripts %}
   {{ parent() }}
-  <script type="text/javascript" charset="utf-8" src="{{ asset('js/min/invoice-list.js') }}"></script>
+  <script type="text/javascript" charset="utf-8" src="{{ asset('bundles/siwappcore/js/invoice-list.js') }}"></script>
 {% endblock %}
 
 {% block searchform %}
@@ -15,9 +15,9 @@
 {% endblock %}
 
 {% block body %}
-  
+
   <div id="dashboard-summary">
-    
+
     <table class="table table-bordered sw-table-horizontal payments">
       <thead>
         <tr>
@@ -39,7 +39,7 @@
         </tr>
       </tbody>
     </table>
-    
+
     <table class="table table-bordered sw-table-horizontal balance">
       <thead>
         <tr>
@@ -80,19 +80,19 @@
         </tr>
       </tbody>
     </table>
-    
+
   </div>
-  
+
   <div class="dashboard-listing">
     <h2>{% trans %}Recent invoices{% endtrans %}</h2>
     {% set table_selectable = false %}
     {% include "SiwappInvoiceBundle:Partials:listing.html.twig" %}
   </div>
-  
+
   <div class="dashboard-listing">
     <h2>{% trans %}Past due invoices{% endtrans %}</h2>
     {% set table_rows = overdue_invoices %}
     {% include "SiwappInvoiceBundle:Partials:listing.html.twig" %}
   </div>
-  
+
 {% endblock %}

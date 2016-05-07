@@ -4,7 +4,7 @@
 {% block body %}
 
    {{ form_start(form, {'action': path('global_settings')}) }}
-        <details>
+        <details open>
             <summary>{% trans %}Company{% endtrans %}</summary>
             {{ form_row(form.company_name) }}
             {{ form_row(form.company_address) }}
