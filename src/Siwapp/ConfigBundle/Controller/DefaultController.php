@@ -31,8 +31,8 @@ class DefaultController extends Controller
         $form = $this->createForm('Siwapp\ConfigBundle\Form\GlobalSettingsType', $data);
 
         if ($request->getMethod() == 'POST') {
-            $form->bindRequest($request);
-            if($form->isValid()) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
                 $data = $form->getData();
                 unset($data['series'], $data['taxes']);
                 $property_repository->setPropertiesFromArray($data);

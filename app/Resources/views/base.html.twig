@@ -3,14 +3,14 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>{% block title %}Welcome!{% endblock %}</title>
-  
+
   <link rel="stylesheet/less" href="{{ asset('css/siwapp.less') }}" type="text/css" media="screen" title="Siwapp Styles" charset="utf-8" />
   {% block stylesheets %}{% endblock %}
-  
+
   <script type="text/javascript" charset="utf-8">
     less = { env: 'development' };
   </script>
-  
+
   {% javascripts
     'js/jquery-1.7.1.min.js'
     'js/modernizr.custom.js'
@@ -26,7 +26,7 @@
 
 {% block header %}
   <header id="hd">
-    
+
     <div class="container">
     <h1>
       <a href="{{ path('dashboard_index') }}">
@@ -34,7 +34,7 @@
         <span class="version">v.1.0-DEV</span>
       </a>
     </h1>
-    
+
     <nav class="user">
       <ul class="unstyled">
         <li>{% trans with {'%username%': 'test' } %}Wellcome, %username%!{% endtrans %}</li>
@@ -49,9 +49,9 @@
         </li>
       </ul>
     </nav>
-    
+
     <nav class="main">
-      
+
       <div id="create-button" class="btn-group">
         <a href="{{ path('invoice_add') }}" class="btn btn-primary">
           <i class="icon-plus icon-white"></i>
@@ -69,10 +69,10 @@
           </li>
         </ul>
       </div>
-      
-      
+
+
       {% set routename = app.request.attributes.get('_route') %}
-      
+
       <ul class="nav nav-tabs">
         <li class="{{ routename|menu_active_tab('dashboard_') }}">
           <a href="{{ path('dashboard_index') }}" data-shortcut="alt+g, d">{% trans %}Dashboard{% endtrans %}</a>
@@ -87,15 +87,15 @@
           <a href="{{ path('estimate_index') }}" data-shortcut="alt+g, e">{% trans %}Estimates{% endtrans %}</a>
         </li>
         <li class="{{ routename|menu_active_tab('customer_') }}">
-          <a href="{{ path('dashboard_index') }}" data-shortcut="alt+g, c">{% trans %}Customers{% endtrans %}</a>
+          <a href="{{ path('customer_index') }}" data-shortcut="alt+g, c">{% trans %}Customers{% endtrans %}</a>
         </li>
       </ul>
     </nav>
-    
+
     </div>
   </header>
 {% endblock %}
-  
+
   <section id="bd">
     {% block searchform_container %}
       <div class="searchform">
@@ -109,15 +109,15 @@
         </div>
       </div>
     {% endblock %}
-    
+
     <div class="container">
       {% block body %}{% endblock %}
     </div>
   </section>
-  
+
   <footer id="ft">
   </footer>
-  
+
   {% javascripts
     'js/bootstrap/bootstrap-transition.js'
     'js/bootstrap/bootstrap-tooltip.js'
@@ -139,13 +139,13 @@
   %}
   <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
   {% endjavascripts %}
-  
+
   {# TODO: Change culture for user. See /web/js/kendoui/cultures #}
   <script type="text/javascript" charset="utf-8" src="{{ asset('js/kendoui/cultures/kendo.culture.en-US.js') }}"></script>
-  
+
   {% block javascripts %}{% endblock %}
-  
+
   {% block toolbar %}{% endblock %}
-  
+
 </body>
 </html>
