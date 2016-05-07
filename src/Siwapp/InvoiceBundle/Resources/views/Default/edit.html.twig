@@ -16,7 +16,7 @@
   {{ block('base_date_widget') }}
   {% if widget == 'single_text' %}
   <script type="text/javascript">
-    jQuery(function($){ $('#{{ id }}').kendoDatePicker(); });
+    //jQuery(function($){ $('#{{ id }}').kendoDatePicker(); });
   </script>
   {% endif %}
 {% endspaceless %}
@@ -42,23 +42,25 @@
 
 {% block body %}
 
-  {# {% form_theme form "SiwappInvoiceBundle:Form:invoice.html.twig" %} #}
-
   <article class="invoice-like">
 
     <header id="invoice-like-title">
-      <h2>Invoice #10</h2>
+      <h2>Invoice #{{ entity.id }}</h2>
       <ul id="invoice-like-status" class="unstyled">
         <li>
-          <span class="label pending">Pending</span>
+          <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
         </li>
         <li>
-          <span class="label notice">Sent by Email</span>
+          {% if entity.sentByEmail %}
+          <span class="label notice">{% trans %}Sent by Email{% endtrans %}</span>
+          {% else %}
+          <span class="label warning">{% trans %}Not Sent by Email{% endtrans %}</span>
+          {% endif %}
         </li>
       </ul>
     </header>
 
-    {{ form_start(form, {'path': entity ? path('invoice_update', { 'id': entity.id }) : path('invoice_add'), 'class': 'form-stacked'}) }}
+    {{ form_start(form, {'attr': {'class': 'form-stacked' } }) }}
 
       {{ form_errors(form) }}
 
@@ -154,41 +156,9 @@
                 <th colspan="2" class="cell-size-small-medium cell-align-right">{% trans %}Line Total{% endtrans %}</th>
               </tr>
             </thead>
-            <tbody data-prototype="{{ form_widget(form.items.vars.prototype)|e }}">
+            <tbody data-prototype="{{ include('SiwappInvoiceBundle:Partials:items.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
               {% for item in form.items %}
-              <tr>
-                <td class="btn-group">
-                  {# TODO: Make this pretty for row actions (add tax, add item before, add item after...) #}
-                  <a class="btn btn-primary btn-mini" data-toggle="dropdown" href="#"><i class="icon-cog icon-white"></i></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#"><i class="icon-arrow-up"></i> Add before</a></li>
-                    <li><a href="#"><i class="icon-arrow-down"></i> Add after</a></li>
-                    <li><a href="#"><i class="icon-plus"></i> Add Tax</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                  </ul>
-                </td>
-                <td>
-                  {{ form_widget(item.invoice) }}
-                  {{ form_widget(item.description, { 'attr': { 'class': 'input-x2large' } }) }}
-                </td>
-                <td class="cell-align-right">
-                  {{ form_widget(item.quantity, { 'attr': { 'class': 'span1' } }) }}
-                </td>
-                <td class="cell-align-right">
-                  {{ form_widget(item.unitary_cost, { 'attr': { 'class': 'span1' } }) }}
-                </td>
-                <td class="cell-align-right">
-                  {{ form_widget(item.discount, { 'attr': { 'class': 'span1' } }) }}
-                </td>
-                <td class="taxes">
-                  <span class="label tax"><a href="#" class="iconic x"></a>VAT 18%</span>
-                  <span class="label tax"><a href="#" class="iconic x"></a>VAT 8%</span>
-                </td>
-                <td class="cell-align-right">
-                  LINE TOTAL
-                </td>
-              </tr>
+                {{ include('SiwappInvoiceBundle:Partials:items.html.twig', { 'form': item, 'entity': item.vars.value, 'currency': currency }) }}
               {% endfor %}
               {# TODO: Action buttons: add/remove items, taxes, sort... #}
             </tbody>
@@ -206,7 +176,7 @@
                   event.preventDefault();
                   var collectionHolder = $('#invoice-like-items tbody');
                   var prototype = collectionHolder.attr('data-prototype');
-                  form = prototype.replace(/\$\$name\$\$/g, collectionHolder.children().length);
+                  form = prototype.replace(/__name__/g, collectionHolder.children().length);
                   collectionHolder.append(form);
               });
           </script>
@@ -218,19 +188,15 @@
             <tbody>
               <tr>
                 <th class="cell-size-large">{% trans %}Subtotal{% endtrans %}</th>
-                <td class="cell-align-right">€ 405.00</td>
+                <td class="cell-align-right">{{ entity.baseAmount|localizedcurrency(currency) }}</td>
               </tr>
               <tr>
-                <th>VAT 18%</th>
-                <td class="cell-align-right">€ 72.90</td>
+                <th>{% trans %}Taxes{% endtrans %}</th>
+                <td class="cell-align-right">{{ entity.taxAmount|localizedcurrency(currency) }}</td>
               </tr>
               <tr>
-                <th>VAT 8%</th>
-                <td class="cell-align-right">€ 32.4</td>
-              </tr>
-              <tr>
-                <th>Invoice Total (EUR)</th>
-                <td class="cell-align-right">€ 510.30</td>
+                <th>Invoice Total (currency)</th>
+                <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
               </tr>
             </tbody>
           </table>

@@ -1,0 +1,26 @@
+<tr>
+  <td class="btn-group">
+    {# TODO: Make this pretty for row actions (add tax, add item before, add item after...) #}
+    <a class="btn btn-mini" title="{% trans %}Remove{% endtrans %}" data-toggle="dropdown" href="#" onclick="jQuery(this).parents('tr').remove();return false;"><i class="icon-trash"></i></a>
+  </td>
+  <td>
+    {{ form_widget(form.description, { 'attr': { 'class': 'input-x2large' } }) }}
+  </td>
+  <td class="cell-align-right">
+    {{ form_widget(form.quantity, { 'attr': { 'class': 'span1' } }) }}
+  </td>
+  <td class="cell-align-right">
+    {{ form_widget(form.unitary_cost, { 'attr': { 'class': 'span1' } }) }}
+  </td>
+  <td class="cell-align-right">
+    {{ form_widget(form.discount, { 'attr': { 'class': 'span1' } }) }}
+  </td>
+  <td class="taxes">
+    <span class="label tax"><a href="#" class="iconic x"></a>VAT 18%</span>
+    <span class="label tax"><a href="#" class="iconic x"></a>VAT 8%</span>
+  </td>
+  <td class="cell-align-right">
+    {{ entity.grossAmount|localizedcurrency(currency) }}
+  </td>
+</tr>
+{{ form_widget(form) }}

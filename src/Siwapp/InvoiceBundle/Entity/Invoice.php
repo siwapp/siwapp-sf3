@@ -245,6 +245,7 @@ class Invoice extends AbstractInvoice
     public function addItem(\Siwapp\InvoiceBundle\Entity\Item $item)
     {
         $this->items[] = $item;
+        $item->setInvoice($this);
     }
 
     /**

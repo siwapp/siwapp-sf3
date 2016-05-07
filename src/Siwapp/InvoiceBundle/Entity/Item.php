@@ -19,6 +19,7 @@ class Item extends AbstractItem
 {
     /**
     * @ORM\ManyToOne(targetEntity="Invoice", inversedBy="items")
+    * @ORM\JoinColumn(name="invoice_id", referencedColumnName="id")
     *
     */
     private $invoice;

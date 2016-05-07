@@ -3,6 +3,7 @@
 namespace Siwapp\InvoiceBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -42,9 +43,15 @@ class DefaultController extends Controller
      * @Route("/{id}/show", name="invoice_show")
      * @Template
      */
-    public function showAction()
+    public function showAction($id)
     {
-        return array();
+        $entity = $this->getDoctrine()
+            ->getRepository('SiwappInvoiceBundle:Invoice')
+            ->find($id);
+
+        return array(
+            'entity' => $entity,
+        );
     }
 
     /**
@@ -53,7 +60,9 @@ class DefaultController extends Controller
      */
     public function newAction()
     {
-        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType');
+        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', null, [
+            'action' => $this->generateUrl('invoice_create'),
+        ]);
         return array(
             'form' => $form->createView(),
             'entity' => null,
@@ -82,11 +91,15 @@ class DefaultController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
-        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $entity);
+        $form = $this->createForm(InvoiceType::class, $entity, [
+            'action' => $this->generateUrl('invoice_update', ['id' => $id]),
+        ]);
 
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            // @todo Unhardcode this.
+            'currency' => 'EUR',
         );
     }
 
@@ -95,7 +108,7 @@ class DefaultController extends Controller
      * @Method("POST")
      * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
      */
-    public function updateAction($id)
+    public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $entity = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
@@ -104,10 +117,8 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
 
-        $form = $this->createForm(new InvoiceType(), $entity);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
+        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $entity);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em->persist($entity);
@@ -117,8 +128,8 @@ class DefaultController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -146,13 +157,13 @@ class DefaultController extends Controller
     /**
      * @Route("/payments/{invoiceId}/add", name="invoice_payment_add")
      * @Method("POST")
-     * @Template("SiwappInvoiceBundle:Partials:payments_form.html.twig")
+     * @Template("SiwappInvoiceBundle:Partials:payments.html.twig")
      */
     public function addPaymentAction($invoiceId)
     {
         // Add payment and return all payments
         // Set Flash with message...
-        return array('invoiceId' => $invoiceId);
+        return $this->paymentsAction($invoiceId);
     }
 
     /**
