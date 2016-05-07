@@ -1,6 +1,6 @@
 {
-    "name": "paris/siwapp.sf3",
-    "license": "proprietary",
+    "name": "parisliakos/siwapp-sf3",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {
