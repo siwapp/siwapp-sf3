@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block searchform %}
-  {% include "SiwappInvoiceBundle:Partials:search.html.twig" %}
+  {% include "SiwappInvoiceBundle:Partials:search.html.twig" with {'form': search_form} %}
 {% endblock %}
 
 {% block body %}

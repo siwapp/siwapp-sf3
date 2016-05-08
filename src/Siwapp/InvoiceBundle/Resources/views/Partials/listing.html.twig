@@ -41,7 +41,7 @@
           <input type="checkbox" name="id[]" value="{{ entity.id }}" />
         </td>
         {% endif %}
-        <td class="cell-size-medium cell-align-center">{{ entity.number }}</td>
+        <td class="cell-size-medium cell-align-center">{{ entity.label() }}</td>
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
         <td>{{ entity.dueDate|localizeddate('short', 'none') }}</td>

@@ -17,22 +17,22 @@ a:focus {
   color: #9d350f;
   text-decoration: underline;
 }
-.btn-primary {
+a.btn-primary {
   background-color: #e34c15;
   border-color: #e34c15;
 }
-.btn-primary:active,
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary.active.focus,
-.btn-primary.active:focus,
-.btn-primary.active:hover,
-.btn-primary:active.focus,
-.btn-primary:active:focus,
-.btn-primary:active:hover,
-.open>.dropdown-toggle.btn-primary.focus,
-.open>.dropdown-toggle.btn-primary:focus,
-.open>.dropdown-toggle.btn-primary:hover {
+a.btn-primary:active,
+a.btn-primary:hover,
+a.btn-primary:focus,
+a.btn-primary.active.focus,
+a.btn-primary.active:focus,
+a.btn-primary.active:hover,
+a.btn-primary:active.focus,
+a.btn-primary:active:focus,
+a.btn-primary:active:hover,
+.open>a.dropdown-toggle.btn-primary.focus,
+.open>a.dropdown-toggle.btn-primary:focus,
+.open>a.dropdown-toggle.btn-primary:hover {
   background-color: #9d350f;
   border-color: #9d350f;
 }
