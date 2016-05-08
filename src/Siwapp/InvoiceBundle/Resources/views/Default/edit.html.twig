@@ -54,7 +54,7 @@
   <article class="invoice-like">
 
     <header id="invoice-like-title">
-      <h2>Invoice #{{ entity.id }}</h2>
+      <h2>Invoice {{ entity.label() }}</h2>
       <ul id="invoice-like-status" class="list-unstyled">
         <li>
           <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
@@ -114,7 +114,6 @@
 
           <div class="panel-body form-inline">
             {{ form_row(form.serie) }}
-            {{ form_row(form.number) }}
             {{ form_row(form.issue_date) }}
             {{ form_row(form.due_date) }}
           </div><!-- form inline -->
@@ -196,8 +195,19 @@
 
       {{ form_rest(form) }}
 
-      <div>
-        <button type="submit" class="btn btn-default btn-primary">{% trans %}Save{% endtrans %}</button>
+      <div class="form-actions">
+        <input type="submit" class="btn btn-default btn-primary" name="save" value="{% trans %}Save{% endtrans %}">
+        {% if not entity.id or entity.isDraft() %}
+        <input type="submit" class="btn btn-default" name="save_draft" value="{% trans %}Save as draft{% endtrans %}">
+        {% endif %}
+        {% if entity.isOpen() %}
+        <input type="submit" class="btn btn-default" name="save_close" value="{% trans %}Save and close{% endtrans %}">
+        {% endif %}
+        <div class="float-right">
+          {% if entity.id %}
+          <a class="btn btn-default btn-danger" href="{{ path('invoice_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
+          {% endif %}
+        </div>
       </div>
     {{ form_end(form) }}
 

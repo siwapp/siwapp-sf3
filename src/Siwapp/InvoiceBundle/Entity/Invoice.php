@@ -2,6 +2,7 @@
 
 namespace Siwapp\InvoiceBundle\Entity;
 
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
@@ -18,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *    @ORM\Index(name="invoice_cntct_idx", columns={"contact_person"})
  * })
  * @ORM\Entity(repositoryClass="Siwapp\InvoiceBundle\Repository\InvoiceRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Invoice extends AbstractInvoice
 {
@@ -46,13 +48,6 @@ class Invoice extends AbstractInvoice
         $this->items = new ArrayCollection();
         $this->payments = new ArrayCollection();
     }
-
-    /**
-     * @var boolean $closed
-     *
-     * @ORM\Column(name="closed", type="boolean", nullable=true)
-     */
-    private $closed;
 
     /**
      * @var boolean $sent_by_email
@@ -90,20 +85,14 @@ class Invoice extends AbstractInvoice
      */
     private $due_date;
 
-
     /**
-     * Set draft
+     * Get draft
      *
-     * Temporary, just until all references to "draft' bookean  field are removed
-     *
-     * @param boolean $draft
+     * @return boolean
      */
-    public function setDraft($draft)
+    public function isClosed()
     {
-        if($draft)
-        {
-            $this->status = Invoice::DRAFT;
-        }
+        return $this->status === Invoice::CLOSED;
     }
 
     /**
@@ -111,29 +100,19 @@ class Invoice extends AbstractInvoice
      *
      * @return boolean
      */
-    public function getDraft()
+    public function isOpen()
     {
-        return $this->status == Invoice::DRAFT;
+        return in_array($this->status, [Invoice::OPENED, Invoice::OVERDUE], true);
     }
 
     /**
-     * Set closed
-     *
-     * @param boolean $closed
-     */
-    public function setClosed($closed)
-    {
-        $this->closed = $closed;
-    }
-
-    /**
-     * Get closed
+     * Get draft
      *
      * @return boolean
      */
-    public function getClosed()
+    public function isDraft()
     {
-        return $this->closed;
+        return $this->status === Invoice::DRAFT;
     }
 
     /**
@@ -247,6 +226,7 @@ class Invoice extends AbstractInvoice
     {
         $this->items[] = $item;
         $item->setInvoice($this);
+        $this->setAmounts();
     }
 
     /**
@@ -307,10 +287,18 @@ class Invoice extends AbstractInvoice
      */
     public function __toString()
     {
-        return (string)$this->number;
+        return $this->label();
     }
 
+    public function label()
+    {
+        $series = $this->getSerie();
+        $label = '';
+        $label .= $series ? $series->getValue() : '';
+        $label .= $this->isDraft() ? '[draft]' : $this->getNumber();
 
+        return $label;
+    }
 
     const DRAFT    = 0;
     const CLOSED   = 1;
@@ -321,11 +309,10 @@ class Invoice extends AbstractInvoice
 
     public function getDueAmount()
     {
-        if($this->status == self::DRAFT)
-        {
+        if ($this->isDraft()) {
             return null;
         }
-        return $this->gross_amount - $this->paid_amount;
+        return $this->getGrossAmount() - $this->getPaidAmount();
     }
 
     /**
@@ -388,13 +375,13 @@ class Invoice extends AbstractInvoice
         {
             return $this;
         }
-        if($this->closed || $this->due_amount == 0)
+        if($this->getDueAmount() == 0)
         {
             $this->setStatus(Invoice::CLOSED);
         }
         else
         {
-            if($this->due_date->format('Y-m-d') > sfDate::getInstance()->format('Y-m-d'))
+            if($this->getDueDate()->getTimestamp() > strtotime(date('Y-m-d')))
             {
                 $this->setStatus(Invoice::OPENED);
             }
@@ -418,6 +405,9 @@ class Invoice extends AbstractInvoice
             break;
           case Invoice::OPENED;
             $status = 'opened';
+            break;
+          case Invoice::OVERDUE:
+            $status = 'overdue';
             break;
           default:
             $status = 'unknown';
@@ -456,8 +446,9 @@ class Invoice extends AbstractInvoice
 
     /**
      * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
-    public function setNextNumber()
+    public function setNextNumber(PreUpdateEventArgs $event)
     {
         // compute the number of invoice
         if( (!$this->number && $this->status!=self::DRAFT) ||
@@ -466,10 +457,36 @@ class Invoice extends AbstractInvoice
         {
             $this->serie_changed = false;
             // TODO set number as the next available number for that serie
-            $this->setNumber($this->id);
+            $this->setNumber($this->getNextNumber($event->getEntityManager()));
         }
     }
 
+    protected function getNextNumber($em)
+    {
+        $series = $this->getSerie();
+        $repo = $em->getRepository('SiwappInvoiceBundle:Invoice');
+        $found = $repo->findBy([
+            'status' => [self::DRAFT, '<>'],
+            'serie' => $series,
+        ]);
 
+        if (count($found) > 0)
+        {
+          $result = $repo->createQueryBuilder('i')
+            ->select('MAX(i.number) AS max_number')
+            ->where('i.status <> :status')
+            ->andWhere('i.serie = :series')
+            ->setParameter('status', self::DRAFT)
+            ->setParameter('series', $series)
+            ->getQuery()
+            ->getSingleResult();
+
+          return $result['max_number'] + 1;
+        }
+        else
+        {
+          return $series->getFirstNumber();
+        }
+    }
 
 }

@@ -24,7 +24,6 @@ class AbstractInvoiceType extends AbstractType
             ->add('contact_person')
             ->add('terms', TextareaType::class, ['attr' => ['rows' => 5]])
             ->add('notes', TextareaType::class, ['attr' => ['rows' => 5]])
-            ->add('status', HiddenType::class)
         ;
     }
 

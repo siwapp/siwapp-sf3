@@ -146,6 +146,15 @@ class InvoicesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            if ($request->request->has('save_draft')) {
+                $entity->setStatus(Invoice::DRAFT);
+            }
+            elseif ($request->request->has('save_close')) {
+                $entity->setStatus(Invoice::CLOSED);
+            }
+            elseif ($entity->isDraft() && $request->request->has('save')) {
+                $entity->setStatus(Invoice::OPENED);
+            }
             $em->persist($entity);
             $em->flush();
 

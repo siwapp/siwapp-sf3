@@ -473,20 +473,6 @@ class AbstractInvoice
 
     /** ** RELATIONSHIPS ** */
 
-    /**
-     * addNewItem
-     * adds an item and recalculcates amounts
-     * it needs to use the 'addItem' of the descendant
-     *
-     * @param \Siwapp\CoreBundle\Entity\AbstractItem $item
-     * @author JoeZ99 <jzarate@gmail.com>
-     */
-    public function addNewItem(\Siwapp\CoreBundle\Entity\AbstractItem $item)
-    {
-        $this->addItem($item);// this method is called from the descendant
-        $item->setParent($this);// this is to ensure relation is established
-        $this->setAmounts();
-    }
 
     /**
      * removeItem
