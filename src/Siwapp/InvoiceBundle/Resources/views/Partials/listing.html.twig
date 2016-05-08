@@ -46,13 +46,6 @@
         <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
         <td>{{ entity.dueDate|localizeddate('short', 'none') }}</td>
         <td class="cell-align-center">
-          {# Use these CSS class names after .label for different statuses:
-            DRAFT   => (no class)
-            CLOSED  => .paid
-            OPENED  => .pending
-            OVERDUE => .overdue
-            ???     => .notice -> informational and not used
-          #}
           <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
         </td>
         <td class="cell-align-right">{{ entity.dueAmount|localizedcurrency(currency) }}</td>

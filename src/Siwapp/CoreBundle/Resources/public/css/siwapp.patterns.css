@@ -12,13 +12,15 @@
   border-color: #aa2b13;
 }
 .label.warning,
-.label.pending {
+.label.pending,
+.label.opened {
   color: #987e42;
   background-color: #f6df69;
   border-color: #d3b549;
 }
 .label.success,
-.label.paid {
+.label.paid,
+.label.closed {
   color: #ffffff;
   background-color: #90c754;
   border-color: #50a200;
