@@ -134,7 +134,7 @@
                 <th class="col-md-1 cell-align-center">{% trans %}Qty/Hours{% endtrans %}</th>
                 <th class="col-md-2 cell-align-center">{% trans %}Price{% endtrans %}</th>
                 <th class="col-md-1 cell-align-center">{% trans %}Discount{% endtrans %}</th>
-                <th class="cell-align-left">{% trans %}Taxes{% endtrans %}</th>
+                <th class="col-md-2 cell-align-left">{% trans %}Taxes{% endtrans %}</th>
                 <th colspan="2" class="cell-align-right">{% trans %}Line Total{% endtrans %}</th>
               </tr>
             </thead>
@@ -154,7 +154,7 @@
 
           <a id="invoice-like-add-item" href="#" class="btn btn-default btn-info"><span class="glyphicon glyphicon-plus glyphicon-white"></span> Add Item</a>
           <script type="text/javascript">
-              $('#invoice-like-add-item').live('click', function(event){
+              $('#invoice-like-add-item').on('click', function(event){
                   event.preventDefault();
                   var collectionHolder = $('#invoice-like-items tbody');
                   var prototype = collectionHolder.attr('data-prototype');
@@ -177,7 +177,7 @@
                 <td class="cell-align-right">{{ entity.taxAmount|localizedcurrency(currency) }}</td>
               </tr>
               <tr>
-                <th>Invoice Total (currency)</th>
+                <th>Invoice Total ({{ currency }})</th>
                 <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
               </tr>
             </tbody>

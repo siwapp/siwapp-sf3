@@ -43,8 +43,8 @@
         {% endif %}
         <td class="cell-size-medium cell-align-center">{{ entity.number }}</td>
         <td>{{ entity.getCustomerName }}</td>
-        <td>{{ entity }}</td>
-        <td>{{ entity }}</td>
+        <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
+        <td>{{ entity.dueDate|localizeddate('short', 'none') }}</td>
         <td class="cell-align-center">
           {# Use these CSS class names after .label for different statuses:
             DRAFT   => (no class)
@@ -53,10 +53,10 @@
             OVERDUE => .overdue
             ???     => .notice -> informational and not used
           #}
-          <span class="label {{ entity }}">{% trans with { '%status%': entity } %}%status%{% endtrans %}</span>
+          <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
         </td>
-        <td class="cell-align-right">{{ entity }}</td>
-        <td class="cell-align-right">{{ entity }}</td>
+        <td class="cell-align-right">{{ entity.status == 3 ? '.' : '-' }}</td>
+        <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
         <td class="cell-align-right payments">
           <a href="{{ path('invoice_payments', { 'invoiceId': entity.id }) }}" class="btn secondary icon clock payments" title="Payments" data-invoice-id="{{ entity.id }}">{% trans %}Payments{% endtrans %}</a>
         </td>

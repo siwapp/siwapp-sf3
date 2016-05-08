@@ -15,16 +15,15 @@ class AbstractInvoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('series_id', ChoiceType::class)
             ->add('customer_id', HiddenType::class)
             ->add('customer_name')
             ->add('customer_identification')
             ->add('customer_email', EmailType::class)
-            ->add('invoicing_address', TextareaType::class)
-            ->add('shipping_address', TextareaType::class)
+            ->add('invoicing_address', TextareaType::class, ['attr' => ['rows' => 3]])
+            ->add('shipping_address', TextareaType::class, ['attr' => ['rows' => 3]])
             ->add('contact_person')
-            ->add('terms', TextareaType::class)
-            ->add('notes', TextareaType::class)
+            ->add('terms', TextareaType::class, ['attr' => ['rows' => 5]])
+            ->add('notes', TextareaType::class, ['attr' => ['rows' => 5]])
             ->add('status', HiddenType::class)
         ;
     }

@@ -4,21 +4,19 @@
     <a class="btn btn-default btn-xs" title="{% trans %}Remove{% endtrans %}" href="#" onclick="jQuery(this).parents('tr').remove();return false;"><span class="glyphicon glyphicon-trash"></span></a>
   </td>
   <td>
-    {{ form_widget(form.description, { 'attr': { 'class': 'input-x2large' } }) }}
+    {{ form_widget(form.description) }}
   </td>
   <td class="cell-align-right">
-    {{ form_widget(form.quantity, { 'attr': { 'class': 'span1' } }) }}
+    {{ form_widget(form.quantity) }}
   </td>
   <td class="cell-align-right">
-    {{ form_widget(form.unitary_cost, { 'attr': { 'class': 'span1' } }) }}
+    {{ form_widget(form.unitary_cost) }}
   </td>
   <td class="cell-align-right">
-    {{ form_widget(form.discount, { 'attr': { 'class': 'span1' } }) }}
+    {{ form_widget(form.discount) }}
   </td>
-  <td class="taxes">
-    <span class="label tax"><a href="#" class="iconic x"></a>VAT 18%</span>
-    <span class="label tax"><a href="#" class="iconic x"></a>VAT 8%</span>
-    <a class="btn btn-default btn-xs" title="{% trans %}Add{% endtrans %}" href="#" ><span class="glyphicon glyphicon-plus"></span></a>
+  <td class="taxes form-inline">
+    {{ form_widget(form.taxes) }}
   </td>
   <td class="cell-align-right">
     {{ entity.grossAmount|localizedcurrency(currency) }}

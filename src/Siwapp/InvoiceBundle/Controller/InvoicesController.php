@@ -38,7 +38,11 @@ class InvoicesController extends Controller
 
         $entities = $em->getRepository('SiwappInvoiceBundle:Invoice')->findAll();
 
-        return array('entities' => $entities);
+        return array(
+            'entities' => $entities,
+            //@todo Unhardcode this.
+            'currency' => 'EUR',
+        );
     }
 
     /**
@@ -82,9 +86,22 @@ class InvoicesController extends Controller
      * @Method("POST")
      * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
-        return $this->redirect($this->generateUrl('invoice_edit'));
+        $em = $this->getDoctrine()->getEntityManager();
+        $invoice = new Invoice();
+        $invoice->addItem(new Item());
+
+        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $invoice);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($invoice);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('invoice_edit', array('id' => $invoice->getId())));
+        }
+        return $this->redirect($this->generateUrl('invoice_add'));
     }
 
     /**

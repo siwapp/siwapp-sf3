@@ -44,7 +44,6 @@ class InvoiceType extends AbstractInvoiceType
             'choice_label' => 'name',
             'placeholder' => '-',
         ));
-        $builder->remove('series_id');
     }
 
     public function configureOptions(OptionsResolver $resolver)
