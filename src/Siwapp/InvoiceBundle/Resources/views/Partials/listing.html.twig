@@ -55,7 +55,7 @@
           #}
           <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
         </td>
-        <td class="cell-align-right">{{ entity.status == 3 ? '.' : '-' }}</td>
+        <td class="cell-align-right">{{ entity.dueAmount|localizedcurrency(currency) }}</td>
         <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
         <td class="cell-align-right payments">
           <a href="{{ path('invoice_payments', { 'invoiceId': entity.id }) }}" class="btn secondary icon clock payments" title="Payments" data-invoice-id="{{ entity.id }}">{% trans %}Payments{% endtrans %}</a>
