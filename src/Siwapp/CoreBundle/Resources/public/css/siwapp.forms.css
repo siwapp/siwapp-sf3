@@ -18,3 +18,11 @@ form.search #search-advanced.active .caret {
   border-top: 0;
   border-bottom: 4px solid #000000;
 }
+.form-inline label,
+.form-inline .form-group {
+   margin:2px 5px 2px 0 !important;
+}
+
+.form-actions {
+  margin-top: 20px;
+}

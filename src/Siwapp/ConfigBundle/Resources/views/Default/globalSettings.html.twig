@@ -4,8 +4,8 @@
 {% block body %}
 
    {{ form_start(form, {'action': path('global_settings')}) }}
-        <details open>
-            <summary>{% trans %}Company{% endtrans %}</summary>
+        <fieldset class="col-md-6">
+            <h3>{% trans %}Company{% endtrans %}</h3>
             {{ form_row(form.company_name) }}
             {{ form_row(form.company_address) }}
             {{ form_row(form.company_phone) }}
@@ -14,28 +14,32 @@
             {{ form_row(form.company_url) }}
             {{ form_row(form.company_logo) }}
             {{ form_row(form.currency) }}
-        </details>
-        <details>
-            <summary>{% trans %}Legal texts{% endtrans %}</summary>
+        </fieldset>
+        <fieldset class="col-md-6" open>
+            <h3>{% trans %}Legal texts{% endtrans %}</h3>
             {{ form_row(form.legal_terms) }}
-        </details>
-        <details>
-            <summary>{% trans %}Invoicing taxes{% endtrans %}</summary>
-            {{ form_row(form.taxes) }}
-            <a href="#" class="addTax">Add Tax</a>
-        </details>
-        <details>
-            <summary>{% trans %}Invoicing series{% endtrans %}</summary>
-            {{ form_row(form.series) }}
-            <a href="#" class="addSerie">Add Serie</a>
-        </details>
-        <details>
-            <summary>{% trans %}PDF Settings{% endtrans %}</summary>
+        </fieldset>
+        <fieldset class="col-md-6">
+            <h3>{% trans %}PDF Settings{% endtrans %}</h3>
             {{ form_row(form.pdf_size) }}
             {{ form_row(form.pdf_orientation) }}
-        </details>
+        </fieldset>
+        <fieldset class="col-md-12">
+            <h3>{% trans %}Invoicing taxes{% endtrans %}</h3>
+            <div class="form-inline">
+              {{ form_row(form.taxes) }}
+              <a href="#" class="addTax">Add Tax</a>
+            </div>
+        </fieldset>
+        <fieldset class="col-md-12">
+            <h3>{% trans %}Invoicing series{% endtrans %}</h3>
+            <div class="form-inline">
+              {{ form_row(form.series) }}
+              <a href="#" class="addSerie">Add Serie</a>
+            </div>
+        </fieldset>
         {{ form_widget(form) }}
-        <input type="submit" value="{% trans %}Save{% endtrans %}" />
+        <div class="form-actions col-md-12"><input type="submit" value="{% trans %}Save{% endtrans %}" class="btn btn-default btn-primary"></div>
     {{ form_end(form) }}
 
     <script type="text/javascript">

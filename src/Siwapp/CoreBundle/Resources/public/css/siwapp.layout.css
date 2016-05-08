@@ -9,6 +9,32 @@ li {
 }
 a {
   color: #e34c15;
+  text-decoration: none;
+}
+a:hover,
+a:active,
+a:focus {
+  color: #9d350f;
+  text-decoration: underline;
+}
+.btn-primary {
+  background-color: #e34c15;
+  border-color: #e34c15;
+}
+.btn-primary:active,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.open>.dropdown-toggle.btn-primary.focus,
+.open>.dropdown-toggle.btn-primary:focus,
+.open>.dropdown-toggle.btn-primary:hover {
+  background-color: #9d350f;
+  border-color: #9d350f;
 }
 .float-left {
   float: left;
@@ -26,7 +52,6 @@ a {
   background-image: linear-gradient(top, #fefefe, #f0f0f0);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#f0f0f0', GradientType=0);
-  margin-bottom: 5px;
   background-image: url('/img/px/ddd.png');
   background-repeat: repeat-x;
   background-position: bottom left;
@@ -110,6 +135,7 @@ a {
 }
 #bd {
   padding: 0;
+  margin: 5px 0 20px 0;
 }
 #bd .searchform {
   margin: 0 0 15px;

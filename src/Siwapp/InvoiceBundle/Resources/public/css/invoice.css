@@ -25,12 +25,6 @@
 .invoice-like #invoice-like-title #invoice-like-status li + li {
   margin-left: 9px;
 }
-#invoice-like-properties .form-inline .form-group {
-  margin-bottom: 10px;
-}
-#invoice-like-properties .form-inline label {
-  margin-right: 5px;
-}
 .invoice-like #invoice-like-items {
   margin: 0;
   border-top: 1px solid #999999;
@@ -46,7 +40,7 @@
   border-bottom: 1px solid #999999;
 }
 .invoice-like #invoice-like-add-item {
-  margin: 18px 0 0 18px;
+  margin: 18px 0 0 0;
 }
 .invoice-like #invoice-like-notes {
   margin-top: 36px;
