@@ -1,0 +1,3 @@
+form[name="invoice_payment_list"] table td.payment-remove .checkbox {
+  margin: 0;
+}

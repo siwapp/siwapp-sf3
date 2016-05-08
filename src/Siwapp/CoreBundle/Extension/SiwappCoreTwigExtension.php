@@ -10,14 +10,14 @@ class SiwappCoreTwigExtension extends \Twig_Extension
     {
         return "siwapp_core_twig_extension";
     }
-    
+
     public function getFilters()
     {
         return array(
-            'menu_active_tab' => new \Twig_Filter_Method($this, 'menu_active_tab'),
+            new \Twig_SimpleFilter('menu_active_tab', [$this, 'menu_active_tab']),
         );
     }
-    
+
     /**
      * @param string $routename Name of the route
      * @param string $prefix Prefix to test

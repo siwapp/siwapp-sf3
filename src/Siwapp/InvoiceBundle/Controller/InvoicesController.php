@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\InvoiceBundle\Entity\Item;
+use Siwapp\InvoiceBundle\Entity\Payment;
 use Siwapp\InvoiceBundle\Form\InvoiceType;
 
 /**
@@ -22,7 +23,7 @@ class InvoicesController extends AbstractInvoiceController
      */
     public function sillyAction()
     {
-        $repo = $this->getDoctrine()->getEntityManager()
+        $repo = $this->getDoctrine()->getManager()
             ->getRepository('SiwappInvoiceBundle:Invoice');
         $repo->updateTotals();
         return array();
@@ -33,7 +34,7 @@ class InvoicesController extends AbstractInvoiceController
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('SiwappInvoiceBundle:Invoice')->createQueryBuilder('i');
 
         $form = $this->createForm('Siwapp\InvoiceBundle\Form\SearchInvoiceType', null, [
@@ -99,7 +100,7 @@ class InvoicesController extends AbstractInvoiceController
      */
     public function createAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $invoice = new Invoice();
         $invoice->addItem(new Item());
 
@@ -146,7 +147,7 @@ class InvoicesController extends AbstractInvoiceController
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
 
         if (!$entity) {
@@ -193,10 +194,23 @@ class InvoicesController extends AbstractInvoiceController
     public function paymentsAction($invoiceId)
     {
         // Return all payments
-        $em = $this->getDoctrine()->getEntityManager();
-        $entities = $em->getRepository('SiwappInvoiceBundle:Payment')->findBy(array('invoice' => $invoiceId));
+        $em = $this->getDoctrine()->getManager();
+        $invoice = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($invoiceId);
+        $payments = $em->getRepository('SiwappInvoiceBundle:Payment')->findBy(array('invoice' => $invoiceId));
 
-        return array('entities' => $entities, 'invoiceId' => $invoiceId);
+        $payment = new Payment;
+        $addForm = $this->createForm('Siwapp\InvoiceBundle\Form\PaymentType', $payment, [
+            'action' => $this->generateUrl('invoice_payment_add', ['invoiceId' => $invoiceId]),
+        ]);
+        $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoicePaymentListType', $payments, [
+            'action' => $this->generateUrl('invoice_payments_delete', ['invoiceId' => $invoiceId]),
+        ]);
+
+        return [
+            'invoiceId' => $invoiceId,
+            'add_form' => $addForm->createView(),
+            'list_form' => $listForm->createView(),
+        ];
     }
 
     /**
@@ -204,22 +218,50 @@ class InvoicesController extends AbstractInvoiceController
      * @Method("POST")
      * @Template("SiwappInvoiceBundle:Partials:payments.html.twig")
      */
-    public function addPaymentAction($invoiceId)
+    public function addPaymentAction(Request $request, $invoiceId)
     {
-        // Add payment and return all payments
-        // Set Flash with message...
-        return $this->paymentsAction($invoiceId);
+        $em = $this->getDoctrine()->getManager();
+        $invoice = $this->getDoctrine()
+            ->getRepository('SiwappInvoiceBundle:Invoice')
+            ->find($invoiceId);
+
+        $entity = new Payment;
+        $entity->setDate(new \Datetime('today'));
+        $addForm = $this->createForm('Siwapp\InvoiceBundle\Form\PaymentType', $entity);
+        $addForm->handleRequest($request);
+
+        if ($addForm->isValid() && $invoice) {
+            $invoice->addPayment($entity);
+            $em->persist($invoice);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Payment added.');
+        }
+
+        return $this->redirect($this->generateUrl('invoice_payments', array('invoiceId' => $invoiceId)));
     }
 
     /**
-     * @Route("/payments/{invoiceId}/delete", name="invoice_payment_delete")
+     * @Route("/payments/{invoiceId}/delete", name="invoice_payments_delete")
      * @Method("POST")
-     * @Template("SiwappInvoiceBundle:Partials:payments_form.html.twig")
      */
-    public function deletePayment($invoiceId)
+    public function deletePayments(Request $request, $invoiceId)
     {
-        // Delete payments and return payments
-        // Set Flash with message...
-        return array('invoiceId' => $invoiceId);
+        $em = $this->getDoctrine()->getManager();
+        $invoice = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($invoiceId);
+        $payments = $em->getRepository('SiwappInvoiceBundle:Payment')->findBy(array('invoice' => $invoiceId));
+
+        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoicePaymentListType', $payments);
+        $form->handleRequest($request);
+        if ($form->isValid() && $invoice) {
+            $data = $form->getData();
+            foreach ($data['payments'] as $payment) {
+                $invoice->removePayment($payment);
+                $em->persist($invoice);
+                $em->flush();
+            }
+            $this->get('session')->getFlashBag()->add('success', 'Payment(s) deleted.');
+        }
+
+        return $this->redirect($this->generateUrl('invoice_payments', array('invoiceId' => $invoiceId)));
     }
 }

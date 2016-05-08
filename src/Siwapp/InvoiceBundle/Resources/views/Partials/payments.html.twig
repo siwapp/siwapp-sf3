@@ -1,59 +1,66 @@
-{# TODO: Set widths in CSS!!! (search style attributes) #}
+{% extends "SiwappCoreBundle::base.html.twig" %}
 
-<div class="popover left payments-popover" data-invoice-id="{{ invoiceId }}">
-  <div class="arrow"></div>
-  <div class="inner" style="width:auto !important;">
-    <h3 class="title">{% trans %}Payments{% endtrans %}</h3>
-    <div class="content">
-	  <form action="{{ path('invoice_payment_add', { 'invoiceId': invoiceId }) }}" method="post">
-	    <table class="condensed-table">
-	      <thead>
-	        <tr>
-	          <th>
-	            <input type="checkbox" name="all" />
-	          </th>
-	          <th class="date">
-	            {% trans %}Date{% endtrans %}
-	          </th>
-	          <th>
-	            {% trans %}Description{% endtrans %}
-	          </th>
-	          <th class="currency">
-	            {% trans %}Amount{% endtrans %}
-	          </th>
-	        </tr>
-	      </thead>
-	      <tbody>
-	  	  {% for entity in entities %}
-	        <tr>
-	         	<td>
-	            <input type="checkbox" name="id[]" value="{{ entity.id }}" />
-	          </td>
-	          <td class="date">{{ entity.date|date("Y/m/d") }}</td>
-	          <td>{{ entity.notes }}</td>
-	          <td class="currency">{{ entity.amount }}</td>
-	        </tr>
-	  	  {% endfor %}
-	        <tr>
-	          <td></td>
-	          <td class="date">
-	            <input type="text" placeholder="Date" name="date" />
-	          </td>
-	          <td>
-	            <input type="text" placeholder="Description" name="description" />
-	          </td>
-	          <td class="currency">
-	            <input type="text" placeholder="Amount" name="amount" />
-	          </td>
-	        </tr>
-	      </tbody>
-	    </table>
-	    <div class="buttons">
-	      <a href="{{ path('invoice_payment_delete', { 'invoiceId': 1 }) }}" class="btn danger icon alternative trash float-left">{% trans %}Remove selected{% endtrans %}</a>
-	      <button type="submit" class="btn success icon alternative add">{% trans %}Add Payment{% endtrans %}</button>
-	      <button type="button" class="btn secondary">{% trans %}OK{% endtrans %}</button>
-	    </div>
-	  </form>
-    </div>
+{% block searchform %}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% stylesheets
+    'bundles/siwappinvoice/css/payments.css'
+    filter='cssrewrite'
+    filter='?yui_css'
+  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+<h3 class="title">{% trans %}Payments{% endtrans %}</h3>
+
+<div class="content">
+  {{ form_start(list_form) }}
+  <table class="table condensed-table">
+    <thead>
+      <tr>
+        <th class="col-md-1">
+          <input type="checkbox" name="all" />
+        </th>
+        <th class="col-md-2 date">
+          {% trans %}Date{% endtrans %}
+        </th>
+        <th class="col-md-7">
+          {% trans %}Description{% endtrans %}
+        </th>
+        <th class="col-md-2 currency">
+          {% trans %}Amount{% endtrans %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for payment in list_form.payments %}
+      <tr>
+        <td class="payment-remove">
+          {{ form_label(payment, {'attr': {'class': 'sr-only' }}) }}
+          {{ form_widget(payment) }}
+        </td>
+        <td class="date">{{ list_form.vars.value[payment.vars.name].date|localizeddate('medium', 'none') }}</td>
+        <td>{{ list_form.vars.value[payment.vars.name].notes }}</td>
+        <td class="currency">{{ list_form.vars.value[payment.vars.name].amount }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="form-actions buttons">
+    <button type="submit" class="btn btn-default btn-danger float-left" name="remove"><span class="glyphicon glyphicon-trash"></span> {% trans %}Remove selected{% endtrans %}</button>
+    <a href="#payment-add-form" class="btn btn-default btn-info" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span> {% trans %}Add Payment{% endtrans %}</a>
   </div>
+  {{ form_end(list_form)}}
+
+  {{ form_start(add_form, {'attr': {'id': 'payment-add-form', 'class': 'collapse form-inline' }}) }}
+    {{ form_row(add_form.date) }}
+    {{ form_row(add_form.amount) }}
+    {{ form_row(add_form.notes) }}
+    <button type="submit" class="btn btn-default btn-primary success" name="add">{% trans %}Save{% endtrans %}</button>
+  {{ form_end(add_form)}}
 </div>
+{% endblock %}

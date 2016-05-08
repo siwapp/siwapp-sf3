@@ -244,11 +244,29 @@ class Invoice extends AbstractInvoice
     /**
      * Add payments
      *
-     * @param Siwapp\InvoiceBundle\Entity\Payment $payments
+     * @param Siwapp\InvoiceBundle\Entity\Payment $payment
      */
-    public function addPayment(\Siwapp\InvoiceBundle\Entity\Payment $payments)
+    public function addPayment(\Siwapp\InvoiceBundle\Entity\Payment $payment)
     {
-        $this->payments[] = $payments;
+        $this->payments[] = $payment;
+        $payment->setInvoice($this);
+    }
+
+    /**
+     * Removes a payment.
+     *
+     * @param Siwapp\InvoiceBundle\Entity\Payment $payment
+     */
+    public function removePayment(\Siwapp\InvoiceBundle\Entity\Payment $payment)
+    {
+        foreach($this->getPayments() as $key => $value)
+        {
+            if ($value === $payment)
+            {
+                unset($this->payments[$key]);
+                break;
+            }
+        }
     }
 
     /**
