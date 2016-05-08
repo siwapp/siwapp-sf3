@@ -2,7 +2,6 @@
 
 namespace Siwapp\InvoiceBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -15,7 +14,7 @@ use Siwapp\InvoiceBundle\Form\InvoiceType;
 /**
  * @Route("/invoices")
  */
-class InvoicesController extends Controller
+class InvoicesController extends AbstractInvoiceController
 {
     /**
      * @Route("/silly", name="silly_index")
@@ -44,36 +43,7 @@ class InvoicesController extends Controller
         $form->handleRequest($request);
         if ($form->isValid())
         {
-            foreach (array_filter($form->getData()) as $field => $value) {
-                if ($field == 'terms') {
-                    $qb->join('i.serie', 's', 'WITH', 'i.serie = s.id');
-                    $terms = $qb->expr()->literal("%$value%");
-                    $qb->andWhere($qb->expr()->orX(
-                        $qb->expr()->like('i.number', $terms),
-                        $qb->expr()->like('s.name', $terms),
-                        $qb->expr()->like("CONCAT(s.name, ' ', i.number)", $terms)
-                    ));
-                }
-                elseif ($field == 'date_from') {
-                    $qb->andWhere('i.issue_date >= :date_from');
-                    $qb->setParameter('date_from', $value);
-                }
-                elseif ($field == 'date_to') {
-                    $qb->andWhere('i.issue_date <= :date_to');
-                    $qb->setParameter('date_to', $value);
-                }
-                elseif ($field == 'customer') {
-                    $customer = $qb->expr()->literal("%$value%");
-                    $qb->andWhere($qb->expr()->orX(
-                        $qb->expr()->like('i.customer_name', $customer),
-                        $qb->expr()->like('i.customer_identification', $customer)
-                    ));
-                }
-                elseif ($field == 'serie') {
-                    $qb->andWhere('i.serie = :series');
-                    $qb->setParameter('series', $value);
-                }
-            }
+            $this->applySearchFilters($qb, $form->getData());
         }
 
         $entities = $qb->getQuery()->getResult();

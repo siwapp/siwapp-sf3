@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block searchform %}
-  {% include "SiwappInvoiceBundle:Partials:search.html.twig" %}
+  {% include "SiwappInvoiceBundle:Partials:search.html.twig" with {'form': search_form} %}
 {% endblock %}
 
 {% block body %}
@@ -38,15 +38,15 @@
       <tbody>
         <tr class="receipts">
           <th>{% trans %}Receipts{% endtrans %}</th>
-          <td>$491,969.17</td>
+          <td>{{ totals.paid|localizedcurrency(currency) }}</td>
         </tr>
         <tr class="due">
           <th>{% trans %}Due{% endtrans %}</th>
-          <td>$4,233.54</td>
+          <td>{{ totals.due|localizedcurrency(currency) }}</td>
         </tr>
         <tr class="overdue">
           <th>{% trans %}Overdue{% endtrans %}</th>
-          <td>$4,233.54</td>
+          <td>{{ totals.overdue|localizedcurrency(currency) }}</td>
         </tr>
       </tbody>
     </table>
@@ -60,15 +60,15 @@
       <tbody>
         <tr class="total">
           <th>{% trans %}Total{% endtrans %}</th>
-          <td>$598,390.67</td>
+          <td>{{ totals.gross|localizedcurrency(currency) }}</td>
         </tr>
         <tr class="net">
           <th>{% trans %}Net{% endtrans %}</th>
-          <td>$500,000.00</td>
+          <td>{{ totals.net|localizedcurrency(currency) }}</td>
         </tr>
         <tr class="taxes">
           <th>{% trans %}Taxes{% endtrans %}</th>
-          <td>$98,390.67</td>
+          <td>{{ totals.tax|localizedcurrency(currency) }}</td>
         </tr>
       </tbody>
     </table>
@@ -80,15 +80,12 @@
         </tr>
       </thead>
       <tbody>
-        {# TODO: Iterate over taxes and totals and show here #}
+        {% for tax in taxes %}
         <tr>
-          <th>IVA 18%</th>
-          <td>$98,390.67</td>
+          <th>{{ tax.name }}</th>
+          <td>{{ totals.taxes[tax.id]|localizedcurrency(currency) }}</td>
         </tr>
-        <tr>
-          <th>IVA 8%</th>
-          <td>$0.00</td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
 
@@ -102,8 +99,7 @@
 
   <div class="dashboard-listing">
     <h2>{% trans %}Past due invoices{% endtrans %}</h2>
-    {% set table_rows = overdue_invoices %}
-    {% include "SiwappInvoiceBundle:Partials:listing.html.twig" %}
+    {% include "SiwappInvoiceBundle:Partials:listing.html.twig" with {'entities': overdue_invoices} %}
   </div>
 
 {% endblock %}

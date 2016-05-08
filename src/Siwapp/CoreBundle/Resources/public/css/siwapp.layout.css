@@ -174,3 +174,8 @@ body.with-toolbar #toolbar a {
 body.with-toolbar #toolbar li + li {
   margin-top: 8px;
 }
+
+.popover {
+  max-width: 100%;
+  padding: 5px;
+}

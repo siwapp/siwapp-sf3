@@ -1,8 +1,8 @@
-{% set is_expanded = form.vars.value.customer or form.vars.value.serie %}
+{% set is_expanded = form.vars.value and (form.vars.value.customer is not null or form.vars.value.serie is not null or form.vars.value.status is not null) %}
 
 {{ form_start(form, {'attr': {'class': 'search form-inline'}}) }}
 
-  <fieldset class="row">
+  <fieldset>
 
     {{ form_row(form.terms) }}
     {{ form_row(form.date_from) }}
@@ -23,7 +23,8 @@
 
   </fieldset>
 
-  <fieldset id="search-secondary" class="row"{% if not is_expanded %} style="display:none;"{% endif %}>
+  <fieldset id="search-secondary"{% if not is_expanded %} style="display:none;"{% endif %}>
+      {{ form_row(form.status) }}
       {{ form_row(form.customer) }}
       {{ form_row(form.serie) }}
   </fieldset>

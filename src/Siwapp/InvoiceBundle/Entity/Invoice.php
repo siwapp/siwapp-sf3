@@ -86,8 +86,6 @@ class Invoice extends AbstractInvoice
     private $due_date;
 
     /**
-     * Get draft
-     *
      * @return boolean
      */
     public function isClosed()
@@ -96,8 +94,6 @@ class Invoice extends AbstractInvoice
     }
 
     /**
-     * Get draft
-     *
      * @return boolean
      */
     public function isOpen()
@@ -106,8 +102,14 @@ class Invoice extends AbstractInvoice
     }
 
     /**
-     * Get draft
-     *
+     * @return boolean
+     */
+    public function isOverdue()
+    {
+        return $this->status === Invoice::OVERDUE;
+    }
+
+    /**
      * @return boolean
      */
     public function isDraft()
