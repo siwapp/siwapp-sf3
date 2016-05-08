@@ -1,8 +1,16 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 
-
-{% form_theme form _self %}
 {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% stylesheets
+    'bundles/siwappinvoice/css/invoice.css'
+    filter='cssrewrite'
+  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+{% endblock %}
 
 {% block field_widget %}
 {% spaceless %}
@@ -26,7 +34,7 @@
 {% spaceless %}
   {% if errors|length > 0 %}
   <div class="row">
-    <div id="invoice-like-form-errors" class="span12">
+    <div id="invoice-like-form-errors" class="col-md-12">
       <ul class="error_list">
         {% for error in errors %}
           <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
@@ -46,7 +54,7 @@
 
     <header id="invoice-like-title">
       <h2>Invoice #{{ entity.id }}</h2>
-      <ul id="invoice-like-status" class="unstyled">
+      <ul id="invoice-like-status" class="list-unstyled">
         <li>
           <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
         </li>
@@ -65,95 +73,68 @@
       {{ form_errors(form) }}
 
       <div class="row">
-        <div id="invoice-like-customer-data" class="span8">
+        <div id="invoice-like-customer-data" class="col-md-8">
 
           <h3>{% trans %}Customer Data{% endtrans %}</h3>
 
           <div class="row">
-            <div class="span3 clearfix">
-              {{ form_label(form.customer_name) }}
-              {{ form_widget(form.customer_name, {'attr': {'class': 'span3'}}) }}
-              {{ form_errors(form.customer_name) }}
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.customer_name) }}
             </div>
-            <div class="span2 clearfix">
-              {{ form_label(form.customer_identification) }}
-              {{ form_widget(form.customer_identification, {'attr': {'class': 'span2'}}) }}
-              {{ form_errors(form.customer_identification) }}
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.customer_identification) }}
             </div>
-            <div class="span3 clearfix">
-              {{ form_label(form.contact_person) }}
-              {{ form_widget(form.contact_person, {'attr': {'class': 'span3'}}) }}
-              {{ form_errors(form.contact_person) }}
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.contact_person) }}
             </div>
 
-            <div class="span8 clearfix">
-              {{ form_label(form.customer_email) }}
-              <div class="input-prepend">
-                <span class="add-on"><i class="icon-envelope"></i></span>
-                {{ form_widget(form.customer_email, {'attr': {'class': 'span3'}}) }}
+            <div class="col-md-6 clearfix">
+              <div class="form-group">
+                {{ form_label(form.customer_email) }}
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                  {{ form_widget(form.customer_email) }}
+                </div>
+                {{ form_errors(form.customer_email) }}
               </div>
-              {{ form_errors(form.customer_email) }}
             </div>
 
-            <div class="span4 clearfix">
-              {{ form_label(form.invoicing_address) }}
-              {{ form_widget(form.invoicing_address, {'attr': {'class': 'span4 address'}}) }}
-              {{ form_errors(form.invoicing_address) }}
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.invoicing_address) }}
             </div>
-            <div class="span4 clearfix">
-              {{ form_label(form.shipping_address) }}
-              {{ form_widget(form.shipping_address, {'attr': {'class': 'span4 address'}}) }}
-              {{ form_errors(form.shipping_address) }}
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.shipping_address) }}
             </div>
           </div><!-- inner row -->
         </div><!-- span10 -->
 
-        <div id="invoice-like-properties" class="span4" style="background:pink;">
+        <div id="invoice-like-properties" class="col-md-4"><div class="panel panel-default">
+          <h3 class="panel-heading">{% trans %}Invoice Properties{% endtrans %}</h3>
 
-          <h3>{% trans %}Invoice Properties{% endtrans %}</h3>
-
-          <div class="form-inline">
-
-            <div class="clearfix">
-              {{ form_label(form.serie) }}
-              {{ form_widget(form.serie, {'attr': {'class': 'span2'}}) }}
-              {{ form_errors(form.serie) }}
-            </div>
-            <div class="clearfix">
-              {{ form_label(form.number) }}
-              {{ form_widget(form.number, {'attr': {'class': 'span2'}}) }}
-              {{ form_errors(form.number) }}
-            </div>
-            <div class="clearfix">
-              {{ form_label(form.issue_date) }}
-              {{ form_widget(form.issue_date, {'attr': {'class': 'span2'}}) }}
-              {{ form_errors(form.issue_date) }}
-            </div>
-            <div class="clearfix">
-              {{ form_label(form.due_date) }}
-              {{ form_widget(form.due_date, {'attr': {'class': 'span2'}}) }}
-              {{ form_errors(form.due_date) }}
-            </div>
-
+          <div class="panel-body form-inline">
+            {{ form_row(form.serie) }}
+            {{ form_row(form.number) }}
+            {{ form_row(form.issue_date) }}
+            {{ form_row(form.due_date) }}
           </div><!-- form inline -->
-        </div><!-- span5 -->
+        </div></div><!-- span5 -->
       </div>
 
       <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
 
           <h3>{% trans %}Invoice items{% endtrans %}</h3>
 
           <table id="invoice-like-items" class="table table-condensed table-striped align-middle">
             <thead>
               <tr>
-                <th class="cell-size-tiny-small"></th>
-                <th class="cell-size-x2large">{% trans %}Concept{% endtrans %}</th>
-                <th class="cell-size-small cell-align-center">{% trans %}Qty/Hours{% endtrans %}</th>
-                <th class="cell-size-small-medium cell-align-center">{% trans %}Price{% endtrans %}</th>
-                <th class="cell-size-small-medium cell-align-center">{% trans %}Discount{% endtrans %}</th>
+                <th></th>
+                <th class="">{% trans %}Concept{% endtrans %}</th>
+                <th class="col-md-1 cell-align-center">{% trans %}Qty/Hours{% endtrans %}</th>
+                <th class="col-md-2 cell-align-center">{% trans %}Price{% endtrans %}</th>
+                <th class="col-md-1 cell-align-center">{% trans %}Discount{% endtrans %}</th>
                 <th class="cell-align-left">{% trans %}Taxes{% endtrans %}</th>
-                <th colspan="2" class="cell-size-small-medium cell-align-right">{% trans %}Line Total{% endtrans %}</th>
+                <th colspan="2" class="cell-align-right">{% trans %}Line Total{% endtrans %}</th>
               </tr>
             </thead>
             <tbody data-prototype="{{ include('SiwappInvoiceBundle:Partials:items.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
@@ -168,9 +149,9 @@
       </div>
 
       <div class="row totals">
-        <div class="span6">
+        <div class="col-md-6">
 
-          <a id="invoice-like-add-item" href="#" class="btn btn-info"><i class="icon-plus icon-white"></i> Add Item</a>
+          <a id="invoice-like-add-item" href="#" class="btn btn-default btn-info"><span class="glyphicon glyphicon-plus glyphicon-white"></span> Add Item</a>
           <script type="text/javascript">
               $('#invoice-like-add-item').live('click', function(event){
                   event.preventDefault();
@@ -183,7 +164,7 @@
           {# TODO: Action buttons: add items. PROTOTYPE MUST BE CUSTOMIZED. #}
 
         </div>
-        <div class="span4 offset2">
+        <div class="col-md-4 col-md-offset-2">
           <table id="invoice-like-totals" class="table table-condensed table-striped">
             <tbody>
               <tr>
@@ -204,22 +185,18 @@
       </div>
 
       <div id="invoice-like-notes" class="row">
-        <div class="span6">
-          {{ form_label(form.terms) }}
-          {{ form_widget(form.terms, {'attr': {'class': 'span6 terms'}}) }}
-          {{ form_errors(form.terms) }}
+        <div class="col-md-6">
+          {{ form_row(form.terms) }}
         </div>
-        <div class="span6">
-          {{ form_label(form.notes) }}
-          {{ form_widget(form.notes, {'attr': {'class': 'span6 terms'}}) }}
-          {{ form_errors(form.notes) }}
+        <div class="col-md-6">
+          {{ form_row(form.notes) }}
         </div>
       </div>
 
       {{ form_rest(form) }}
 
       <div>
-        <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+        <button type="submit" class="btn btn-default btn-primary">{% trans %}Save{% endtrans %}</button>
       </div>
     {{ form_end(form) }}
 

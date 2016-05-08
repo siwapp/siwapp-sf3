@@ -4,25 +4,25 @@
 {% block toolbar %}
   <ul id="toolbar">
     <li>
-      <a href="#" title="{% trans %}Remove selected{% endtrans %}"><i class="icon-trash"></i></a>
+      <a href="#" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></a>
     </li>
     <li>
-      <a href="#" title="{% trans %}Print selected{% endtrans %}"><i class="icon-print"></i></a>
+      <a href="#" title="{% trans %}Print selected{% endtrans %}"><span class="glyphicon glyphicon-print"></span></a>
     </li>
     <li>
-      <a href="#" title="{% trans %}Download as PDF{% endtrans %}"><i class="icon-download-alt"></i></a>
+      <a href="#" title="{% trans %}Download as PDF{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></a>
     </li>
     <li>
-      <a href="#" title="{% trans %}Email selected{% endtrans %}"><i class="icon-envelope"></i></a>
+      <a href="#" title="{% trans %}Email selected{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></a>
     </li>
   </ul>
 {% endblock %}
 
+
 {% block javascripts %}
   {{ parent() }}
   {% javascripts
-    'bundles/siwappcore/js/bundle/invoice-payments.js'
-    output='bundles/siwappcore/js/invoice-list.js'
+    'bundles/siwappinvoice/js/invoice-payments.js'
     filter='?yui_js'
   %}
   <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>

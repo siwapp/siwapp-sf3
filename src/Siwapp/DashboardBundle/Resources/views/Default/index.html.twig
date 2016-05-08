@@ -1,13 +1,23 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet/less" href="{{ asset('bundles/siwappcore/css/bundle/dashboard.less') }}" type="text/css" media="screen" title="Dashboard Styles" charset="utf-8" />
+  {{ parent() }}
+  {% stylesheets
+    'bundles/siwappdashboard/css/dashboard.css'
+    filter='cssrewrite'
+  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
 {% endblock %}
 
 {% block javascripts %}
   {{ parent() }}
-  <script type="text/javascript" charset="utf-8" src="{{ asset('bundles/siwappcore/js/invoice-list.js') }}"></script>
+  {% javascripts
+    'bundles/siwappinvoice/js/invoice-payments.js'
+    filter='?yui_js'
+  %}
+  <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
 {% endblock %}
 
 {% block searchform %}

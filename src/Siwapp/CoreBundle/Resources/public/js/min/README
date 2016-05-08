@@ -1,3 +1,0 @@
-This directory is for minified files:
-
-siwapp user$ ./app/console assetic:dump --env=prod --no-debug

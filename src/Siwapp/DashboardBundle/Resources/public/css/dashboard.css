@@ -1,0 +1,29 @@
+#bd #dashboard-summary {
+  overflow: hidden;
+}
+#bd #dashboard-summary table {
+  width: auto;
+  font-size: 15.6px !important;
+  float: left;
+  margin: 0;
+  background-color: #ffffff;
+}
+#bd #dashboard-summary table th[colspan] {
+  border-top-width: 0;
+}
+#bd #dashboard-summary table td {
+  text-align: right;
+}
+#bd #dashboard-summary table .overdue th,
+#bd #dashboard-summary table .overdue td {
+  color: #bc432a;
+}
+#bd #dashboard-summary table + table {
+  margin-left: 10px;
+}
+#bd .dashboard-listing {
+  margin: 26px 0 0;
+}
+#bd .dashboard-listing h2 {
+  margin: 0 0 13px;
+}

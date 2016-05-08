@@ -4,17 +4,22 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>{% block title %}Welcome!{% endblock %}</title>
 
-  <link rel="stylesheet/less" href="{{ asset('bundles/siwappcore/css/siwapp.less') }}" type="text/css" media="screen" title="Siwapp Styles" charset="utf-8" />
-  {% block stylesheets %}{% endblock %}
-
-  <script type="text/javascript" charset="utf-8">
-    less = { env: 'development' };
-  </script>
+  {% block stylesheets %}
+  {% stylesheets
+    'bundles/siwappcore/vendor/bootstrap/css/bootstrap.min.css'
+    'bundles/siwappcore/css/siwapp.layout.css'
+    'bundles/siwappcore/css/siwapp.tables.css'
+    'bundles/siwappcore/css/siwapp.forms.css'
+    'bundles/siwappcore/css/siwapp.patterns.css'
+    filter='cssrewrite'
+  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+  {% endblock %}
 
   {% javascripts
-    'bundles/siwappcore/js/jquery-1.7.1.min.js'
-    'bundles/siwappcore/js/modernizr.custom.js'
-    'bundles/siwappcore/js/less-1.2.2.min.js'
+    'bundles/siwappcore/vendor/jquery-2.2.3.min.js'
+    'bundles/siwappcore/vendor/modernizr-custom.js'
     output='js/core.js'
     filter='?yui_js'
   %}
@@ -36,11 +41,11 @@
     </h1>
 
     <nav class="user">
-      <ul class="unstyled">
+      <ul class="list-unstyled">
         <li>{% trans with {'%username%': 'test' } %}Wellcome, %username%!{% endtrans %}</li>
         <li>
           <a href="{{ path('global_settings') }}" data-shortcut="alt+g, s">
-            <i class="icon-cog"></i>
+            <span class="glyphicon glyphicon-cog"></span>
             {% trans %}Settings{% endtrans %}
           </a>
         </li>
@@ -53,11 +58,11 @@
     <nav class="main">
 
       <div id="create-button" class="btn-group">
-        <a href="{{ path('invoice_add') }}" class="btn btn-primary">
-          <i class="icon-plus icon-white"></i>
+        <a href="{{ path('invoice_add') }}" class="btn btn-default btn-primary">
+          <span class="glyphicon glyphicon-plus glyphicon glyphicon-white"></span>
           {% trans %}New Invoice{% endtrans %}
         </a>
-        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+        <a class="btn btn-default btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
@@ -119,33 +124,17 @@
   </footer>
 
   {% javascripts
-    'bundles/siwappcore/js/bootstrap/bootstrap-transition.js'
-    'bundles/siwappcore/js/bootstrap/bootstrap-tooltip.js'
-    'bundles/siwappcore/js/bootstrap/bootstrap-*.js'
-    'bundles/siwappcore/js/kendoui/kendo.core.min.js'
-    'bundles/siwappcore/js/kendoui/kendo.data.min.js'
-    'bundles/siwappcore/js/kendoui/kendo.fx.min.js'
-    'bundles/siwappcore/js/kendoui/kendo.popup.min.js'
-    'bundles/siwappcore/js/kendoui/kendo.list.min.js'
-    'bundles/siwappcore/js/kendoui/kendo.draganddrop.min.js'
-    'bundles/siwappcore/js/kendoui/kendo.calendar.min.js'
-    'bundles/siwappcore/js/kendoui/kendo.*.min.js'
-    'bundles/siwappcore/js/jwerty.js'
-    'bundles/siwappcore/js/jquery.placeholder.min.js'
-    'bundles/siwappcore/js/bundle/global.js'
-    'bundles/siwappcore/js/bundle/search-common.js'
+    'bundles/siwappcore/vendor/bootstrap/js/bootstrap.min.js'
+    'bundles/siwappcore/vendor/jwerty.js'
+    'bundles/siwappcore/vendor/jquery.placeholder.min.js'
+    'bundles/siwappcore/js/global.js'
+    'bundles/siwappcore/js/search-common.js'
     output='js/frameworks.js'
     filter='?yui_js'
   %}
   <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
   {% endjavascripts %}
 
-  {# TODO: Change culture for user. See /web/js/kendoui/cultures #}
-  <script type="text/javascript" charset="utf-8" src="{{ asset('bundles/siwappcore/js/kendoui/cultures/kendo.culture.en-US.js') }}"></script>
-
   {% block javascripts %}{% endblock %}
-
-  {% block toolbar %}{% endblock %}
-
 </body>
 </html>

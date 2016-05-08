@@ -1,0 +1,150 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  min-width: 960px;
+}
+li {
+  color: #333333;
+}
+a {
+  color: #e34c15;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+#hd {
+  background-color: #f8f8f8;
+  background-image: -moz-linear-gradient(top, #fefefe, #f0f0f0);
+  background-image: -ms-linear-gradient(top, #fefefe, #f0f0f0);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fefefe), to(#f0f0f0));
+  background-image: -webkit-linear-gradient(top, #fefefe, #f0f0f0);
+  background-image: -o-linear-gradient(top, #fefefe, #f0f0f0);
+  background-image: linear-gradient(top, #fefefe, #f0f0f0);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#f0f0f0', GradientType=0);
+  margin-bottom: 5px;
+  background-image: url('/img/px/ddd.png');
+  background-repeat: repeat-x;
+  background-position: bottom left;
+}
+#hd h1 {
+  float: left;
+  margin: 10px 10px 10px 0;
+  line-height: 19px;
+  height: 19px;
+}
+#hd h1 a {
+  text-decoration: none;
+}
+#hd h1 a .version {
+  font-size: 11px;
+  font-weight: normal;
+  color: #333333;
+  position: relative;
+  top: -8px;
+}
+#hd h1 a:hover .version {
+  text-decoration: underline;
+}
+#hd nav {
+  *zoom: 1;
+}
+#hd nav:before,
+#hd nav:after {
+  display: table;
+  content: "";
+}
+#hd nav:after {
+  clear: both;
+}
+#hd nav.user {
+  float: right;
+  font-size: 12px;
+  margin: 10px 0;
+}
+#hd nav.user li {
+  float: left;
+}
+#hd nav.user li + li {
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+  border-left: 1px solid #333333;
+}
+#hd nav.main {
+  clear: both;
+  position: relative;
+  padding-top: 8px;
+}
+#hd nav.main #create-button {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+}
+#hd nav.main #create-button .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+#hd nav.main .nav-tabs {
+  padding-left: 0;
+  padding-right: 150px;
+  margin-bottom: 0;
+}
+#hd nav.main .nav-tabs > li {
+  font-size: 15.6px;
+  font-weight: bold;
+}
+#hd nav.main .nav-tabs > li > a:hover {
+  color: #e34c15;
+  background-color: #fafafa;
+  border-color: #ddd;
+}
+#hd nav.main .nav-tabs > li.active > a {
+  color: #333333;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+#bd {
+  padding: 0;
+}
+#bd .searchform {
+  margin: 0 0 15px;
+  padding: 10px;
+  border-bottom: 1px solid #eeeeee;
+  -webkit-box-shadow: 0 4px 3px -2px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 4px 3px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 3px -2px rgba(0, 0, 0, 0.1);
+}
+#bd h2 {
+  margin: 0.5em 0 0.25em;
+}
+body.with-toolbar #toolbar {
+  position: fixed;
+  top: 250px;
+  right: 0px;
+  width: 16px;
+  min-height: 16px;
+  padding: 10px;
+  background-color: #fafafa;
+  border: 1px solid #eeeeee;
+  border-right-width: 0;
+  list-style: none;
+  margin: 0;
+}
+body.with-toolbar #toolbar li,
+body.with-toolbar #toolbar a {
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+}
+body.with-toolbar #toolbar li + li {
+  margin-top: 8px;
+}

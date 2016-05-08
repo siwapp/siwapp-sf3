@@ -1,0 +1,193 @@
+.label {
+  padding: 1px 5px 2px;
+  font-size: 11.049999999999999px;
+  color: #a098a0;
+  border: 1px solid #dcdcdc;
+  background-color: #eeeeee;
+}
+.label.important,
+.label.overdue {
+  color: #ffffff;
+  background-color: #bc432a;
+  border-color: #aa2b13;
+}
+.label.warning,
+.label.pending {
+  color: #987e42;
+  background-color: #f6df69;
+  border-color: #d3b549;
+}
+.label.success,
+.label.paid {
+  color: #ffffff;
+  background-color: #90c754;
+  border-color: #50a200;
+}
+.label.notice {
+  color: #ffffff;
+  background-color: #62cffc;
+  border-color: #049cdb;
+}
+.label.tax {
+  font-size: 10.4px;
+  color: #cc0000;
+  background-color: #ffffff;
+  border-color: #cc0000;
+}
+.label.tax a {
+  text-decoration: none;
+  font-size: 8px;
+  line-height: 8px;
+  margin: 0 5px 0 0;
+  position: relative;
+  top: -1px;
+  display: inline-block;
+}
+form .buttons {
+  overflow: hidden;
+  text-align: right;
+}
+.payments-popover form {
+  margin: 0;
+}
+.payments-popover table .description {
+  width: 300px;
+}
+.payments-popover input[name="date"] {
+  width: 90px;
+}
+.payments-popover input[name="amount"] {
+  width: 90px;
+}
+.payments-popover input[name="description"] {
+  width: 268px;
+}
+.button {
+  background: #00a6fc;
+  display: inline-block;
+  text-align: center;
+  padding: 9px 34px 11px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  line-height: 1;
+  font-family: "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  position: relative;
+  cursor: pointer;
+  border: none;
+}
+.button.nice {
+  background: #00a6fc url(/img/button-gloss.png) repeat-x 0 -34px;
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.28);
+  background: #00a6fc url(/img/button-gloss.png) repeat-x 0 -34px, -moz-linear-gradient(top, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+  background: #00a6fc url(/img/button-gloss.png) repeat-x 0 -34px, -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 0.4)), color-stop(100%, transparent));
+  border: 1px solid #0593dc;
+  -webkit-transition: background-color 0.15s ease-in-out;
+  -moz-transition: background-color 0.15s ease-in-out;
+  -o-transition: background-color 0.15s ease-in-out;
+}
+.button.radius {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.button.round {
+  -moz-border-radius: 1000px;
+  -webkit-border-radius: 1000px;
+  border-radius: 1000px;
+}
+.button.full-width {
+  width: 100%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: center;
+}
+.button.left-align {
+  text-align: left;
+  text-indent: 12px;
+}
+/* Don't use native buttons on iOS */
+input[type=submit].button {
+  -webkit-appearance: none;
+}
+/* Sizes ---------- */
+.small.button {
+  font-size: 11px;
+  padding: 8px 20px 10px;
+  width: auto;
+}
+.medium.button {
+  font-size: 13px;
+  width: auto;
+}
+.large.button {
+  font-size: 18px;
+  padding: 11px 48px 13px;
+  width: auto;
+}
+/* Nice Sizes ---------- */
+.nice.small.button {
+  background-position: 0 -36px;
+}
+.nice.large.button {
+  background-position: 0 -30px;
+}
+/* Colors ---------- */
+.blue.button {
+  background-color: #00a6fc;
+}
+.red.button {
+  background-color: #e91c21;
+}
+.white.button {
+  background-color: #e9e9e9;
+  color: #333;
+}
+.black.button {
+  background-color: #141414;
+}
+/* Nice Colors ---------- */
+.nice.blue.button {
+  border: 1px solid #0593dc;
+}
+.nice.red.button {
+  border: 1px solid #b90b0b;
+}
+.nice.white.button {
+  border: 1px solid #cacaca;
+  text-shadow: none !important;
+}
+.nice.black.button {
+  border: 1px solid #000;
+}
+/* Hovers ---------- */
+.button:hover,
+.button:focus {
+  background-color: #0192dd;
+  color: #fff;
+}
+.blue.button:hover,
+.blue.button:focus {
+  background-color: #0192dd;
+}
+.red.button:hover,
+.red.button:focus {
+  background-color: #d01217;
+}
+.white.button:hover,
+.white.button:focus {
+  background-color: #dadada;
+  color: #333;
+}
+.black.button:hover,
+.black.button:focus {
+  background-color: #000;
+}
+/* Disabled ---------- */
+.button.disabled,
+.button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}

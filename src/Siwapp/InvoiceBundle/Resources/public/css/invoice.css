@@ -1,0 +1,54 @@
+.invoice-like h3 {
+  margin: 18px 0 9px;
+}
+.invoice-like h3.panel-heading {
+  margin: 0;
+}
+.invoice-like label {
+  font-weight: bold;
+  white-space: nowrap;
+}
+.invoice-like #invoice-like-title #invoice-like-status {
+  *zoom: 1;
+}
+.invoice-like #invoice-like-title #invoice-like-status:before,
+.invoice-like #invoice-like-title #invoice-like-status:after {
+  display: table;
+  content: "";
+}
+.invoice-like #invoice-like-title #invoice-like-status:after {
+  clear: both;
+}
+.invoice-like #invoice-like-title #invoice-like-status li {
+  float: left;
+}
+.invoice-like #invoice-like-title #invoice-like-status li + li {
+  margin-left: 9px;
+}
+#invoice-like-properties .form-inline .form-group {
+  margin-bottom: 10px;
+}
+#invoice-like-properties .form-inline label {
+  margin-right: 5px;
+}
+.invoice-like #invoice-like-items {
+  margin: 0;
+  border-top: 1px solid #999999;
+  border-bottom: 1px solid #999999;
+}
+.invoice-like #invoice-like-items input,
+.invoice-like #invoice-like-items textarea,
+.invoice-like #invoice-like-items select,
+.invoice-like #invoice-like-items .uneditable-input {
+  margin: 0;
+}
+.invoice-like #invoice-like-totals {
+  border-bottom: 1px solid #999999;
+}
+.invoice-like #invoice-like-add-item {
+  margin: 18px 0 0 18px;
+}
+.invoice-like #invoice-like-notes {
+  margin-top: 36px;
+  margin-bottom: 36px;
+}
