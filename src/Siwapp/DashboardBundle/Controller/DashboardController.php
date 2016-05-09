@@ -34,11 +34,9 @@ class DashboardController extends AbstractInvoiceController
             $this->applySearchFilters($qb, $form->getData());
         }
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $qb->getQuery(),
-            $request->query->getInt('page', 1)
-        );
+        $invoicesQb = clone $qb;
+        $invoicesQb->setMaxResults(5);
+        $invoices = $invoicesQb->getQuery()->getResult();
 
         $overdueQb = clone $qb;
         $overdueQb->andWhere('i.status = :overdue')
@@ -78,12 +76,14 @@ class DashboardController extends AbstractInvoiceController
         }
 
         return array(
-            'invoices' => $pagination,
+            'invoices' => $invoices,
             'overdue_invoices' => $overdue,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
             'totals' => $totals,
             'taxes' => $taxes,
+            'paginatable' => false,
+            'sortable' => false,
         );
     }
 }
