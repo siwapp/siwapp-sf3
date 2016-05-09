@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Invoicing software{% endblock %} | Siwapp</title>
+
+  {% block stylesheets %}
+  {% stylesheets
+    'bundles/siwappcore/vendor/bootstrap/css/bootstrap.min.css'
+    'bundles/siwappcore/css/siwapp.layout.css'
+    'bundles/siwappcore/css/siwapp.forms.css'
+    filter='cssrewrite'
+    filter='?yui_css'
+  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+  {% endblock %}
+
+  {% javascripts 'bundles/siwappcore/vendor/jquery-2.2.3.min.js' %}
+  <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+  <div class="container">
+    {% block body %}{% endblock %}
+  </div>
+  {% javascripts 'bundles/siwappcore/vendor/bootstrap/js/bootstrap.min.js' %}
+  <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+
+  {% block javascripts %}{% endblock %}
+</body>
+</html>

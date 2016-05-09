@@ -1,0 +1,31 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% extends "SiwappUserBundle::anonymous.html.twig" %}
+
+{% block title %}{{ 'security.login.submit'|trans }}{% endblock %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div class="alert alert-danger fade in">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+  <div class="form-group">
+    <label for="username">{{ 'security.login.username'|trans }}</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="password">{{ 'security.login.password'|trans }}</label>
+    <input type="password" id="password" name="_password" required="required" class="form-control" />
+  </div>
+  <div class="form-group">
+    <div class="checkbox pull-left">
+      <label for="remember_me"><input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+      {{ 'security.login.remember_me'|trans }}</label>
+    </div>
+    <div class="forgot-pass-link pull-right text-right">
+      <a href="{{ path('fos_user_resetting_request') }}">Forgot password ?</a>
+    </div>
+  </div>
+  <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-lg btn-primary btn-block" />
+</form>
+{% endblock %}

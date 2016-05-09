@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>{% block title %}Welcome!{% endblock %}</title>
+  <meta charset="utf-8" />
+  <title>{% block title %}Invoicing software{% endblock %} | Siwapp</title>
 
   {% block stylesheets %}
   {% stylesheets
@@ -43,7 +43,7 @@
 
     <nav class="user">
       <ul class="list-unstyled">
-        <li>{% trans %}Welcome{% endtrans %}, <a href="{{ path('fos_user_profile_edit') }}">{{ app.user.username }}</a></li>
+        <li>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</li>
         <li>
           <a href="{{ path('global_settings') }}" data-shortcut="alt+g, s">
             <span class="glyphicon glyphicon-cog"></span>
@@ -51,7 +51,7 @@
           </a>
         </li>
         <li>
-          <a href="{{ path('fos_user_security_logout') }}" data-shortcut="alt+g, q">{% trans %}Logout{% endtrans %}</a>
+          <a href="{{ path('fos_user_security_logout') }}" data-shortcut="alt+g, q">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
         </li>
       </ul>
     </nav>
