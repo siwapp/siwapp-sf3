@@ -51,7 +51,8 @@ class InvoicesController extends AbstractInvoiceController
         $pagination = $paginator->paginate(
             $qb->getQuery(),
             $request->query->getInt('page', 1),
-            20
+            // @todo Unhardcode this.
+            50
         );
 
         return array(

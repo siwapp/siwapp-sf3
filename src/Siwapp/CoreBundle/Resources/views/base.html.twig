@@ -43,7 +43,7 @@
 
     <nav class="user">
       <ul class="list-unstyled">
-        <li>{% trans with {'%username%': 'test' } %}Wellcome, %username%!{% endtrans %}</li>
+        <li>{% trans %}Welcome{% endtrans %}, <a href="{{ path('fos_user_profile_edit') }}">{{ app.user.username }}</a></li>
         <li>
           <a href="{{ path('global_settings') }}" data-shortcut="alt+g, s">
             <span class="glyphicon glyphicon-cog"></span>
@@ -51,7 +51,7 @@
           </a>
         </li>
         <li>
-          <a href="{{ path('dashboard_index') }}" data-shortcut="alt+g, q">{% trans %}Logout{% endtrans %}</a>
+          <a href="{{ path('fos_user_security_logout') }}" data-shortcut="alt+g, q">{% trans %}Logout{% endtrans %}</a>
         </li>
       </ul>
     </nav>

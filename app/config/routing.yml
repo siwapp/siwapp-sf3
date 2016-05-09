@@ -1,3 +1,6 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 SiwappCoreBundle:
     resource: "@SiwappCoreBundle/Controller/"
     type:     annotation
