@@ -9,6 +9,12 @@
   {% set table_selectable = true %}
   {% set table_columns = table_columns + 1 %}
 {% endif %}
+{% if not paginatable is defined %}
+  {% set paginatable = true %}
+{% endif %}
+{% if not sortable is defined %}
+  {% set sortable = true %}
+{% endif %}
 
 <table class="table table-condensed table-striped align-middle" data-type="invoices">
   <thead>
@@ -18,23 +24,62 @@
         <input type="checkbox" name="all" />
       </th>
       {% endif %}
-      <th class="cell-size-medium">{% trans %}Number{% endtrans %}</th>
-      <th>{% trans %}Customer{% endtrans %}</th>
-      <th class="cell-size-medium">{% trans %}Date{% endtrans %}</th>
-      <th class="cell-size-medium">{% trans %}Due Date{% endtrans %}</th>
-      <th class="cell-size-small-medium cell-align-center">{% trans %}Status{% endtrans %}</th>
-      <th class="cell-size-medium cell-align-right">{% trans %}Due{% endtrans %}</th>
-      <th class="cell-size-medium cell-align-right">{% trans %}Total{% endtrans %}</th>
+      <th class="cell-size-medium">
+        {% if sortable %}
+        {{ knp_pagination_sortable(invoices, 'Number'|trans, 'i.number') }}
+        {% else %}
+        {% trans %}Number{% endtrans %}
+        {% endif %}
+      </th>
+      <th>
+        {% if sortable %}
+        {{ knp_pagination_sortable(invoices, 'Customer'|trans, 'i.customer_name') }}
+        {% else %}
+        {% trans %}Customer{% endtrans %}
+        {% endif %}
+      </th>
+      <th class="cell-size-medium">
+        {% if sortable %}
+        {{ knp_pagination_sortable(invoices, 'Date'|trans, 'i.issue_date') }}
+        {% else %}
+        {% trans %}Date{% endtrans %}
+        {% endif %}
+      </th>
+      <th class="cell-size-medium">
+        {% if sortable %}
+        {{ knp_pagination_sortable(invoices, 'Due Date'|trans, 'i.due_date') }}
+        {% else %}
+        {% trans %}Due Date{% endtrans %}
+        {% endif %}
+      </th>
+      <th class="cell-size-small-medium cell-align-center">
+        {% if sortable %}
+        {{ knp_pagination_sortable(invoices, 'Status'|trans, 'i.status') }}
+        {% else %}
+        {% trans %}Status{% endtrans %}
+        {% endif %}
+      </th>
+      <th class="cell-size-medium cell-align-right">
+        {# No sort here for now until we have a DB field #}
+        {{ 'Due'|trans }}
+      </th>
+      <th class="cell-size-medium cell-align-right">
+        {% if sortable %}
+        {{ knp_pagination_sortable(invoices, 'Total'|trans, 'i.gross_amount') }}
+        {% else %}
+        {% trans %}Status{% endtrans %}
+        {% endif %}
+      </th>
       <th class="cell-size-medium"></th>
     </tr>
   </thead>
   <tbody>
-    {% if entities|length == 0 %}
+    {% if invoices|length == 0 %}
       <tr>
         <td colspan="{{ table_columns }}">{% trans %}No invoices found.{% endtrans %}</td>
       </tr>
     {% endif %}
-    {% for entity in entities %}
+    {% for entity in invoices %}
       <tr data-link="{{ path('invoice_show', { 'id': entity.id }) }}">
         {% if table_selectable %}
         <td class="cell-align-center">
@@ -57,6 +102,11 @@
     {% endfor %}
   </tbody>
 </table>
+{% if paginatable %}
+<div class="navigation">
+    {{ knp_pagination_render(invoices) }}
+</div>
+{% endif %}
 <div id="payment-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="payments-modal-title">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

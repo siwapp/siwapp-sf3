@@ -21,7 +21,7 @@ class DefaultController extends Controller
      */
     public function globalSettingsAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $property_repository = $em->getRepository('SiwappConfigBundle:Property');
 
         $data = $property_repository->getAll();

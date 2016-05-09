@@ -17,7 +17,7 @@ class DashboardController extends AbstractInvoiceController
      */
     public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $invoiceRepo = $em->getRepository('SiwappInvoiceBundle:Invoice');
         $taxRepo = $em->getRepository('SiwappCoreBundle:Tax');
 
@@ -32,38 +32,55 @@ class DashboardController extends AbstractInvoiceController
         if ($form->isValid())
         {
             $this->applySearchFilters($qb, $form->getData());
-            $entities = $qb->getQuery()->getResult();
-            $overdue = array_filter($entities, function ($invoice) {
-                return $invoice->isOverdue();
-            });
-        }
-        else {
-            $entities = $qb->getQuery()->getResult();
-            $overdue = $invoiceRepo->findBy(['status' => Invoice::OVERDUE]);
         }
 
-        $totals = ['gross' => 0, 'paid' => 0, 'due' => 0, 'overdue' => 0, 'net' => 0, 'tax' => 0, 'taxes' => []];
-        foreach ($entities as $entity) {
-            $totals['gross'] += $entity->getGrossAmount();
-            $totals['paid'] += $entity->getPaidAmount();
-            $totals['due'] += $entity->getDueAmount();
-            $totals['net'] += $entity->getNetAmount();
-            $totals['tax'] += $entity->getTaxAmount();
-            foreach ($taxes as $tax) {
-                if (!isset($totals['taxes'][$tax->getId()])) {
-                    $totals['taxes'][$tax->getId()] = 0;
-                }
-                $totals['taxes'][$tax->getId()] += $entity->__get('tax_amount_' . $tax->getName());
-            }
-        }
-        foreach ($overdue as $entity) {
-            $totals['overdue'] += $entity->getDueAmount();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(),
+            $request->query->getInt('page', 1)
+        );
+
+        $overdueQb = clone $qb;
+        $overdueQb->andWhere('i.status = :overdue')
+            ->setParameter('overdue', Invoice::OVERDUE);
+        $overdue = $overdueQb->getQuery()->getResult();
+
+        // Totals.
+        $qb->addSelect('SUM(i.gross_amount)');
+        $qb->addSelect('SUM(i.paid_amount)');
+        $qb->addSelect('SUM(i.gross_amount - i.paid_amount)');
+        $qb->addSelect('SUM(i.net_amount)');
+        $qb->addSelect('SUM(i.tax_amount)');
+        $qb->setMaxResults(1);
+        $result = $qb->getQuery()->getSingleResult();
+        // Transform to named array for easier access in template.
+        $totals = [
+            'gross' => $result[1],
+            'paid' => $result[2],
+            'due' => $result[3],
+            'net' => $result[4],
+            'tax' => $result[5],
+        ];
+        // Overdue total.
+        $overdueQb->addSelect('SUM(i.gross_amount - i.paid_amount)');
+        $result = $overdueQb->getQuery()->getSingleResult();
+        $totals['overdue'] = $result[1];
+
+        // Tax totals.
+        foreach ($taxes as $tax) {
+            $taxQb = clone $qb;
+            $taxQb->join('i.items', 'it');
+            $taxQb->join('it.taxes', 'tx');
+            $taxQb->addSelect('SUM(it.unitary_cost * (tx.value/100))');
+            $taxQb->andWhere('tx.id = :tax')
+                ->setParameter('tax', $tax);
+            $totals['taxes'][$tax->getId()] = $taxQb->getQuery()->getSingleResult()[6];
         }
 
         return array(
-            'entities' => array_slice($entities, 0, 5),
+            'invoices' => $pagination,
             'overdue_invoices' => $overdue,
-            'currency' => 'EUR',
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
             'totals' => $totals,
             'taxes' => $taxes,

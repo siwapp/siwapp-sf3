@@ -47,12 +47,16 @@ class InvoicesController extends AbstractInvoiceController
             $this->applySearchFilters($qb, $form->getData());
         }
 
-        $entities = $qb->getQuery()->getResult();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb->getQuery(),
+            $request->query->getInt('page', 1),
+            20
+        );
 
         return array(
-            'entities' => $entities,
-            //@todo Unhardcode this.
-            'currency' => 'EUR',
+            'invoices' => $pagination,
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
         );
     }
@@ -78,6 +82,7 @@ class InvoicesController extends AbstractInvoiceController
      */
     public function newAction()
     {
+        $em = $this->getDoctrine()->getManager();
         $invoice = new Invoice();
         $invoice->addItem(new Item());
 
@@ -88,8 +93,7 @@ class InvoicesController extends AbstractInvoiceController
         return array(
             'form' => $form->createView(),
             'entity' => $invoice,
-            // @todo Unhardcode this.
-            'currency' => 'EUR',
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
         );
     }
 
@@ -122,9 +126,8 @@ class InvoicesController extends AbstractInvoiceController
      */
     public function editAction($id)
     {
-        $entity = $this->getDoctrine()
-            ->getRepository('SiwappInvoiceBundle:Invoice')
-            ->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
@@ -135,8 +138,7 @@ class InvoicesController extends AbstractInvoiceController
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
-            // @todo Unhardcode this.
-            'currency' => 'EUR',
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
         );
     }
 

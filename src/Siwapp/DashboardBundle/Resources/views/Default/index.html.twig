@@ -99,7 +99,7 @@
 
   <div class="dashboard-listing">
     <h2>{% trans %}Past due invoices{% endtrans %}</h2>
-    {% include "SiwappInvoiceBundle:Partials:listing.html.twig" with {'entities': overdue_invoices} %}
+    {% include "SiwappInvoiceBundle:Partials:listing.html.twig" with {'invoices': overdue_invoices, 'paginatable': false, 'sortable': false} %}
   </div>
 
 {% endblock %}

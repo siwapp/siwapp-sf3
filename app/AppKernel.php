@@ -15,10 +15,13 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+
             // Siwapp bundles
             new Siwapp\InvoiceBundle\SiwappInvoiceBundle(),
             new Siwapp\DashboardBundle\SiwappDashboardBundle(),
