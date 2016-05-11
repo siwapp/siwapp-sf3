@@ -1,0 +1,52 @@
+<table class="table table-condensed table-striped align-middle" data-type="recurring-invoices">
+  <thead>
+    <tr>
+      <th class="cell-size-tiny cell-align-center">
+        <input type="checkbox" name="all" />
+      </th>
+      <th class="cell-size-medium">
+        {{ knp_pagination_sortable(invoices, 'Series'|trans, 'ri.serie') }}
+      </th>
+      <th>
+        {{ knp_pagination_sortable(invoices, 'Customer'|trans, 'ri.customer_name') }}
+      </th>
+      <th class="cell-size-medium">
+        {{ knp_pagination_sortable(invoices, 'Period'|trans, 'ri.period_type') }}
+      </th>
+      <th class="cell-size-medium">
+        {{ knp_pagination_sortable(invoices, 'Frequency'|trans, 'ri.period') }}
+      </th>
+      <th class="cell-size-small-medium cell-align-center">
+        {{ knp_pagination_sortable(invoices, 'Status'|trans, 'ri.status') }}
+      </th>
+      <th class="cell-size-medium cell-align-right">
+        {{ knp_pagination_sortable(invoices, 'Total'|trans, 'ri.gross_amount') }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if invoices|length == 0 %}
+      <tr>
+        <td colspan="7">{% trans %}No recurring invoices found.{% endtrans %}</td>
+      </tr>
+    {% endif %}
+    {% for entity in invoices %}
+      <tr data-link="{{ path('recurring_show', { 'id': entity.id }) }}">
+        <td class="cell-align-center">
+          <input type="checkbox" name="id[]" value="{{ entity.id }}" />
+        </td>
+        <td class="cell-size-medium cell-align-center">{{ entity.serie.getName() }}</td>
+        <td>{{ entity.getCustomerName }}</td>
+        <td>{{ entity.periodType }}</td>
+        <td>{{ entity.period }}</td>
+        <td class="cell-align-center">
+          <span class="label {{ entity.enabled ? 'opened' : 'draft' }}">{% trans with { '%status%': entity.enabled } %}%status%{% endtrans %}</span>
+        </td>
+        <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(invoices) }}
+</div>

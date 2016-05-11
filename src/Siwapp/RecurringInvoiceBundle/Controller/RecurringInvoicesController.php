@@ -51,7 +51,7 @@ class RecurringInvoicesController extends Controller
     }
 
     /**
-     * @Route("/show", name="recurring_show")
+     * @Route("/{id}/show", name="recurring_show")
      * @Template("SiwappRecurringInvoiceBundle:Default:show.html.twig")
      */
     public function showAction($id)
