@@ -5,18 +5,23 @@
   </td>
   <td>
     {{ form_widget(form.description) }}
+    {{ form_errors(form.description) }}
   </td>
   <td class="cell-align-right">
     {{ form_widget(form.quantity) }}
+    {{ form_errors(form.quantity) }}
   </td>
   <td class="cell-align-right">
     {{ form_widget(form.unitary_cost) }}
+    {{ form_errors(form.unitary_cost) }}
   </td>
   <td class="cell-align-right">
     {{ form_widget(form.discount) }}
+    {{ form_errors(form.discount) }}
   </td>
   <td class="taxes form-inline">
     {{ form_widget(form.taxes) }}
+    {{ form_errors(form.taxes) }}
   </td>
   <td class="cell-align-right">
     {{ entity.grossAmount|localizedcurrency(currency) }}

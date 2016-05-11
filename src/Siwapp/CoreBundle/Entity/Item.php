@@ -4,165 +4,172 @@ namespace Siwapp\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Util\Inflector;
-use Gedmo\Sluggable\Util\Urlizer as Urlizer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Siwapp\CoreBundle\Entity\AbstractItem
+ * Siwapp\InvoiceBundle\Entity\Item
  *
- * TODO: Custom methods
- * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity
+ * @ORM\Table(indexes={
+ *    @ORM\Index(name="invoice_item_desc_idx", columns={"description"})
+ * })
  */
-class AbstractItem
+class Item
 {
 
-  /**
-   * @var integer $id
-   *
-   * @ORM\Column(type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+    /**
+    * @var integer $id
+    *
+    * @ORM\Column(type="integer")
+    * @ORM\Id
+    * @ORM\GeneratedValue(strategy="AUTO")
+    */
+    private $id;
 
-  /**
-   * @var integer $quantity
-   *
-   * @ORM\Column(type="integer")
-   */
-  private $quantity;
+    /**
+    * @var integer $quantity
+    *
+    * @ORM\Column(type="integer")
+    */
+    private $quantity;
 
-  /**
-   * @var decimal $discount
-   *
-   * @ORM\Column(type="decimal", precision=5, scale=2)
-   */
-  private $discount;
+    /**
+    * @var decimal $discount
+    *
+    * @ORM\Column(type="decimal", precision=5, scale=2)
+    */
+    private $discount;
 
-  /**
-   * @var string $description
-   *
-   * @ORM\Column()
-   */
-  private $description;
+    /**
+    * @var string $description
+    *
+    * @ORM\Column()
+    */
+    private $description;
 
-  /**
-   * @var decimal $unitary_cost
-   *
-   * @ORM\Column(type="decimal", precision=15, scale=3)
-   */
-  private $unitary_cost;
+    /**
+    * @var decimal $unitary_cost
+    *
+    * @ORM\Column(type="decimal", precision=15, scale=3)
+    */
+    private $unitary_cost;
 
-  /**
-   * Get id
-   *
-   * @return integer
-   */
-  public function getId()
-  {
+    /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Tax")
+     * @ORM\JoinTable(name="items_taxes")
+     *
+     * unidirectional many-to-many
+     */
+    private $taxes;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
     return $this->id;
-  }
+    }
 
-  /**
-   * Get quantity
-   *
-   * @return integer
-   */
-  public function getQuantity()
-  {
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
     return $this->quantity;
-  }
+    }
 
-  /**
-   * Set Quantity
-   *
-   * @param integer $quantity
-   */
-  public function setQuantity($quantity)
-  {
+    /**
+     * Set Quantity
+     *
+     * @param integer $quantity
+     */
+    public function setQuantity($quantity)
+    {
     $this->quantity = $quantity;
-  }
+    }
 
-  /**
-   * Get discount
-   *
-   * @return decimal
-   */
-  public function getDiscount()
-  {
+    /**
+     * Get discount
+     *
+     * @return decimal
+     */
+    public function getDiscount()
+    {
     return $this->discount;
-  }
+    }
 
-  /**
-   * Set Discount
-   *
-   * @param decimal $discount
-   */
-  public function setDiscount($discount)
-  {
+    /**
+     * Set Discount
+     *
+     * @param decimal $discount
+     */
+    public function setDiscount($discount)
+    {
     $this->discount = $discount;
-  }
+    }
 
-  /**
-   * Get description
-   *
-   * @return string
-   */
-  public function getDescription()
-  {
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
     return $this->description;
-  }
+    }
 
-  /**
-   * Set description
-   *
-   * @param string $description
-   */
-  public function setDescription($description)
-  {
+    /**
+     * Set description
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
     $this->description = $description;
-  }
+    }
 
-  /**
-   * Get unitary cost
-   *
-   * @return decimal
-   */
-  public function getUnitaryCost()
-  {
+    /**
+     * Get unitary cost
+     *
+     * @return decimal
+     */
+    public function getUnitaryCost()
+    {
     return $this->unitary_cost;
-  }
+    }
 
-  /**
-   * Set unitary cost
-   *
-   * @param decimal $unitary_cost
-   */
-  public function setUnitaryCost($unitary_cost)
-  {
+    /**
+     * Set unitary cost
+     *
+     * @param decimal $unitary_cost
+     */
+    public function setUnitaryCost($unitary_cost)
+    {
     $this->unitary_cost = $unitary_cost;
-  }
+    }
 
 
-  /** **************** CUSTOM METHODS ************* */
+    /** **************** CUSTOM METHODS ************* */
 
 
-  /**
-   * reCalculate
-   * recalculate invoice's amounts
-   *
-   * @ORM\PreUpdate
-   * @author JoeZ99 <jzarate@gmail.com>
-   */
-  public function reCalculate()
-  {
+    /**
+     * reCalculate
+     * recalculate invoice's amounts
+     *
+     * @ORM\PreUpdate
+     * @author JoeZ99 <jzarate@gmail.com>
+     */
+    public function reCalculate()
+    {
       if($this->getInvoice() instanceof \Siwapp\CoreBundle\Entity\AbstractInvoice)
       {
           $this->getInvoice()->setAmounts();
       }
-  }
+    }
 
     /**
      * Get base amount
@@ -285,6 +292,40 @@ class AbstractItem
         return (string) $this->description.': '.$this->quantity;
     }
 
+    public function __construct()
+    {
+      $this->taxes = new ArrayCollection();
+    }
 
+    /**
+     * Add taxes
+     *
+     * @param Siwapp\CoreBundle\Entity\Tax $tax
+     */
+    public function addTax(\Siwapp\CoreBundle\Entity\Tax $tax)
+    {
+        $this->taxes[] = $tax;
+    }
+
+    /**
+     * Get taxes
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getTaxes()
+    {
+        return $this->taxes;
+    }
+
+    /**
+     *
+     * Remove Tax
+     *
+     * @param Siwapp\CoreBundle\Entity\Tax
+     */
+    public function removeTax(\Siwapp\CoreBundle\Entity\Tax $tax)
+    {
+        $this->taxes->removeElement($tax);
+    }
 
 }

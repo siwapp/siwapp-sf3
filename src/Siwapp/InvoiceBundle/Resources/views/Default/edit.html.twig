@@ -1,7 +1,5 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 
-{% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
-
 {% block stylesheets %}
   {{ parent() }}
   {% stylesheets
@@ -12,40 +10,6 @@
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
 {% endblock %}
-
-{% block field_widget %}
-{% spaceless %}
-  {% set type = type|default('text') %}
-  <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}{% if type != 'hidden' %} placeholder="{{ label }}"{% endif %}/>
-{% endspaceless %}
-{% endblock %}
-
-{% block date_widget %}
-{% spaceless %}
-  {{ block('base_date_widget') }}
-  {% if widget == 'single_text' %}
-  <script type="text/javascript">
-    //jQuery(function($){ $('#{{ id }}').kendoDatePicker(); });
-  </script>
-  {% endif %}
-{% endspaceless %}
-{% endblock date_widget %}
-
-{% block form_errors %}
-{% spaceless %}
-  {% if errors|length > 0 %}
-  <div class="row">
-    <div id="invoice-like-form-errors" class="col-md-12">
-      <ul class="error_list">
-        {% for error in errors %}
-          <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  {% endif %}
-{% endspaceless %}
-{% endblock form_errors %}
 
 {% block searchform_container %}{% endblock %}
 
@@ -110,7 +74,7 @@
         </div><!-- span10 -->
 
         <div id="invoice-like-properties" class="col-md-4"><div class="panel panel-default">
-          <h3 class="panel-heading">{% trans %}Invoice Properties{% endtrans %}</h3>
+          <h3 class="panel-heading">{% trans %}Properties{% endtrans %}</h3>
 
           <div class="panel-body form-inline">
             {{ form_row(form.serie) }}
@@ -137,9 +101,9 @@
                 <th colspan="2" class="cell-align-right">{% trans %}Line Total{% endtrans %}</th>
               </tr>
             </thead>
-            <tbody data-prototype="{{ include('SiwappInvoiceBundle:Partials:items.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
+            <tbody data-prototype="{{ include('SiwappCoreBundle:Partials:items.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
               {% for item in form.items %}
-                {{ include('SiwappInvoiceBundle:Partials:items.html.twig', { 'form': item, 'entity': item.vars.value, 'currency': currency }) }}
+                {{ include('SiwappCoreBundle:Partials:items.html.twig', { 'form': item, 'entity': item.vars.value, 'currency': currency }) }}
               {% endfor %}
               {# TODO: Action buttons: add/remove items, taxes, sort... #}
             </tbody>

@@ -18,17 +18,6 @@ use Siwapp\InvoiceBundle\Form\InvoiceType;
 class InvoicesController extends AbstractInvoiceController
 {
     /**
-     * @Route("/silly", name="silly_index")
-     * @Template()
-     */
-    public function sillyAction()
-    {
-        $repo = $this->getDoctrine()->getManager()
-            ->getRepository('SiwappInvoiceBundle:Invoice');
-        $repo->updateTotals();
-        return array();
-    }
-    /**
      * @Route("/", name="invoice_index")
      * @Template("SiwappInvoiceBundle:Default:index.html.twig")
      */
@@ -42,8 +31,7 @@ class InvoicesController extends AbstractInvoiceController
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $this->applySearchFilters($qb, $form->getData());
         }
 
@@ -81,15 +69,23 @@ class InvoicesController extends AbstractInvoiceController
      * @Route("/new", name="invoice_add")
      * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $invoice = new Invoice();
         $invoice->addItem(new Item());
 
         $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $invoice, [
-            'action' => $this->generateUrl('invoice_create'),
+            'action' => $this->generateUrl('invoice_add'),
         ]);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($invoice);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('invoice_edit', array('id' => $invoice->getId())));
+        }
 
         return array(
             'form' => $form->createView(),
@@ -99,33 +95,10 @@ class InvoicesController extends AbstractInvoiceController
     }
 
     /**
-     * @Route("/create", name="invoice_create")
-     * @Method("POST")
-     * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $invoice = new Invoice();
-        $invoice->addItem(new Item());
-
-        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $invoice);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em->persist($invoice);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('invoice_edit', array('id' => $invoice->getId())));
-        }
-        return $this->redirect($this->generateUrl('invoice_add'));
-    }
-
-    /**
      * @Route("/{id}/edit", name="invoice_edit")
      * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
@@ -133,31 +106,8 @@ class InvoicesController extends AbstractInvoiceController
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
         $form = $this->createForm(InvoiceType::class, $entity, [
-            'action' => $this->generateUrl('invoice_update', ['id' => $id]),
+            'action' => $this->generateUrl('invoice_edit', ['id' => $id]),
         ]);
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
-        );
-    }
-
-    /**
-     * @Route("/{id}/update", name="invoice_update")
-     * @Method("POST")
-     * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Invoice entity.');
-        }
-
-        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -178,7 +128,8 @@ class InvoicesController extends AbstractInvoiceController
 
         return array(
             'entity' => $entity,
-            'form' => $editForm->createView(),
+            'form' => $form->createView(),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
         );
     }
 
@@ -203,59 +154,21 @@ class InvoicesController extends AbstractInvoiceController
 
         $payment = new Payment;
         $addForm = $this->createForm('Siwapp\InvoiceBundle\Form\PaymentType', $payment, [
-            'action' => $this->generateUrl('invoice_payment_add', ['invoiceId' => $invoiceId]),
+            'action' => $this->generateUrl('invoice_payments', ['invoiceId' => $invoiceId]),
         ]);
-        $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoicePaymentListType', $payments, [
-            'action' => $this->generateUrl('invoice_payments_delete', ['invoiceId' => $invoiceId]),
-        ]);
-
-        return [
-            'invoiceId' => $invoiceId,
-            'add_form' => $addForm->createView(),
-            'list_form' => $listForm->createView(),
-        ];
-    }
-
-    /**
-     * @Route("/payments/{invoiceId}/add", name="invoice_payment_add")
-     * @Method("POST")
-     * @Template("SiwappInvoiceBundle:Partials:payments.html.twig")
-     */
-    public function addPaymentAction(Request $request, $invoiceId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $invoice = $this->getDoctrine()
-            ->getRepository('SiwappInvoiceBundle:Invoice')
-            ->find($invoiceId);
-
-        $entity = new Payment;
-        $entity->setDate(new \Datetime('today'));
-        $addForm = $this->createForm('Siwapp\InvoiceBundle\Form\PaymentType', $entity);
         $addForm->handleRequest($request);
-
         if ($addForm->isValid() && $invoice) {
-            $invoice->addPayment($entity);
+            $invoice->addPayment($payment);
             $em->persist($invoice);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Payment added.');
         }
 
-        return $this->redirect($this->generateUrl('invoice_payments', array('invoiceId' => $invoiceId)));
-    }
-
-    /**
-     * @Route("/payments/{invoiceId}/delete", name="invoice_payments_delete")
-     * @Method("POST")
-     */
-    public function deletePayments(Request $request, $invoiceId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $invoice = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($invoiceId);
-        $payments = $em->getRepository('SiwappInvoiceBundle:Payment')->findBy(array('invoice' => $invoiceId));
-
-        $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoicePaymentListType', $payments);
-        $form->handleRequest($request);
-        if ($form->isValid() && $invoice) {
+        $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoicePaymentListType', $payments, [
+            'action' => $this->generateUrl('invoice_payments', ['invoiceId' => $invoiceId]),
+        ]);
+        $listForm->handleRequest($request);
+        if ($listForm->isValid() && $invoice) {
             $data = $form->getData();
             foreach ($data['payments'] as $payment) {
                 $invoice->removePayment($payment);
@@ -265,6 +178,11 @@ class InvoicesController extends AbstractInvoiceController
             $this->get('session')->getFlashBag()->add('success', 'Payment(s) deleted.');
         }
 
-        return $this->redirect($this->generateUrl('invoice_payments', array('invoiceId' => $invoiceId)));
+        return [
+            'invoiceId' => $invoiceId,
+            'add_form' => $addForm->createView(),
+            'list_form' => $listForm->createView(),
+        ];
     }
+
 }

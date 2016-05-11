@@ -21,27 +21,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RecurringInvoice extends AbstractInvoice
 {
-    /**
-    *   @ORM\OneToMany(targetEntity="Item", mappedBy="recurring_invoice", orphanRemoval=true, cascade={"all"})
-    */
-    private $items;
-
-    /**
-    * @ORM\ManyToOne(targetEntity="Siwapp\CoreBundle\Entity\Serie")
-    *
-    * unidirectional many-to-one
-    */
-    private $serie;
-
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
-    }
 
     /**
      * @var integer $days_to_due
      *
-     * @ORM\Column(name="days_to_due", type="integer")
+     * @ORM\Column(name="days_to_due", type="integer", nullable=true)
+     * @Assert\Length(min=0)
      */
     private $days_to_due;
 
@@ -56,6 +41,7 @@ class RecurringInvoice extends AbstractInvoice
      * @var integer $max_occurrences
      *
      * @ORM\Column(name="max_occurrences", type="integer", nullable=true)
+     * @Assert\Length(min=1)
      */
     private $max_occurrences;
 
@@ -63,6 +49,7 @@ class RecurringInvoice extends AbstractInvoice
      * @var integer $must_occurrences
      *
      * @ORM\Column(name="must_occurrences", type="integer", nullable=true)
+     * @Assert\Length(min=1)
      */
     private $must_occurrences;
 
@@ -70,6 +57,8 @@ class RecurringInvoice extends AbstractInvoice
      * @var integer $period
      *
      * @ORM\Column(name="period", type="integer")
+     * @Assert\Length(min=1)
+     * @Assert\NotBlank()
      */
     private $period;
 
@@ -77,6 +66,9 @@ class RecurringInvoice extends AbstractInvoice
      * @var string $period_type
      *
      * @ORM\Column(name="period_type", type="string", length=8)
+     * @Assert\Choice(
+     *     choices = { "year", "month", "week", "day" },
+     * )
      */
     private $period_type;
 
@@ -103,6 +95,15 @@ class RecurringInvoice extends AbstractInvoice
      */
     private $last_execution_date;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"persist"})
+     * @ORM\JoinTable(name="recurring_invoices_items",
+     *      joinColumns={@ORM\JoinColumn(name="recurring_invoice_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
+     * )
+     * @Assert\NotBlank()
+     */
+    protected $items;
 
     /**
      * Set days_to_due
@@ -252,8 +253,11 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function setFinishingDate($finishingDate)
     {
-      $this->finishing_date = $finishingDate instanceof \DateTime ?
-	$finishingDate: new \DateTime($finishingDate);
+        if ($finishingDate) {
+            $this->finishing_date = $finishingDate instanceof \DateTime
+                ? $finishingDate
+                : new \DateTime($finishingDate);
+        }
     }
 
     /**
@@ -273,8 +277,9 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function setLastExecutionDate($lastExecutionDate)
     {
-      $this->last_execution_date = $lastExecutionDate instanceof \DateTime ?
-	$lastExecutionDate: new \DateTime($lastExecutionDate);
+      $this->last_execution_date = $lastExecutionDate instanceof \DateTime
+        ? $lastExecutionDate
+        : new \DateTime($lastExecutionDate);
     }
 
     /**
@@ -287,37 +292,23 @@ class RecurringInvoice extends AbstractInvoice
         return $this->last_execution_date;
     }
 
-
-    /** ***************** RELATIONSHIP METHODS *********** **/
-
-    /**
-     * Add items
-     *
-     * @param Siwapp\RecurringInvoiceBundle\Entity\Item $item
-     */
-    public function addItem(\Siwapp\RecurringInvoiceBundle\Entity\Item $item)
-    {
-      $this->items[] = $item;
-    }
-
-    /**
-     * Get items
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-
     /** ********** CUSTOM METHODS AND PROPERTIES ************** **/
     /**
      * TODO: provide the series.
      */
     public function __toString()
     {
-        return (string) "Recurring Invoice: ".$this->serie." ".$this->customer_name;
+        return $this->label();
+    }
+
+    public function label() {
+        $label = '';
+        if ($this->getSerie()) {
+            $label .= $this->getSerie()->getName();
+        }
+        $label .= $this->getCustomerName();
+
+        return $label;
     }
 
     const INACTIVE = 0;
@@ -412,24 +403,4 @@ class RecurringInvoice extends AbstractInvoice
         //TODO : End this
     }
 
-
-    /**
-     * Set serie
-     *
-     * @param Siwapp\CoreBundle\Entity\Serie $serie
-     */
-    public function setSerie(\Siwapp\CoreBundle\Entity\Serie $serie)
-    {
-        $this->serie = $serie;
-    }
-
-    /**
-     * Get serie
-     *
-     * @return Siwapp\CoreBundle\Entity\Serie
-     */
-    public function getSerie()
-    {
-        return $this->serie;
-    }
 }

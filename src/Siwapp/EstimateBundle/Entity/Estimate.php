@@ -21,21 +21,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Estimate extends AbstractInvoice
 {
     /**
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="estimate", orphanRemoval=true, cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"persist"})
+     * @ORM\JoinTable(name="estimates_items",
+     *      joinColumns={@ORM\JoinColumn(name="estimate_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
+     * )
+     * @Assert\NotBlank()
      */
-    private $items;
+    protected $items;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="\Siwapp\CoreBundle\Entity\Serie")
-     *
-     * unidirectional one-to-many
-     */
-    private $serie;
-
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
-    }
     /**
      * @var boolean $draft
      *
@@ -118,26 +112,6 @@ class Estimate extends AbstractInvoice
         return $this->sent_by_email;
     }
 
-    /**
-     * Add items
-     *
-     * @param Siwapp\EstimateBundle\Entity\Item $item
-     */
-    public function addItem(\Siwapp\CoreBundle\Entity\AbstractItem $item)
-    {
-        $this->items[] = $item;
-    }
-
-    /**
-     * Get items
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
     /** ********** CUSTOM METHODS AND PROPERTIES ************* */
 
     const DRAFT    = 0;
@@ -153,25 +127,4 @@ class Estimate extends AbstractInvoice
         }
     }
 
-
-
-    /**
-     * Set serie
-     *
-     * @param Siwapp\CoreBundle\Entity\Serie $serie
-     */
-    public function setSerie(\Siwapp\CoreBundle\Entity\Serie $serie)
-    {
-        $this->serie = $serie;
-    }
-
-    /**
-     * Get serie
-     *
-     * @return Siwapp\CoreBundle\Entity\Serie
-     */
-    public function getSerie()
-    {
-        return $this->serie;
-    }
 }

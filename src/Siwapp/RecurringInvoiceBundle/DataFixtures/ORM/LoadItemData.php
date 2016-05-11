@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
-use Siwapp\RecurringInvoiceBundle\Entity\Item;
+use Siwapp\CoreBundle\Entity\Item;
 
 use Symfony\Component\Yaml\Parser;
 use Doctrine\Common\Util\Inflector;
@@ -17,7 +17,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     private $container;
-    
+
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
@@ -25,7 +25,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
 
     public function load(ObjectManager $manager)
     {
-        
+
         $yaml = new Parser();
         $bpath = $this->container->get('kernel')->getBundle('SiwappRecurringInvoiceBundle')->getPath();
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/recurring_invoices.yml'));
@@ -39,8 +39,10 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
                 if($fname == 'RecurringInvoice')
                 {
                     $fvalue = $manager->merge($this->getReference($fvalue));
+                    $fvalue->addItem($item);
+                    $manager->persist($fvalue);
                 }
-                
+
                 $method = 'set'.Inflector::camelize($fname);
                 if(is_callable(array($item, $method)))
                 {
@@ -60,9 +62,9 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
             $manager->persist($item);
             $manager->flush();
         }
-        
+
     }
-  
+
     public function getOrder()
     {
         return '3';

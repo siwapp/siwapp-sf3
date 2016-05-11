@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Siwapp\InvoiceBundle\Entity\Invoice;
-use Siwapp\InvoiceBundle\Entity\Item;
+use Siwapp\CoreBundle\Entity\Item;
 
 
 use Symfony\Component\Yaml\Parser;
@@ -38,6 +38,8 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
                 if($fname == 'Invoice')
                 {
                     $fvalue = $manager->merge($this->getReference($fvalue));
+                    $fvalue->addItem($item);
+                    $manager->persist($fvalue);
                 }
 
                 $method = 'set'.Inflector::camelize($fname);
@@ -50,7 +52,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
             $manager->flush();
             $this->addReference($ref, $item);
         }
-        
+
         foreach($value['ItemTax'] as $ref => $values)
         {
             $item = $this->getReference($values['Item']);
@@ -59,9 +61,9 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
             $manager->persist($item);
             $manager->flush();
         }
-        
+
     }
-    
+
     public function getOrder()
     {
         return '3';

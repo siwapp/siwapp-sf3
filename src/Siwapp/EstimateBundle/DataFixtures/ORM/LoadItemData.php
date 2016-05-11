@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Siwapp\EstimateBundle\Entity\Estimate;
-use Siwapp\EstimateBundle\Entity\Item;
+use Siwapp\CoreBundle\Entity\Item;
 
 use Symfony\Component\Yaml\Parser;
 use Doctrine\Common\Util\Inflector;
@@ -30,7 +30,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
       // TODO: find a way of obtainin Bundle's path with the help of $this->container
       $bpath = $this->container->get('kernel')->getBundle('SiwappEstimateBundle')->getPath();
       $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/estimates.yml'));
-      
+
       foreach($value['Item'] as $ref => $values)
       {
           $item = new Item();
@@ -39,7 +39,9 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
           {
               if($fname == 'Estimate')
               {
-                  $fvalue = $manager->merge($this->getReference($fvalue));
+                    $fvalue = $manager->merge($this->getReference($fvalue));
+                    $fvalue->addItem($item);
+                    $manager->persist($fvalue);
               }
 
               $method = 'set'.Inflector::camelize($fname);
@@ -52,7 +54,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
           $manager->flush();
           $this->addReference($ref, $item);
       }
-      
+
       foreach($value['ItemTax'] as $ref => $values)
       {
           $item = $this->getReference($values['Item']);
@@ -62,7 +64,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
           $manager->flush();
       }
     }
-    
+
     public function getOrder()
     {
       return '3';

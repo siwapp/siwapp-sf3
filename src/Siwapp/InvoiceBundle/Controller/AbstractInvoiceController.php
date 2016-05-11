@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class AbstractInvoiceController extends Controller
 {
-    public function applySearchFilters(QueryBuilder $qb, array $data)
+    protected function applySearchFilters(QueryBuilder $qb, array $data)
     {
         foreach ($data as $field => $value) {
             if ($value === null) {

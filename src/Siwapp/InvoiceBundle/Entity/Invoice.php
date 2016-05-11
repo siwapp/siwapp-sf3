@@ -24,30 +24,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Invoice extends AbstractInvoice
 {
     /**
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="invoice", orphanRemoval=true, cascade={"all"})
-     */
-    private $items;
-
-    /**
      * @ORM\OneToMany(targetEntity="Payment", mappedBy="invoice", orphanRemoval=true, cascade={"all"})
      *
      */
     private $payments;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Siwapp\CoreBundle\Entity\Serie")
-     * @ORM\JoinColumn(name="serie_id", referencedColumnName="id")
-     *
-     * unidirectional many-to-one
-     */
-    private $serie;
-
-
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
-        $this->payments = new ArrayCollection();
-    }
 
     /**
      * @var boolean $sent_by_email
@@ -74,6 +54,7 @@ class Invoice extends AbstractInvoice
      * @var date $issue_date
      *
      * @ORM\Column(name="issue_date", type="date", nullable=true)
+     * @Assert\Date()
      */
     private $issue_date;
 
@@ -84,6 +65,23 @@ class Invoice extends AbstractInvoice
      * @Assert\Date()
      */
     private $due_date;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"persist"})
+     * @ORM\JoinTable(name="invoices_items",
+     *      joinColumns={@ORM\JoinColumn(name="invoice_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
+     * )
+     * @Assert\NotBlank()
+     */
+    protected $items;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->payments = new ArrayCollection();
+    }
 
     /**
      * @return boolean
@@ -220,28 +218,6 @@ class Invoice extends AbstractInvoice
     }
 
     /**
-     * Add items
-     *
-     * @param Siwapp\InvoiceBundle\Entity\Item $item
-     */
-    public function addItem(\Siwapp\InvoiceBundle\Entity\Item $item)
-    {
-        $this->items[] = $item;
-        $item->setInvoice($this);
-        $this->setAmounts();
-    }
-
-    /**
-     * Get items
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
      * Add payments
      *
      * @param Siwapp\InvoiceBundle\Entity\Payment $payment
@@ -277,27 +253,6 @@ class Invoice extends AbstractInvoice
     public function getPayments()
     {
         return $this->payments;
-    }
-
-    /**
-     * Set serie
-     *
-     * @param Siwapp\CoreBundle\Entity\Serie $serie
-     */
-    public function setSerie(\Siwapp\CoreBundle\Entity\Serie $serie)
-    {
-        $this->checkSerieChanged($serie);
-        $this->serie = $serie;
-    }
-
-    /**
-     * Get serie
-     *
-     * @return Siwapp\CoreBundle\Entity\Serie
-     */
-    public function getSerie()
-    {
-        return $this->serie;
     }
 
     /** **************** CUSTOM METHODS AND PROPERTIES **************  */
@@ -468,7 +423,7 @@ class Invoice extends AbstractInvoice
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function setNextNumber(PreUpdateEventArgs $event)
+    public function setNextNumber($event)
     {
         // compute the number of invoice
         if( (!$this->number && $this->status!=self::DRAFT) ||

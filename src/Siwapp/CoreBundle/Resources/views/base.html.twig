@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>{% block title %}Invoicing software{% endblock %} | Siwapp</title>
-
+  <link rel="shortcut icon" src="{{ asset('bundles/siwappcore/img/favicon.ico') }}">
   {% block stylesheets %}
   {% stylesheets
     'bundles/siwappcore/vendor/bootstrap/css/bootstrap.min.css'
@@ -59,10 +59,12 @@
     <nav class="main">
 
       <div id="create-button" class="btn-group">
+        {% block actionlink %}
         <a href="{{ path('invoice_add') }}" class="btn btn-default btn-primary">
-          <span class="glyphicon glyphicon-plus glyphicon glyphicon-white"></span>
+          <span class="glyphicon glyphicon-plus"></span>
           {% trans %}New Invoice{% endtrans %}
         </a>
+        {% endblock %}
       </div>
 
 
@@ -133,5 +135,6 @@
   {% endjavascripts %}
 
   {% block javascripts %}{% endblock %}
+  {% block toolbar %}{% endblock %}
 </body>
 </html>

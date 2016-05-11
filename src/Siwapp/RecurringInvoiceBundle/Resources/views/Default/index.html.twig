@@ -1,5 +1,16 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 
+{% block actionlink %}
+<a href="{{ path('recurring_add') }}" class="btn btn-default btn-primary">
+  <span class="glyphicon glyphicon-plus"></span>
+  {% trans %}New Recurring Invoice{% endtrans %}
+</a>
+{% endblock %}
+
+{% block searchform %}
+  {% include "SiwappRecurringInvoiceBundle:Partials:search.html.twig" with {'form': search_form} %}
+{% endblock %}
+
 {% block body %}
 
   <h1>Recurring Invoices</h1>

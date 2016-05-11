@@ -3,6 +3,7 @@
 namespace Siwapp\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -135,8 +136,23 @@ class AbstractInvoice
      * @var smallint $status
      *
      * @ORM\Column(name="status", type="smallint", nullable=true)
+     * @Assert\Length(min=0, max=3)
      */
     protected $status = 0;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Siwapp\CoreBundle\Entity\Serie")
+     * @ORM\JoinColumn(name="serie_id", referencedColumnName="id")
+     * @Assert\NotBlank()
+     *
+     * unidirectional many-to-one
+     */
+    private $serie;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -466,6 +482,47 @@ class AbstractInvoice
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set serie
+     *
+     * @param Siwapp\CoreBundle\Entity\Serie $serie
+     */
+    public function setSerie(\Siwapp\CoreBundle\Entity\Serie $serie)
+    {
+        $this->serie = $serie;
+    }
+
+    /**
+     * Get serie
+     *
+     * @return Siwapp\CoreBundle\Entity\Serie
+     */
+    public function getSerie()
+    {
+        return $this->serie;
+    }
+
+    /**
+     * Add items
+     *
+     * @param Siwapp\InvoiceBundle\Entity\Item $item
+     */
+    public function addItem(\Siwapp\CoreBundle\Entity\Item $item)
+    {
+        $this->items[] = $item;
+        $this->setAmounts();
+    }
+
+    /**
+     * Get items
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
     }
 
     /** ########### CUSTOM METHODS ################## */

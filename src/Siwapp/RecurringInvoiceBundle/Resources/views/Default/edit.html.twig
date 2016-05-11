@@ -1,8 +1,210 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 
+{% block actionlink %}
+<a href="{{ path('recurring_add') }}" class="btn btn-default btn-primary">
+  <span class="glyphicon glyphicon-plus"></span>
+  {% trans %}New Recurring Invoice{% endtrans %}
+</a>
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% stylesheets
+    'bundles/siwappinvoice/css/invoice.css'
+    filter='cssrewrite'
+    filter='?yui_css'
+  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+{% endblock %}
+
+{% block searchform_container %}{% endblock %}
+
+
 {% block body %}
 
-  <h1>Recurring Invoices</h1>
-  <p>EDIT RECURRING INVOICE</p>
+  <article class="invoice-like">
+
+    <header id="invoice-like-title">
+      <h2>Recurring Invoice {{ entity.label() }}</h2>
+      <ul id="invoice-like-status" class="list-unstyled">
+        <li>
+          <span class="label {{ entity.enabled ? 'opened' : 'draft' }}">{{ entity.enabled ? 'Active'|trans : 'Inactive'|trans }}</span>
+        </li>
+      </ul>
+    </header>
+
+    {{ form_start(form, {'attr': {'class': 'form-stacked' } }) }}
+
+      {{ form_errors(form) }}
+
+      <div class="row">
+        <div id="invoice-like-execution-data" class="col-md-8">
+
+          <h3>{% trans %}Execution Time{% endtrans %}</h3>
+          <div class="row">
+            <div class="col-md-4 clearfix">
+              {{ form_row(form.starting_date) }}
+            </div>
+            <div class="col-md-4 clearfix">
+              {{ form_row(form.finishing_date) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              {{ form_row(form.period) }}
+            </div>
+            <div class="col-md-3">
+              <label>&nbsp;</label>
+              {{ form_errors(form.period_type) }}
+              {{ form_widget(form.period_type) }}
+            </div>
+            <div class="col-md-2">
+              {{ form_row(form.max_occurrences) }}
+            </div>
+            <div class="col-md-2">
+              {{ form_row(form.days_to_due) }}
+            </div>
+          </div>
+        </div>
+
+        <div id="invoice-like-properties" class="col-md-4">
+          <div class="panel panel-default">
+            <h3 class="panel-heading">{% trans %}Properties{% endtrans %}</h3>
+
+            <div class="panel-body">
+              <div class="form-inline">
+                {{ form_row(form.serie) }}
+              </div>
+              <div class="form-inline">
+                {{ form_row(form.enabled) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="invoice-like-customer-data" class="col-md-8">
+
+          <h3>{% trans %}Customer Data{% endtrans %}</h3>
+
+          <div class="row">
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.customer_name) }}
+            </div>
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.customer_identification) }}
+            </div>
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.contact_person) }}
+            </div>
+
+            <div class="col-md-6 clearfix">
+              <div class="form-group">
+                {{ form_label(form.customer_email) }}
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                  {{ form_widget(form.customer_email) }}
+                </div>
+                {{ form_errors(form.customer_email) }}
+              </div>
+            </div>
+
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.invoicing_address) }}
+            </div>
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.shipping_address) }}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+
+          <h3>{% trans %}Invoice items{% endtrans %}</h3>
+
+          <table id="invoice-like-items" class="table table-condensed table-striped align-middle">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="">{% trans %}Concept{% endtrans %}</th>
+                <th class="col-md-1 cell-align-center">{% trans %}Qty/Hours{% endtrans %}</th>
+                <th class="col-md-2 cell-align-center">{% trans %}Price{% endtrans %}</th>
+                <th class="col-md-1 cell-align-center">{% trans %}Discount{% endtrans %}</th>
+                <th class="col-md-2 cell-align-left">{% trans %}Taxes{% endtrans %}</th>
+                <th colspan="2" class="cell-align-right">{% trans %}Line Total{% endtrans %}</th>
+              </tr>
+            </thead>
+            <tbody data-prototype="{{ include('SiwappCoreBundle:Partials:items.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
+              {% for item in form.items %}
+                {{ include('SiwappCoreBundle:Partials:items.html.twig', { 'form': item, 'entity': item.vars.value, 'currency': currency }) }}
+              {% endfor %}
+              {# TODO: Action buttons: add/remove items, taxes, sort... #}
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+      <div class="row totals">
+        <div class="col-md-6">
+
+          <a id="invoice-like-add-item" href="#" class="btn btn-default btn-info"><span class="glyphicon glyphicon-plus glyphicon-white"></span> Add Item</a>
+          <script type="text/javascript">
+              $('#invoice-like-add-item').on('click', function(event){
+                  event.preventDefault();
+                  var collectionHolder = $('#invoice-like-items tbody');
+                  var prototype = collectionHolder.attr('data-prototype');
+                  form = prototype.replace(/__name__/g, collectionHolder.children().length);
+                  collectionHolder.append(form);
+              });
+          </script>
+          {# TODO: Action buttons: add items. PROTOTYPE MUST BE CUSTOMIZED. #}
+
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+          <table id="invoice-like-totals" class="table table-condensed table-striped">
+            <tbody>
+              <tr>
+                <th class="cell-size-large">{% trans %}Subtotal{% endtrans %}</th>
+                <td class="cell-align-right">{{ entity.baseAmount|localizedcurrency(currency) }}</td>
+              </tr>
+              <tr>
+                <th>{% trans %}Taxes{% endtrans %}</th>
+                <td class="cell-align-right">{{ entity.taxAmount|localizedcurrency(currency) }}</td>
+              </tr>
+              <tr>
+                <th>Invoice Total ({{ currency }})</th>
+                <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="invoice-like-notes" class="row">
+        <div class="col-md-6">
+          {{ form_row(form.terms) }}
+        </div>
+        <div class="col-md-6">
+          {{ form_row(form.notes) }}
+        </div>
+      </div>
+
+      {{ form_rest(form) }}
+
+      <div class="form-actions">
+        <input type="submit" class="btn btn-default btn-primary" name="save" value="{% trans %}Save{% endtrans %}">
+        <div class="float-right">
+          {% if entity.id %}
+          <a class="btn btn-default btn-danger" href="{{ path('recurring_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
+          {% endif %}
+        </div>
+      </div>
+    {{ form_end(form) }}
+
+  </article>
 
 {% endblock %}
