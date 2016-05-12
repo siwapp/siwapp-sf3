@@ -1,0 +1,48 @@
+<table class="table table-condensed table-striped align-middle" data-type="estimates">
+  <thead>
+    <tr>
+      <th class="cell-size-tiny cell-align-center">
+        <input type="checkbox" name="all" />
+      </th>
+      <th class="cell-size-medium">
+        {{ knp_pagination_sortable(invoices, 'Series'|trans, 'e.serie') }}
+      </th>
+      <th>
+        {{ knp_pagination_sortable(invoices, 'Customer'|trans, 'e.customer_name') }}
+      </th>
+      <th class="cell-size-medium">
+        {{ knp_pagination_sortable(invoices, 'Date'|trans, 'e.issue_date') }}
+      </th>
+      <th class="cell-size-small-medium cell-align-center">
+        {{ knp_pagination_sortable(invoices, 'Status'|trans, 'e.status') }}
+      </th>
+      <th class="cell-size-medium cell-align-right">
+        {{ knp_pagination_sortable(invoices, 'Total'|trans, 'e.gross_amount') }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if invoices|length == 0 %}
+      <tr>
+        <td colspan="7">{% trans %}No estimates found.{% endtrans %}</td>
+      </tr>
+    {% endif %}
+    {% for entity in invoices %}
+      <tr data-link="{{ path('estimate_show', { 'id': entity.id }) }}">
+        <td class="cell-align-center">
+          <input type="checkbox" name="id[]" value="{{ entity.id }}" />
+        </td>
+        <td class="cell-size-medium cell-align-center">{{ entity.serie.getName() }}</td>
+        <td>{{ entity.getCustomerName }}</td>
+        <td>{{ entity.issueDate }}</td>
+        <td class="cell-align-center">
+          <span class="label {{ entity.status }}">{% trans with { '%status%': entity.status } %}%status%{% endtrans %}</span>
+        </td>
+        <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(invoices) }}
+</div>
