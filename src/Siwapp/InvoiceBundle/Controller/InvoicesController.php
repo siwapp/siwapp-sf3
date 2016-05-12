@@ -7,8 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\InvoiceBundle\Entity\Invoice;
-use Siwapp\InvoiceBundle\Entity\Item;
 use Siwapp\InvoiceBundle\Entity\Payment;
 use Siwapp\InvoiceBundle\Form\InvoiceType;
 

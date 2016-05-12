@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
-use Siwapp\RecurringInvoiceBundle\Entity\Item;
 
 /**
  * @Route("/recurring")
@@ -26,7 +26,7 @@ class RecurringInvoicesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')->createQueryBuilder('ri');
 
-        $form = $this->createForm('Siwapp\InvoiceBundle\Form\SearchInvoiceType', null, [
+        $form = $this->createForm('Siwapp\RecurringInvoiceBundle\Form\SearchRecurringInvoiceType', null, [
             'action' => $this->generateUrl('recurring_index'),
             'method' => 'GET',
         ]);
