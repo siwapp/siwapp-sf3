@@ -51,6 +51,14 @@ class Estimate extends AbstractInvoice
      */
     private $sent_by_email;
 
+    /**
+     * @var date $issue_date
+     *
+     * @ORM\Column(name="issue_date", type="date", nullable=true)
+     * @Assert\Date()
+     */
+    private $issue_date;
+
 
     /**
      * Set draft
@@ -110,6 +118,27 @@ class Estimate extends AbstractInvoice
     public function getSentByEmail()
     {
         return $this->sent_by_email;
+    }
+
+    /**
+     * Set issue_date
+     *
+     * @param date $issueDate
+     */
+    public function setIssueDate($issueDate)
+    {
+        $this->issue_date = $issueDate instanceof \DateTime ?
+	  $issueDate: new \DateTime($issueDate);
+    }
+
+    /**
+     * Get issue_date
+     *
+     * @return date
+     */
+    public function getIssueDate()
+    {
+        return $this->issue_date;
     }
 
     /** ********** CUSTOM METHODS AND PROPERTIES ************* */

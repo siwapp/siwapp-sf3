@@ -146,14 +146,6 @@ class RecurringInvoicesController extends Controller
                     $qb->expr()->like('s.name', $terms)
                 ));
             }
-            elseif ($field == 'date_from') {
-                $qb->andWhere('ri.issue_date >= :date_from');
-                $qb->setParameter('date_from', $value);
-            }
-            elseif ($field == 'date_to') {
-                $qb->andWhere('ri.issue_date <= :date_to');
-                $qb->setParameter('date_to', $value);
-            }
             elseif ($field == 'status') {
                 $qb->andWhere('ri.status = :status');
                 $qb->setParameter('status', $value);
