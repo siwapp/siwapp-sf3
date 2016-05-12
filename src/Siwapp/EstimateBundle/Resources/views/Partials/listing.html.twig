@@ -34,7 +34,7 @@
         </td>
         <td class="cell-size-medium cell-align-center">{{ entity.serie.getName() }}</td>
         <td>{{ entity.getCustomerName }}</td>
-        <td>{{ entity.issueDate }}</td>
+        <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
         <td class="cell-align-center">
           <span class="label {{ entity.status }}">{% trans with { '%status%': entity.status } %}%status%{% endtrans %}</span>
         </td>
