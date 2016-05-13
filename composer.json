@@ -29,7 +29,6 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "symfony/assetic-bundle": "^2.8",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "jms/security-extra-bundle": "^1.6",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "twig/extensions": "^1.3",
         "knplabs/knp-paginator-bundle": "^2.5",

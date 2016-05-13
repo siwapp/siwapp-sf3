@@ -11,10 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Siwapp\EstimateBundle\Entity\Estimate
  *
  * @ORM\Table(indexes={
- *    @ORM\index(name="estimate_cstnm_idx", columns={"customer_name"}),
- *    @ORM\index(name="estimate_cstid_idx", columns={"customer_identification"}),
- *    @ORM\index(name="estimate_cstml_idx", columns={"customer_email"}),
- *    @ORM\index(name="estimate_cntct_idx", columns={"contact_person"})
+ *    @ORM\Index(name="estimate_cstnm_idx", columns={"customer_name"}),
+ *    @ORM\Index(name="estimate_cstid_idx", columns={"customer_identification"}),
+ *    @ORM\Index(name="estimate_cstml_idx", columns={"customer_email"}),
+ *    @ORM\Index(name="estimate_cntct_idx", columns={"contact_person"})
  * })
  * @ORM\Entity(repositoryClass="Siwapp\EstimateBundle\Repository\EstimateRepository")
  * @ORM\HasLifecycleCallbacks()

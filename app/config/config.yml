@@ -82,10 +82,6 @@ fos_user:
     firewall_name: main
     user_class: Siwapp\CoreBundle\Entity\User
 
-jms_security_extra:
-#    secure_controllers:  true
-    secure_all_services: false
-
 stof_doctrine_extensions:
     orm:
         default:
