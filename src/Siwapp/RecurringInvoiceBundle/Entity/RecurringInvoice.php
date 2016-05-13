@@ -107,6 +107,22 @@ class RecurringInvoice extends AbstractInvoice
     protected $items;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice")
+     * @ORM\JoinTable(name="recurring_invoices_invoices",
+     *      joinColumns={@ORM\JoinColumn(name="recurring_invoice_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="invoice_id", referencedColumnName="id")}
+     * )
+     */
+    protected $invoices;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->invoices = new ArrayCollection;
+    }
+
+    /**
      * Set days_to_due
      *
      * @param integer $daysToDue
@@ -283,6 +299,11 @@ class RecurringInvoice extends AbstractInvoice
         : new \DateTime($lastExecutionDate);
     }
 
+    public function getInvoices()
+    {
+        return $this->invoices;
+    }
+
     /**
      * Get last_execution_date
      *
@@ -317,6 +338,29 @@ class RecurringInvoice extends AbstractInvoice
     const ACTIVE = 2;
     const PENDING = 3;
 
+    public function getStatusString()
+    {
+        switch($this->status)
+        {
+          case self::INACTIVE;
+            $status = 'inactive';
+             break;
+          case self::FINISHED;
+            $status = 'finished';
+            break;
+          case self::ACTIVE;
+            $status = 'active';
+            break;
+          case self::PENDING:
+            $status = 'pending';
+            break;
+          default:
+            $status = 'unknown';
+            break;
+        }
+        return $status;
+    }
+
     /**
      * get occurrences. get the number of invoices this recurring has generated
      *
@@ -335,7 +379,7 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function countPendingInvoices()
     {
-        return ($this->must_occurrences - $this->getOcurrences());
+        return ($this->must_occurrences - $this->getOccurrences());
     }
 
     /**
@@ -401,7 +445,32 @@ class RecurringInvoice extends AbstractInvoice
     public function checkStatus()
     {
         $this->checkMustOccurrences();
-        //TODO : End this
+
+        if(!$this->getEnabled())
+        {
+          $this->setStatus(RecurringInvoice::DISABLED);
+        }
+        else
+        {
+          if(($this->getMaxOccurrences() && $this->getOccurrences() >= $this->getMaxOccurrences())
+                  || ($this->getFinishingDate()
+                    && $this->getLastExecutionDate() >= $this->getFinishingDate()
+                    && $this->countPendingInvoices() <= 0))
+          {
+            $this->setStatus(RecurringInvoice::FINISHED);
+          }
+          else
+          {
+            if($this->countPendingInvoices() > 0)
+            {
+              $this->setStatus(RecurringInvoice::PENDING);
+            }
+            else
+            {
+              $this->setStatus(RecurringInvoice::ENABLED);
+            }
+          }
+        }
     }
 
 }

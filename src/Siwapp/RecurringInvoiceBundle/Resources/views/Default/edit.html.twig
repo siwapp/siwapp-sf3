@@ -29,7 +29,7 @@
       <h2>Recurring Invoice {{ entity.label() }}</h2>
       <ul id="invoice-like-status" class="list-unstyled">
         <li>
-          <span class="label {{ entity.enabled ? 'opened' : 'draft' }}">{{ entity.enabled ? 'Active'|trans : 'Inactive'|trans }}</span>
+          <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
         </li>
       </ul>
     </header>

@@ -44,13 +44,6 @@ class Invoice extends AbstractInvoice
     private $number;
 
     /**
-     * @var bigint $recurring_invoice_id
-     *
-     * @ORM\Column(name="recurring_invoice_id", type="bigint", nullable=true)
-     */
-    private $recurring_invoice_id;
-
-    /**
      * @var date $issue_date
      *
      * @ORM\Column(name="issue_date", type="date", nullable=true)
@@ -153,26 +146,6 @@ class Invoice extends AbstractInvoice
     public function getNumber()
     {
         return $this->number;
-    }
-
-    /**
-     * Set recurring_invoice_id
-     *
-     * @param bigint $recurringInvoiceId
-     */
-    public function setRecurringInvoiceId($recurringInvoiceId)
-    {
-        $this->recurring_invoice_id = $recurringInvoiceId;
-    }
-
-    /**
-     * Get recurring_invoice_id
-     *
-     * @return bigint
-     */
-    public function getRecurringInvoiceId()
-    {
-        return $this->recurring_invoice_id;
     }
 
     /**

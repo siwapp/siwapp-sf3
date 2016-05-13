@@ -40,7 +40,7 @@
         <td>{{ entity.periodType }}</td>
         <td>{{ entity.period }}</td>
         <td class="cell-align-center">
-          <span class="label {{ entity.enabled ? 'opened' : 'draft' }}">{% trans with { '%status%': entity.enabled } %}%status%{% endtrans %}</span>
+          <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
         </td>
         <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
       </tr>
