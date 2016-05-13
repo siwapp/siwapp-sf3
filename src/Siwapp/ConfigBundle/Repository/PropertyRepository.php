@@ -1,6 +1,6 @@
 <?php
 
-namespace Siwapp\ConfigBundle\Entity;
+namespace Siwapp\ConfigBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
