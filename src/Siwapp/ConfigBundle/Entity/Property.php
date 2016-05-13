@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Siwapp\ConfigBundle\Entity\Property
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Siwapp\ConfigBundle\Entity\PropertyRepository")
+ * @ORM\Entity(repositoryClass="Siwapp\ConfigBundle\Repository\PropertyRepository")
  */
 class Property
 {
@@ -31,7 +31,7 @@ class Property
     {
         return $this->getRawValue();
     }
-    
+
     /**
      * Set keey
      *
@@ -45,7 +45,7 @@ class Property
     /**
      * Get keey
      *
-     * @return string 
+     * @return string
      */
     public function getKeey()
     {
@@ -61,7 +61,7 @@ class Property
     {
         $this->value = $value;
     }
-    
+
     /**
      * Set value with JSON encode
      *
@@ -76,13 +76,13 @@ class Property
     /**
      * Get value
      *
-     * @return text 
+     * @return text
      */
     public function getRawValue()
     {
         return $this->value;
     }
-    
+
     /**
      * returns the value JSON decoded
      *
@@ -93,5 +93,5 @@ class Property
     {
         return json_decode($this->getRawValue(), true);
     }
-    
+
 }

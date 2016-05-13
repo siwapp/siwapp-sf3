@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *    @ORM\index(name="estimate_cstml_idx", columns={"customer_email"}),
  *    @ORM\index(name="estimate_cntct_idx", columns={"contact_person"})
  * })
- * @ORM\Entity(repositoryClass="Siwapp\EstimateBundle\Entity\EstimateRepository")
+ * @ORM\Entity(repositoryClass="Siwapp\EstimateBundle\Repository\EstimateRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Estimate extends AbstractInvoice

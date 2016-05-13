@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *    @ORM\index(name="recurring_cstml_idx", columns={"customer_email"}),
  *    @ORM\index(name="recurring_cntct_idx", columns={"contact_person"})
  * })
- * @ORM\Entity(repositoryClass="Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoiceRepository")
  * @ORM\Entity(repositoryClass="Siwapp\RecurringInvoiceBundle\Repository\RecurringInvoiceRepository")
  */
 class RecurringInvoice extends AbstractInvoice

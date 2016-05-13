@@ -1,6 +1,6 @@
 <?php
 
-namespace Siwapp\EstimateBundle\Entity;
+namespace Siwapp\EstimateBundle\Repository;
 
 use Siwapp\CoreBundle\Entity\Serie;
 use Siwapp\CoreBundle\Repository\AbstractInvoiceRepository;
