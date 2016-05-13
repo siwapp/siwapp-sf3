@@ -36,7 +36,7 @@
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
         <td class="cell-align-center">
-          <span class="label {{ entity.status }}">{% trans with { '%status%': entity.status } %}%status%{% endtrans %}</span>
+          <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
         </td>
         <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
       </tr>

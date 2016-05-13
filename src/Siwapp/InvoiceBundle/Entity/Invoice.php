@@ -74,6 +74,8 @@ class Invoice extends AbstractInvoice
     {
         parent::__construct();
         $this->payments = new ArrayCollection();
+        $this->issue_date = new \DateTime();
+        $this->due_date = new \DateTime();
     }
 
     /**
@@ -253,8 +255,6 @@ class Invoice extends AbstractInvoice
     const OPENED   = 2;
     const OVERDUE  = 3;
 
-    private $serie_changed = false;
-
     public function getDueAmount()
     {
         if ($this->isDraft()) {
@@ -292,23 +292,6 @@ class Invoice extends AbstractInvoice
         }
         // TODO: somebody wrote this, but there is no such parent method
         // return parent::__isset($name);
-    }
-
-    /**
-     * When setting serie, we check if there has been a serie change,
-     * because the invoice number will have to change later
-     *
-     * TODO: Review this method when serie object are available
-     *
-     * @author JoeZ99 <jzarate@gmail.com>
-     *
-     */
-    private function checkSerieChanged(\Siwapp\CoreBundle\Entity\Serie $serie)
-    {
-        if($this->number>0 && $this->serie && $this->serie != $serie)
-        {
-            $this->serie_changed = true;
-        }
     }
 
     /**
@@ -372,23 +355,6 @@ class Invoice extends AbstractInvoice
         return $this;
     }
 
-    /**
-     * needsNumber
-     *
-     * checks if invoice need number asignment or reasignment
-     * either it has not one yet, and it's not draft  or
-     * it's serie has changed and need new numeration
-     *
-     * @author JoeZ
-     * @return boolean
-     */
-    public function needsNumber()
-    {
-
-        return (!$this->number && $this->status!=self::DRAFT) ||
-            ($this->serie_changed && $this->status!=self::DRAFT);
-    }
-
 
     /* ********** LIFECYCLE CALLBACKS *********** */
 
@@ -400,10 +366,9 @@ class Invoice extends AbstractInvoice
     {
         // compute the number of invoice
         if( (!$this->number && $this->status!=self::DRAFT) ||
-            ($this->serie_changed && $this->status!=self::DRAFT)
+            ($event->hasChangedField('serie') && $this->status!=self::DRAFT)
             )
         {
-            $this->serie_changed = false;
             $this->setNumber($event->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice')->getNextNumber($this->getSerie()));
         }
     }

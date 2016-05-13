@@ -2,20 +2,19 @@
 
 namespace Siwapp\EstimateBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Siwapp\CoreBundle\Form\AbstractInvoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EstimateType extends AbstractType
+class EstimateType extends AbstractInvoiceType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('draft')
-            ->add('number')
-            ->add('sent_by_email')
+            ->add('issue_date', DateType::class, ['widget' => 'single_text'])
         ;
     }
 

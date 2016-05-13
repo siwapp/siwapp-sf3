@@ -1,8 +1,18 @@
-{% extends "::base.html.twig" %}
+{% extends "SiwappCoreBundle::base.html.twig" %}
+
+{% block actionlink %}
+<a href="{{ path('estimate_add') }}" class="btn btn-default btn-primary">
+  <span class="glyphicon glyphicon-plus"></span>
+  {% trans %}New Estimate{% endtrans %}
+</a>
+{% endblock %}
+
+{% block searchform %}{% endblock %}
 
 {% block body %}
-  
+
   <h1>Estimates</h1>
   <p>SHOW ESTIMATE</p>
-  
+
+  <a class="btn btn-default" href="{{ path('estimate_edit', {'id': entity.id}) }}">{% trans %}Edit{% endtrans %}</a>
 {% endblock %}

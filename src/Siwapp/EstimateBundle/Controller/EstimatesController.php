@@ -9,6 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\CoreBundle\Entity\Item;
+use Siwapp\EstimateBundle\Entity\Estimate;
+use Siwapp\EstimateBundle\Form\EstimateType;
+
 /**
  * @Route("/estimates")
  */
@@ -49,49 +53,85 @@ class EstimatesController extends Controller
 
     /**
      * @Route("/{id}/show", name="estimate_show")
-     * @Template
+     * @Template("SiwappEstimateBundle:Default:show.html.twig")
      */
     public function showAction($id)
     {
-        return array();
+        $entity = $this->getDoctrine()
+            ->getRepository('SiwappEstimateBundle:Estimate')
+            ->find($id);
+
+        return array(
+            'entity' => $entity,
+        );
     }
 
     /**
      * @Route("/add", name="estimate_add")
      * @Template("SiwappEstimateBundle:Default:edit.html.twig")
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
-        return array();
+        $em = $this->getDoctrine()->getManager();
+        $estimate = new Estimate();
+        $estimate->addItem(new Item());
+
+        $form = $this->createForm(EstimateType::class, $estimate, [
+            'action' => $this->generateUrl('estimate_add'),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($estimate);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('estimate_edit', array('id' => $estimate->getId())));
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'entity' => $estimate,
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+        );
     }
 
     /**
-     * @Route("/create", name="estimate_create")
-     * @Method("POST")
+     * @Route("/{id}/edit", name="estimate_edit")
      * @Template("SiwappEstimateBundle:Default:edit.html.twig")
      */
-    public function createAction()
+    public function editAction(Request $request, $id)
     {
-        return $this->redirect($this->generateUrl('estimate_edit'));
-    }
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('SiwappEstimateBundle:Estimate')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Estimate entity.');
+        }
+        $form = $this->createForm(EstimateType::class, $entity, [
+            'action' => $this->generateUrl('estimate_edit', ['id' => $id]),
+        ]);
+        $form->handleRequest($request);
 
-    /**
-     * @Route("/edit", name="estimate_edit")
-     * @Template
-     */
-    public function editAction()
-    {
-        return array();
-    }
+        if ($form->isValid()) {
+            if ($request->request->has('save_draft')) {
+                $entity->setStatus(Estimate::DRAFT);
+            }
+            elseif ($request->request->has('save_close')) {
+                $entity->setStatus(Estimate::REJECTED);
+            }
+            elseif ($entity->isDraft() && $request->request->has('save')) {
+                $entity->setStatus(Estimate::APPROVED);
+            }
+            $em->persist($entity);
+            $em->flush();
 
-    /**
-     * @Route("/update", name="estimate_update")
-     * @Method("POST")
-     * @Template("SiwappEstimateBundle:Default:edit.html.twig")
-     */
-    public function updateAction()
-    {
-        return $this->redirect($this->generateUrl('estimate_edit'));
+            return $this->redirect($this->generateUrl('estimate_edit', array('id' => $id)));
+        }
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+        );
     }
 
     /**

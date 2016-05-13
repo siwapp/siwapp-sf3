@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *    @ORM\index(name="estimate_cntct_idx", columns={"contact_person"})
  * })
  * @ORM\Entity(repositoryClass="Siwapp\EstimateBundle\Entity\EstimateRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Estimate extends AbstractInvoice
 {
@@ -31,13 +32,6 @@ class Estimate extends AbstractInvoice
     protected $items;
 
     /**
-     * @var boolean $draft
-     *
-     * @ORM\Column(name="draft", type="boolean")
-     */
-    private $draft;
-
-    /**
      * @var integer $number
      *
      * @ORM\Column(name="number", type="integer", nullable=true)
@@ -47,7 +41,7 @@ class Estimate extends AbstractInvoice
     /**
      * @var boolean $sent_by_email
      *
-     * @ORM\Column(name="sent_by_email", type="boolean")
+     * @ORM\Column(name="sent_by_email", type="boolean", nullable=true)
      */
     private $sent_by_email;
 
@@ -59,6 +53,11 @@ class Estimate extends AbstractInvoice
      */
     private $issue_date;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->issue_date = new \DateTime();
+    }
 
     /**
      * Set draft
@@ -75,9 +74,19 @@ class Estimate extends AbstractInvoice
      *
      * @return boolean
      */
-    public function getDraft()
+    public function isDraft()
     {
-        return $this->draft;
+        return $this->status == self::DRAFT;
+    }
+
+    /**
+     * Get draft
+     *
+     * @return boolean
+     */
+    public function isApproved()
+    {
+        return $this->status == self::APPROVED;
     }
 
     /**
@@ -143,17 +152,70 @@ class Estimate extends AbstractInvoice
 
     /** ********** CUSTOM METHODS AND PROPERTIES ************* */
 
+    public function __toString()
+    {
+        return $this->label();
+    }
+    public function label()
+    {
+        $series = $this->getSerie();
+        $label = '';
+        $label .= $series ? $series->getValue() : '';
+        $label .= $this->isDraft() ? '[draft]' : $this->getNumber();
+
+        return $label;
+    }
+
     const DRAFT    = 0;
     const PENDING  = 1;
     const APPROVED = 2;
     const REJECTED = 3;
 
+    public function getStatusString()
+    {
+        switch($this->status)
+        {
+          case self::DRAFT;
+            $status = 'draft';
+             break;
+          case self::REJECTED;
+            $status = 'rejected';
+            break;
+          case self::APPROVED;
+            $status = 'approved';
+            break;
+          case self::PENDING:
+            $status = 'pending';
+            break;
+          default:
+            $status = 'unknown';
+            break;
+        }
+        return $status;
+    }
+
     public function checkStatus()
     {
-        if($this->getDraft())
+        if($this->isDraft())
         {
             $this->setStatus(Estimate::DRAFT);
         }
     }
 
+    /* ********** LIFECYCLE CALLBACKS *********** */
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setNextNumber($event)
+    {
+        // compute the number of invoice
+        if( (!$this->number && $this->status!=self::DRAFT) ||
+            ($event->hasChangedField('serie') && $this->status!=self::DRAFT)
+            )
+        {
+            $this->setNumber($event->getEntityManager()->getRepository('SiwappEstimateBundle:Estimate')->getNextNumber($this->getSerie()));
+        }
+    }
 }
