@@ -431,36 +431,7 @@ class Invoice extends AbstractInvoice
             )
         {
             $this->serie_changed = false;
-            // TODO set number as the next available number for that serie
-            $this->setNumber($this->getNextNumber($event->getEntityManager()));
-        }
-    }
-
-    protected function getNextNumber($em)
-    {
-        $series = $this->getSerie();
-        $repo = $em->getRepository('SiwappInvoiceBundle:Invoice');
-        $found = $repo->findBy([
-            'status' => [self::DRAFT, '<>'],
-            'serie' => $series,
-        ]);
-
-        if (count($found) > 0)
-        {
-          $result = $repo->createQueryBuilder('i')
-            ->select('MAX(i.number) AS max_number')
-            ->where('i.status <> :status')
-            ->andWhere('i.serie = :series')
-            ->setParameter('status', self::DRAFT)
-            ->setParameter('series', $series)
-            ->getQuery()
-            ->getSingleResult();
-
-          return $result['max_number'] + 1;
-        }
-        else
-        {
-          return $series->getFirstNumber();
+            $this->setNumber($event->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice')->getNextNumber($this->getSerie()));
         }
     }
 

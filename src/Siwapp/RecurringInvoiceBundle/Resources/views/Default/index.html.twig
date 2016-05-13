@@ -12,6 +12,23 @@
 {% endblock %}
 
 {% block body %}
+  <div class="row"><div class="col-md-6">
+    <table id="recurring-summary" class="table table-bordered table-condensed col-md-2">
+      <thead>
+        <tr>
+          <th colspan="4">Average turnover</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>{{ expected|localizedcurrency(currency) }}</strong> /day</td>
+          <td><strong>{{ (expected*7)|localizedcurrency(currency) }}</strong> /week</td>
+          <td><strong>{{ (expected*30)|localizedcurrency(currency) }}</strong> /month</td>
+          <td><strong>{{ (expected*365)|localizedcurrency(currency) }}</strong> /year</td>
+        </tr>
+      </tbody>
+    </table>
+  </div></div>
   <div id="invoices-latest-recurring-invoices">
     {% include "SiwappRecurringInvoiceBundle:Partials:listing.html.twig" %}
   </div>

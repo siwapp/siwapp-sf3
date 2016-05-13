@@ -47,6 +47,7 @@ class RecurringInvoicesController extends Controller
             'invoices' => $pagination,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
+            'expected' => $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')->getAverageDayAmount(),
         );
     }
 

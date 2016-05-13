@@ -4,10 +4,9 @@ namespace Siwapp\InvoiceBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
+use Siwapp\CoreBundle\Entity\Serie;
 use Siwapp\CoreBundle\Repository\AbstractInvoiceRepository;
-
 use Siwapp\InvoiceBundle\Entity\Invoice;
-
 
 /**
  * InvoiceRepository
@@ -17,24 +16,36 @@ use Siwapp\InvoiceBundle\Entity\Invoice;
  */
 class InvoiceRepository extends AbstractInvoiceRepository
 {
-    /** 
+    /**
      * getNextNumber
      * Obtain the next numer available for the provided series
      * @param \Siwapp\CoreBundle\Entity\Serie @serie
      * @return integer
      */
-    public function getNextNumber($serie)
+    public function getNextNumber(Serie $series)
     {
-        $em = $this->getEntityManager();
-        $number = $em->createQuery('SELECT MAX(i.number)  
-            FROM \Siwapp\InvoiceBundle\Entity\Invoice i  JOIN i.serie s
-            WHERE i.status!=:draft AND i.serie=:serie')
-            ->setParameters(array(
-                                  'draft'=>Invoice::DRAFT, 
-                                  'serie'=>$serie))
-            ->getSingleScalarResult();
+        $found = $this->findBy([
+            'status' => [Invoice::DRAFT, '<>'],
+            'serie' => $series,
+        ]);
 
-        return $number ? intval($number) + 1: $serie->getFirstNumber();
-        
+        if (count($found) > 0)
+        {
+          $result = $this->getEntityManager()->createQueryBuilder()
+            ->select('MAX(i.number) AS max_number')
+            ->from(Invoice::class, 'i')
+            ->where('i.status <> :status')
+            ->andWhere('i.serie = :series')
+            ->setParameter('status', Invoice::DRAFT)
+            ->setParameter('series', $series)
+            ->getQuery()
+            ->getSingleResult();
+
+          return $result['max_number'] + 1;
+        }
+        else
+        {
+          return $series->getFirstNumber();
+        }
     }
 }

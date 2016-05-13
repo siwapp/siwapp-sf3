@@ -145,7 +145,7 @@ class InvoicesController extends AbstractInvoiceController
      * @Route("/payments/{invoiceId}", name="invoice_payments")
      * @Template("SiwappInvoiceBundle:Partials:payments.html.twig")
      */
-    public function paymentsAction($invoiceId)
+    public function paymentsAction(Request $request, $invoiceId)
     {
         // Return all payments
         $em = $this->getDoctrine()->getManager();
