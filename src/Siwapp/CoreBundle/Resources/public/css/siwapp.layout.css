@@ -148,3 +148,7 @@ a.btn-primary:active:hover,
 #bd h2 {
   margin: 0.5em 0 0.25em;
 }
+
+.entity-actions {
+  margin-top: 1.2em;
+}

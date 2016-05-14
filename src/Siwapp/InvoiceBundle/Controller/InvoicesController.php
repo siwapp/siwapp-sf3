@@ -117,6 +117,11 @@ class InvoicesController extends AbstractInvoiceController
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
 
+        if (!$entity->isClosed()) {
+            // When the invoice is open send to the edit form by default.
+            return $this->redirect($this->generateUrl('invoice_edit', array('id' => $id)));
+        }
+
         return array(
             'entity' => $entity,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),

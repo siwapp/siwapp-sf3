@@ -17,9 +17,21 @@
 
   <article class="invoice-like">
 
-    <header id="invoice-like-title">
+    <header id="invoice-like-title" class="clearfix">
+      {% if entity.id %}
+      <ul class="entity-actions list-inline float-right">
+        <li><a class="btn btn-default btn-info" href="{{ path('invoice_show_pdf', {'id': entity.id}) }}"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}PDF{% endtrans %}</a></li>
+        <li><a class="btn btn-default btn-info" href="{{ path('invoice_show_print', {'id': entity.id}) }}"><span class="glyphicon glyphicon-print"></span> {% trans %}Print{% endtrans %}</a></li>
+        <li><form action="{{ path('invoice_email', {'id': entity.id}) }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+          <button type="submit" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-envelope"></span> Send Email</button>
+          </form>
+        </li>
+      </ul>
+      {% endif %}
+
       <h2>Invoice {{ entity.label() }}</h2>
-      <ul id="invoice-like-status" class="list-unstyled">
+      <ul class="list-inline list-unstyled">
         <li>
           <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
         </li>
