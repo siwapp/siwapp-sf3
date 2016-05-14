@@ -19,7 +19,7 @@ use Siwapp\InvoiceBundle\Form\InvoiceType;
 class InvoicesController extends AbstractInvoiceController
 {
     /**
-     * @Route("/", name="invoice_index")
+     * @Route("", name="invoice_index")
      * @Template("SiwappInvoiceBundle:Default:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -56,9 +56,48 @@ class InvoicesController extends AbstractInvoiceController
                 }
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'Invoice(s) deleted.');
+
+                // Rebuild the query, since some objects are now missing.
+                return $this->redirect($this->generateUrl('invoice_index'));
             }
-            // Rebuild the query, since some objects are now missing.
-            return $this->redirect($this->generateUrl('invoice_index'));
+            elseif ($request->request->has('pdf') || $request->request->has('print')) {
+                $pages = [];
+                $settings = $em->getRepository('SiwappConfigBundle:Property')->getAll();
+                foreach ($data['invoices'] as $invoice) {
+                    $pages[] = $this->renderView('SiwappInvoiceBundle:Print:invoice.html.twig', array(
+                        'invoice'  => $invoice,
+                        'settings' => $settings,
+                        'print' => $request->request->has('print'),
+                    ));
+                }
+
+                $html = $this->get('siwapp_core.html_page_merger')->merge($pages, '<div class="pagebreak"> </div>');
+                if ($request->request->has('pdf')) {
+                    $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
+
+                    return new Response($pdf, 200, [
+                        'Content-Type' => 'application/pdf',
+                        'Content-Disposition' => 'attachment; filename="Invoices.pdf"'
+                    ]);
+                }
+                else {
+                    return new Response($html);
+                }
+            }
+            elseif ($request->request->has('email')) {
+                foreach ($data['invoices'] as $invoice) {
+                    $message = $this->getEmailMessage($invoice);
+                    $result = $this->get('mailer')->send($message);
+                    if ($result) {
+                        $invoice->setSentByEmail(true);
+                        $em->persist($invoice);
+                    }
+                }
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Invoice(s) sent by email.');
+
+                return $this->redirect($this->generateUrl('invoice_index'));
+            }
         }
 
         return array(
@@ -75,15 +114,15 @@ class InvoicesController extends AbstractInvoiceController
      */
     public function showAction($id)
     {
-        $entity = $this->getDoctrine()
-            ->getRepository('SiwappInvoiceBundle:Invoice')
-            ->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Invoice entity.');
         }
 
         return array(
             'entity' => $entity,
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
         );
     }
 
@@ -237,7 +276,7 @@ class InvoicesController extends AbstractInvoiceController
         $message = \Swift_Message::newInstance()
             ->setSubject($invoice->label())
             ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
-            ->setTo($invoice-getCustomerEmail(), $invoice->getCustomerName())
+            ->setTo($invoice->getCustomerEmail(), $invoice->getCustomerName())
             ->setBody($html, 'text/html')
             ->attach($attachment);
 

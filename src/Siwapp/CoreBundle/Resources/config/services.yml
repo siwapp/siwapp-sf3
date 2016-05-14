@@ -7,3 +7,5 @@ services:
         class: Siwapp\CoreBundle\Extension\SiwappCoreTwigExtension
         tags:
             - { name: twig.extension }
+    siwapp_core.html_page_merger:
+        class: Siwapp\CoreBundle\HtmlPageMerger

@@ -57,7 +57,7 @@ class Tax
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -77,7 +77,7 @@ class Tax
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -97,7 +97,7 @@ class Tax
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -117,7 +117,7 @@ class Tax
     /**
      * Get is_default
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsDefault()
     {
@@ -127,10 +127,15 @@ class Tax
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

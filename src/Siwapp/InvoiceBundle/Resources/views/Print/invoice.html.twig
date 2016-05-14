@@ -1,4 +1,4 @@
-<!doctype html">
+<!doctype html>
 <html lang="{{ app.request.locale }}">
 <head>
   <meta charset="utf-8" />
@@ -36,11 +36,17 @@
     @media print {
       body           { margin:auto; }
       .section       { page-break-inside:avoid; }
+      .pagebreak     { page-break-before: always; }
       div#sfWebDebug { display:none; }
     }
   </style>
+  {% if print is defined and print %}
+  <script type="text/javascript">
+    window.onload = function() { window.print(); }
+  </script>
+  {% endif %}
 </head>
-<body {% if print is defined and print %}onload="window.print();"{% endif %}>
+<body>
   {% if settings.company_logo %}
     <div class="logo">
       <img src="{{ settings.company_logo }}" alt="{{ settings.company_name }}" />

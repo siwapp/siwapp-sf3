@@ -1,0 +1,22 @@
+<tr>
+  <td>
+    {{ item.description }}
+  </td>
+  <td class="cell-align-right">
+    {{ item.quantity }}
+  </td>
+  <td class="cell-align-right">
+    {{ item.unitary_cost }}
+  </td>
+  <td class="cell-align-right">
+    {{ item.discount }}
+  </td>
+  <td class="taxes form-inline">
+    {% for tax in item.taxes %}
+    {{ tax.name }}
+    {% endfor %}
+  </td>
+  <td class="cell-align-right">
+    {{ item.grossAmount|localizedcurrency(currency) }}
+  </td>
+</tr>

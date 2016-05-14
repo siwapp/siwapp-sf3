@@ -53,7 +53,7 @@ class Serie
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,7 +73,7 @@ class Serie
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -93,7 +93,7 @@ class Serie
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -113,7 +113,7 @@ class Serie
     /**
      * Get first_number
      *
-     * @return integer 
+     * @return integer
      */
     public function getFirstNumber()
     {
@@ -133,10 +133,15 @@ class Serie
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

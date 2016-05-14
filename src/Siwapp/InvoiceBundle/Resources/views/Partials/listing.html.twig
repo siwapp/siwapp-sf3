@@ -23,13 +23,13 @@
     <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash" onclick="return confirm('Are you sure?')"></span></button>
   </li>
   <li>
-    <button type="submit" class="btn btn-default" title="{% trans %}Print selected{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
+    <button type="submit" name="print" class="btn btn-default" title="{% trans %}Print selected{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
   </li>
   <li>
-    <button type="submit" class="btn btn-default" title="{% trans %}Download as PDF{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
+    <button type="submit" name="pdf" class="btn btn-default" title="{% trans %}Download as PDF{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
   </li>
   <li>
-    <button type="submit" class="btn btn-default" title="{% trans %}Email selected{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></button>
+    <button type="submit" name="email" class="btn btn-default" title="{% trans %}Email selected{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></button>
   </li>
 </ul>
 {% endif %}
