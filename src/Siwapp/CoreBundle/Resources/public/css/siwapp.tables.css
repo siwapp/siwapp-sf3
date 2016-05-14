@@ -32,3 +32,11 @@ table.table-striped[data-type] tbody tr:hover td {
 table.table-striped[data-type] tbody tr.selected:nth-child(odd) td {
   background-color: #fbe6c8;
 }
+table td.table-action .form-group,
+table td.table-action .checkbox,
+table td.table-action .checkbox label,
+table td.table-action .checkbox input[type="checkbox"] {
+  margin: 0;
+  padding: 0;
+  position: inherit;
+}

@@ -43,10 +43,30 @@ class RecurringInvoicesController extends Controller
             50
         );
 
+
+        $listForm = $this->createForm('Siwapp\RecurringInvoiceBundle\Form\RecurringInvoiceListType', $pagination->getItems(), [
+            'action' => $this->generateUrl('recurring_index'),
+        ]);
+        $listForm->handleRequest($request);
+        if ($listForm->isValid()) {
+            $data = $listForm->getData();
+            if ($request->request->has('delete')) {
+                foreach ($data['recurring_invoices'] as $recurring) {
+                    $em->remove($recurring);
+                }
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Recurring invoice(s) deleted.');
+
+                // Rebuild the query, since some objects are now missing.
+                return $this->redirect($this->generateUrl('recurring_index'));
+            }
+        }
+
         return array(
             'invoices' => $pagination,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
+            'list_form' => $listForm->createView(),
             'expected' => $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')->getAverageDayAmount(),
         );
     }

@@ -1,3 +1,9 @@
+{{ form_start(list_form) }}
+<ul id="toolbar" class="table-actions list-inline list-unstyled">
+  <li>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+  </li>
+</ul>
 <table class="table table-condensed table-striped align-middle" data-type="estimates">
   <thead>
     <tr>
@@ -5,32 +11,32 @@
         <input type="checkbox" name="all" />
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(invoices, 'Series'|trans, 'e.serie') }}
+        {{ knp_pagination_sortable(estimates, 'Series'|trans, 'e.serie') }}
       </th>
       <th>
-        {{ knp_pagination_sortable(invoices, 'Customer'|trans, 'e.customer_name') }}
+        {{ knp_pagination_sortable(estimates, 'Customer'|trans, 'e.customer_name') }}
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(invoices, 'Date'|trans, 'e.issue_date') }}
+        {{ knp_pagination_sortable(estimates, 'Date'|trans, 'e.issue_date') }}
       </th>
       <th class="cell-size-small-medium cell-align-center">
-        {{ knp_pagination_sortable(invoices, 'Status'|trans, 'e.status') }}
+        {{ knp_pagination_sortable(estimates, 'Status'|trans, 'e.status') }}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {{ knp_pagination_sortable(invoices, 'Total'|trans, 'e.gross_amount') }}
+        {{ knp_pagination_sortable(estimates, 'Total'|trans, 'e.gross_amount') }}
       </th>
     </tr>
   </thead>
   <tbody>
-    {% if invoices|length == 0 %}
+    {% if estimates|length == 0 %}
       <tr>
         <td colspan="7">{% trans %}No estimates found.{% endtrans %}</td>
       </tr>
     {% endif %}
-    {% for entity in invoices %}
+    {% for key, entity in estimates %}
       <tr data-link="{{ path('estimate_show', { 'id': entity.id }) }}">
-        <td class="cell-align-center">
-          <input type="checkbox" name="id[]" value="{{ entity.id }}" />
+        <td class="table-action cell-align-center no-link">
+          {{ form_row(list_form.estimates[key]) }}
         </td>
         <td class="cell-size-medium cell-align-center">{{ entity.serie.getName() }}</td>
         <td>{{ entity.getCustomerName }}</td>
@@ -43,6 +49,7 @@
     {% endfor %}
   </tbody>
 </table>
+{{ form_end(list_form) }}
 <div class="navigation">
-    {{ knp_pagination_render(invoices) }}
+    {{ knp_pagination_render(estimates) }}
 </div>

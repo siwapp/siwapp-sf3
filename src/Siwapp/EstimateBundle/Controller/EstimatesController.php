@@ -45,10 +45,30 @@ class EstimatesController extends Controller
             50
         );
 
+        $listForm = $this->createForm('Siwapp\EstimateBundle\Form\EstimateListType', $pagination->getItems(), [
+            'action' => $this->generateUrl('estimate_index'),
+        ]);
+        $listForm->handleRequest($request);
+        if ($listForm->isValid()) {
+            $data = $listForm->getData();
+            if ($request->request->has('delete')) {
+                foreach ($data['estimates'] as $estimate) {
+                    $em->remove($estimate);
+                }
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Estimate(s) deleted.');
+
+                // Rebuild the query, since some objects are now missing.
+                return $this->redirect($this->generateUrl('estimate_index'));
+            }
+        }
+
+
         return array(
-            'invoices' => $pagination,
+            'estimates' => $pagination,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
+            'list_form' => $listForm->createView(),
         );
     }
 

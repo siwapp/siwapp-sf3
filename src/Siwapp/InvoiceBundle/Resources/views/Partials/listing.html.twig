@@ -20,7 +20,7 @@
 {{ form_start(list_form) }}
 <ul id="toolbar" class="table-actions list-inline list-unstyled">
   <li>
-    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash" onclick="return confirm('Are you sure?')"></span></button>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
   </li>
   <li>
     <button type="submit" name="print" class="btn btn-default" title="{% trans %}Print selected{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
@@ -100,7 +100,7 @@
     {% for key, entity in invoices %}
       <tr data-link="{{ path('invoice_show', { 'id': entity.id }) }}">
         {% if table_selectable %}
-        <td class="cell-align-center">
+        <td class="table-action cell-align-center no-link">
           {{ form_row(list_form.invoices[key]) }}
         </td>
         {% endif %}

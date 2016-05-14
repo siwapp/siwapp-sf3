@@ -30,6 +30,6 @@
     </table>
   </div></div>
   <div id="invoices-latest-recurring-invoices">
-    {% include "SiwappRecurringInvoiceBundle:Partials:listing.html.twig" %}
+    {% include "SiwappRecurringInvoiceBundle:Partials:listing.html.twig" with {'list_form': list_form} %}
   </div>
 {% endblock %}
