@@ -2,10 +2,11 @@
 
 namespace Siwapp\RecurringInvoiceBundle\Entity;
 
-use Siwapp\CoreBundle\Entity\AbstractInvoice;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
 use Doctrine\ORM\Mapping as ORM;
+use Siwapp\CoreBundle\Entity\AbstractInvoice;
+use Siwapp\InvoiceBundle\Entity\Invoice;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -107,7 +108,7 @@ class RecurringInvoice extends AbstractInvoice
     protected $items;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice")
+     * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice", cascade={"persist"})
      * @ORM\JoinTable(name="recurring_invoices_invoices",
      *      joinColumns={@ORM\JoinColumn(name="recurring_invoice_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="invoice_id", referencedColumnName="id")}
@@ -305,6 +306,16 @@ class RecurringInvoice extends AbstractInvoice
     }
 
     /**
+     * Add invoice
+     *
+     * @param Siwapp\InvoiceBundle\Entity\Invoice $invoice
+     */
+    public function addInvoice(Invoice $invoice)
+    {
+        $this->invoices[] = $invoice;
+    }
+
+    /**
      * Get last_execution_date
      *
      * @return date
@@ -461,7 +472,7 @@ class RecurringInvoice extends AbstractInvoice
 
         if(!$this->getEnabled())
         {
-          $this->setStatus(RecurringInvoice::DISABLED);
+          $this->setStatus(RecurringInvoice::INACTIVE);
         }
         else
         {
@@ -480,7 +491,7 @@ class RecurringInvoice extends AbstractInvoice
             }
             else
             {
-              $this->setStatus(RecurringInvoice::ENABLED);
+              $this->setStatus(RecurringInvoice::ACTIVE);
             }
           }
         }
