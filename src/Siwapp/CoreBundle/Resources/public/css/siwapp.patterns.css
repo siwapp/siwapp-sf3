@@ -6,7 +6,8 @@
   background-color: #eeeeee;
 }
 .label.important,
-.label.overdue {
+.label.overdue,
+.label.finished {
   color: #ffffff;
   background-color: #bc432a;
   border-color: #aa2b13;
@@ -20,7 +21,8 @@
 }
 .label.success,
 .label.paid,
-.label.closed {
+.label.closed,
+.label.active {
   color: #ffffff;
   background-color: #90c754;
   border-color: #50a200;

@@ -201,6 +201,7 @@ class Invoice extends AbstractInvoice
     {
         $this->payments[] = $payment;
         $payment->setInvoice($this);
+        $this->setAmounts();
     }
 
     /**

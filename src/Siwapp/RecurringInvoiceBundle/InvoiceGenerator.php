@@ -60,6 +60,7 @@ class InvoiceGenerator
             $generated++;
         }
 
+        $recurring->setLastExecutionDate(new \DateTime);
         $this->em->persist($recurring);
         $this->em->flush();
 

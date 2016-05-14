@@ -296,7 +296,7 @@ class InvoicesController extends AbstractInvoiceController
     }
 
     /**
-     * @Route("/payments/{invoiceId}", name="invoice_payments")
+     * @Route("/{invoiceId}/payments", name="invoice_payments")
      * @Template("SiwappInvoiceBundle:Partials:payments.html.twig")
      */
     public function paymentsAction(Request $request, $invoiceId)
@@ -316,6 +316,9 @@ class InvoicesController extends AbstractInvoiceController
             $em->persist($invoice);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Payment added.');
+
+            // Rebuild the query, since we have new objects now.
+            return $this->redirect($this->generateUrl('invoice_index'));
         }
 
         $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoicePaymentListType', $payments, [
@@ -323,13 +326,16 @@ class InvoicesController extends AbstractInvoiceController
         ]);
         $listForm->handleRequest($request);
         if ($listForm->isValid() && $invoice) {
-            $data = $form->getData();
+            $data = $listForm->getData();
             foreach ($data['payments'] as $payment) {
                 $invoice->removePayment($payment);
                 $em->persist($invoice);
                 $em->flush();
             }
             $this->get('session')->getFlashBag()->add('success', 'Payment(s) deleted.');
+
+            // Rebuild the query, since some objects are now missing.
+            return $this->redirect($this->generateUrl('invoice_index'));
         }
 
         return [
