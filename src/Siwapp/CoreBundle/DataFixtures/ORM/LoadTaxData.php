@@ -10,7 +10,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 use Siwapp\CoreBundle\Entity\Tax;
 
-
 class LoadTaxData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     private $container;
@@ -26,36 +25,33 @@ class LoadTaxData extends AbstractFixture implements OrderedFixtureInterface, Co
                        'Tax_1'=>array(
                                       'name'=>'IVA 16%',
                                       'value'=>16,
-                                      'active'=>true, 
+                                      'active'=>true,
                                       'is_default'=>true
                                       ),
                        'Tax_2'=>array(
                                       'name'=>'IVA 4%',
                                       'value'=>4,
-                                      'active'=>true, 
+                                      'active'=>true,
                                       'is_default'=>false
                                       ),
                        'Tax_3'=>array(
                                       'name'=>'IVA 7%',
                                       'value'=>7,
-                                      'active'=>false, 
+                                      'active'=>false,
                                       'is_default'=>false
                                       ),
                        'Tax_4'=>array(
                                       'name'=>'IRPF',
                                       'value'=>-15,
-                                      'active'=>true, 
+                                      'active'=>true,
                                       'is_default'=>true
                                       )
                        );
-        foreach($taxes as $ref => $values)
-        {
+        foreach ($taxes as $ref => $values) {
             $tax = new Tax();
-            foreach($values as $fname => $fvalue)
-            {
+            foreach ($values as $fname => $fvalue) {
                 $method = 'set'.Inflector::camelize($fname);
-                if(is_callable(array($tax, $method)))
-                {
+                if (is_callable(array($tax, $method))) {
                     call_user_func(array($tax, $method), $fvalue);
                 }
             }
@@ -69,5 +65,4 @@ class LoadTaxData extends AbstractFixture implements OrderedFixtureInterface, Co
     {
         return '0';
     }
-
 }

@@ -70,7 +70,7 @@ class Item
      */
     public function getId()
     {
-    return $this->id;
+        return $this->id;
     }
 
     /**
@@ -80,7 +80,7 @@ class Item
      */
     public function getQuantity()
     {
-    return $this->quantity;
+        return $this->quantity;
     }
 
     /**
@@ -90,7 +90,7 @@ class Item
      */
     public function setQuantity($quantity)
     {
-    $this->quantity = $quantity;
+        $this->quantity = $quantity;
     }
 
     /**
@@ -100,7 +100,7 @@ class Item
      */
     public function getDiscount()
     {
-    return $this->discount;
+        return $this->discount;
     }
 
     /**
@@ -110,7 +110,7 @@ class Item
      */
     public function setDiscount($discount)
     {
-    $this->discount = $discount;
+        $this->discount = $discount;
     }
 
     /**
@@ -120,7 +120,7 @@ class Item
      */
     public function getDescription()
     {
-    return $this->description;
+        return $this->description;
     }
 
     /**
@@ -130,7 +130,7 @@ class Item
      */
     public function setDescription($description)
     {
-    $this->description = $description;
+        $this->description = $description;
     }
 
     /**
@@ -140,7 +140,7 @@ class Item
      */
     public function getUnitaryCost()
     {
-    return $this->unitary_cost;
+        return $this->unitary_cost;
     }
 
     /**
@@ -150,7 +150,7 @@ class Item
      */
     public function setUnitaryCost($unitary_cost)
     {
-    $this->unitary_cost = $unitary_cost;
+        $this->unitary_cost = $unitary_cost;
     }
 
 
@@ -166,10 +166,9 @@ class Item
      */
     public function reCalculate()
     {
-      if($this->getInvoice() instanceof \Siwapp\CoreBundle\Entity\AbstractInvoice)
-      {
-          $this->getInvoice()->setAmounts();
-      }
+        if ($this->getInvoice() instanceof \Siwapp\CoreBundle\Entity\AbstractInvoice) {
+            $this->getInvoice()->setAmounts();
+        }
     }
 
     /**
@@ -236,12 +235,11 @@ class Item
             array(Urlizer::urlize($tax_names)) ;
 
         $total = 0;
-        foreach($this->getTaxes() as $tax){
-            if(count($tax_names)==0 ||
-               in_array(Urlizer::urlize(str_replace(' ','',$tax->getName())), $tax_names))
-             {
-                 $total += $tax->getValue();
-             }
+        foreach ($this->getTaxes() as $tax) {
+            if (count($tax_names)==0 ||
+               in_array(Urlizer::urlize(str_replace(' ', '', $tax->getName())), $tax_names)) {
+                $total += $tax->getValue();
+            }
         }
         return $total;
     }
@@ -254,8 +252,7 @@ class Item
      */
     public function __call($data, $argument)
     {
-        if(strpos($data, 'getTaxAmount') === 0 && strlen($data)>12)
-        {
+        if (strpos($data, 'getTaxAmount') === 0 && strlen($data)>12) {
             $tax_name = substr($data, 12);
             return $this->getTaxAmount($tax_name);
         }
@@ -268,8 +265,7 @@ class Item
      */
     public function __get($name)
     {
-        if(in_array($name, array('base_amount', 'discount_amount', 'net_amount', 'tax_amount', 'gross_amount')))
-        {
+        if (in_array($name, array('base_amount', 'discount_amount', 'net_amount', 'tax_amount', 'gross_amount'))) {
             $m = Inflector::camelize("get_{$name}");
             return $this->$m();
         }
@@ -281,8 +277,7 @@ class Item
      */
     public function __isset($name)
     {
-        if(in_array($name, array('base_amount', 'discount_amount', 'net_amount', 'tax_amount', 'gross_amount')))
-        {
+        if (in_array($name, array('base_amount', 'discount_amount', 'net_amount', 'tax_amount', 'gross_amount'))) {
             return true;
         }
         return false;
@@ -295,7 +290,7 @@ class Item
 
     public function __construct()
     {
-      $this->taxes = new ArrayCollection();
+        $this->taxes = new ArrayCollection();
     }
 
     /**
@@ -328,5 +323,4 @@ class Item
     {
         $this->taxes->removeElement($tax);
     }
-
 }

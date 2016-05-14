@@ -97,8 +97,7 @@ class GlobalSettingsType extends AbstractType
             ->add('legal_terms', TextareaType::class, array('required' => false))
             ->add('pdf_size', ChoiceType::class, array(
                 'choices' => self::$paper_sizes
-                )
-            )
+                ))
             ->add('pdf_orientation', ChoiceType::class, array(
                 'choices' => array(
                     'portrait' => 'Portrait',
@@ -121,5 +120,4 @@ class GlobalSettingsType extends AbstractType
             'prototype' => true,
         ));
     }
-
 }

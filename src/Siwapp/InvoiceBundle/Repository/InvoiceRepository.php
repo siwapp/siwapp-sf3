@@ -29,9 +29,8 @@ class InvoiceRepository extends AbstractInvoiceRepository
             'serie' => $series,
         ]);
 
-        if (count($found) > 0)
-        {
-          $result = $this->getEntityManager()->createQueryBuilder()
+        if (count($found) > 0) {
+            $result = $this->getEntityManager()->createQueryBuilder()
             ->select('MAX(i.number) AS max_number')
             ->from(Invoice::class, 'i')
             ->where('i.status <> :status')
@@ -41,11 +40,9 @@ class InvoiceRepository extends AbstractInvoiceRepository
             ->getQuery()
             ->getSingleResult();
 
-          return $result['max_number'] + 1;
-        }
-        else
-        {
-          return $series->getFirstNumber();
+            return $result['max_number'] + 1;
+        } else {
+            return $series->getFirstNumber();
         }
     }
 }

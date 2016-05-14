@@ -11,7 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Siwapp\CoreBundle\Form\AbstractInvoiceType;
 
-
 class RecurringInvoiceType extends AbstractInvoiceType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

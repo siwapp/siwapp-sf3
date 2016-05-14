@@ -543,20 +543,15 @@ class AbstractInvoice
      */
     public function removeItem($mixed)
     {
-        if($mixed instanceof \Siwapp\CoreBundle\Entity\AbstractItem)
-        {
+        if ($mixed instanceof \Siwapp\CoreBundle\Entity\AbstractItem) {
             $items = $this->getItems();
-            foreach($items as $ref => $item)
-            {
-                if($item === $mixed)
-                {
+            foreach ($items as $ref => $item) {
+                if ($item === $mixed) {
                     unset($items[$ref]);
                     break;
                 }
             }
-        }
-        else if(is_int($mixed))
-        {
+        } elseif (is_int($mixed)) {
             unset($this->items[$mixed]);
         }
         $this->setAmounts();
@@ -569,20 +564,18 @@ class AbstractInvoice
 
     public function getRoundedAmount($concept = 'gross')
     {
-        if(!in_array($concept, array('base', 'discount', 'net', 'tax', 'gross')))
-        {
+        if (!in_array($concept, array('base', 'discount', 'net', 'tax', 'gross'))) {
             return 0;
         }
-        return round(call_user_func(array($this, Inflector::camelize('get_'.$concept.'_amount'))),$this->getDecimals());
+        return round(call_user_func(array($this, Inflector::camelize('get_'.$concept.'_amount'))), $this->getDecimals());
     }
 
     private function getDecimals()
     {
-      if(!$this->decimals)
-      {
-          $this->decimals = 2;
-      }
-      return $this->decimals;
+        if (!$this->decimals) {
+            $this->decimals = 2;
+        }
+        return $this->decimals;
     }
 
 
@@ -596,32 +589,28 @@ class AbstractInvoice
      * @param boolean $rounded
      * @return float
      */
-    public function calculate($field, $rounded=false)
+    public function calculate($field, $rounded = false)
     {
-      $val = 0;
-      switch($field)
-      {
-      case 'paid_amount':
-          foreach($this->getPayments() as $payment)
-          {
-              $val += $payment->getAmount();
-          }
-          break;
-      default:
-          foreach($this->getItems() as $item)
-          {
-              $method = Inflector::camelize('get_'.$field);
-              $val += $item->$method();
-          }
-          break;
-      }
+        $val = 0;
+        switch ($field) {
+            case 'paid_amount':
+                foreach ($this->getPayments() as $payment) {
+                    $val += $payment->getAmount();
+                }
+                break;
+            default:
+                foreach ($this->getItems() as $item) {
+                    $method = Inflector::camelize('get_'.$field);
+                    $val += $item->$method();
+                }
+                break;
+        }
 
-      if($rounded)
-      {
-          return round($val, $this->getDecimals());
-      }
+        if ($rounded) {
+            return round($val, $this->getDecimals());
+        }
 
-      return $val;
+        return $val;
     }
 
     public function setAmounts()
@@ -631,9 +620,9 @@ class AbstractInvoice
         $this->setNetAmount($this->getBaseAmount() - $this->getDiscountAmount());
         $this->setTaxAmount($this->calculate('tax_amount'));
         $rounded_gross = round(
-                               $this->getNetAmount() + $this->getTaxAmount(),
-                               $this->getDecimals()
-                               );
+            $this->getNetAmount() + $this->getTaxAmount(),
+            $this->getDecimals()
+        );
         $this->setGrossAmount($rounded_gross);
 
         return $this;

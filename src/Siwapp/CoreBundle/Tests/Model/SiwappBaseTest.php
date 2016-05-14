@@ -1,5 +1,6 @@
 <?php
 namespace Siwapp\CoreBundle\Tests;
+
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
 class SiwappBaseTest extends \PHPUnit_Framework_TestCase
@@ -34,7 +35,7 @@ class SiwappBaseTest extends \PHPUnit_Framework_TestCase
         $this->runConsole("doctrine:fixtures:load");
     }
 
-    protected function runConsole($command, Array $options = array())
+    protected function runConsole($command, array $options = array())
     {
         $options["-e"] = "test";
         $options["-q"] = null;
@@ -44,60 +45,51 @@ class SiwappBaseTest extends \PHPUnit_Framework_TestCase
 
     protected function getRepo($repo_name)
     {
-        switch($repo_name)
-        {
+        switch ($repo_name) {
             case 'tax':
-                if(!$this->_tax_repo)
-                {
+                if (!$this->_tax_repo) {
                     $this->_tax_repo = $this->em->getRepository('SiwappCoreBundle:Tax');
                 }
                 return $this->_tax_repo;
                 break;
             case 'serie':
-                if(!$this->_serie_repo)
-                {
+                if (!$this->_serie_repo) {
                     $this->_serie_repo = $this->em->getRepository('SiwappCoreBundle:Serie');
                 }
                 return $this->_serie_repo;
                 break;
             case 'invoice':
-                if(!$this->_invoice_repo)
-                {
+                if (!$this->_invoice_repo) {
                     $this->_invoice_repo = $this->em->getRepository('SiwappInvoiceBundle:Invoice');
                 }
                 return $this->_invoice_repo;
                 break;
             case 'recurring_invoice':
-                if(!$this->_recurring_invoice_repo)
-                {
+                if (!$this->_recurring_invoice_repo) {
                     $this->_recurring_invoice_repo = $this->em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice');
                 }
                 return $this->_recurring_invoice_repo;
                 break;
             case 'estimate':
-                if(!$this->_estimate_repo)
-                {
+                if (!$this->_estimate_repo) {
                     $this->_estimate_repo = $this->em->getRepository('SiwappEstimateBundle:Estimate');
                 }
                 return $this->_estimate_repo;
                 break;
             case 'invoice_item':
-                if(!$this->_invoice_item_repo)
-                {
+                if (!$this->_invoice_item_repo) {
                     $this->_invoice_item_repo = $this->em->getRepository('SiwappInvoiceBundle:Item');
                 }
                 return $this->_invoice_item_repo;
                 break;
             case 'recurring_invoice_item':
-                if(!$this->_recurring_invoice_item_repo)
-                {
+                if (!$this->_recurring_invoice_item_repo) {
                     $this->_recurring_invoice_item_repo = $this->em->getRepository('SiwappRecurringInvoiceBundle:Item');
                 }
                 return $this->_recurring_invoice_item_repo;
                 break;
             case 'estimate_item':
-                if(!$this->_estimate_item_repo)
-                {
+                if (!$this->_estimate_item_repo) {
                     $this->_estimate_item_repo = $this->em->getRepository('SiwappEstimateBundle:Item');
                 }
                 return $this->_estimate_item_repo;
@@ -108,5 +100,4 @@ class SiwappBaseTest extends \PHPUnit_Framework_TestCase
     public function testDummy()
     {
     }
-
 }

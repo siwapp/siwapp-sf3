@@ -1,7 +1,6 @@
 <?php
 namespace Siwapp\InvoiceBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -28,18 +27,14 @@ class LoadInvoiceData extends AbstractFixture implements OrderedFixtureInterface
         $bpath = $this->container->get('kernel')->getBundle('SiwappInvoiceBundle')->getPath();
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/invoices.yml'));
         
-        foreach($value['Invoice'] as $ref => $values)
-        {
+        foreach ($value['Invoice'] as $ref => $values) {
             $invoice = new Invoice();
-            foreach($values as $fname => $fvalue)
-            {
-                if($fname == 'Serie')
-                {
+            foreach ($values as $fname => $fvalue) {
+                if ($fname == 'Serie') {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
                 $method = 'set'.Inflector::camelize($fname);
-                if(is_callable(array($invoice, $method)))
-                {   
+                if (is_callable(array($invoice, $method))) {
                     call_user_func(array($invoice, $method), $fvalue);
                 }
             }

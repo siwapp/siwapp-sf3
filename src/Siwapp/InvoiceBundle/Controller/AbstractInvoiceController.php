@@ -21,27 +21,22 @@ abstract class AbstractInvoiceController extends Controller
                     $qb->expr()->like('s.name', $terms),
                     $qb->expr()->like("CONCAT(s.name, ' ', i.number)", $terms)
                 ));
-            }
-            elseif ($field == 'date_from') {
+            } elseif ($field == 'date_from') {
                 $qb->andWhere('i.issue_date >= :date_from');
                 $qb->setParameter('date_from', $value);
-            }
-            elseif ($field == 'date_to') {
+            } elseif ($field == 'date_to') {
                 $qb->andWhere('i.issue_date <= :date_to');
                 $qb->setParameter('date_to', $value);
-            }
-            elseif ($field == 'status') {
+            } elseif ($field == 'status') {
                 $qb->andWhere('i.status = :status');
                 $qb->setParameter('status', $value);
-            }
-            elseif ($field == 'customer') {
+            } elseif ($field == 'customer') {
                 $customer = $qb->expr()->literal("%$value%");
                 $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->like('i.customer_name', $customer),
                     $qb->expr()->like('i.customer_identification', $customer)
                 ));
-            }
-            elseif ($field == 'serie') {
+            } elseif ($field == 'serie') {
                 $qb->andWhere('i.serie = :series');
                 $qb->setParameter('series', $value);
             }

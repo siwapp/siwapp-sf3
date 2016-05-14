@@ -59,8 +59,7 @@ class InvoicesController extends AbstractInvoiceController
 
                 // Rebuild the query, since some objects are now missing.
                 return $this->redirect($this->generateUrl('invoice_index'));
-            }
-            elseif ($request->request->has('pdf') || $request->request->has('print')) {
+            } elseif ($request->request->has('pdf') || $request->request->has('print')) {
                 $pages = [];
                 $settings = $em->getRepository('SiwappConfigBundle:Property')->getAll();
                 foreach ($data['invoices'] as $invoice) {
@@ -79,12 +78,10 @@ class InvoicesController extends AbstractInvoiceController
                         'Content-Type' => 'application/pdf',
                         'Content-Disposition' => 'attachment; filename="Invoices.pdf"'
                     ]);
-                }
-                else {
+                } else {
                     return new Response($html);
                 }
-            }
-            elseif ($request->request->has('email')) {
+            } elseif ($request->request->has('email')) {
                 foreach ($data['invoices'] as $invoice) {
                     $message = $this->getEmailMessage($invoice);
                     $result = $this->get('mailer')->send($message);
@@ -218,11 +215,9 @@ class InvoicesController extends AbstractInvoiceController
         if ($form->isValid()) {
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Invoice::DRAFT);
-            }
-            elseif ($request->request->has('save_close')) {
+            } elseif ($request->request->has('save_close')) {
                 $entity->setStatus(Invoice::CLOSED);
-            }
-            elseif ($entity->isDraft() && $request->request->has('save')) {
+            } elseif ($entity->isDraft() && $request->request->has('save')) {
                 $entity->setStatus(Invoice::OPENED);
             }
             $em->persist($entity);
@@ -343,5 +338,4 @@ class InvoicesController extends AbstractInvoiceController
             'list_form' => $listForm->createView(),
         ];
     }
-
 }

@@ -10,7 +10,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 use Siwapp\CoreBundle\Entity\Serie;
 
-
 class LoadSerieData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     private $container;
@@ -26,30 +25,27 @@ class LoadSerieData extends AbstractFixture implements OrderedFixtureInterface, 
                        'Serie_1'=>array(
                                       'name'=>'Internet',
                                       'value'=>'ASET-',
-                                      'first_number'=>1, 
+                                      'first_number'=>1,
                                       'enabled'=>true
                                       ),
                        'Serie_2'=>array(
                                       'name'=>'Design',
                                       'value'=>'BSET-',
-                                      'first_number'=>4, 
+                                      'first_number'=>4,
                                       'enabled'=>true
                                       ),
                        'Serie_3'=>array(
                                       'name'=>'Others',
                                       'value'=>'CSET-',
-                                      'first_number'=>1, 
+                                      'first_number'=>1,
                                       'enabled'=>true
                                       )
                        );
-        foreach($series as $ref => $values)
-        {
+        foreach ($series as $ref => $values) {
             $serie = new Serie();
-            foreach($values as $fname => $fvalue)
-            {
+            foreach ($values as $fname => $fvalue) {
                 $method = 'set'.Inflector::camelize($fname);
-                if(is_callable(array($serie, $method)))
-                {
+                if (is_callable(array($serie, $method))) {
                     call_user_func(array($serie, $method), $fvalue);
                 }
             }
@@ -63,5 +59,4 @@ class LoadSerieData extends AbstractFixture implements OrderedFixtureInterface, 
     {
         return '0';
     }
-
 }

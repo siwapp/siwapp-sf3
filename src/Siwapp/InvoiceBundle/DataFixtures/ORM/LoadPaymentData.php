@@ -1,7 +1,6 @@
 <?php
 namespace Siwapp\InvoiceBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -28,20 +27,16 @@ class LoadPaymentData extends AbstractFixture implements OrderedFixtureInterface
         // TODO: find a way of obtainin Bundle's path with the help of $this->container
         $bpath = './src/Siwapp/InvoiceBundle';
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/payments.yml'));
-        foreach($value['Payment'] as $ref => $values)
-        {
+        foreach ($value['Payment'] as $ref => $values) {
             $payment = new Payment();
             $invoice = new Invoice();
-            foreach($values as $fname => $fvalue)
-            {
-                if($fname == 'Invoice')
-                {
+            foreach ($values as $fname => $fvalue) {
+                if ($fname == 'Invoice') {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
 
                 $method = 'set'.Inflector::camelize($fname);
-                if(is_callable(array($payment, $method)))
-                {
+                if (is_callable(array($payment, $method))) {
                     call_user_func(array($payment, $method), $fvalue);
                 }
             }
@@ -55,5 +50,4 @@ class LoadPaymentData extends AbstractFixture implements OrderedFixtureInterface
     {
         return '4';
     }
-
 }

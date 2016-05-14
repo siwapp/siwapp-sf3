@@ -25,5 +25,4 @@ class TaxType extends AbstractType
             'data_class' => 'Siwapp\CoreBundle\Entity\Tax',
         ]);
     }
-
 }

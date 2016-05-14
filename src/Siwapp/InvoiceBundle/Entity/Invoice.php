@@ -158,7 +158,7 @@ class Invoice extends AbstractInvoice
     public function setIssueDate($issueDate)
     {
         $this->issue_date = $issueDate instanceof \DateTime ?
-	  $issueDate: new \DateTime($issueDate);
+        $issueDate: new \DateTime($issueDate);
     }
 
     /**
@@ -178,8 +178,8 @@ class Invoice extends AbstractInvoice
      */
     public function setDueDate($dueDate)
     {
-      $this->due_date = $dueDate instanceof \DateTime ?
-	$dueDate : new \DateTime($dueDate);
+        $this->due_date = $dueDate instanceof \DateTime ?
+        $dueDate : new \DateTime($dueDate);
     }
 
     /**
@@ -210,10 +210,8 @@ class Invoice extends AbstractInvoice
      */
     public function removePayment(\Siwapp\InvoiceBundle\Entity\Payment $payment)
     {
-        foreach($this->getPayments() as $key => $value)
-        {
-            if ($value === $payment)
-            {
+        foreach ($this->getPayments() as $key => $value) {
+            if ($value === $payment) {
                 unset($this->payments[$key]);
                 break;
             }
@@ -299,22 +297,15 @@ class Invoice extends AbstractInvoice
      */
     public function checkStatus()
     {
-        if($this->status == Invoice::DRAFT)
-        {
+        if ($this->status == Invoice::DRAFT) {
             return $this;
         }
-        if($this->getDueAmount() == 0)
-        {
+        if ($this->getDueAmount() == 0) {
             $this->setStatus(Invoice::CLOSED);
-        }
-        else
-        {
-            if($this->getDueDate()->getTimestamp() > strtotime(date('Y-m-d')))
-            {
+        } else {
+            if ($this->getDueDate()->getTimestamp() > strtotime(date('Y-m-d'))) {
                 $this->setStatus(Invoice::OPENED);
-            }
-            else
-            {
+            } else {
                 $this->setStatus(Invoice::OVERDUE);
             }
         }
@@ -323,23 +314,22 @@ class Invoice extends AbstractInvoice
 
     public function getStatusString()
     {
-        switch($this->status)
-        {
-          case Invoice::DRAFT;
-            $status = 'draft';
+        switch ($this->status) {
+            case Invoice::DRAFT;
+                $status = 'draft';
              break;
-          case Invoice::CLOSED;
-            $status = 'closed';
+            case Invoice::CLOSED;
+                $status = 'closed';
             break;
-          case Invoice::OPENED;
-            $status = 'opened';
+            case Invoice::OPENED;
+                $status = 'opened';
             break;
-          case Invoice::OVERDUE:
-            $status = 'overdue';
-            break;
-          default:
-            $status = 'unknown';
-            break;
+            case Invoice::OVERDUE:
+                $status = 'overdue';
+                break;
+            default:
+                $status = 'unknown';
+                break;
         }
         return $status;
     }
@@ -362,12 +352,10 @@ class Invoice extends AbstractInvoice
     public function setNextNumber($event)
     {
         // compute the number of invoice
-        if( (!$this->number && $this->status!=self::DRAFT) ||
+        if ((!$this->number && $this->status!=self::DRAFT) ||
             ($event instanceof PreUpdateEventArgs && $event->hasChangedField('serie') && $this->status!=self::DRAFT)
-            )
-        {
+            ) {
             $this->setNumber($event->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice')->getNextNumber($this->getSerie()));
         }
     }
-
 }

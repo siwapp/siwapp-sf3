@@ -9,7 +9,6 @@ use Siwapp\CoreBundle\Entity\AbstractInvoice;
 use Siwapp\InvoiceBundle\Entity\Invoice;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice
  *
@@ -130,7 +129,7 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function setDaysToDue($daysToDue)
     {
-      $this->days_to_due = $daysToDue;
+        $this->days_to_due = $daysToDue;
     }
 
     /**
@@ -250,8 +249,8 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function setStartingDate($startingDate)
     {
-      $this->starting_date = $startingDate instanceof \DateTime ?
-	$startingDate: new \DateTime($startingDate);
+        $this->starting_date = $startingDate instanceof \DateTime ?
+        $startingDate: new \DateTime($startingDate);
     }
 
     /**
@@ -295,7 +294,7 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function setLastExecutionDate($lastExecutionDate)
     {
-      $this->last_execution_date = $lastExecutionDate instanceof \DateTime
+        $this->last_execution_date = $lastExecutionDate instanceof \DateTime
         ? $lastExecutionDate
         : new \DateTime($lastExecutionDate);
     }
@@ -347,7 +346,8 @@ class RecurringInvoice extends AbstractInvoice
         return $this->label();
     }
 
-    public function label() {
+    public function label()
+    {
         $label = '';
         if ($this->getSerie()) {
             $label .= $this->getSerie()->getName();
@@ -364,23 +364,22 @@ class RecurringInvoice extends AbstractInvoice
 
     public function getStatusString()
     {
-        switch($this->status)
-        {
-          case self::INACTIVE;
-            $status = 'inactive';
+        switch ($this->status) {
+            case self::INACTIVE;
+                $status = 'inactive';
              break;
-          case self::FINISHED;
-            $status = 'finished';
+            case self::FINISHED;
+                $status = 'finished';
             break;
-          case self::ACTIVE;
-            $status = 'active';
+            case self::ACTIVE;
+                $status = 'active';
             break;
-          case self::PENDING:
-            $status = 'pending';
-            break;
-          default:
-            $status = 'unknown';
-            break;
+            case self::PENDING:
+                $status = 'pending';
+                break;
+            default:
+                $status = 'unknown';
+                break;
         }
         return $status;
     }
@@ -414,33 +413,32 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function checkMustOccurrences(\DateTime $today = null)
     {
-        if(!$today) $today = new \DateTime();
+        if (!$today) {
+            $today = new \DateTime();
+        }
         $starting_date = $this->getStartingDate();
         $finishing_date = $this->getFinishingDate();
         // TODO : FINISH THIS METHODD!!!
-        if($today > $starting_date)
-        {
+        if ($today > $starting_date) {
             $check_date = $finishing_date ?
                 ($today > $finishing_date ? $finishing_date: $today) : $today;
 
-            switch($this->period_type)
-            {
-            case 'year':
-                $unit = 'y';
-                break;
-            case 'month':
-                $unit = 'm';
-                break;
-            case 'week':
-            case 'day':
-                $unit = 'a';
-                break;
+            switch ($this->period_type) {
+                case 'year':
+                    $unit = 'y';
+                    break;
+                case 'month':
+                    $unit = 'm';
+                    break;
+                case 'week':
+                case 'day':
+                    $unit = 'a';
+                    break;
             }
 
             $difference = $check_date->diff($starting_date)->format($unit);
 
-            if($this->period_type == 'week')
-            {
+            if ($this->period_type == 'week') {
                 $difference /= 7;
             }
             $must_occurrences = floor($difference / $this->period) +1;
@@ -448,15 +446,12 @@ class RecurringInvoice extends AbstractInvoice
 
             // if there's already a must_occurreces and is greater
             // then set this as must_occurences
-            if($this->must_occurrences &&
-               $must_occurrences > $this->must_occurrences)
-            {
+            if ($this->must_occurrences &&
+               $must_occurrences > $this->must_occurrences) {
                 $must_occurrences = $this->must_occurrences;
             }
             $this->must_occurrences = $must_occurrences;
-        }
-        else
-        {
+        } else {
             $this->must_occurrences = 0;
         }
     }
@@ -470,31 +465,21 @@ class RecurringInvoice extends AbstractInvoice
     {
         $this->checkMustOccurrences();
 
-        if(!$this->getEnabled())
-        {
-          $this->setStatus(RecurringInvoice::INACTIVE);
-        }
-        else
-        {
-          if(($this->getMaxOccurrences() && $this->getOccurrences() >= $this->getMaxOccurrences())
+        if (!$this->getEnabled()) {
+            $this->setStatus(RecurringInvoice::INACTIVE);
+        } else {
+            if (($this->getMaxOccurrences() && $this->getOccurrences() >= $this->getMaxOccurrences())
                   || ($this->getFinishingDate()
                     && $this->getLastExecutionDate() >= $this->getFinishingDate()
-                    && $this->countPendingInvoices() <= 0))
-          {
-            $this->setStatus(RecurringInvoice::FINISHED);
-          }
-          else
-          {
-            if($this->countPendingInvoices() > 0)
-            {
-              $this->setStatus(RecurringInvoice::PENDING);
+                    && $this->countPendingInvoices() <= 0)) {
+                $this->setStatus(RecurringInvoice::FINISHED);
+            } else {
+                if ($this->countPendingInvoices() > 0) {
+                    $this->setStatus(RecurringInvoice::PENDING);
+                } else {
+                    $this->setStatus(RecurringInvoice::ACTIVE);
+                }
             }
-            else
-            {
-              $this->setStatus(RecurringInvoice::ACTIVE);
-            }
-          }
         }
     }
-
 }

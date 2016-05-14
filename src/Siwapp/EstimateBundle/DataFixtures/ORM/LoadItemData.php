@@ -1,7 +1,6 @@
 <?php
 namespace Siwapp\EstimateBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -16,57 +15,52 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-  private $container;
+    private $container;
 
-  public function setContainer(ContainerInterface $container = null)
-  {
-    $this->container = $container;
-  }
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
 
     public function load(ObjectManager $manager)
     {
 
-      $yaml = new Parser();
+        $yaml = new Parser();
       // TODO: find a way of obtainin Bundle's path with the help of $this->container
-      $bpath = $this->container->get('kernel')->getBundle('SiwappEstimateBundle')->getPath();
-      $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/estimates.yml'));
+        $bpath = $this->container->get('kernel')->getBundle('SiwappEstimateBundle')->getPath();
+        $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/estimates.yml'));
 
-      foreach($value['Item'] as $ref => $values)
-      {
-          $item = new Item();
-          $estimate = new Estimate();
-          foreach($values as $fname => $fvalue)
-          {
-              if($fname == 'Estimate')
-              {
+        foreach ($value['Item'] as $ref => $values) {
+            $item = new Item();
+            $estimate = new Estimate();
+            foreach ($values as $fname => $fvalue) {
+                if ($fname == 'Estimate') {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                     $fvalue->addItem($item);
                     $manager->persist($fvalue);
-              }
+                }
 
-              $method = 'set'.Inflector::camelize($fname);
-              if(is_callable(array($item, $method)))
-              {
-                  call_user_func(array($item, $method), $fvalue);
-              }
-          }
-          $manager->persist($item);
-          $manager->flush();
-          $this->addReference($ref, $item);
-      }
+                $method = 'set'.Inflector::camelize($fname);
+                if (is_callable(array($item, $method))) {
+                    call_user_func(array($item, $method), $fvalue);
+                }
+            }
+            $manager->persist($item);
+            $manager->flush();
+            $this->addReference($ref, $item);
+        }
 
-      foreach($value['ItemTax'] as $ref => $values)
-      {
-          $item = $this->getReference($values['Item']);
-          $tax = $this->getReference($values['Tax']);
-          $item->addTax($tax);
-          $manager->persist($item);
-          $manager->flush();
-      }
+        foreach ($value['ItemTax'] as $ref => $values) {
+            $item = $this->getReference($values['Item']);
+            $tax = $this->getReference($values['Tax']);
+            $item->addTax($tax);
+            $manager->persist($item);
+            $manager->flush();
+        }
     }
 
     public function getOrder()
     {
-      return '3';
+        return '3';
     }
 }

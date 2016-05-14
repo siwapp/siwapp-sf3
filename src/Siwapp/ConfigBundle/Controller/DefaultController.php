@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Siwapp\ConfigBundle\Form\GlobalSettingsType;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * @Route("/configuration")
  */

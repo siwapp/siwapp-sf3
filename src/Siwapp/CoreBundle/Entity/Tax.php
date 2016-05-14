@@ -20,29 +20,29 @@ class Tax
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    */
-  private $id;
+    private $id;
 
   /**
    * @var string $name
    * @ORM\Column
    */
-  private $name;
+    private $name;
   /**
    * @var string $value
    * @ORM\Column
    */
-  private $value;
+    private $value;
   /**
    * @var boolean $active
    * @ORM\Column(type="boolean")
    */
-  private $active;
+    private $active;
 
   /**
    * @var boolean $is_default
    * @ORM\Column(type="boolean")
    */
-  private $is_default;
+    private $is_default;
 
     /**
      * Set name

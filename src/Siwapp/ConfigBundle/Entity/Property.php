@@ -93,5 +93,4 @@ class Property
     {
         return json_decode($this->getRawValue(), true);
     }
-
 }

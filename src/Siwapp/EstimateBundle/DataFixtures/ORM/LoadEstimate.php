@@ -1,7 +1,6 @@
 <?php
 namespace Siwapp\EstimateBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -29,18 +28,14 @@ class LoadEstimateData extends AbstractFixture implements OrderedFixtureInterfac
         $bpath = $this->container->get('kernel')->getBundle('SiwappEstimateBundle')->getPath();
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/estimates.yml'));
       
-        foreach($value['Estimate'] as $ref => $values)
-        {
+        foreach ($value['Estimate'] as $ref => $values) {
             $estimate = new Estimate();
-            foreach($values as $fname => $fvalue)
-            {
-                if($fname == 'Serie')
-                {
+            foreach ($values as $fname => $fvalue) {
+                if ($fname == 'Serie') {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
                 $method = 'set'.Inflector::camelize($fname);
-                if(is_callable(array($estimate, $method)))
-                {
+                if (is_callable(array($estimate, $method))) {
                     call_user_func(array($estimate, $method), $fvalue);
                 }
             }

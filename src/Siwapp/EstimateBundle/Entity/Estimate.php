@@ -139,7 +139,7 @@ class Estimate extends AbstractInvoice
     public function setIssueDate($issueDate)
     {
         $this->issue_date = $issueDate instanceof \DateTime ?
-	  $issueDate: new \DateTime($issueDate);
+        $issueDate: new \DateTime($issueDate);
     }
 
     /**
@@ -188,31 +188,29 @@ class Estimate extends AbstractInvoice
 
     public function getStatusString()
     {
-        switch($this->status)
-        {
-          case self::DRAFT;
-            $status = 'draft';
+        switch ($this->status) {
+            case self::DRAFT;
+                $status = 'draft';
              break;
-          case self::REJECTED;
-            $status = 'rejected';
+            case self::REJECTED;
+                $status = 'rejected';
             break;
-          case self::APPROVED;
-            $status = 'approved';
+            case self::APPROVED;
+                $status = 'approved';
             break;
-          case self::PENDING:
-            $status = 'pending';
-            break;
-          default:
-            $status = 'unknown';
-            break;
+            case self::PENDING:
+                $status = 'pending';
+                break;
+            default:
+                $status = 'unknown';
+                break;
         }
         return $status;
     }
 
     public function checkStatus()
     {
-        if($this->isDraft())
-        {
+        if ($this->isDraft()) {
             $this->setStatus(Estimate::DRAFT);
         }
     }
@@ -226,10 +224,9 @@ class Estimate extends AbstractInvoice
     public function setNextNumber($event)
     {
         // compute the number of invoice
-        if( (!$this->number && $this->status!=self::DRAFT) ||
+        if ((!$this->number && $this->status!=self::DRAFT) ||
             ($event instanceof PreUpdateEventArgs && $event->hasChangedField('serie') && $this->status!=self::DRAFT)
-            )
-        {
+            ) {
             $this->setNumber($event->getEntityManager()->getRepository('SiwappEstimateBundle:Estimate')->getNextNumber($this->getSerie()));
         }
     }

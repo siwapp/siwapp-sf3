@@ -8,7 +8,6 @@ use Siwapp\CoreBundle\Repository\AbstractInvoiceRepository;
 
 use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 
-
 /**
  * RecurringInvoiceRepository
  *

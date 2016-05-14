@@ -166,19 +166,16 @@ class RecurringInvoicesController extends Controller
                 $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->like('s.name', $terms)
                 ));
-            }
-            elseif ($field == 'status') {
+            } elseif ($field == 'status') {
                 $qb->andWhere('ri.status = :status');
                 $qb->setParameter('status', $value);
-            }
-            elseif ($field == 'customer') {
+            } elseif ($field == 'customer') {
                 $customer = $qb->expr()->literal("%$value%");
                 $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->like('ri.customer_name', $customer),
                     $qb->expr()->like('ri.customer_identification', $customer)
                 ));
-            }
-            elseif ($field == 'serie') {
+            } elseif ($field == 'serie') {
                 $qb->andWhere('ri.serie = :series');
                 $qb->setParameter('series', $value);
             }

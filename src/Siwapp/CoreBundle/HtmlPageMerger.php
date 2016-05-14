@@ -17,7 +17,7 @@ class HtmlPageMerger
             $document->loadHTML($page);
             $bodyOnlyDocument = new \DOMDocument;
             $body = $document->getElementsByTagName('body')->item(0);
-            foreach ($body->childNodes as $child){
+            foreach ($body->childNodes as $child) {
                 $bodyOnlyDocument->appendChild($bodyOnlyDocument->importNode($child, true));
             }
             $output .= $bodyOnlyDocument->saveHtml() . $separator;

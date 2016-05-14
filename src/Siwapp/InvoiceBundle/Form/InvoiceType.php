@@ -13,7 +13,6 @@ use Siwapp\CoreBundle\Form\AbstractInvoiceType;
 use Siwapp\InvoiceBundle\Entity\Item;
 use Siwapp\InvoiceBundle\Form\ItemType;
 
-
 class InvoiceType extends AbstractInvoiceType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

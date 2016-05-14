@@ -182,11 +182,9 @@ class EstimatesController extends Controller
         if ($form->isValid()) {
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Estimate::DRAFT);
-            }
-            elseif ($request->request->has('save_close')) {
+            } elseif ($request->request->has('save_close')) {
                 $entity->setStatus(Estimate::REJECTED);
-            }
-            elseif ($entity->isDraft() && $request->request->has('save')) {
+            } elseif ($entity->isDraft() && $request->request->has('save')) {
                 $entity->setStatus(Estimate::APPROVED);
             }
             $em->persist($entity);
@@ -222,27 +220,22 @@ class EstimatesController extends Controller
                 $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->like('s.name', $terms)
                 ));
-            }
-            elseif ($field == 'date_from') {
+            } elseif ($field == 'date_from') {
                 $qb->andWhere('e.issue_date >= :date_from');
                 $qb->setParameter('date_from', $value);
-            }
-            elseif ($field == 'date_to') {
+            } elseif ($field == 'date_to') {
                 $qb->andWhere('e.issue_date <= :date_to');
                 $qb->setParameter('date_to', $value);
-            }
-            elseif ($field == 'status') {
+            } elseif ($field == 'status') {
                 $qb->andWhere('e.status = :status');
                 $qb->setParameter('status', $value);
-            }
-            elseif ($field == 'customer') {
+            } elseif ($field == 'customer') {
                 $customer = $qb->expr()->literal("%$value%");
                 $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->like('e.customer_name', $customer),
                     $qb->expr()->like('e.customer_identification', $customer)
                 ));
-            }
-            elseif ($field == 'serie') {
+            } elseif ($field == 'serie') {
                 $qb->andWhere('e.serie = :series');
                 $qb->setParameter('series', $value);
             }

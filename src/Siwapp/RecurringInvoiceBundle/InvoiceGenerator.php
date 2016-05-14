@@ -28,33 +28,33 @@ class InvoiceGenerator
     {
         $generated = 0;
         while ($recurring->countPendingInvoices($recurring) > 0) {
-          $invoice = new Invoice;
-          $invoice->setCustomerName($recurring->getCustomerName());
-          $invoice->setCustomerEmail($recurring->getCustomerEmail());
-          $invoice->setCustomerIdentification($recurring->getCustomerIdentification());
-          $invoice->setContactPerson($recurring->getContactPerson());
-          $invoice->setInvoicingAddress($recurring->getInvoicingAddress());
-          $invoice->setShippingAddress($recurring->getShippingAddress());
-          $invoice->setSerie($recurring->getSerie());
-          foreach ($recurring->getItems() as $item) {
-              $invoiceItem = new Item;
-              $invoiceItem->setDescription($item->getDescription());
-              $invoiceItem->setQuantity($item->getQuantity());
-              $invoiceItem->setDiscount($item->getDiscount());
-              $invoiceItem->setUnitaryCost($item->getUnitaryCost());
-              foreach ($item->getTaxes() as $tax) {
-                  $invoiceItem->addTax($tax);
-              }
-              $invoice->addItem($invoiceItem);
-          }
-          $invoice->setNotes($recurring->getNotes());
-          $invoice->setTerms($recurring->getTerms());
-          if ($d = $recurring->getDaysToDue()) {
-              $invoice->setDueDate(new \DateTime('+ ' . $d . ' days'));
-          }
+            $invoice = new Invoice;
+            $invoice->setCustomerName($recurring->getCustomerName());
+            $invoice->setCustomerEmail($recurring->getCustomerEmail());
+            $invoice->setCustomerIdentification($recurring->getCustomerIdentification());
+            $invoice->setContactPerson($recurring->getContactPerson());
+            $invoice->setInvoicingAddress($recurring->getInvoicingAddress());
+            $invoice->setShippingAddress($recurring->getShippingAddress());
+            $invoice->setSerie($recurring->getSerie());
+            foreach ($recurring->getItems() as $item) {
+                $invoiceItem = new Item;
+                $invoiceItem->setDescription($item->getDescription());
+                $invoiceItem->setQuantity($item->getQuantity());
+                $invoiceItem->setDiscount($item->getDiscount());
+                $invoiceItem->setUnitaryCost($item->getUnitaryCost());
+                foreach ($item->getTaxes() as $tax) {
+                    $invoiceItem->addTax($tax);
+                }
+                $invoice->addItem($invoiceItem);
+            }
+            $invoice->setNotes($recurring->getNotes());
+            $invoice->setTerms($recurring->getTerms());
+            if ($d = $recurring->getDaysToDue()) {
+                $invoice->setDueDate(new \DateTime('+ ' . $d . ' days'));
+            }
 
-          $recurring->addInvoice($invoice);
-          $generated++;
+            $recurring->addInvoice($invoice);
+            $generated++;
         }
 
         $this->em->persist($recurring);

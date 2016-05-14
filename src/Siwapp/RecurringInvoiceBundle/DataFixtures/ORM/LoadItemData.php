@@ -1,7 +1,6 @@
 <?php
 namespace Siwapp\RecurringInvoiceBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -30,22 +29,18 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
         $bpath = $this->container->get('kernel')->getBundle('SiwappRecurringInvoiceBundle')->getPath();
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/recurring_invoices.yml'));
 
-        foreach($value['Item'] as $ref => $values)
-        {
+        foreach ($value['Item'] as $ref => $values) {
             $item = new Item();
             $recurring_invoice = new RecurringInvoice();
-            foreach($values as $fname => $fvalue)
-            {
-                if($fname == 'RecurringInvoice')
-                {
+            foreach ($values as $fname => $fvalue) {
+                if ($fname == 'RecurringInvoice') {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                     $fvalue->addItem($item);
                     $manager->persist($fvalue);
                 }
 
                 $method = 'set'.Inflector::camelize($fname);
-                if(is_callable(array($item, $method)))
-                {
+                if (is_callable(array($item, $method))) {
                     call_user_func(array($item, $method), $fvalue);
                 }
             }
@@ -54,8 +49,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
             $this->addReference($ref, $item);
         }
 
-        foreach($value['ItemTax'] as $ref => $values)
-        {
+        foreach ($value['ItemTax'] as $ref => $values) {
             $item = $this->getReference($values['Item']);
             $tax = $this->getReference($values['Tax']);
             $item->addTax($tax);

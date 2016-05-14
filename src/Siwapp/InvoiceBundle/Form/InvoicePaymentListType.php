@@ -19,10 +19,10 @@ class InvoicePaymentListType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => $builder->getData(),
-                'choice_label' => function($payment) {
+                'choice_label' => function ($payment) {
                     return ' ';
                 },
-                'choice_value' => function($payment) {
+                'choice_value' => function ($payment) {
                     return $payment->getId();
                 },
                 'label' => false,

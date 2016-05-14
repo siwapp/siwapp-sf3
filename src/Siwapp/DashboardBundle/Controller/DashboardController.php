@@ -29,8 +29,7 @@ class DashboardController extends AbstractInvoiceController
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid())
-        {
+        if ($form->isValid()) {
             $this->applySearchFilters($qb, $form->getData());
         }
 
