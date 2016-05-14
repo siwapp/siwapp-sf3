@@ -91,7 +91,7 @@ class InvoicesController extends AbstractInvoiceController
      * @Route("/{id}/show/print", name="invoice_show_print")
      * @Template("SiwappInvoiceBundle:Print:invoice.html.twig")
      */
-    public function showPrintAction($id)
+    public function showPrintAction(Request $request, $id)
     {
         $invoice = $this->getDoctrine()
             ->getRepository('SiwappInvoiceBundle:Invoice')
@@ -101,7 +101,7 @@ class InvoicesController extends AbstractInvoiceController
         }
 
         return array(
-            'lang' => 'en',
+            'lang' => $request->getLocale(),
             'invoice'  => $invoice,
             'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
             'print' => true,
@@ -111,7 +111,7 @@ class InvoicesController extends AbstractInvoiceController
     /**
      * @Route("/{id}/show/pdf", name="invoice_show_pdf")
      */
-    public function showPdfAction($id)
+    public function showPdfAction(Request $request, $id)
     {
         $invoice = $this->getDoctrine()
             ->getRepository('SiwappInvoiceBundle:Invoice')
@@ -121,7 +121,7 @@ class InvoicesController extends AbstractInvoiceController
         }
 
         $html = $this->renderView('SiwappInvoiceBundle:Print:invoice.html.twig', array(
-            'lang' => 'en',
+            'lang' => $request->getLocale(),
             'invoice'  => $invoice,
             'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
             'print' => false,
