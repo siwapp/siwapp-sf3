@@ -10,11 +10,11 @@
 
     <div class="form-group float-right btn-toolbar">
       <div class="btn-group">
-        <button id="search-submit" type="submit" class="btn btn-default btn-primary">{% trans %}Search{% endtrans %}
-        <button id="search-advanced" type="button" data-toggle="button" class="btn btn-default{% if is_expanded %} active{% endif %}">
+        <button id="search-submit" type="submit" class="btn btn-default btn-primary">{% trans %}Search{% endtrans %}</button>
+        <a href="#search-secondary" data-toggle="collapse" class="btn btn-default"{% if is_expanded %} aria-expanded="true"{% endif %}" aria-controls="search-secondary">
           {% trans %}Advanced{% endtrans %}
         <span class="caret"></span>
-        </button></button>
+        </a>
       </div>
       <div class="btn-group">
         <button id="search-reset" type="reset" class="btn btn-default btn-warning">{% trans %}Reset{% endtrans %}</button>
@@ -23,7 +23,7 @@
 
   </fieldset>
 
-  <fieldset id="search-secondary"{% if not is_expanded %} style="display:none;"{% endif %}>
+  <fieldset id="search-secondary" class="collapse{% if is_expanded %} in{% endif %}">
       {{ form_row(form.status) }}
       {{ form_row(form.customer) }}
       {{ form_row(form.serie) }}
