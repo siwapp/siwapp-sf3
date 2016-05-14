@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Siwapp\ConfigBundle\Form\GlobalSettingsType;
-use Siwapp\ConfigBundle\Entity\PropertyRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 

@@ -16,6 +16,24 @@
   {% set sortable = true %}
 {% endif %}
 
+{% if table_selectable %}
+{{ form_start(list_form) }}
+<ul id="toolbar" class="table-actions list-inline list-unstyled">
+  <li>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash" onclick="return confirm('Are you sure?')"></span></button>
+  </li>
+  <li>
+    <button type="submit" class="btn btn-default" title="{% trans %}Print selected{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
+  </li>
+  <li>
+    <button type="submit" class="btn btn-default" title="{% trans %}Download as PDF{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
+  </li>
+  <li>
+    <button type="submit" class="btn btn-default" title="{% trans %}Email selected{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></button>
+  </li>
+</ul>
+{% endif %}
+
 <table class="table table-condensed table-striped align-middle" data-type="invoices">
   <thead>
     <tr>
@@ -79,11 +97,11 @@
         <td colspan="{{ table_columns }}">{% trans %}No invoices found.{% endtrans %}</td>
       </tr>
     {% endif %}
-    {% for entity in invoices %}
+    {% for key, entity in invoices %}
       <tr data-link="{{ path('invoice_show', { 'id': entity.id }) }}">
         {% if table_selectable %}
         <td class="cell-align-center">
-          <input type="checkbox" name="id[]" value="{{ entity.id }}" />
+          {{ form_row(list_form.invoices[key]) }}
         </td>
         {% endif %}
         <td class="cell-size-medium cell-align-center">{{ entity.label() }}</td>
@@ -102,9 +120,12 @@
     {% endfor %}
   </tbody>
 </table>
+{% if table_selectable %}
+  {{ form_end(list_form) }}
+{% endif %}
 {% if paginatable %}
 <div class="navigation">
-    {{ knp_pagination_render(invoices) }}
+  {{ knp_pagination_render(invoices) }}
 </div>
 {% endif %}
 <div id="payment-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="payments-modal-title">

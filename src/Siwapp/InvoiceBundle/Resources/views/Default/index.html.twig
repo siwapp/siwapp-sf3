@@ -1,24 +1,5 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 
-{% block bodytag %}<body class="with-toolbar">{% endblock %}
-{% block toolbar %}
-  <ul id="toolbar">
-    <li>
-      <a href="#" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></a>
-    </li>
-    <li>
-      <a href="#" title="{% trans %}Print selected{% endtrans %}"><span class="glyphicon glyphicon-print"></span></a>
-    </li>
-    <li>
-      <a href="#" title="{% trans %}Download as PDF{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></a>
-    </li>
-    <li>
-      <a href="#" title="{% trans %}Email selected{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></a>
-    </li>
-  </ul>
-{% endblock %}
-
-
 {% block javascripts %}
   {{ parent() }}
   {% javascripts

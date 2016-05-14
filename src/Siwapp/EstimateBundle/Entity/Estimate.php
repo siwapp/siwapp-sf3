@@ -2,6 +2,7 @@
 
 namespace Siwapp\EstimateBundle\Entity;
 
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Siwapp\CoreBundle\Entity\AbstractInvoice;
@@ -212,7 +213,7 @@ class Estimate extends AbstractInvoice
     {
         // compute the number of invoice
         if( (!$this->number && $this->status!=self::DRAFT) ||
-            ($event->hasChangedField('serie') && $this->status!=self::DRAFT)
+            ($event instanceof PreUpdateEventArgs && $event->hasChangedField('serie') && $this->status!=self::DRAFT)
             )
         {
             $this->setNumber($event->getEntityManager()->getRepository('SiwappEstimateBundle:Estimate')->getNextNumber($this->getSerie()));

@@ -652,4 +652,12 @@ class AbstractInvoice
         // TODO: check for customer matching and update it accordingly. (calling it's updateCustomer method)
     }
 
+    public function __isset($name)
+    {
+        if (in_array($name, array_keys(get_object_vars($this)))) {
+            return true;
+        }
+
+        return false;
+    }
 }

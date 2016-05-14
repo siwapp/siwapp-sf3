@@ -3,6 +3,7 @@
 namespace Siwapp\InvoiceBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -43,10 +44,28 @@ class InvoicesController extends AbstractInvoiceController
             50
         );
 
+        $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceListType', $pagination->getItems(), [
+            'action' => $this->generateUrl('invoice_index'),
+        ]);
+        $listForm->handleRequest($request);
+        if ($listForm->isValid()) {
+            $data = $listForm->getData();
+            if ($request->request->has('delete')) {
+                foreach ($data['invoices'] as $invoice) {
+                    $em->remove($invoice);
+                }
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Invoice(s) deleted.');
+            }
+            // Rebuild the query, since some objects are now missing.
+            return $this->redirect($this->generateUrl('invoice_index'));
+        }
+
         return array(
             'invoices' => $pagination,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
+            'list_form' => $listForm->createView(),
         );
     }
 
@@ -59,9 +78,62 @@ class InvoicesController extends AbstractInvoiceController
         $entity = $this->getDoctrine()
             ->getRepository('SiwappInvoiceBundle:Invoice')
             ->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Invoice entity.');
+        }
 
         return array(
             'entity' => $entity,
+        );
+    }
+
+    /**
+     * @Route("/{id}/show/print", name="invoice_show_print")
+     * @Template("SiwappInvoiceBundle:Print:invoice.html.twig")
+     */
+    public function showPrintAction($id)
+    {
+        $invoice = $this->getDoctrine()
+            ->getRepository('SiwappInvoiceBundle:Invoice')
+            ->find($id);
+        if (!$invoice) {
+            throw $this->createNotFoundException('Unable to find Invoice entity.');
+        }
+
+        return array(
+            'lang' => 'en',
+            'invoice'  => $invoice,
+            'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
+            'print' => true,
+        );
+    }
+
+    /**
+     * @Route("/{id}/show/pdf", name="invoice_show_pdf")
+     */
+    public function showPdfAction($id)
+    {
+        $invoice = $this->getDoctrine()
+            ->getRepository('SiwappInvoiceBundle:Invoice')
+            ->find($id);
+        if (!$invoice) {
+            throw $this->createNotFoundException('Unable to find Invoice entity.');
+        }
+
+        $html = $this->renderView('SiwappInvoiceBundle:Print:invoice.html.twig', array(
+            'lang' => 'en',
+            'invoice'  => $invoice,
+            'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
+            'print' => false,
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="Invoice-' . $invoice->label() . '.pdf"'
+            )
         );
     }
 
@@ -138,6 +210,15 @@ class InvoicesController extends AbstractInvoiceController
      */
     public function deleteAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $invoice = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
+        if (!$invoice) {
+            throw $this->createNotFoundException('Unable to find Invoice entity.');
+        }
+        $em->remove($invoice);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Invoice deleted.');
+
         return $this->redirect($this->generateUrl('invoice_index'));
     }
 

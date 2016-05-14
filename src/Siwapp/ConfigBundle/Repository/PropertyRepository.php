@@ -3,6 +3,7 @@
 namespace Siwapp\ConfigBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Siwapp\ConfigBundle\Entity\Property;
 
 /**
  * PropertyRepository

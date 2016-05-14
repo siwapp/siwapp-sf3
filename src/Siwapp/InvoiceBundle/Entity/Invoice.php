@@ -268,30 +268,27 @@ class Invoice extends AbstractInvoice
      */
     public function __get($name)
     {
-        if($name == 'due_amount')
-          {
-              $m = Inflector::camelize("get_{$name}");
-              return $this->$m();
-          }
-        if(strpos($name, 'tax_amount_') === 0)
-        {
+        if (strpos($name, 'tax_amount_') === 0) {
             return $this->calculate($name, true);
+        }
+        $method = Inflector::camelize("get_{$name}");
+        if (method_exists($this, $method)) {
+            return $this->$method();
         }
         return false;
     }
 
     public function __isset($name)
     {
-        if($name == 'due_amount')
-        {
+        if (strpos($name, 'tax_amount_') === 0) {
             return true;
         }
-        if(strpos($name, 'tax_amount_') === 0)
-        {
+
+        if (in_array($name, array_keys(get_object_vars($this)))) {
             return true;
         }
-        // TODO: somebody wrote this, but there is no such parent method
-        // return parent::__isset($name);
+
+        return parent::__isset($name);
     }
 
     /**
@@ -366,7 +363,7 @@ class Invoice extends AbstractInvoice
     {
         // compute the number of invoice
         if( (!$this->number && $this->status!=self::DRAFT) ||
-            ($event->hasChangedField('serie') && $this->status!=self::DRAFT)
+            ($event instanceof PreUpdateEventArgs && $event->hasChangedField('serie') && $this->status!=self::DRAFT)
             )
         {
             $this->setNumber($event->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice')->getNextNumber($this->getSerie()));

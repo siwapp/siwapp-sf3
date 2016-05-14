@@ -175,7 +175,7 @@
         {% endif %}
         <div class="float-right">
           {% if entity.id %}
-          <a class="btn btn-default btn-danger" href="{{ path('invoice_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
+          <a class="btn btn-default btn-danger" href="{{ path('invoice_delete', {'id': entity.id}) }}" onclick="return confirm('Are you sure?')">{% trans %}Delete{% endtrans %}</a>
           {% endif %}
         </div>
       </div>
