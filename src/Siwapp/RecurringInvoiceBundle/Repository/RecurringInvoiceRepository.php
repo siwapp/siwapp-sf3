@@ -5,7 +5,7 @@ namespace Siwapp\RecurringInvoiceBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 use Siwapp\CoreBundle\Repository\AbstractInvoiceRepository;
-
+use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 
 /**
@@ -31,5 +31,17 @@ class RecurringInvoiceRepository extends AbstractInvoiceRepository
         $smt->execute();
 
         return $smt->fetchColumn();
+    }
+
+    public function findByInvoice(Invoice $invoice)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('ri')
+            ->from(RecurringInvoice::class, 'ri')
+            ->join('ri.invoices', 'i')
+            ->where('i.id = ?1')
+            ->setParameter(1, $invoice->getId());
+
+        return $qb->getQuery()->getResult();
     }
 }

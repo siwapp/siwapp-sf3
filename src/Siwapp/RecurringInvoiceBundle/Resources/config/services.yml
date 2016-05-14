@@ -10,3 +10,8 @@ services:
             - "@siwapp_recurring_invoice.invoice_generator"
         tags:
             -  { name: console.command }
+
+    siwapp_recurring_invoice.listener.invoice_listener:
+        class: Siwapp\RecurringInvoiceBundle\EventListener\InvoiceListener
+        tags:
+            - { name: doctrine.event_listener, event: preRemove }
