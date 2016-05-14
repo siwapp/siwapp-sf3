@@ -110,7 +110,9 @@ class RecurringInvoice extends AbstractInvoice
      * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice", cascade={"persist"})
      * @ORM\JoinTable(name="recurring_invoices_invoices",
      *      joinColumns={@ORM\JoinColumn(name="recurring_invoice_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="invoice_id", referencedColumnName="id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(
+     *          name="invoice_id", referencedColumnName="id", onDelete="CASCADE"
+     *      )}
      * )
      */
     protected $invoices;

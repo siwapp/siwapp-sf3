@@ -62,6 +62,15 @@ class RecurringInvoicesController extends Controller
             }
         }
 
+        $pending = 0;
+        foreach ($pagination as $recurring) {
+            $pending += $recurring->countPendingInvoices($recurring);
+        }
+        if ($pending) {
+            $this->get('session')->getFlashBag()
+                ->add('warning', sprintf('There are %d recurring invoices that were not executed.', $pending));
+        }
+
         return array(
             'invoices' => $pagination,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
@@ -136,6 +145,7 @@ class RecurringInvoicesController extends Controller
         if ($form->isValid()) {
             $em->persist($invoice);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Recurring invoice was updated.');
         }
 
         return array(
@@ -145,6 +155,17 @@ class RecurringInvoicesController extends Controller
         );
     }
 
+    /**
+     * @Route("/delete", name="recurring_generate_pending")
+     * @Method({"POST"})
+     */
+    public function generatePendingAction()
+    {
+        $count = $this->get('siwapp_recurring_invoice.invoice_generator')->generateAll();
+        $this->get('session')->getFlashBag()->add('success', sprintf('%d invoices were generated.', $count));
+
+        return $this->redirect($this->generateUrl('recurring_index'));
+    }
 
     /**
      * @Route("/delete", name="recurring_delete")

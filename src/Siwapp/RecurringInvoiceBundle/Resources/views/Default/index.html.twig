@@ -32,4 +32,9 @@
   <div id="invoices-latest-recurring-invoices">
     {% include "SiwappRecurringInvoiceBundle:Partials:listing.html.twig" with {'list_form': list_form} %}
   </div>
+  <div class="float-right">
+    <form action="{{ path('recurring_generate_pending') }}" method="post">
+      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> Generate all pending invoices now</button>
+    </form>
+  </div>
 {% endblock %}

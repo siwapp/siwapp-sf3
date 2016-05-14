@@ -18,10 +18,13 @@ class InvoiceGenerator
 
     public function generateAll()
     {
+        $count = 0;
         $collection = $this->em->getRepository(RecurringInvoice::class)->findBy(['status' => RecurringInvoice::PENDING]);
         foreach ($collection as $recurring) {
-            $this->generatePending($recurring);
+            $count += $this->generatePending($recurring);
         }
+
+        return $count;
     }
 
     public function generatePending(RecurringInvoice $recurring)
