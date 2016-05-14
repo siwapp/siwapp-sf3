@@ -1,21 +1,32 @@
+{% set is_expanded = form.vars.value and (form.vars.value.customer is not null or form.vars.value.serie is not null or form.vars.value.status is not null) %}
+
 {{ form_start(form, {'attr': {'class': 'search form-inline'}}) }}
 
   <fieldset>
 
     {{ form_row(form.terms) }}
-    {{ form_row(form.status) }}
-    {{ form_row(form.customer) }}
-    {{ form_row(form.serie) }}
+    {{ form_row(form.date_from) }}
+    {{ form_row(form.date_to) }}
 
     <div class="form-group float-right btn-toolbar">
       <div class="btn-group">
         <button id="search-submit" type="submit" class="btn btn-default btn-primary">{% trans %}Search{% endtrans %}</button>
+        <a href="#search-secondary" data-toggle="collapse" class="btn btn-default"{% if is_expanded %} aria-expanded="true"{% endif %}" aria-controls="search-secondary">
+          {% trans %}Advanced{% endtrans %}
+        <span class="caret"></span>
+        </a>
       </div>
       <div class="btn-group">
         <button id="search-reset" type="reset" class="btn btn-default btn-warning">{% trans %}Reset{% endtrans %}</button>
       </div>
     </div>
 
+  </fieldset>
+
+  <fieldset id="search-secondary" class="collapse{% if is_expanded %} in{% endif %}">
+      {{ form_row(form.status) }}
+      {{ form_row(form.customer) }}
+      {{ form_row(form.serie) }}
   </fieldset>
 
 {{ form_end(form) }}

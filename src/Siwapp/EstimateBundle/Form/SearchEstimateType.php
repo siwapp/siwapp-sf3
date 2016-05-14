@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Siwapp\InvoiceBundle\Entity\Invoice;
+use Siwapp\EstimateBundle\Entity\Estimate;
 
 class SearchEstimateType extends AbstractType
 {
@@ -17,11 +17,13 @@ class SearchEstimateType extends AbstractType
         $builder
             ->add('terms', null, ['required' => false])
             ->add('status', ChoiceType::class, ['choices' => [
-                'Draft' => Invoice::DRAFT,
-                'Open' => Invoice::OPENED,
-                'Overdue' => Invoice::OVERDUE,
-                'Closed' => Invoice::CLOSED,
+                'Draft' => Estimate::DRAFT,
+                'Pending' => Estimate::PENDING,
+                'Approved' => Estimate::APPROVED,
+                'Rejected' => Estimate::REJECTED,
             ],'required' => false])
+            ->add('date_from', DateType::class, ['widget' => 'single_text', 'required' => false])
+            ->add('date_to', DateType::class, ['widget' => 'single_text', 'required' => false])
             ->add('customer', null, ['required' => false])
         ;
 

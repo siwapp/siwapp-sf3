@@ -341,7 +341,7 @@ class RecurringInvoice extends AbstractInvoice
         if ($this->getSerie()) {
             $label .= $this->getSerie()->getName();
         }
-        $label .= $this->getCustomerName();
+        $label .= ' ' . $this->getCustomerName();
 
         return $label;
     }

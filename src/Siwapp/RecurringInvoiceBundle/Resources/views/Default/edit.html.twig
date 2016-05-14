@@ -137,9 +137,9 @@
                 <th colspan="2" class="cell-align-right">{% trans %}Line Total{% endtrans %}</th>
               </tr>
             </thead>
-            <tbody data-prototype="{{ include('SiwappCoreBundle:Partials:items.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
+            <tbody data-prototype="{{ include('SiwappCoreBundle:Partials:item_edit.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
               {% for item in form.items %}
-                {{ include('SiwappCoreBundle:Partials:items.html.twig', { 'form': item, 'entity': item.vars.value, 'currency': currency }) }}
+                {{ include('SiwappCoreBundle:Partials:item_edit.html.twig', { 'form': item, 'item': item.vars.value, 'currency': currency }) }}
               {% endfor %}
               {# TODO: Action buttons: add/remove items, taxes, sort... #}
             </tbody>

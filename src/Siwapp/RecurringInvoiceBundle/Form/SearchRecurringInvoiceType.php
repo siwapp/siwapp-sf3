@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use Siwapp\InvoiceBundle\Entity\Invoice;
+use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 
 class SearchRecurringInvoiceType extends AbstractType
 {
@@ -17,10 +17,10 @@ class SearchRecurringInvoiceType extends AbstractType
         $builder
             ->add('terms', null, ['required' => false])
             ->add('status', ChoiceType::class, ['choices' => [
-                'Draft' => Invoice::DRAFT,
-                'Open' => Invoice::OPENED,
-                'Overdue' => Invoice::OVERDUE,
-                'Closed' => Invoice::CLOSED,
+                'Inactive' => RecurringInvoice::INACTIVE,
+                'Active' => RecurringInvoice::ACTIVE,
+                'Pending' => RecurringInvoice::PENDING,
+                'Finished' => RecurringInvoice::FINISHED,
             ],'required' => false])
             ->add('customer', null, ['required' => false])
         ;
