@@ -6,8 +6,12 @@
 
   <p>SHOW INVOICE</p>
 
+  <a class="btn btn-default btn-primary" href="{{ path('invoice_edit', {'id': entity.id}) }}">{% trans %}Edit{% endtrans %}</a>
   <a class="btn btn-default btn-info" href="{{ path('invoice_show_pdf', {'id': entity.id}) }}">{% trans %}PDF{% endtrans %}</a>
   <a class="btn btn-default btn-info" href="{{ path('invoice_show_print', {'id': entity.id}) }}">{% trans %}Print{% endtrans %}</a>
-  <a class="btn btn-default" href="{{ path('invoice_edit', {'id': entity.id}) }}">{% trans %}Edit{% endtrans %}</a>
+  <form action="{{ path('invoice_email', {'id': entity.id}) }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    <button type="submit" class="btn btn-default btn-info">Email</button>
+  </form>
   <a class="btn btn-default btn-danger" href="{{ path('invoice_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
 {% endblock %}

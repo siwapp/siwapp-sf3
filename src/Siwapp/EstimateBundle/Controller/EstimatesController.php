@@ -71,7 +71,7 @@ class EstimatesController extends Controller
      * @Route("/{id}/show/print", name="estimate_show_print")
      * @Template("SiwappEstimateBundle:Print:estimate.html.twig")
      */
-    public function showPrintAction(Request $request, $id)
+    public function showPrintAction($id)
     {
         $estimate = $this->getDoctrine()
             ->getRepository('SiwappEstimateBundle:Estimate')
@@ -81,7 +81,6 @@ class EstimatesController extends Controller
         }
 
         return array(
-            'lang' => $request->getLocale(),
             'estimate'  => $estimate,
             'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
             'print' => true,
@@ -91,7 +90,7 @@ class EstimatesController extends Controller
     /**
      * @Route("/{id}/show/pdf", name="estimate_show_pdf")
      */
-    public function showPdfAction(Request $request, $id)
+    public function showPdfAction($id)
     {
         $estimate = $this->getDoctrine()
             ->getRepository('SiwappEstimateBundle:Estimate')
@@ -101,10 +100,8 @@ class EstimatesController extends Controller
         }
 
         $html = $this->renderView('SiwappEstimateBundle:Print:estimate.html.twig', array(
-            'lang' => $request->getLocale(),
             'estimate'  => $estimate,
             'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
-            'print' => false,
         ));
 
         return new Response(

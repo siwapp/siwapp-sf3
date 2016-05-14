@@ -91,7 +91,7 @@ class InvoicesController extends AbstractInvoiceController
      * @Route("/{id}/show/print", name="invoice_show_print")
      * @Template("SiwappInvoiceBundle:Print:invoice.html.twig")
      */
-    public function showPrintAction(Request $request, $id)
+    public function showPrintAction($id)
     {
         $invoice = $this->getDoctrine()
             ->getRepository('SiwappInvoiceBundle:Invoice')
@@ -101,7 +101,6 @@ class InvoicesController extends AbstractInvoiceController
         }
 
         return array(
-            'lang' => $request->getLocale(),
             'invoice'  => $invoice,
             'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
             'print' => true,
@@ -111,7 +110,7 @@ class InvoicesController extends AbstractInvoiceController
     /**
      * @Route("/{id}/show/pdf", name="invoice_show_pdf")
      */
-    public function showPdfAction(Request $request, $id)
+    public function showPdfAction($id)
     {
         $invoice = $this->getDoctrine()
             ->getRepository('SiwappInvoiceBundle:Invoice')
@@ -121,20 +120,15 @@ class InvoicesController extends AbstractInvoiceController
         }
 
         $html = $this->renderView('SiwappInvoiceBundle:Print:invoice.html.twig', array(
-            'lang' => $request->getLocale(),
             'invoice'  => $invoice,
             'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
-            'print' => false,
         ));
+        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
 
-        return new Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            200,
-            array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="Invoice-' . $invoice->label() . '.pdf"'
-            )
-        );
+        return new Response($pdf, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="Invoice-' . $invoice->label() . '.pdf"'
+        ]);
     }
 
     /**
@@ -203,6 +197,51 @@ class InvoicesController extends AbstractInvoiceController
             'form' => $form->createView(),
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
         );
+    }
+
+    /**
+     * @Route("/{id}/email", name="invoice_email")
+     * @Method({"POST"})
+     */
+    public function emailAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $invoice = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($id);
+        if (!$invoice) {
+            throw $this->createNotFoundException('Unable to find Invoice entity.');
+        }
+
+        $message = $this->getEmailMessage($invoice);
+        $result = $this->get('mailer')->send($message);
+        if ($result) {
+            $invoice->setSentByEmail(true);
+            $em->persist($invoice);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Invoice sent by email.');
+        }
+
+        return $this->redirect($this->generateUrl('invoice_index'));
+    }
+
+    protected function getEmailMessage($invoice)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $configRepo = $em->getRepository('SiwappConfigBundle:Property');
+
+        $html = $this->renderView('SiwappInvoiceBundle:Email:invoice.html.twig', array(
+            'invoice'  => $invoice,
+            'settings' => $em->getRepository('SiwappConfigBundle:Property')->getAll(),
+        ));
+        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
+        $attachment = new \Swift_Attachment($pdf, $invoice->getId().'.pdf', 'application/pdf');
+        $message = \Swift_Message::newInstance()
+            ->setSubject($invoice->label())
+            ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
+            ->setTo($invoice-getCustomerEmail(), $invoice->getCustomerName())
+            ->setBody($html, 'text/html')
+            ->attach($attachment);
+
+        return $message;
     }
 
     /**

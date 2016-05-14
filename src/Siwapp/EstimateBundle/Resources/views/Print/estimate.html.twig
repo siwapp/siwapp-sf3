@@ -1,5 +1,5 @@
 <!doctype html">
-<html lang="{{lang}}">
+<html lang="{{ app.request.locale }}">
 <head>
   <meta charset="utf-8" />
   <title>Estimate</title>
@@ -40,7 +40,7 @@
     }
   </style>
 </head>
-<body>
+<body {% if print is defined and print %}onload="window.print();"{% endif %}>
   {% if settings.company_logo %}
     <div class="logo">
       <img src="{{ settings.company_logo }}" alt="{{ settings.company_name }}" />
