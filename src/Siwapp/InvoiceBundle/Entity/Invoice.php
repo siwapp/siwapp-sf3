@@ -69,6 +69,12 @@ class Invoice extends AbstractInvoice
      */
     protected $items;
 
+    /**
+     * @var boolean $closed
+     *
+     * @ORM\Column(name="closed", type="boolean", nullable=true)
+     */
+    private $forcefully_closed;
 
     public function __construct()
     {
@@ -217,6 +223,7 @@ class Invoice extends AbstractInvoice
                 break;
             }
         }
+        $this->setAmounts();
     }
 
     /**
@@ -227,6 +234,16 @@ class Invoice extends AbstractInvoice
     public function getPayments()
     {
         return $this->payments;
+    }
+
+    public function setForcefullyClosed($value)
+    {
+        $this->forcefully_closed = $value;
+    }
+
+    public function isForcefullyClosed()
+    {
+        return $this->forcefully_closed;
     }
 
     /** **************** CUSTOM METHODS AND PROPERTIES **************  */
@@ -301,7 +318,7 @@ class Invoice extends AbstractInvoice
         if ($this->status == Invoice::DRAFT) {
             return $this;
         }
-        if ($this->getDueAmount() == 0) {
+        if ($this->isForcefullyClosed() || $this->getDueAmount() == 0) {
             $this->setStatus(Invoice::CLOSED);
         } else {
             if ($this->getDueDate()->getTimestamp() > strtotime(date('Y-m-d'))) {
@@ -310,6 +327,7 @@ class Invoice extends AbstractInvoice
                 $this->setStatus(Invoice::OVERDUE);
             }
         }
+
         return $this;
     }
 

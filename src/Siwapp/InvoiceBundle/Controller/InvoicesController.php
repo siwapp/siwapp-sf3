@@ -216,7 +216,7 @@ class InvoicesController extends AbstractInvoiceController
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Invoice::DRAFT);
             } elseif ($request->request->has('save_close')) {
-                $entity->setStatus(Invoice::CLOSED);
+                $entity->setForcefullyClosed(true);
             } elseif ($entity->isDraft() && $request->request->has('save')) {
                 $entity->setStatus(Invoice::OPENED);
             }
