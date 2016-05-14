@@ -1,0 +1,189 @@
+<!doctype html">
+<html lang="{{lang}}">
+<head>
+  <meta charset="utf-8" />
+  <title>Estimate</title>
+  <style type="text/css">
+    /* Custom CSS code */
+    table {border-spacing:0; border-collapse: collapse;}
+    ul {list-style-type: none; padding-left:0;}
+    body, input, textarea { font-family:helvetica,sans-serif; font-size:8pt; }
+    body { color:#464648; margin:2cm 1.5cm; }
+    h2   { color:#535255; font-size:16pt; font-weight:normal; line-height:1.2em; border-bottom:1px solid #DB4823; margin-right:220px }
+    h3   { color:#9A9A9A; font-size:13pt; font-weight:normal; margin-bottom: 0em}
+    table th.right,
+    table td.right              { text-align:right; }
+    .customer-data              { padding:1em 0; }
+    .customer-data table        { width:100%;       }
+    .customer-data table td     { width:50%;        }
+    .customer-data td span      { display:block; margin:0 0 5pt; padding-bottom:2pt; border-bottom:1px solid #DCDCDC; }
+    .customer-data td span.left { margin-right:1em; }
+    .customer-data label        { display:block; font-weight:bold; font-size:8pt; }
+    .payment-data               { padding:1em 0;    }
+    .payment-data table         { width:100%;       }
+    .payment-data th,
+    .payment-data td            { line-height:1em; padding:5pt 8pt 5pt; border:1px solid #DCDCDC; }
+    .payment-data thead th      { background:#FAFAFA; }
+    .payment-data th            { font-weight:bold; white-space:nowrap; }
+    .payment-data .bottomleft   { border-color:white; border-top:inherit; border-right:inherit; }
+    .payment-data span.tax      { display:block; white-space:nowrap; }
+    .terms, .notes              { padding:9pt 0 0; font-size:7pt; line-height:9pt; }
+    .section                    { margin-bottom: 1em; }
+    .logo                       { text-align: right; }
+  </style>
+  <style type="text/css">
+    /* CSS code for printing */
+    @media print {
+      body           { margin:auto; }
+      .section       { page-break-inside:avoid; }
+      div#sfWebDebug { display:none; }
+    }
+  </style>
+</head>
+<body>
+  {% if settings.company_logo %}
+    <div class="logo">
+      <img src="{{ settings.company_logo }}" alt="{{ settings.company_name }}" />
+    </div>
+  {% endif %}
+  <div class="h2">
+    <h2>Estimate #{{estimate}}</h2>
+  </div>
+  <div class="section">
+    <div class="company-data">
+      <ul>
+        <li>Company: {{settings.company_name}}</li>
+        <li>Address: {{settings.company_address|format}}</li>
+        <li>Phone: {{settings.company_phone}}</li>
+        <li>Fax: {{settings.company_fax}}</li>
+        <li>Email: {{settings.company_email}}</li>
+        <li>Web: {{settings.company_url}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="section">
+    <h3>Client info</h3>
+    <div class="customer-data">
+      <table cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+          <td>
+            <span class="left">
+              <label>Customer:</label>
+              {{estimate.customer_name}}
+            </span>
+          </td>
+          <td>
+            <span class="right">
+              <label>Customer identification:</label>
+              {{estimate.customer_identification}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="left">
+              <label>Contact person:</label>
+              {{estimate.contact_person}}
+            </span>
+          </td>
+          <td>
+            <span class="right">
+              <label>Email:</label>
+              {{estimate.customer_email}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="left">
+              <label>Invoicing address:</label>
+              {{estimate.invoicing_address|format}}
+            </span>
+          </td>
+          <td>
+            <span class="right">
+              <label>Shipping address:</label>
+              {{estimate.shipping_address|format}}
+            </span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="section">
+    <h3>Payment details</h3>
+    <div class="payment-data">
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th class="right">Unit Cost</th>
+            <th class="right">Qty</th>
+            <th class="right">Taxes</th>
+            {# show discounts only if there is some discount #}
+            {% if estimate.discount_amount %}
+            <th class="right">Discount</th>
+            {% endif %}
+            <th class="right">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in estimate.Items %}
+            <tr>
+              <td>
+                {{item.description}}
+              </td>
+              <td class="right">{{item.unitary_cost|localizedcurrency(settings.currency)}}</td>
+              <td class="right">{{item.quantity}}</td>
+              <td class="right">
+                {% for tax in item.Taxes %}
+                  <span class="tax">{{tax.name}}</span>
+                {% endfor %}
+              </td>
+              {% if estimate.discount_amount %}
+              <td class="right">{{item.discount_amount|localizedcurrency(settings.currency)}}</td>
+              {% endif %}
+              <td class="right">{{item.gross_amount|localizedcurrency(settings.currency)}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
+            <th class="right">Base</th>
+            <td class="right">{{estimate.base_amount|localizedcurrency(settings.currency)}}</td>
+          </tr>
+          {% if estimate.discount_amount %}
+          <tr>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
+            <th class="right">Discount</th>
+            <td class="td_global_discount right">{{estimate.discount_amount|localizedcurrency(settings.currency)}}</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
+            <th class="right">Subtotal</th>
+            <td class="td_subtotal right">{{estimate.net_amount|localizedcurrency(settings.currency)}}</td>
+          </tr>
+          <tr>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
+            <th class="right">Taxes</th>
+            <td class="td_total_taxes right">{{estimate.tax_amount|localizedcurrency(settings.currency)}}</td>
+          </tr>
+          <tr class="strong">
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
+            <th class="right">Total</th>
+            <td class="td_total right">{{estimate.gross_amount|localizedcurrency(settings.currency)}}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="section">
+    <h3>Terms & conditions</h3>
+    <div class="terms">
+      {{estimate.terms|format}}
+    </div>
+  </div>
+</body>
+</html>

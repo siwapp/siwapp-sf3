@@ -14,5 +14,8 @@
   <h1>Estimates</h1>
   <p>SHOW ESTIMATE</p>
 
+  <a class="btn btn-default btn-info" href="{{ path('estimate_show_pdf', {'id': entity.id}) }}">{% trans %}PDF{% endtrans %}</a>
+  <a class="btn btn-default btn-info" href="{{ path('estimate_show_print', {'id': entity.id}) }}">{% trans %}Print{% endtrans %}</a>
   <a class="btn btn-default" href="{{ path('estimate_edit', {'id': entity.id}) }}">{% trans %}Edit{% endtrans %}</a>
+  <a class="btn btn-default btn-danger" href="{{ path('estimate_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
 {% endblock %}

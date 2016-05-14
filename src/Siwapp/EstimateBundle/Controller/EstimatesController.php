@@ -5,6 +5,7 @@ namespace Siwapp\EstimateBundle\Controller;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -63,6 +64,56 @@ class EstimatesController extends Controller
 
         return array(
             'entity' => $entity,
+        );
+    }
+
+    /**
+     * @Route("/{id}/show/print", name="estimate_show_print")
+     * @Template("SiwappEstimateBundle:Print:estimate.html.twig")
+     */
+    public function showPrintAction($id)
+    {
+        $estimate = $this->getDoctrine()
+            ->getRepository('SiwappEstimateBundle:Estimate')
+            ->find($id);
+        if (!$estimate) {
+            throw $this->createNotFoundException('Unable to find Estimate entity.');
+        }
+
+        return array(
+            'lang' => 'en',
+            'estimate'  => $estimate,
+            'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
+            'print' => true,
+        );
+    }
+
+    /**
+     * @Route("/{id}/show/pdf", name="estimate_show_pdf")
+     */
+    public function showPdfAction($id)
+    {
+        $estimate = $this->getDoctrine()
+            ->getRepository('SiwappEstimateBundle:Estimate')
+            ->find($id);
+        if (!$estimate) {
+            throw $this->createNotFoundException('Unable to find Estimate entity.');
+        }
+
+        $html = $this->renderView('SiwappEstimateBundle:Print:estimate.html.twig', array(
+            'lang' => 'en',
+            'estimate'  => $estimate,
+            'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
+            'print' => false,
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="Estimate-' . $estimate->label() . '.pdf"'
+            )
         );
     }
 

@@ -5,6 +5,7 @@ namespace Siwapp\EstimateBundle\Entity;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Util\Inflector;
 use Siwapp\CoreBundle\Entity\AbstractInvoice;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -152,6 +153,19 @@ class Estimate extends AbstractInvoice
     }
 
     /** ********** CUSTOM METHODS AND PROPERTIES ************* */
+
+
+    /**
+     * try to catch custom methods to be used in twig templates
+     */
+    public function __get($name)
+    {
+        $method = Inflector::camelize("get_{$name}");
+        if (method_exists($this, $method)) {
+            return $this->$method();
+        }
+        return false;
+    }
 
     public function __toString()
     {
