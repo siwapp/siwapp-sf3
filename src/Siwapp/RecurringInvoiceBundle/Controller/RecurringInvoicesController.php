@@ -18,7 +18,7 @@ use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 class RecurringInvoicesController extends Controller
 {
     /**
-     * @Route("/", name="recurring_index")
+     * @Route("", name="recurring_index")
      * @Template("SiwappRecurringInvoiceBundle:Default:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -87,7 +87,7 @@ class RecurringInvoicesController extends Controller
     public function showAction($id)
     {
         // No show for now, always redirect to edit.
-        return $this->redirect($this->generateUrl('estimate_edit', ['id' => $id]));
+        return $this->redirect($this->generateUrl('recurring_edit', ['id' => $id]));
     }
 
     /**
@@ -163,10 +163,19 @@ class RecurringInvoicesController extends Controller
     }
 
     /**
-     * @Route("/delete", name="recurring_delete")
+     * @Route("/{id}/delete", name="recurring_delete")
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $recurring = $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')->find($id);
+        if (!$recurring) {
+            throw $this->createNotFoundException('Unable to find Recurring invoice entity.');
+        }
+        $em->remove($recurring);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Recurring invoice deleted.');
+
         return $this->redirect($this->generateUrl('recurring_index'));
     }
 

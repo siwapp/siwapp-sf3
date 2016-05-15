@@ -310,10 +310,19 @@ class EstimatesController extends Controller
     }
 
     /**
-     * @Route("/delete", name="estimate_delete")
+     * @Route("/{id}/delete", name="estimate_delete")
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $estimate = $em->getRepository('SiwappEstimateBundle:Estimate')->find($id);
+        if (!$estimate) {
+            throw $this->createNotFoundException('Unable to find Estimate entity.');
+        }
+        $em->remove($estimate);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Estimate deleted.');
+
         return $this->redirect($this->generateUrl('estimate_index'));
     }
 
