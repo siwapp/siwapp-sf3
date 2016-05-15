@@ -13,6 +13,14 @@ class CustomerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder
+            ->add('name')
+            ->add('identification')
+            ->add('email')
+            ->add('contact_person')
+            ->add('invoicing_address')
+            ->add('shipping_address')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

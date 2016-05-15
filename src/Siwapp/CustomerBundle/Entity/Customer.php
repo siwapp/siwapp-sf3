@@ -3,6 +3,7 @@
 namespace Siwapp\CustomerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Siwapp\InvoiceBundle\Entity\Invoice;
 
 /**
  * Customer
@@ -31,7 +32,7 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="identification", type="string", length=255, nullable=true)
+     * @ORM\Column(name="identification", type="string", length=128, nullable=true, unique=true)
      */
     private $identification;
 
@@ -63,6 +64,18 @@ class Customer
      */
     private $shippingAddress;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice", cascade={"persist"})
+     * @ORM\JoinTable(name="customers_invoices",
+     *      joinColumns={@ORM\JoinColumn(
+     *          name="customer_id", referencedColumnName="id", onDelete="CASCADE"
+     *      )},
+     *      inverseJoinColumns={@ORM\JoinColumn(
+     *          name="invoice_id", referencedColumnName="id", onDelete="CASCADE", unique=true
+     *      )}
+     * )
+     */
+    protected $invoices;
 
     /**
      * Get id
@@ -216,5 +229,40 @@ class Customer
     public function getShippingAddress()
     {
         return $this->shippingAddress;
+    }
+
+    /**
+     * Add invoice
+     *
+     * @param Siwapp\InvoiceBundle\Entity\Invoice $invoice
+     */
+    public function addInvoice(Invoice $invoice)
+    {
+        $this->invoices[] = $invoice;
+    }
+
+    public function label()
+    {
+        return $this->getName();
+    }
+
+    public function getTotal()
+    {
+        $total = 0;
+        foreach ($this->invoices as $invoice) {
+            $total += $invoice->getGrossAmount();
+        }
+
+        return $total;
+    }
+
+    public function getDue()
+    {
+        $due = 0;
+        foreach ($this->invoices as $invoice) {
+            $due += $invoice->getDueAmount();
+        }
+
+        return $due;
     }
 }

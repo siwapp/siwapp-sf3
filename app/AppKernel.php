@@ -22,15 +22,16 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
 
-            // Siwapp bundles
+            // Siwapp required bundles.
+            new Siwapp\ConfigBundle\SiwappConfigBundle(),
+            new Siwapp\CoreBundle\SiwappCoreBundle(),
             new Siwapp\InvoiceBundle\SiwappInvoiceBundle(),
+            // Siwap optional bundles.
             new Siwapp\DashboardBundle\SiwappDashboardBundle(),
-            new Siwapp\RecurringInvoiceBundle\SiwappRecurringInvoiceBundle(),
             new Siwapp\CustomerBundle\SiwappCustomerBundle(),
             new Siwapp\EstimateBundle\SiwappEstimateBundle(),
             new Siwapp\ProductBundle\SiwappProductBundle(),
-            new Siwapp\ConfigBundle\SiwappConfigBundle(),
-            new Siwapp\CoreBundle\SiwappCoreBundle(),
+            new Siwapp\RecurringInvoiceBundle\SiwappRecurringInvoiceBundle(),
             new Siwapp\UserBundle\SiwappUserBundle(),
         ];
 

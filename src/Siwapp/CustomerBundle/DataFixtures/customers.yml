@@ -1,0 +1,120 @@
+Customer:
+  Customer_1:
+    name: 'Smith and Co.'
+    identification: 2450626775P
+    email: jody_nichols@example.com
+    invoicing_address: "Fake Dir n 262\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 262\nMadrid\nSpain"
+    contact_person: 'Jody Nichols'
+  Customer_2:
+    name: 'Rouster and Sideways'
+    identification: '1889335077'
+    email: varria_leijten@example.com
+    invoicing_address: "Fake Dir n 871\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 871\nMadrid\nSpain"
+    contact_person: 'Varria Leijten'
+  Customer_3:
+    name: 'Western Gas & Electric'
+    identification: 3924395949G
+    email: marissa_peers@example.com
+    invoicing_address: "Fake Dir n 88\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 88\nMadrid\nSpain"
+    contact_person: 'Marissa Peers'
+  Customer_4:
+    name: 'Osato Chemicals'
+    identification: 4499553670X
+    email: julie_radue@example.com
+    invoicing_address: "Fake Dir n 969\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 969\nMadrid\nSpain"
+    contact_person: 'Julie Radue'
+  Customer_5:
+    name: '123 Warehousing'
+    identification: '77426541881'
+    email: cyrus_decker@example.com
+    invoicing_address: "Fake Dir n 39\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 39\nMadrid\nSpain"
+    contact_person: 'Cyrus Decker'
+  Customer_6:
+    name: 'Allied Biscuit'
+    identification: 6787068643G
+    email: willard_starling@example.com
+    invoicing_address: "Fake Dir n 617\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 617\nMadrid\nSpain"
+    contact_person: 'Willard Starling'
+  Customer_7:
+    name: 'St. Anky Beer'
+    identification: '9295043937'
+    email: sharon_ward@example.com
+    invoicing_address: "Fake Dir n 424\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 424\nMadrid\nSpain"
+    contact_person: 'Sharon Ward'
+  Customer_8:
+    name: 'The Krusty Krab'
+    identification: '8248936709'
+    email: kusatsu_douglas@example.com
+    invoicing_address: "Fake Dir n 390\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 390\nMadrid\nSpain"
+    contact_person: 'Kusatsu Douglas'
+  Customer_9:
+    name: 'Big Kahuna Burger'
+    identification: 5714673104J
+    email: natima_seyetik@example.com
+    invoicing_address: "Fake Dir n 734\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 734\nMadrid\nSpain"
+    contact_person: 'Natima Seyetik'
+  Customer_10:
+    name: SpringShield
+    identification: 4716162264W
+    email: dmitri_campio@example.com
+    invoicing_address: "Fake Dir n 824\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 824\nMadrid\nSpain"
+    contact_person: 'Dmitri Campio'
+  Customer_11:
+    name: 'Sample, inc'
+    identification: 7863841633Q
+    email: gerard_bennett@example.com
+    invoicing_address: "Fake Dir n 681\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 681\nMadrid\nSpain"
+    contact_person: 'Gerard Bennett'
+  Customer_12:
+    name: Tessier-Ashpool
+    identification: 3378474903M
+    email: ronald_mccullen@example.com
+    invoicing_address: "Fake Dir n 802\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 802\nMadrid\nSpain"
+    contact_person: 'Ronald McCullen'
+  Customer_13:
+    name: 'Fake Brothers'
+    identification: 6009961348U
+    email: tristan_stone@example.com
+    invoicing_address: "Fake Dir n 839\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 839\nMadrid\nSpain"
+    contact_person: 'Tristan Stone'
+  Customer_14:
+    name: 'Sonky Rubber Goods'
+    identification: '40487600161'
+    email: olivia_mirren@example.com
+    invoicing_address: "Fake Dir n 47\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 47\nMadrid\nSpain"
+    contact_person: 'Olivia Mirren'
+  Customer_15:
+    name: 'BLAND Corporation'
+    identification: 6812087434H
+    email: 'kestra_o''malley@example.com'
+    invoicing_address: "Fake Dir n 983\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 983\nMadrid\nSpain"
+    contact_person: 'Kestra O''Malley'
+  Customer_16:
+    name: Initech
+    identification: 1674636932B
+    email: orfil_johnson@example.com
+    invoicing_address: "Fake Dir n 700\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 700\nMadrid\nSpain"
+    contact_person: 'Orfil Johnson'
+  Customer_17:
+    name: 'Big Kahuna Burger'
+    identification: 3641026692R
+    email: mary_ellen_ingram@example.com
+    invoicing_address: "Fake Dir n 763\nMadrid\nSpain"
+    shipping_address: "Fake Dir n 763\nMadrid\nSpain"
+    contact_person: 'Mary Ellen Ingram'

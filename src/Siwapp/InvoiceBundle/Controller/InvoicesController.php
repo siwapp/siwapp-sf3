@@ -330,6 +330,7 @@ class InvoicesController extends AbstractInvoiceController
             'action' => $this->generateUrl('invoice_payments', ['invoiceId' => $invoiceId]),
         ]);
         $listForm->handleRequest($request);
+
         if ($listForm->isValid() && $invoice) {
             $data = $listForm->getData();
             foreach ($data['payments'] as $payment) {

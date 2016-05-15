@@ -7,8 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use Siwapp\CustomerBundle\Entity\Customer;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchCustomerType extends AbstractType
 {
@@ -17,5 +16,12 @@ class SearchCustomerType extends AbstractType
         $builder
             ->add('terms', null, ['required' => false])
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'csrf_protection' => false,
+        ));
     }
 }

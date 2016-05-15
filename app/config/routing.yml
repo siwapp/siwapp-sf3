@@ -1,13 +1,18 @@
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
+siwapp_config:
+    resource: "@SiwappConfigBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 siwapp_core:
     resource: "@SiwappCoreBundle/Controller/"
     type:     annotation
     prefix:   /
 
-siwapp_config:
-    resource: "@SiwappConfigBundle/Controller/"
+siwapp_invoice:
+    resource: "@SiwappInvoiceBundle/Controller/"
     type:     annotation
     prefix:   /
 
@@ -33,11 +38,6 @@ siwapp_recurring_invoice:
 
 siwapp_dashboard:
     resource: "@SiwappDashboardBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-siwapp_invoice:
-    resource: "@SiwappInvoiceBundle/Controller/"
     type:     annotation
     prefix:   /
 

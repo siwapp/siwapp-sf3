@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
 use Symfony\Component\Validator\Constraints as Assert;
+use Siwapp\CustomerBundle\Entity\Customer;
 
 /**
  * Siwapp\CoreBundle\Entity\AbstractInvoice
@@ -27,30 +28,23 @@ class AbstractInvoice
     private $id;
 
     /**
-     * @var integer $customer_id
-     *
-     * @ORM\Column(name="customer_id", type="integer", nullable=true)
-     */
-    private $customer_id;
-
-    /**
      * @var string $customer_name
      *
-     * @ORM\Column(name="customer_name", type="string", length=100, nullable=true)
+     * @ORM\Column(name="customer_name", type="string", length=255, nullable=true)
      */
     private $customer_name;
 
     /**
      * @var string $customer_identification
      *
-     * @ORM\Column(name="customer_identification", type="string", length=50, nullable=true)
+     * @ORM\Column(name="customer_identification", type="string", length=128, nullable=true)
      */
     private $customer_identification;
 
     /**
      * @var string $customer_email
      *
-     * @ORM\Column(name="customer_email", type="string", length=100, nullable=true)
+     * @ORM\Column(name="customer_email", type="string", length=255, nullable=true)
      * @Assert\Email()
      */
     private $customer_email;
@@ -72,7 +66,7 @@ class AbstractInvoice
     /**
      * @var string $contact_person
      *
-     * @ORM\Column(name="contact_person", type="string", length=100, nullable=true)
+     * @ORM\Column(name="contact_person", type="string", length=255, nullable=true)
      */
     private $contact_person;
 
@@ -165,23 +159,31 @@ class AbstractInvoice
     }
 
     /**
-     * Set customer_id
+     * Set customer parameters from customer entity.
      *
-     * @param integer $customerId
+     * @param Siwapp\CustomerBundle\Entity\Customer $customer
      */
-    public function setCustomerId($customerId)
+    public function setFromCustomer(Customer $customer)
     {
-        $this->customer_id = $customerId;
-    }
-
-    /**
-     * Get customer_id
-     *
-     * @return integer
-     */
-    public function getCustomerId()
-    {
-        return $this->customer_id;
+        if (empty($this->customer_name) && $customer->getName()) {
+            $this->customer_name = $customer->getName();
+        }
+        if (empty($this->customer_email) && $customer->getEmail()) {
+            $this->customer_email = $customer->getEmail();
+        }
+        if (empty($this->customer_identification) && $customer->getIdentification()) {
+            $this->customer_identification = $customer->getIdentification();
+        }
+        if (empty($this->contact_person) && $customer->getContactPerson()) {
+            $this->contact_person = $customer->getContactPerson();
+        }
+        if (empty($this->invoicing_address) && $customer->getInvoicingAddress()) {
+            $this->invoicing_address = $customer->getInvoicingAddress();
+        }
+        if (empty($this->shipping_address) && $customer->getShippingAddress()) {
+            $this->shipping_address = $customer->getShippingAddress();
+        }
+        $this->customer->addInvoice($this);
     }
 
     /**

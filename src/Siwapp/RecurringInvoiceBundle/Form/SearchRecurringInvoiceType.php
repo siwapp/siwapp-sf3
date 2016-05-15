@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 
@@ -30,6 +31,13 @@ class SearchRecurringInvoiceType extends AbstractType
             'choice_label' => 'name',
             'placeholder' => '-',
             'required' => false,
+        ));
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'csrf_protection' => false,
         ));
     }
 }

@@ -1,0 +1,62 @@
+{% extends "SiwappCoreBundle::base.html.twig" %}
+
+{% block searchform_container %}{% endblock %}
+
+{% block body %}
+
+  <article class="invoice-like">
+
+    <header id="invoice-like-title" class="clearfix">
+      <h2>Customer {{ entity.label() }}</h2>
+    </header>
+
+    {{ form_start(form, {'attr': {'class': 'form-stacked' } }) }}
+
+      {{ form_errors(form) }}
+
+      <div class="row">
+        <div class="col-md-6 clearfix">
+          {{ form_row(form.name) }}
+        </div>
+        <div class="col-md-6 clearfix">
+          {{ form_row(form.identification) }}
+        </div>
+        <div class="col-md-6 clearfix">
+          {{ form_row(form.contact_person) }}
+        </div>
+        <div class="col-md-6 clearfix">
+          <div class="form-group">
+            {{ form_label(form.email) }}
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+              {{ form_widget(form.email) }}
+            </div>
+            {{ form_errors(form.email) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 clearfix">
+          {{ form_row(form.invoicing_address) }}
+        </div>
+        <div class="col-md-6 clearfix">
+          {{ form_row(form.shipping_address) }}
+        </div>
+      </div>
+
+      {{ form_rest(form) }}
+
+      <div class="form-actions">
+        <input type="submit" class="btn btn-default btn-primary" name="save" value="{% trans %}Save{% endtrans %}">
+        <div class="float-right">
+          {% if entity.id %}
+          <a class="btn btn-default btn-danger" href="{{ path('customer_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
+          {% endif %}
+        </div>
+      </div>
+    {{ form_end(form) }}
+
+  </article>
+
+{% endblock %}

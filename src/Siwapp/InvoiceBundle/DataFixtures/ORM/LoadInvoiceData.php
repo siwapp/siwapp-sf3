@@ -26,11 +26,11 @@ class LoadInvoiceData extends AbstractFixture implements OrderedFixtureInterface
         $yaml = new Parser();
         $bpath = $this->container->get('kernel')->getBundle('SiwappInvoiceBundle')->getPath();
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/invoices.yml'));
-        
+
         foreach ($value['Invoice'] as $ref => $values) {
             $invoice = new Invoice();
             foreach ($values as $fname => $fvalue) {
-                if ($fname == 'Serie') {
+                if (in_array($fname, ['Serie', 'Customer'])) {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
                 $method = 'set'.Inflector::camelize($fname);

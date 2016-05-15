@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RecurringInvoice extends AbstractInvoice
 {
-
     /**
      * @var integer $days_to_due
      *
@@ -113,7 +112,7 @@ class RecurringInvoice extends AbstractInvoice
      *          name="recurring_invoice_id", referencedColumnName="id", onDelete="CASCADE"
      *      )},
      *      inverseJoinColumns={@ORM\JoinColumn(
-     *          name="invoice_id", referencedColumnName="id", onDelete="CASCADE"
+     *          name="invoice_id", referencedColumnName="id", onDelete="CASCADE", unique=true
      *      )}
      * )
      */
@@ -303,6 +302,11 @@ class RecurringInvoice extends AbstractInvoice
         : new \DateTime($lastExecutionDate);
     }
 
+    /**
+     * Get invoices
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
     public function getInvoices()
     {
         return $this->invoices;

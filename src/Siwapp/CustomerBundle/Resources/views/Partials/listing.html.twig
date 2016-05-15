@@ -14,12 +14,12 @@
         {{ knp_pagination_sortable(customers, 'Name'|trans, 'c.name') }}
       </th>
       <th>
-        {{ knp_pagination_sortable(customers, 'Identification'|trans, 'e.identification') }}
+        {{ knp_pagination_sortable(customers, 'Identification'|trans, 'c.identification') }}
       </th>
-      <th class="cell-size-medium">
+      <th class="cell-size-medium cell-align-right">
         {{ knp_pagination_sortable(customers, 'Due'|trans, 'e.identification') }}
       </th>
-      <th class="cell-size-small-medium cell-align-center">
+      <th class="cell-size-small-medium cell-align-right">
         {{ knp_pagination_sortable(customers, 'Total'|trans, 'e.identification') }}
       </th>
       <th class="cell-size-medium cell-align-right"></th>
@@ -32,15 +32,15 @@
       </tr>
     {% endif %}
     {% for key, entity in customers %}
-      <tr data-link="{{ path('customer_show', { 'id': entity.id }) }}">
+      <tr data-link="{{ path('customer_edit', { 'id': entity.id }) }}">
         <td class="table-action cell-align-center no-link">
           {{ form_row(list_form.customers[key]) }}
         </td>
-        <td class="cell-size-medium cell-align-center">{{ entity.name }}</td>
+        <td class="cell-size-medium">{{ entity.name }}</td>
         <td>{{ entity.identification }}</td>
-        <td>{{ entity.identification|localizedcurrency(currency) }}</td>
-        <td class="cell-align-center">{{ entity.identification|localizedcurrency(currency) }}</td>
-        <td class="cell-align-right"></td>
+        <td class="cell-align-right">{{ entity.total|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right">{{ entity.due|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right"><a href="{{ path('invoice_index', {'search_invoice': {'customer': entity.identification}}) }}" class="btn btn-default btn-info"><span class="glyphicon glyphicon-book"></span> {% trans %}Invoices{% endtrans %}</a></td>
       </tr>
     {% endfor %}
   </tbody>
