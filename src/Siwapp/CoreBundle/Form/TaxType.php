@@ -14,8 +14,8 @@ class TaxType extends AbstractType
         $builder
             ->add('name')
             ->add('value')
-            ->add('active', CheckboxType::class, array('required' => false))
-            ->add('is_default', CheckboxType::class, array('required' => false))
+            ->add('active')
+            ->add('is_default')
         ;
     }
 

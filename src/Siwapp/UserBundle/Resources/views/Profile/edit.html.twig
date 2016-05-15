@@ -1,4 +1,8 @@
-{% extends "SiwappConfigBundle:Default:settingsMenu.html.twig" %}
+{% extends "SiwappCoreBundle::base.html.twig" %}
+
+{% block searchform %}
+{% include "SiwappConfigBundle:Default:settings_menu.html.twig" %}
+{% endblock %}
 
 {% block body %}
 {% include "FOSUserBundle:Profile:edit_content.html.twig" %}

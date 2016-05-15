@@ -87,7 +87,7 @@ class GlobalSettingsType extends AbstractType
             ->add('company_address', TextareaType::class, array('required' => false))
             ->add('company_phone', TextType::class, array('required' => false))
             ->add('company_fax', TextType::class, array('required' => false))
-            ->add('company_email', EmailType::class, array('required' => false))
+            ->add('company_email', EmailType::class)
             ->add('company_url', UrlType::class, array('required' => false))
             ->add('company_logo', FileType::class, array('required' => false))
             ->add('currency', ChoiceType::class, array(

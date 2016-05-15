@@ -3,6 +3,7 @@
 namespace Siwapp\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Siwapp\ConfigBundle\Entity\Property
@@ -91,6 +92,12 @@ class Property
      **/
     public function getValue()
     {
-        return json_decode($this->getRawValue(), true);
+        $value = json_decode($this->getRawValue(), true);
+
+        if ($value && $this->keey == 'company_logo') {
+            $value = new File($value);
+        }
+
+        return $value;
     }
 }

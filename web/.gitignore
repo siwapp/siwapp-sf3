@@ -1,3 +1,5 @@
 css/*
 js/*
 bundles/*
+uploads/*
+!uploads/.gitkeep

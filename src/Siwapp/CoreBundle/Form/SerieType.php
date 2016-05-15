@@ -15,8 +15,8 @@ class SerieType extends AbstractType
         $builder
             ->add('name')
             ->add('value')
-            ->add('first_number', IntegerType::class)
-            ->add('enabled', CheckboxType::class, array('required' => false))
+            ->add('first_number')
+            ->add('enabled')
         ;
     }
 

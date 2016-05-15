@@ -1,10 +1,5 @@
-{% extends "SiwappCoreBundle::base.html.twig" %}
-
-{% block searchform %}
 {% set routename = app.request.attributes.get('_route') %}
 <ul class="nav nav-tabs">
     <li class="{{ routename|menu_active_tab('global_settings') }}"><a href="{{ path('global_settings') }}">{% trans %}Global Settings{% endtrans %}</a></li>
     <li class="{{ routename|menu_active_tab('fos_user_profile_edit') }}"><a href="{{ path('fos_user_profile_edit') }}">{% trans %}My Settings{% endtrans %}</a></li>
-    <li class="{{ routename|menu_active_tab('printing_templates') }}"><a href="{{ path('printing_templates') }}">{% trans %}Printing Templates{% endtrans %}</a></li>
 </ul>
-{% endblock %}

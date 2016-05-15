@@ -48,7 +48,7 @@
 <body>
   {% if settings.company_logo %}
     <div class="logo">
-      <img src="{{ settings.company_logo }}" alt="{{ settings.company_name }}" />
+      <img src="{{ absolute_url(asset(settings.company_logo)) }}" alt="{{ settings.company_name }}" />
     </div>
   {% endif %}
   <div class="h2">
