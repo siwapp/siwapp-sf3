@@ -1,0 +1,18 @@
+{{ form_start(form, {'attr': {'class': 'search form-inline'}}) }}
+
+  <fieldset>
+
+    {{ form_row(form.terms) }}
+
+    <div class="form-group float-right btn-toolbar">
+      <div class="btn-group">
+        <button id="search-submit" type="submit" class="btn btn-default btn-primary">{% trans %}Search{% endtrans %}</button>
+      </div>
+      <div class="btn-group">
+        <button id="search-reset" type="reset" class="btn btn-default btn-warning">{% trans %}Reset{% endtrans %}</button>
+      </div>
+    </div>
+
+  </fieldset>
+
+{{ form_end(form) }}
