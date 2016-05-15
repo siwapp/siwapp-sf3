@@ -36,11 +36,16 @@
     @media print {
       body           { margin:auto; }
       .section       { page-break-inside:avoid; }
-      div#sfWebDebug { display:none; }
+      .pagebreak     { page-break-before: always; }
     }
   </style>
+  {% if print is defined and print %}
+  <script type="text/javascript">
+    window.onload = function() { window.print(); }
+  </script>
+  {% endif %}
 </head>
-<body {% if print is defined and print %}onload="window.print();"{% endif %}>
+<body>
   {% if settings.company_logo %}
     <div class="logo">
       <img src="{{ settings.company_logo }}" alt="{{ settings.company_name }}" />

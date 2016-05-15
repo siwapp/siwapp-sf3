@@ -1,0 +1,5 @@
+services:
+    siwapp_estimate.invoice_generator:
+        class: Siwapp\EstimateBundle\InvoiceGenerator
+        arguments:
+            - "@doctrine.orm.entity_manager"

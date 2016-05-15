@@ -86,13 +86,8 @@ class RecurringInvoicesController extends Controller
      */
     public function showAction($id)
     {
-        $entity = $this->getDoctrine()
-            ->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')
-            ->find($id);
-
-        return array(
-            'entity' => $entity,
-        );
+        // No show for now, always redirect to edit.
+        return $this->redirect($this->generateUrl('estimate_edit', ['id' => $id]));
     }
 
     /**

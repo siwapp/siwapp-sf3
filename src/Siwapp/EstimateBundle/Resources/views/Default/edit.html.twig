@@ -25,6 +25,22 @@
   <article class="invoice-like">
 
     <header id="invoice-like-title">
+      {% if entity.id %}
+      <ul class="entity-actions list-inline float-right">
+        <li><a class="btn btn-default btn-info" href="{{ path('estimate_show_pdf', {'id': entity.id}) }}"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}PDF{% endtrans %}</a></li>
+        <li><a class="btn btn-default btn-info" href="{{ path('estimate_show_print', {'id': entity.id}) }}"><span class="glyphicon glyphicon-print"></span> {% trans %}Print{% endtrans %}</a></li>
+        <li><form action="{{ path('estimate_email', {'id': entity.id}) }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+          <button type="submit" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-envelope"></span> Send Email</button>
+          </form>
+        </li>
+        <li><form action="{{ path('estimate_generate_invoice', {'id': entity.id}) }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+          <button type="submit" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-file"></span> Create invoice</button>
+          </form></li>
+      </ul>
+      {% endif %}
+
       <h2>Estimate {{ entity.label() }}</h2>
       <ul id="invoice-like-status" class="list-unstyled">
         <li>
@@ -86,6 +102,9 @@
           <div class="panel-body form-inline">
             {{ form_row(form.serie) }}
             {{ form_row(form.issue_date) }}
+            {% if form.status is defined %}
+            {{ form_row(form.status) }}
+            {% endif %}
           </div><!-- form inline -->
         </div></div><!-- span5 -->
       </div>

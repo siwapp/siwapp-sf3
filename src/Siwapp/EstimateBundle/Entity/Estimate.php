@@ -82,8 +82,14 @@ class Estimate extends AbstractInvoice
     }
 
     /**
-     * Get draft
-     *
+     * @return boolean
+     */
+    public function isPending()
+    {
+        return $this->status == self::PENDING;
+    }
+
+    /**
      * @return boolean
      */
     public function isApproved()
@@ -165,6 +171,15 @@ class Estimate extends AbstractInvoice
             return $this->$method();
         }
         return false;
+    }
+
+    public function __isset($name)
+    {
+        if (in_array($name, array_keys(get_object_vars($this)))) {
+            return true;
+        }
+
+        return parent::__isset($name);
     }
 
     public function __toString()

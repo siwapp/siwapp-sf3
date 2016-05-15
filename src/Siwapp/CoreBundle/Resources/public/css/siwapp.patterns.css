@@ -7,7 +7,8 @@
 }
 .label.important,
 .label.overdue,
-.label.finished {
+.label.finished,
+.label.rejected {
   color: #ffffff;
   background-color: #bc432a;
   border-color: #aa2b13;
@@ -22,7 +23,8 @@
 .label.success,
 .label.paid,
 .label.closed,
-.label.active {
+.label.active,
+.label.approved {
   color: #ffffff;
   background-color: #90c754;
   border-color: #50a200;

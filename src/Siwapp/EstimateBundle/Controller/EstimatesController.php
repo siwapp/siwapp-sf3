@@ -20,7 +20,7 @@ use Siwapp\EstimateBundle\Form\EstimateType;
 class EstimatesController extends Controller
 {
     /**
-     * @Route("/", name="estimate_index")
+     * @Route("", name="estimate_index")
      * @Template("SiwappEstimateBundle:Default:index.html.twig")
      */
     public function indexAction(Request $request)
@@ -60,6 +60,41 @@ class EstimatesController extends Controller
 
                 // Rebuild the query, since some objects are now missing.
                 return $this->redirect($this->generateUrl('estimate_index'));
+            } elseif ($request->request->has('pdf') || $request->request->has('print')) {
+                $pages = [];
+                $settings = $em->getRepository('SiwappConfigBundle:Property')->getAll();
+                foreach ($data['estimates'] as $estimate) {
+                    $pages[] = $this->renderView('SiwappEstimateBundle:Print:estimate.html.twig', array(
+                        'estimate'  => $estimate,
+                        'settings' => $settings,
+                        'print' => $request->request->has('print'),
+                    ));
+                }
+
+                $html = $this->get('siwapp_core.html_page_merger')->merge($pages, '<div class="pagebreak"> </div>');
+                if ($request->request->has('pdf')) {
+                    $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
+
+                    return new Response($pdf, 200, [
+                        'Content-Type' => 'application/pdf',
+                        'Content-Disposition' => 'attachment; filename="Estimates.pdf"'
+                    ]);
+                } else {
+                    return new Response($html);
+                }
+            } elseif ($request->request->has('email')) {
+                foreach ($data['estimates'] as $estimate) {
+                    $message = $this->getEmailMessage($estimate);
+                    $result = $this->get('mailer')->send($message);
+                    if ($result) {
+                        $estimate->setSentByEmail(true);
+                        $em->persist($estimate);
+                    }
+                }
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Estimate(s) sent by email.');
+
+                return $this->redirect($this->generateUrl('estimate_index'));
             }
         }
 
@@ -78,8 +113,20 @@ class EstimatesController extends Controller
      */
     public function showAction($id)
     {
-        // No show for now, always redirect to edit.
-        return $this->redirect($this->generateUrl('estimate_edit', ['id' => $id]));
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('SiwappEstimateBundle:Estimate')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Estimate entity.');
+        }
+
+        if ($entity->isDraft() || $entity->isPending()) {
+            return $this->redirect($this->generateUrl('estimate_edit', ['id' => $id]));
+        }
+
+        return array(
+            'entity' => $entity,
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+        );
     }
 
     /**
@@ -193,6 +240,73 @@ class EstimatesController extends Controller
             'form' => $form->createView(),
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
         );
+    }
+
+    /**
+     * @Route("/{id}/email", name="estimate_email")
+     * @Method({"POST"})
+     */
+    public function emailAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $estimate = $em->getRepository('SiwappEstimateBundle:Estimate')->find($id);
+        if (!$estimate) {
+            throw $this->createNotFoundException('Unable to find Estimate entity.');
+        }
+
+        $message = $this->getEmailMessage($estimate);
+        $result = $this->get('mailer')->send($message);
+        if ($result) {
+            $estimate->setSentByEmail(true);
+            $em->persist($estimate);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Estimate sent by email.');
+        }
+
+        return $this->redirect($this->generateUrl('estimate_index'));
+    }
+
+    /**
+     * @Route("/{id}/generate-invoice", name="estimate_generate_invoice")
+     * @Method({"POST"})
+     */
+    public function generateInvoiceAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $estimate = $em->getRepository('SiwappEstimateBundle:Estimate')->find($id);
+        if (!$estimate) {
+            throw $this->createNotFoundException('Unable to find Estimate entity.');
+        }
+
+        $invoice = $this->get('siwapp_estimate.invoice_generator')->generate($estimate);
+        if ($invoice) {
+            $this->get('session')->getFlashBag()->add('success', 'Invoice generated.');
+
+            return $this->redirect($this->generateUrl('invoice_edit', ['id' => $invoice->getId()]));
+        }
+
+        return $this->redirect($this->generateUrl('estimate_index'));
+    }
+
+    protected function getEmailMessage($estimate)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $configRepo = $em->getRepository('SiwappConfigBundle:Property');
+
+        $html = $this->renderView('SiwappEstimateBundle:Email:estimate.html.twig', array(
+            'estimate'  => $estimate,
+            'settings' => $em->getRepository('SiwappConfigBundle:Property')->getAll(),
+        ));
+        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
+        $attachment = new \Swift_Attachment($pdf, $estimate->getId().'.pdf', 'application/pdf');
+        $message = \Swift_Message::newInstance()
+            ->setSubject($estimate->label())
+            ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
+            ->setTo($estimate->getCustomerEmail(), $estimate->getCustomerName())
+            ->setBody($html, 'text/html')
+            ->attach($attachment);
+
+        return $message;
     }
 
     /**
