@@ -60,6 +60,7 @@ class CustomersController extends Controller
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
+            'totals' => $em->getRepository('SiwappInvoiceBundle:Invoice')->getTotalsAndDuePerCustomer(),
         );
     }
 

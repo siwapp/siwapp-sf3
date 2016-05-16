@@ -96,6 +96,11 @@
           <a href="{{ path('customer_index') }}" data-shortcut="alt+g, c">{% trans %}Customers{% endtrans %}</a>
         </li>
         {% endif %}
+        {% if bundle_exists('SiwappCustomerBundle') %}
+        <li class="{{ routename|menu_active_tab('product_') }}">
+          <a href="{{ path('product_index') }}" data-shortcut="alt+g, c">{% trans %}Products{% endtrans %}</a>
+        </li>
+        {% endif %}
       </ul>
     </nav>
 

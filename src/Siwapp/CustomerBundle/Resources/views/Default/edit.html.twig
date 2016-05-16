@@ -2,6 +2,13 @@
 
 {% block searchform_container %}{% endblock %}
 
+{% block actionlink %}
+<a href="{{ path('customer_add') }}" class="btn btn-default btn-primary">
+  <span class="glyphicon glyphicon-plus"></span>
+  {% trans %}New Customer{% endtrans %}
+</a>
+{% endblock %}
+
 {% block body %}
 
   <article class="invoice-like">

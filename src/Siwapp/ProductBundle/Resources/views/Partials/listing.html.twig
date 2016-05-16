@@ -1,0 +1,53 @@
+{{ form_start(list_form) }}
+<ul id="toolbar" class="table-actions list-inline list-unstyled">
+  <li>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+  </li>
+</ul>
+<table class="table table-condensed table-striped align-middle" data-type="products">
+  <thead>
+    <tr>
+      <th class="cell-size-tiny cell-align-center">
+        <input type="checkbox" name="all" />
+      </th>
+      <th class="cell-size-medium">
+        {{ knp_pagination_sortable(products, 'Reference'|trans, 'p.reference') }}
+      </th>
+      <th>
+        {{ knp_pagination_sortable(products, 'Description'|trans, 'p.description') }}
+      </th>
+      <th class="cell-size-medium cell-align-right">
+        {{ 'Price'|trans }}
+      </th>
+      <th class="cell-size-small-medium cell-align-right">
+        {{ 'Units'|trans }}
+      </th>
+      <th class="cell-size-medium cell-align-right">
+        {{ 'Sold'|trans }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if products|length == 0 %}
+      <tr>
+        <td colspan="6">{% trans %}No products found.{% endtrans %}</td>
+      </tr>
+    {% endif %}
+    {% for key, entity in products %}
+      <tr data-link="{{ path('customer_edit', { 'id': entity.id }) }}">
+        <td class="table-action cell-align-center no-link">
+          {{ form_row(list_form.products[key]) }}
+        </td>
+        <td class="cell-size-medium">{{ entity.reference }}</td>
+        <td>{{ entity.description }}</td>
+        <td class="cell-align-right">-</td>
+        <td class="cell-align-right">-</td>
+        <td class="cell-align-right">-</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{{ form_end(list_form) }}
+<div class="navigation">
+    {{ knp_pagination_render(products) }}
+</div>

@@ -29,6 +29,12 @@ class AbstractInvoice
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Siwapp\CustomerBundle\Entity\Customer")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     */
+    protected $customer;
+
+    /**
      * @var string $customer_name
      *
      * @ORM\Column(name="customer_name", type="string", length=255, nullable=true)
@@ -184,7 +190,16 @@ class AbstractInvoice
         if (empty($this->shipping_address) && $customer->getShippingAddress()) {
             $this->shipping_address = $customer->getShippingAddress();
         }
-        $customer->addInvoice($this);
+    }
+
+    /**
+     * Set customer.
+     *
+     * @param Siwapp\CustomerBundle\Entity\Customer $customer
+     */
+    public function setCustomer(Customer $customer)
+    {
+        $this->customer = $customer;
     }
 
     /**
@@ -648,5 +663,13 @@ class AbstractInvoice
     public function preSave(LifecycleEventArgs $args)
     {
         $this->checkStatus();
+        $customers = $args->getEntityManager()->getRepository('SiwappCustomerBundle:Customer')->findBy([
+            'name' => $this->getCustomerName(),
+            'identification' => $this->getCustomerIdentification(),
+        ]);
+        $customer = reset($customers);
+        if ($customer) {
+            $this->setCustomer($customer);
+        }
     }
 }

@@ -38,8 +38,13 @@
         </td>
         <td class="cell-size-medium">{{ entity.name }}</td>
         <td>{{ entity.identification }}</td>
-        <td class="cell-align-right">{{ entity.due|localizedcurrency(currency) }}</td>
-        <td class="cell-align-right">{{ entity.total|localizedcurrency(currency) }}</td>
+        {% if totals[entity.id] is defined  %}
+        <td class="cell-align-right">{{ totals[entity.id].gross|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right">{{ totals[entity.id].due|localizedcurrency(currency) }}</td>
+        {% else %}
+        <td class="cell-align-right">-</td>
+        <td class="cell-align-right">-</td>
+        {% endif %}
         <td class="cell-align-right"><a href="{{ path('invoice_index', {'search_invoice': {'customer': entity.identification}}) }}" class="btn btn-default btn-info"><span class="glyphicon glyphicon-book"></span> {% trans %}Invoices{% endtrans %}</a></td>
       </tr>
     {% endfor %}

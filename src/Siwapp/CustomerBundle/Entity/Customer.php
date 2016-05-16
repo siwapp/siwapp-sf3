@@ -67,45 +67,6 @@ class Customer implements \JsonSerializable
     private $shippingAddress;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice")
-     * @ORM\JoinTable(name="customers_invoices",
-     *      joinColumns={@ORM\JoinColumn(
-     *          name="customer_id", referencedColumnName="id", onDelete="CASCADE"
-     *      )},
-     *      inverseJoinColumns={@ORM\JoinColumn(
-     *          name="invoice_id", referencedColumnName="id", onDelete="CASCADE", unique=true
-     *      )}
-     * )
-     */
-    protected $invoices;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice")
-     * @ORM\JoinTable(name="customers_recurring_invoices",
-     *      joinColumns={@ORM\JoinColumn(
-     *          name="customer_id", referencedColumnName="id", onDelete="CASCADE"
-     *      )},
-     *      inverseJoinColumns={@ORM\JoinColumn(
-     *          name="recurring_invoice_id", referencedColumnName="id", onDelete="CASCADE", unique=true
-     *      )}
-     * )
-     */
-    protected $recurring_invoices;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\EstimateBundle\Entity\Estimate")
-     * @ORM\JoinTable(name="customers_estimates",
-     *      joinColumns={@ORM\JoinColumn(
-     *          name="customer_id", referencedColumnName="id", onDelete="CASCADE"
-     *      )},
-     *      inverseJoinColumns={@ORM\JoinColumn(
-     *          name="estimate_id", referencedColumnName="id", onDelete="CASCADE", unique=true
-     *      )}
-     * )
-     */
-    protected $estimates;
-
-    /**
      * Get id
      *
      * @return int
@@ -259,81 +220,6 @@ class Customer implements \JsonSerializable
         return $this->shippingAddress;
     }
 
-    /**
-     * Adds an invoice.
-     *
-     * @param Siwapp\InvoiceBundle\Entity\Invoice $invoice
-     */
-    public function addInvoice(Invoice $invoice)
-    {
-        $this->invoices[] = $invoice;
-    }
-
-    /**
-     * Removes an invoice.
-     *
-     * @param Siwapp\InvoiceBundle\Entity\Invoice $invoice
-     */
-    public function removeInvoice(Invoice $invoice)
-    {
-        foreach ($this->invoices as $key => $value) {
-            if ($value === $invoice) {
-                unset($this->invoices[$key]);
-                break;
-            }
-        }
-    }
-
-    /**
-     * Adds a recurring invoice.
-     *
-     * @param Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice $invoice
-     */
-    public function addRecurringInvoice(RecurringInvoice $recurring)
-    {
-        $this->recurring_invoices[] = $recurring;
-    }
-
-    /**
-     * Removes a recurring invoice.
-     *
-     * @param Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice $recurring
-     */
-    public function removeRecurringInvoice(RecurringInvoice $recurring)
-    {
-        foreach ($this->recurring_invoices as $key => $value) {
-            if ($value === $recurring) {
-                unset($this->recurring_invoices[$key]);
-                break;
-            }
-        }
-    }
-
-    /**
-     * Adds an estimate.
-     *
-     * @param Siwapp\EstimateBundle\Entity\Estimate $invoice
-     */
-    public function addEstimate(Estimate $estimate)
-    {
-        $this->estimates[] = $estimate;
-    }
-
-    /**
-     * Removes an estimate.
-     *
-     * @param Siwapp\InvoiceBundle\Entity\Invoice $estimate
-     */
-    public function removeEstimate(Estimate $estimate)
-    {
-        foreach ($this->estimates as $key => $value) {
-            if ($value === $estimate) {
-                unset($this->estimates[$key]);
-                break;
-            }
-        }
-    }
-
     public function jsonSerialize()
     {
         return array(
@@ -350,31 +236,5 @@ class Customer implements \JsonSerializable
     public function label()
     {
         return $this->getName();
-    }
-
-    public function getTotal()
-    {
-        $total = 0;
-        foreach ($this->invoices as $invoice) {
-            if ($invoice->isDraft()) {
-                continue;
-            }
-            $total += $invoice->getGrossAmount();
-        }
-
-        return $total;
-    }
-
-    public function getDue()
-    {
-        $due = 0;
-        foreach ($this->invoices as $invoice) {
-            if ($invoice->isDraft()) {
-                continue;
-            }
-            $due += $invoice->getDueAmount();
-        }
-
-        return $due;
     }
 }

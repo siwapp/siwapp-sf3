@@ -1,1 +1,18 @@
-Hello {{ name }}!
+{% extends "SiwappCoreBundle::base.html.twig" %}
+
+{% block actionlink %}
+<a href="{{ path('product_add') }}" class="btn btn-default btn-primary">
+  <span class="glyphicon glyphicon-plus"></span>
+  {% trans %}New Product{% endtrans %}
+</a>
+{% endblock %}
+
+{% block searchform %}
+  {% include "SiwappProductBundle:Partials:search.html.twig" with {'form': search_form} %}
+{% endblock %}
+
+{% block body %}
+  <div id="invoices-latest-recurring-invoices">
+    {% include "SiwappProductBundle:Partials:listing.html.twig" %}
+  </div>
+{% endblock %}

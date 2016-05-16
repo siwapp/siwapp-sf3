@@ -26,11 +26,13 @@ class AppKernel extends Kernel
             new Siwapp\ConfigBundle\SiwappConfigBundle(),
             new Siwapp\CoreBundle\SiwappCoreBundle(),
             new Siwapp\InvoiceBundle\SiwappInvoiceBundle(),
+            // @todo: Make those bundles optional too when its possible to
+            // override Entities of other bundles.
+            new Siwapp\CustomerBundle\SiwappCustomerBundle(),
+            new Siwapp\ProductBundle\SiwappProductBundle(),
             // Siwap optional bundles.
             new Siwapp\DashboardBundle\SiwappDashboardBundle(),
-            new Siwapp\CustomerBundle\SiwappCustomerBundle(),
             new Siwapp\EstimateBundle\SiwappEstimateBundle(),
-            new Siwapp\ProductBundle\SiwappProductBundle(),
             new Siwapp\RecurringInvoiceBundle\SiwappRecurringInvoiceBundle(),
             new Siwapp\UserBundle\SiwappUserBundle(),
         ];

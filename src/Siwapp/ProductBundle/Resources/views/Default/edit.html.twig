@@ -1,0 +1,50 @@
+{% extends "SiwappCoreBundle::base.html.twig" %}
+
+{% block searchform_container %}{% endblock %}
+
+{% block actionlink %}
+<a href="{{ path('product_add') }}" class="btn btn-default btn-primary">
+  <span class="glyphicon glyphicon-plus"></span>
+  {% trans %}New Product{% endtrans %}
+</a>
+{% endblock %}
+
+{% block body %}
+
+  <article class="invoice-like">
+
+    <header id="invoice-like-title" class="clearfix">
+      <h2>Customer {{ entity.label() }}</h2>
+    </header>
+
+    {{ form_start(form, {'attr': {'class': 'form-stacked' } }) }}
+
+      {{ form_errors(form) }}
+
+      <div class="row">
+        <div class="col-md-6 clearfix">
+          {{ form_row(form.reference) }}
+        </div>
+        <div class="col-md-6 clearfix">
+          {{ form_row(form.price) }}
+        </div>
+        <div class="col-md-12 clearfix">
+          {{ form_row(form.description) }}
+        </div>
+      </div>
+
+      {{ form_rest(form) }}
+
+      <div class="form-actions">
+        <input type="submit" class="btn btn-default btn-primary" name="save" value="{% trans %}Save{% endtrans %}">
+        <div class="float-right">
+          {% if entity.id %}
+          <a class="btn btn-default btn-danger" href="{{ path('product_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
+          {% endif %}
+        </div>
+      </div>
+    {{ form_end(form) }}
+
+  </article>
+
+{% endblock %}

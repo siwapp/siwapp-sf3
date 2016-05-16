@@ -31,18 +31,43 @@ class InvoiceRepository extends AbstractInvoiceRepository
 
         if (count($found) > 0) {
             $result = $this->getEntityManager()->createQueryBuilder()
-            ->select('MAX(i.number) AS max_number')
-            ->from(Invoice::class, 'i')
-            ->where('i.status <> :status')
-            ->andWhere('i.serie = :series')
-            ->setParameter('status', Invoice::DRAFT)
-            ->setParameter('series', $series)
-            ->getQuery()
-            ->getSingleResult();
+                ->select('MAX(i.number) AS max_number')
+                ->from(Invoice::class, 'i')
+                ->where('i.status <> :status')
+                ->andWhere('i.serie = :series')
+                ->setParameter('status', Invoice::DRAFT)
+                ->setParameter('series', $series)
+                ->getQuery()
+                ->getSingleResult();
 
             return $result['max_number'] + 1;
         } else {
             return $series->getFirstNumber();
         }
+    }
+
+    public function getTotalsAndDuePerCustomer()
+    {
+        $result = $this->getEntityManager()->createQueryBuilder()
+            ->select('SUM(i.gross_amount) as gross')
+            ->addSelect('SUM(i.gross_amount-i.paid_amount) as due')
+            ->addSelect('IDENTITY(i.customer) as customer_id')
+            ->from(Invoice::class, 'i')
+            ->where('i.status <> :status')
+            ->setParameter('status', Invoice::DRAFT)
+            ->groupBy('i.customer')
+            ->getQuery()
+            ->getResult();
+        $total = [];
+        foreach ($result as $row) {
+            $total[$row['customer_id']] = $row;
+        }
+
+        return $total;
+    }
+
+    public function getDuePerCustomer()
+    {
+
     }
 }
