@@ -10,6 +10,11 @@ The following will ask you to setup the database info, so make sure you have one
 
     $ composer install
     $ php bin/console assetic:dump --env=prod
+    $ php bin/console doctrine:schema:create
+
+Creating the first (admin) user:
+
+    $ php bin/console fos:user:create admin mail@example.com 1234 --super-admin
 
 Make sure that the `var/` folder is writable by the webserver:
 
@@ -19,9 +24,7 @@ or check [this](https://symfony.com/doc/current/book/installation.html#book-inst
 
 Thats it!
 The siwapp installation should be reachable and working now.
-
-### Creating the first user
-    $ php bin/console fos:user:create admin mail@example.com 1234 --super-admin
+Check `/config.php` or `/web/config.php` to make sure that everything on your enviroment is ok.
 
 ### Loading demo data
     $ php bin/console doctrine:fixtures:load
