@@ -11,7 +11,7 @@ The following will ask you to setup the database info, so make sure you have one
     $ composer install
     $ php bin/console assetic:dump --env=prod
 
-Make that the `var/` folder is writable by the webserver:
+Make sure that the `var/` folder is writable by the webserver:
 
     $ sudo chown www-data:www-data -R var/
 
