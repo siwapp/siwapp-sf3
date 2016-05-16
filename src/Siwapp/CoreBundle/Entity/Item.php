@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Siwapp\ProductBundle\Entity\Product;
 
 /**
  * Siwapp\InvoiceBundle\Entity\Item
@@ -65,7 +66,7 @@ class Item
 
     /**
      * @ORM\ManyToOne(targetEntity="Siwapp\ProductBundle\Entity\Product")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $product;
 
@@ -157,6 +158,16 @@ class Item
     public function setUnitaryCost($unitary_cost)
     {
         $this->unitary_cost = $unitary_cost;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \Siwapp\ProductBundle\Entity\Product $product
+     */
+    public function setProduct(Product $product)
+    {
+        $this->product = $product;
     }
 
 

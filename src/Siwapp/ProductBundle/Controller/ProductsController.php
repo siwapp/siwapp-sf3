@@ -47,7 +47,7 @@ class ProductsController extends Controller
                     $em->remove($product);
                 }
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Customer(s) deleted.');
+                $this->get('session')->getFlashBag()->add('success', 'Product(s) deleted.');
 
                 // Rebuild the query, since some objects are now missing.
                 return $this->redirect($this->generateUrl('product_index'));

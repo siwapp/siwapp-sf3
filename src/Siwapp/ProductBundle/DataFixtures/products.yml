@@ -1,0 +1,17 @@
+Product:
+  Product_1:
+    reference: 'ESO'
+    description: 'Excepteur sint occaecat'
+    price: '179.54'
+  Product_2:
+    reference: 'DAI'
+    description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+    price: '207.08'
+  Product_3:
+    reference: 'ULN'
+    description: 'Ullamco laboris nisi'
+    price: '99.15'
+  Product_4:
+    reference: 'LID'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+    price: '732.82'

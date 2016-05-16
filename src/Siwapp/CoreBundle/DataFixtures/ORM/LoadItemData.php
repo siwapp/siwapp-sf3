@@ -31,6 +31,9 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface, C
         foreach ($value['Item'] as $ref => $values) {
             $item = new Item();
             foreach ($values as $fname => $fvalue) {
+                if (in_array($fname, ['Product'])) {
+                    $fvalue = $manager->merge($this->getReference($fvalue));
+                }
                 $method = Inflector::camelize('set_' . $fname);
                 if (is_callable(array($item, $method))) {
                     call_user_func(array($item, $method), $fvalue);
