@@ -1,5 +1,7 @@
 {% set routename = app.request.attributes.get('_route') %}
 <ul class="nav nav-tabs">
     <li class="{{ routename|menu_active_tab('global_settings') }}"><a href="{{ path('global_settings') }}">{% trans %}Global Settings{% endtrans %}</a></li>
+    {% if bundle_exists('SiwappUserBundle') %}
     <li class="{{ routename|menu_active_tab('fos_user_profile_edit') }}"><a href="{{ path('fos_user_profile_edit') }}">{% trans %}My Settings{% endtrans %}</a></li>
+    {% endif %}
 </ul>

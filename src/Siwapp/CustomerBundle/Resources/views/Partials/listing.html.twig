@@ -17,10 +17,10 @@
         {{ knp_pagination_sortable(customers, 'Identification'|trans, 'c.identification') }}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {{ knp_pagination_sortable(customers, 'Due'|trans, 'e.identification') }}
+        {{ 'Due'|trans }}
       </th>
       <th class="cell-size-small-medium cell-align-right">
-        {{ knp_pagination_sortable(customers, 'Total'|trans, 'e.identification') }}
+        {{ 'Total'|trans }}
       </th>
       <th class="cell-size-medium cell-align-right"></th>
     </tr>
@@ -38,8 +38,8 @@
         </td>
         <td class="cell-size-medium">{{ entity.name }}</td>
         <td>{{ entity.identification }}</td>
-        <td class="cell-align-right">{{ entity.total|localizedcurrency(currency) }}</td>
         <td class="cell-align-right">{{ entity.due|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right">{{ entity.total|localizedcurrency(currency) }}</td>
         <td class="cell-align-right"><a href="{{ path('invoice_index', {'search_invoice': {'customer': entity.identification}}) }}" class="btn btn-default btn-info"><span class="glyphicon glyphicon-book"></span> {% trans %}Invoices{% endtrans %}</a></td>
       </tr>
     {% endfor %}

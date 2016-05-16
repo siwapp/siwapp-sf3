@@ -7,10 +7,12 @@
   {% block stylesheets %}
   {% stylesheets
     'bundles/siwappcore/vendor/bootstrap/css/bootstrap.min.css'
+    'bundles/siwappcore/vendor/jquery-ui/jquery-ui.min.css'
     'bundles/siwappcore/css/siwapp.layout.css'
     'bundles/siwappcore/css/siwapp.tables.css'
     'bundles/siwappcore/css/siwapp.forms.css'
     'bundles/siwappcore/css/siwapp.patterns.css'
+    'bundles/siwappcore/css/siwapp.autocomplete.css'
     filter='cssrewrite'
     filter='?yui_css'
   %}
@@ -35,7 +37,7 @@
 
     <div class="container">
     <h1>
-      <a href="{{ path('dashboard_index') }}">
+      <a href="{{ bundle_exists('SiwappDashboardBundle') ? path('dashboard_index') : path('invoice_index') }}">
         <img src="{{ asset('bundles/siwappcore/img/logo.png') }}" alt="Siwapp" />
         <span class="version">v.1.0-DEV</span>
       </a>
@@ -71,21 +73,29 @@
       {% set routename = app.request.attributes.get('_route') %}
 
       <ul class="nav nav-tabs">
+        {% if bundle_exists('SiwappDashboardBundle') %}
         <li class="{{ routename|menu_active_tab('dashboard_') }}">
           <a href="{{ path('dashboard_index') }}" data-shortcut="alt+g, d">{% trans %}Dashboard{% endtrans %}</a>
         </li>
+        {% endif %}
         <li class="{{ routename|menu_active_tab('invoice_') }}">
           <a href="{{ path('invoice_index') }}" data-shortcut="alt+g, i">{% trans %}Invoices{% endtrans %}</a>
         </li>
+        {% if bundle_exists('SiwappRecurringInvoiceBundle') %}
         <li class="{{ routename|menu_active_tab('recurring_') }}">
           <a href="{{ path('recurring_index') }}" data-shortcut="alt+g, r">{% trans %}Recurring Invoices{% endtrans %}</a>
         </li>
+        {% endif %}
+        {% if bundle_exists('SiwappEstimateBundle') %}
         <li class="{{ routename|menu_active_tab('estimate_') }}">
           <a href="{{ path('estimate_index') }}" data-shortcut="alt+g, e">{% trans %}Estimates{% endtrans %}</a>
         </li>
+        {% endif %}
+        {% if bundle_exists('SiwappCustomerBundle') %}
         <li class="{{ routename|menu_active_tab('customer_') }}">
           <a href="{{ path('customer_index') }}" data-shortcut="alt+g, c">{% trans %}Customers{% endtrans %}</a>
         </li>
+        {% endif %}
       </ul>
     </nav>
 
@@ -126,6 +136,7 @@
   {% javascripts
     'bundles/siwappcore/vendor/bootstrap/js/bootstrap.min.js'
     'bundles/siwappcore/vendor/jquery.placeholder.min.js'
+    'bundles/siwappcore/vendor/jquery-ui/jquery-ui.min.js'
     'bundles/siwappcore/js/global.js'
     output='js/frameworks.js'
     filter='?yui_js'

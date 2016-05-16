@@ -5,6 +5,7 @@ services:
             - { name: twig.extension }
     twig.extension.siwapp_core:
         class: Siwapp\CoreBundle\Extension\SiwappCoreTwigExtension
+        arguments: [%kernel.bundles%]
         tags:
             - { name: twig.extension }
     siwapp_core.html_page_merger:

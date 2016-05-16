@@ -6,15 +6,28 @@ namespace Siwapp\CoreBundle\Extension;
  */
 class SiwappCoreTwigExtension extends \Twig_Extension
 {
+    protected $bundles;
+
+    public function __construct(array $bundles) {
+        $this->bundles = $bundles;
+    }
+
     public function getName()
     {
-        return "siwapp_core_twig_extension";
+        return 'siwapp_core_twig_extension';
     }
 
     public function getFilters()
     {
         return array(
             new \Twig_SimpleFilter('menu_active_tab', [$this, 'menu_active_tab']),
+        );
+    }
+
+    public function getFunctions()
+    {
+        return array(
+            new \Twig_SimpleFunction('bundle_exists', array($this, 'bundleExists')),
         );
     }
 
@@ -28,5 +41,15 @@ class SiwappCoreTwigExtension extends \Twig_Extension
     public function menu_active_tab($routename, $prefix)
     {
         return (strpos($routename, $prefix) === 0 ? "active" : "");
+    }
+
+    /**
+     * @param string $bundle
+     *
+     * @return bool
+     */
+    public function bundleExists($bundle)
+    {
+        return array_key_exists($bundle, $this->bundles);
     }
 }

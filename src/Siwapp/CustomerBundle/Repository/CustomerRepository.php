@@ -2,6 +2,9 @@
 
 namespace Siwapp\CustomerBundle\Repository;
 
+use Siwapp\CustomerBundle\Entity\Customer;
+use Siwapp\InvoiceBundle\Entity\Invoice;
+
 /**
  * CustomerRepository
  *
@@ -10,4 +13,29 @@ namespace Siwapp\CustomerBundle\Repository;
  */
 class CustomerRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLike($term)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('c')
+            ->from(Customer::class, 'c')
+            ->where('c.name LIKE :name')
+            ->orWhere('c.identification LIKE :name')
+            ->setParameter('name', '%'. $term .'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByInvoice(Invoice $invoice)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('c')
+            ->from(Customer::class, 'c')
+            ->join('c.invoices', 'i')
+            ->where('i.id = ?1')
+            ->setParameter(1, $invoice->getId())
+            ->getQuery()
+            ->getResult();
+    }
 }

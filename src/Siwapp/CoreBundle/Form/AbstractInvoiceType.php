@@ -17,7 +17,6 @@ class AbstractInvoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('customer_id', HiddenType::class)
             ->add('customer_name')
             ->add('customer_identification')
             ->add('customer_email')

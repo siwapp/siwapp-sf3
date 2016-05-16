@@ -183,7 +183,7 @@ class AbstractInvoice
         if (empty($this->shipping_address) && $customer->getShippingAddress()) {
             $this->shipping_address = $customer->getShippingAddress();
         }
-        $this->customer->addInvoice($this);
+        $customer->addInvoice($this);
     }
 
     /**
@@ -640,7 +640,6 @@ class AbstractInvoice
     public function preUpdate()
     {
         $this->checkStatus();
-        // TODO: check for customer matching and update it accordingly. (calling it's updateCustomer method)
     }
 
     public function __isset($name)

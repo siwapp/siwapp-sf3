@@ -11,7 +11,7 @@ use Symfony\Component\Yaml\Parser;
 
 use Siwapp\CustomerBundle\Entity\Customer;
 
-class LoadInvoiceData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadCustomerData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     private $container;
 

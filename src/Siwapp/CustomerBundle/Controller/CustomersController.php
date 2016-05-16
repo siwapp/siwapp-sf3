@@ -5,6 +5,7 @@ namespace Siwapp\CustomerBundle\Controller;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Siwapp\CustomerBundle\Entity\Customer;
@@ -65,6 +66,18 @@ class CustomersController extends Controller
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
         );
+    }
+
+    /**
+     * @Route("/autocomplete", name="customer_autocomplete")
+     */
+    public function autocompleteAction(Request $request)
+    {
+        $entities = $this->getDoctrine()
+            ->getRepository('SiwappCustomerBundle:Customer')
+            ->findLike($request->get('term'));
+
+        return new JsonResponse($entities);
     }
 
     /**

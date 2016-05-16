@@ -11,7 +11,7 @@ use Siwapp\InvoiceBundle\Entity\Invoice;
  * @ORM\Table(name="customer")
  * @ORM\Entity(repositoryClass="Siwapp\CustomerBundle\Repository\CustomerRepository")
  */
-class Customer
+class Customer implements \JsonSerializable
 {
     /**
      * @var int
@@ -65,7 +65,7 @@ class Customer
     private $shippingAddress;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice")
      * @ORM\JoinTable(name="customers_invoices",
      *      joinColumns={@ORM\JoinColumn(
      *          name="customer_id", referencedColumnName="id", onDelete="CASCADE"
@@ -232,13 +232,41 @@ class Customer
     }
 
     /**
-     * Add invoice
+     * Adds an invoice.
      *
      * @param Siwapp\InvoiceBundle\Entity\Invoice $invoice
      */
     public function addInvoice(Invoice $invoice)
     {
         $this->invoices[] = $invoice;
+    }
+
+    /**
+     * Removes an invoice.
+     *
+     * @param Siwapp\InvoiceBundle\Entity\Invoice $invoice
+     */
+    public function removeInvoice(Invoice $invoice)
+    {
+        foreach ($this->invoices as $key => $value) {
+            if ($value === $invoice) {
+                unset($this->invoices[$key]);
+                break;
+            }
+        }
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'email'=> $this->getEmail(),
+            'identification' => $this->getIdentification(),
+            'contact_person' => $this->getContactPerson(),
+            'invoicing_address' => $this->getInvoicingAddress(),
+            'shipping_address' => $this->getShippingAddress(),
+        );
     }
 
     public function label()
@@ -250,6 +278,9 @@ class Customer
     {
         $total = 0;
         foreach ($this->invoices as $invoice) {
+            if ($invoice->isDraft()) {
+                continue;
+            }
             $total += $invoice->getGrossAmount();
         }
 
@@ -260,6 +291,9 @@ class Customer
     {
         $due = 0;
         foreach ($this->invoices as $invoice) {
+            if ($invoice->isDraft()) {
+                continue;
+            }
             $due += $invoice->getDueAmount();
         }
 
