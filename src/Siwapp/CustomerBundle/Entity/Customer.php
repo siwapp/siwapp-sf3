@@ -4,6 +4,8 @@ namespace Siwapp\CustomerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Siwapp\InvoiceBundle\Entity\Invoice;
+use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
+use Siwapp\EstimateBundle\Entity\Estimate;
 
 /**
  * Customer
@@ -76,6 +78,32 @@ class Customer implements \JsonSerializable
      * )
      */
     protected $invoices;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice")
+     * @ORM\JoinTable(name="customers_recurring_invoices",
+     *      joinColumns={@ORM\JoinColumn(
+     *          name="customer_id", referencedColumnName="id", onDelete="CASCADE"
+     *      )},
+     *      inverseJoinColumns={@ORM\JoinColumn(
+     *          name="recurring_invoice_id", referencedColumnName="id", onDelete="CASCADE", unique=true
+     *      )}
+     * )
+     */
+    protected $recurring_invoices;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\EstimateBundle\Entity\Estimate")
+     * @ORM\JoinTable(name="customers_estimates",
+     *      joinColumns={@ORM\JoinColumn(
+     *          name="customer_id", referencedColumnName="id", onDelete="CASCADE"
+     *      )},
+     *      inverseJoinColumns={@ORM\JoinColumn(
+     *          name="estimate_id", referencedColumnName="id", onDelete="CASCADE", unique=true
+     *      )}
+     * )
+     */
+    protected $estimates;
 
     /**
      * Get id
@@ -251,6 +279,56 @@ class Customer implements \JsonSerializable
         foreach ($this->invoices as $key => $value) {
             if ($value === $invoice) {
                 unset($this->invoices[$key]);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Adds a recurring invoice.
+     *
+     * @param Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice $invoice
+     */
+    public function addRecurringInvoice(RecurringInvoice $recurring)
+    {
+        $this->recurring_invoices[] = $recurring;
+    }
+
+    /**
+     * Removes a recurring invoice.
+     *
+     * @param Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice $recurring
+     */
+    public function removeRecurringInvoice(RecurringInvoice $recurring)
+    {
+        foreach ($this->recurring_invoices as $key => $value) {
+            if ($value === $recurring) {
+                unset($this->recurring_invoices[$key]);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Adds an estimate.
+     *
+     * @param Siwapp\EstimateBundle\Entity\Estimate $invoice
+     */
+    public function addEstimate(Estimate $estimate)
+    {
+        $this->estimates[] = $estimate;
+    }
+
+    /**
+     * Removes an estimate.
+     *
+     * @param Siwapp\InvoiceBundle\Entity\Invoice $estimate
+     */
+    public function removeEstimate(Estimate $estimate)
+    {
+        foreach ($this->estimates as $key => $value) {
+            if ($value === $estimate) {
+                unset($this->estimates[$key]);
                 break;
             }
         }

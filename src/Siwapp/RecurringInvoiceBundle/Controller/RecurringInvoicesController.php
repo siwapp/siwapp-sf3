@@ -24,7 +24,10 @@ class RecurringInvoicesController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')->createQueryBuilder('ri');
+        $repo = $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice');
+        $repo->setPaginator($this->get('knp_paginator'));
+        // @todo Unhardcode this.
+        $limit = 50;
 
         $form = $this->createForm('Siwapp\RecurringInvoiceBundle\Form\SearchRecurringInvoiceType', null, [
             'action' => $this->generateUrl('recurring_index'),
@@ -32,17 +35,10 @@ class RecurringInvoicesController extends Controller
         ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $this->applySearchFilters($qb, $form->getData());
+            $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
+        } else {
+            $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
         }
-
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $qb->getQuery(),
-            $request->query->getInt('page', 1),
-            // @todo Unhardcode this.
-            50
-        );
-
 
         $listForm = $this->createForm('Siwapp\RecurringInvoiceBundle\Form\RecurringInvoiceListType', $pagination->getItems(), [
             'action' => $this->generateUrl('recurring_index'),
@@ -177,33 +173,5 @@ class RecurringInvoicesController extends Controller
         $this->get('session')->getFlashBag()->add('success', 'Recurring invoice deleted.');
 
         return $this->redirect($this->generateUrl('recurring_index'));
-    }
-
-    protected function applySearchFilters(QueryBuilder $qb, array $data)
-    {
-        foreach ($data as $field => $value) {
-            if ($value === null) {
-                continue;
-            }
-            if ($field == 'terms') {
-                $qb->join('ri.serie', 's', 'WITH', 'ri.serie = s.id');
-                $terms = $qb->expr()->literal("%$value%");
-                $qb->andWhere($qb->expr()->orX(
-                    $qb->expr()->like('s.name', $terms)
-                ));
-            } elseif ($field == 'status') {
-                $qb->andWhere('ri.status = :status');
-                $qb->setParameter('status', $value);
-            } elseif ($field == 'customer') {
-                $customer = $qb->expr()->literal("%$value%");
-                $qb->andWhere($qb->expr()->orX(
-                    $qb->expr()->like('ri.customer_name', $customer),
-                    $qb->expr()->like('ri.customer_identification', $customer)
-                ));
-            } elseif ($field == 'serie') {
-                $qb->andWhere('ri.serie = :series');
-                $qb->setParameter('series', $value);
-            }
-        }
     }
 }

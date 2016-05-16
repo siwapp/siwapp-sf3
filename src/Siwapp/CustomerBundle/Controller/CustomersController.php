@@ -2,7 +2,6 @@
 
 namespace Siwapp\CustomerBundle\Controller;
 
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,7 +21,10 @@ class CustomersController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('SiwappCustomerBundle:Customer')->createQueryBuilder('c');
+        $repo = $em->getRepository('SiwappCustomerBundle:Customer');
+        $repo->setPaginator($this->get('knp_paginator'));
+        // @todo Unhardcode this.
+        $limit = 50;
 
         $form = $this->createForm('Siwapp\CustomerBundle\Form\SearchCustomerType', null, [
             'action' => $this->generateUrl('customer_index'),
@@ -30,17 +32,10 @@ class CustomersController extends Controller
         ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $this->applySearchFilters($qb, $form->getData());
+            $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
+        } else {
+            $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
         }
-
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $qb->getQuery(),
-            $request->query->getInt('page', 1),
-            // @todo Unhardcode this.
-            50
-        );
-
 
         $listForm = $this->createForm('Siwapp\CustomerBundle\Form\CustomerListType', $pagination->getItems(), [
             'action' => $this->generateUrl('customer_index'),
@@ -152,21 +147,5 @@ class CustomersController extends Controller
         $this->get('session')->getFlashBag()->add('success', 'Customer deleted.');
 
         return $this->redirect($this->generateUrl('customer_index'));
-    }
-
-    protected function applySearchFilters(QueryBuilder $qb, array $data)
-    {
-        foreach ($data as $field => $value) {
-            if ($value === null) {
-                continue;
-            }
-            if ($field == 'terms') {
-                $terms = $qb->expr()->literal("%$value%");
-                $qb->andWhere($qb->expr()->orX(
-                    $qb->expr()->like('c.name', $terms),
-                    $qb->expr()->like('c.identification', $terms)
-                ));
-            }
-        }
     }
 }

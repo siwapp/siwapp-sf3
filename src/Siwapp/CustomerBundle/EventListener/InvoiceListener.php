@@ -3,51 +3,120 @@
 namespace Siwapp\CustomerBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Siwapp\InvoiceBundle\Entity\Invoice;
+use Siwapp\CoreBundle\Entity\AbstractInvoice;
 
 class InvoiceListener
 {
     public function postPersist(LifecycleEventArgs $args)
     {
         $invoice = $args->getEntity();
-        if (!$invoice instanceof Invoice) {
+        if (!$invoice instanceof AbstractInvoice) {
             return;
         }
 
-        $this->addRelationship($invoice, $args->getEntityManager());
+        switch (get_class($invoice)) {
+            case 'Siwapp\InvoiceBundle\Entity\Invoice':
+                $this->addInvoiceRelationship($invoice, $args->getEntityManager());
+                break;
+            case 'Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice':
+                $this->addRecurringInvoiceRelationship($invoice, $args->getEntityManager());
+                break;
+            case 'Siwapp\EstimateBundle\Entity\Estimate':
+                $this->addEstimateRelationship($invoice, $args->getEntityManager());
+                break;
+        }
+
     }
 
     public function postUpdate(LifecycleEventArgs $args)
     {
         $invoice = $args->getEntity();
-        if (!$invoice instanceof Invoice) {
+        if (!$invoice instanceof AbstractInvoice) {
             return;
         }
 
-        $this->removeRelationship($invoice, $args->getEntityManager());
-        $this->addRelationship($invoice, $args->getEntityManager());
+        switch (get_class($invoice)) {
+            case 'Siwapp\InvoiceBundle\Entity\Invoice':
+                $this->removeInvoiceRelationship($invoice, $args->getEntityManager());
+                $this->addInvoiceRelationship($invoice, $args->getEntityManager());
+                break;
+            case 'Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice':
+                $this->removeRecurringInvoiceRelationship($invoice, $args->getEntityManager());
+                $this->addRecurringInvoiceRelationship($invoice, $args->getEntityManager());
+                break;
+            case 'Siwapp\EstimateBundle\Entity\Estimate':
+                $this->removeEstimateRelationship($invoice, $args->getEntityManager());
+                $this->addEstimateRelationship($invoice, $args->getEntityManager());
+                break;
+        }
     }
 
-    protected function addRelationship(Invoice $invoice, $em)
+    protected function findCustomer(AbstractInvoice $invoice, $em)
     {
         $params = [
             'name' => $invoice->getCustomerName(),
             'identification' => $invoice->getCustomerIdentification(),
         ];
         $result = $em->getRepository('SiwappCustomerBundle:Customer')->findBy($params);
-        if ($result) {
-            $customer = reset($result);
+
+        return reset($result);
+    }
+
+    protected function addInvoiceRelationship(AbstractInvoice $invoice, $em)
+    {
+        $customer = $this->findCustomer($invoice, $em);
+        if ($customer) {
             $customer->addInvoice($invoice);
             $em->persist($customer);
             $em->flush();
         }
     }
 
-    protected function removeRelationship(Invoice $invoice, $em)
+    protected function addRecurringInvoiceRelationship(AbstractInvoice $invoice, $em)
+    {
+        $customer = $this->findCustomer($invoice, $em);
+        if ($customer) {
+            $customer->addRecurringInvoice($invoice);
+            $em->persist($customer);
+            $em->flush();
+        }
+    }
+
+    protected function addEstimateRelationship(AbstractInvoice $invoice, $em)
+    {
+        $customer = $this->findCustomer($invoice, $em);
+        if ($customer) {
+            $customer->removeEstimate($invoice);
+            $em->persist($customer);
+            $em->flush();
+        }
+    }
+
+    protected function removeInvoiceRelationship(AbstractInvoice $invoice, $em)
     {
         $customers = $em->getRepository('SiwappCustomerBundle:Customer')->findByInvoice($invoice);
         foreach ($customers as $customer) {
             $customer->removeInvoice($invoice);
+            $em->persist($customer);
+        }
+        $em->flush();
+    }
+
+    protected function removeRecurringInvoiceRelationship(AbstractInvoice $invoice, $em)
+    {
+        $customers = $em->getRepository('SiwappCustomerBundle:Customer')->findByRecurringInvoice($invoice);
+        foreach ($customers as $customer) {
+            $customer->removeRecurringInvoice($invoice);
+            $em->persist($customer);
+        }
+        $em->flush();
+    }
+
+    protected function removeEstimateRelationship(AbstractInvoice $invoice, $em)
+    {
+        $customers = $em->getRepository('SiwappCustomerBundle:Customer')->findByEstimate($invoice);
+        foreach ($customers as $customer) {
+            $customer->removeEstimate($invoice);
             $em->persist($customer);
         }
         $em->flush();

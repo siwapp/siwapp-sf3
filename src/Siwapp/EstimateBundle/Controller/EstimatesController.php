@@ -2,7 +2,6 @@
 
 namespace Siwapp\EstimateBundle\Controller;
 
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +25,10 @@ class EstimatesController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('SiwappEstimateBundle:Estimate')->createQueryBuilder('e');
+        $repo = $em->getRepository('SiwappEstimateBundle:Estimate');
+        $repo->setPaginator($this->get('knp_paginator'));
+        // @todo Unhardcode this.
+        $limit = 50;
 
         $form = $this->createForm('Siwapp\EstimateBundle\Form\SearchEstimateType', null, [
             'action' => $this->generateUrl('estimate_index'),
@@ -34,16 +36,10 @@ class EstimatesController extends Controller
         ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $this->applySearchFilters($qb, $form->getData());
+            $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
+        } else {
+            $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
         }
-
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $qb->getQuery(),
-            $request->query->getInt('page', 1),
-            // @todo Unhardcode this.
-            50
-        );
 
         $listForm = $this->createForm('Siwapp\EstimateBundle\Form\EstimateListType', $pagination->getItems(), [
             'action' => $this->generateUrl('estimate_index'),
@@ -324,39 +320,5 @@ class EstimatesController extends Controller
         $this->get('session')->getFlashBag()->add('success', 'Estimate deleted.');
 
         return $this->redirect($this->generateUrl('estimate_index'));
-    }
-
-    protected function applySearchFilters(QueryBuilder $qb, array $data)
-    {
-        foreach ($data as $field => $value) {
-            if ($value === null) {
-                continue;
-            }
-            if ($field == 'terms') {
-                $qb->join('e.serie', 's', 'WITH', 'e.serie = s.id');
-                $terms = $qb->expr()->literal("%$value%");
-                $qb->andWhere($qb->expr()->orX(
-                    $qb->expr()->like('s.name', $terms)
-                ));
-            } elseif ($field == 'date_from') {
-                $qb->andWhere('e.issue_date >= :date_from');
-                $qb->setParameter('date_from', $value);
-            } elseif ($field == 'date_to') {
-                $qb->andWhere('e.issue_date <= :date_to');
-                $qb->setParameter('date_to', $value);
-            } elseif ($field == 'status') {
-                $qb->andWhere('e.status = :status');
-                $qb->setParameter('status', $value);
-            } elseif ($field == 'customer') {
-                $customer = $qb->expr()->literal("%$value%");
-                $qb->andWhere($qb->expr()->orX(
-                    $qb->expr()->like('e.customer_name', $customer),
-                    $qb->expr()->like('e.customer_identification', $customer)
-                ));
-            } elseif ($field == 'serie') {
-                $qb->andWhere('e.serie = :series');
-                $qb->setParameter('series', $value);
-            }
-        }
     }
 }

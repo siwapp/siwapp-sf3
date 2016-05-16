@@ -2,6 +2,7 @@
 
 namespace Siwapp\DashboardBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -9,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Siwapp\InvoiceBundle\Controller\AbstractInvoiceController;
 use Siwapp\InvoiceBundle\Entity\Invoice;
 
-class DashboardController extends AbstractInvoiceController
+class DashboardController extends Controller
 {
     /**
      * @Route("/", name="dashboard_index")
@@ -19,6 +20,8 @@ class DashboardController extends AbstractInvoiceController
     {
         $em = $this->getDoctrine()->getManager();
         $invoiceRepo = $em->getRepository('SiwappInvoiceBundle:Invoice');
+        $invoiceRepo->setPaginator($this->get('knp_paginator'));
+
         $taxRepo = $em->getRepository('SiwappCoreBundle:Tax');
 
         $taxes = $taxRepo->findAll();
@@ -30,53 +33,36 @@ class DashboardController extends AbstractInvoiceController
         ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $this->applySearchFilters($qb, $form->getData());
+            $params = $form->getData();
+        } else {
+            $params = [];
         }
+        // Last invoices.
+        // @todo Unhardcode this.
+        $limit = 5;
+        $pagination = $invoiceRepo->paginatedSearch($params, $limit, $request->query->getInt('page', 1));
+        $totals = $invoiceRepo->getTotals($params);
 
-        $invoicesQb = clone $qb;
-        $invoicesQb->setMaxResults(5);
-        $invoices = $invoicesQb->getQuery()->getResult();
-
-        $overdueQb = clone $qb;
-        $overdueQb->andWhere('i.status = :overdue')
-            ->setParameter('overdue', Invoice::OVERDUE);
-        $overdue = $overdueQb->getQuery()->getResult();
-
-        // Totals.
-        $qb->addSelect('SUM(i.gross_amount)');
-        $qb->addSelect('SUM(i.paid_amount)');
-        $qb->addSelect('SUM(i.gross_amount - i.paid_amount)');
-        $qb->addSelect('SUM(i.net_amount)');
-        $qb->addSelect('SUM(i.tax_amount)');
-        $qb->setMaxResults(1);
-        $result = $qb->getQuery()->getSingleResult();
-        // Transform to named array for easier access in template.
-        $totals = [
-            'gross' => $result[1],
-            'paid' => $result[2],
-            'due' => $result[3],
-            'net' => $result[4],
-            'tax' => $result[5],
-        ];
-        // Overdue total.
-        $overdueQb->addSelect('SUM(i.gross_amount - i.paid_amount)');
-        $result = $overdueQb->getQuery()->getSingleResult();
-        $totals['overdue'] = $result[1];
+        // Last overdue invoices.
+        $overdueParams = $params;
+        $overdueParams['status'] = Invoice::OVERDUE;
+        // @todo Unhardcode this.
+        $limit = 50;
+        $paginationDue = $invoiceRepo->paginatedSearch($overdueParams, $limit, $request->query->getInt('page', 1));
+        $totalsDue = $invoiceRepo->getTotals($overdueParams);
+        $totals['overdue'] = $totalsDue['due'];
 
         // Tax totals.
         foreach ($taxes as $tax) {
-            $taxQb = clone $qb;
-            $taxQb->join('i.items', 'it');
-            $taxQb->join('it.taxes', 'tx');
-            $taxQb->addSelect('SUM(it.unitary_cost * (tx.value/100))');
-            $taxQb->andWhere('tx.id = :tax')
-                ->setParameter('tax', $tax);
-            $totals['taxes'][$tax->getId()] = $taxQb->getQuery()->getSingleResult()[6];
+            $taxId = $tax->getId();
+            $params['tax'] = $taxId;
+            $taxTotals = $invoiceRepo->getTotals($params);
+            $totals['taxes'][$taxId] = $taxTotals['tax_' . $taxId];
         }
 
         return array(
-            'invoices' => $invoices,
-            'overdue_invoices' => $overdue,
+            'invoices' => $pagination,
+            'overdue_invoices' => $paginationDue,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
             'totals' => $totals,

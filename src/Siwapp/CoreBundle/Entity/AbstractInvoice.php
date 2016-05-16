@@ -2,6 +2,7 @@
 
 namespace Siwapp\CoreBundle\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
@@ -514,7 +515,6 @@ class AbstractInvoice
     public function addItem(\Siwapp\CoreBundle\Entity\Item $item)
     {
         $this->items[] = $item;
-        $this->setAmounts();
     }
 
     /**
@@ -529,6 +529,15 @@ class AbstractInvoice
 
     /** ########### CUSTOM METHODS ################## */
 
+
+    public function __isset($name)
+    {
+        if (in_array($name, array_keys(get_object_vars($this)))) {
+            return true;
+        }
+
+        return false;
+    }
 
     /** ** RELATIONSHIPS ** */
 
@@ -556,7 +565,6 @@ class AbstractInvoice
         } elseif (is_int($mixed)) {
             unset($this->items[$mixed]);
         }
-        $this->setAmounts();
 
     }
 
@@ -615,7 +623,7 @@ class AbstractInvoice
         return $val;
     }
 
-    public function setAmounts()
+    public function checkAmounts()
     {
         $this->setBaseAmount($this->calculate('base_amount'));
         $this->setDiscountAmount($this->calculate('discount_amount'));
@@ -637,17 +645,8 @@ class AbstractInvoice
      * @ORM\PreUpdate
      * @ORM\PrePersist
      */
-    public function preUpdate()
+    public function preSave(LifecycleEventArgs $args)
     {
         $this->checkStatus();
-    }
-
-    public function __isset($name)
-    {
-        if (in_array($name, array_keys(get_object_vars($this)))) {
-            return true;
-        }
-
-        return false;
     }
 }

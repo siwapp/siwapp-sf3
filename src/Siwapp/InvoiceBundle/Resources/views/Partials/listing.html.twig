@@ -114,7 +114,7 @@
         <td class="cell-align-right">{{ entity.dueAmount|localizedcurrency(currency) }}</td>
         <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
         <td class="cell-align-right payments">
-          <a href="{{ path('invoice_payments', { 'invoiceId': entity.id }) }}" class="btn btn-default payments" title="Payments"  data-toggle="modal" data-target="#payment-modal" data-remote="false"><span class="glyphicon glyphicon-piggy-bank"></span> {% trans %}Payments{% endtrans %}</a>
+          <a href="{{ path('invoice_payments', { 'invoiceId': entity.id }) }}" class="btn btn-default btn-info payments" title="Payments"  data-toggle="modal" data-target="#payment-modal" data-remote="false"><span class="glyphicon glyphicon-piggy-bank"></span> {% trans %}Payments{% endtrans %}</a>
         </td>
       </tr>
     {% endfor %}

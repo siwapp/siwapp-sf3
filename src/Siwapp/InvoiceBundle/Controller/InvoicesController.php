@@ -2,6 +2,7 @@
 
 namespace Siwapp\InvoiceBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -16,7 +17,7 @@ use Siwapp\InvoiceBundle\Form\InvoiceType;
 /**
  * @Route("/invoices")
  */
-class InvoicesController extends AbstractInvoiceController
+class InvoicesController extends Controller
 {
     /**
      * @Route("", name="invoice_index")
@@ -25,7 +26,10 @@ class InvoicesController extends AbstractInvoiceController
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('SiwappInvoiceBundle:Invoice')->createQueryBuilder('i');
+        $repo = $em->getRepository('SiwappInvoiceBundle:Invoice');
+        $repo->setPaginator($this->get('knp_paginator'));
+        // @todo Unhardcode this.
+        $limit = 50;
 
         $form = $this->createForm('Siwapp\InvoiceBundle\Form\SearchInvoiceType', null, [
             'action' => $this->generateUrl('invoice_index'),
@@ -33,16 +37,10 @@ class InvoicesController extends AbstractInvoiceController
         ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
-            $this->applySearchFilters($qb, $form->getData());
+            $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
+        } else {
+            $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
         }
-
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $qb->getQuery(),
-            $request->query->getInt('page', 1),
-            // @todo Unhardcode this.
-            50
-        );
 
         $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceListType', $pagination->getItems(), [
             'action' => $this->generateUrl('invoice_index'),
@@ -309,7 +307,6 @@ class InvoicesController extends AbstractInvoiceController
         // Return all payments
         $em = $this->getDoctrine()->getManager();
         $invoice = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($invoiceId);
-        $payments = $em->getRepository('SiwappInvoiceBundle:Payment')->findBy(array('invoice' => $invoiceId));
 
         $payment = new Payment;
         $addForm = $this->createForm('Siwapp\InvoiceBundle\Form\PaymentType', $payment, [
@@ -326,7 +323,7 @@ class InvoicesController extends AbstractInvoiceController
             return $this->redirect($this->generateUrl('invoice_index'));
         }
 
-        $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoicePaymentListType', $payments, [
+        $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoicePaymentListType', $invoice->getPayments()->getValues(), [
             'action' => $this->generateUrl('invoice_payments', ['invoiceId' => $invoiceId]),
         ]);
         $listForm->handleRequest($request);

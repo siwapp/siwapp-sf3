@@ -44,6 +44,21 @@ class LoadInvoiceData extends AbstractFixture implements OrderedFixtureInterface
             $this->addReference($ref, $invoice);
         }
 
+        foreach ($value['InvoiceItem'] as $ref => $values) {
+            $item = $this->getReference($values['Item']);
+            $invoice = $this->getReference($values['Invoice']);
+            $invoice->addItem($item);
+            $manager->persist($invoice);
+            $manager->flush();
+        }
+
+        foreach ($value['InvoicePayment'] as $ref => $values) {
+            $payment = $this->getReference($values['Payment']);
+            $invoice = $this->getReference($values['Invoice']);
+            $invoice->addPayment($payment);
+            $manager->persist($invoice);
+            $manager->flush();
+        }
     }
 
     public function getOrder()

@@ -2,6 +2,7 @@
 
 namespace Siwapp\EstimateBundle\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,10 +25,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Estimate extends AbstractInvoice
 {
     /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"all"})
      * @ORM\JoinTable(name="estimates_items",
-     *      joinColumns={@ORM\JoinColumn(name="estimate_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
+     *      joinColumns={@ORM\JoinColumn(name="estimate_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
      * )
      * @Assert\NotBlank()
      */
@@ -230,19 +231,25 @@ class Estimate extends AbstractInvoice
         }
     }
 
+    public function checkNumber($args)
+    {
+        // compute the number of invoice
+        if ((!$this->number && $this->status!=self::DRAFT) ||
+            ($args instanceof PreUpdateEventArgs && $args->hasChangedField('serie') && $this->status!=self::DRAFT)
+            ) {
+            $this->setNumber($args->getEntityManager()->getRepository('SiwappEstimateBundle:Estimate')->getNextNumber($this->getSerie()));
+        }
+    }
+
     /* ********** LIFECYCLE CALLBACKS *********** */
 
     /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function setNextNumber($event)
+    public function preSave(LifecycleEventArgs $args)
     {
-        // compute the number of invoice
-        if ((!$this->number && $this->status!=self::DRAFT) ||
-            ($event instanceof PreUpdateEventArgs && $event->hasChangedField('serie') && $this->status!=self::DRAFT)
-            ) {
-            $this->setNumber($event->getEntityManager()->getRepository('SiwappEstimateBundle:Estimate')->getNextNumber($this->getSerie()));
-        }
+        parent::presave($args);
+        $this->checkNumber($args);
     }
 }

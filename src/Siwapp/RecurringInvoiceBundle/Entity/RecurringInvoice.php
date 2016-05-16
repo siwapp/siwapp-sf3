@@ -2,9 +2,10 @@
 
 namespace Siwapp\RecurringInvoiceBundle\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
-use Doctrine\ORM\Mapping as ORM;
 use Siwapp\CoreBundle\Entity\AbstractInvoice;
 use Siwapp\InvoiceBundle\Entity\Invoice;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -96,10 +97,10 @@ class RecurringInvoice extends AbstractInvoice
     private $last_execution_date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"all"})
      * @ORM\JoinTable(name="recurring_invoices_items",
-     *      joinColumns={@ORM\JoinColumn(name="recurring_invoice_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
+     *      joinColumns={@ORM\JoinColumn(name="recurring_invoice_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
      * )
      * @Assert\NotBlank()
      */
@@ -471,8 +472,6 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function checkStatus()
     {
-        $this->checkMustOccurrences();
-
         if (!$this->getEnabled()) {
             $this->setStatus(RecurringInvoice::INACTIVE);
         } else {
@@ -489,5 +488,17 @@ class RecurringInvoice extends AbstractInvoice
                 }
             }
         }
+    }
+
+    /* ********** LIFECYCLE CALLBACKS *********** */
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function preSave(LifecycleEventArgs $args)
+    {
+        parent::presave($args);
+        $this->checkMustOccurrences();
     }
 }

@@ -29,13 +29,8 @@ class LoadPaymentData extends AbstractFixture implements OrderedFixtureInterface
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/payments.yml'));
         foreach ($value['Payment'] as $ref => $values) {
             $payment = new Payment();
-            $invoice = new Invoice();
             foreach ($values as $fname => $fvalue) {
-                if ($fname == 'Invoice') {
-                    $fvalue = $manager->merge($this->getReference($fvalue));
-                }
-
-                $method = 'set'.Inflector::camelize($fname);
+                $method = Inflector::camelize('set_' . $fname);
                 if (is_callable(array($payment, $method))) {
                     call_user_func(array($payment, $method), $fvalue);
                 }
@@ -45,9 +40,9 @@ class LoadPaymentData extends AbstractFixture implements OrderedFixtureInterface
             $this->addReference($ref, $payment);
         }
     }
-    
+
     public function getOrder()
     {
-        return '4';
+        return '1';
     }
 }

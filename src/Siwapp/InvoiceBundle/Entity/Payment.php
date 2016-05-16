@@ -21,23 +21,21 @@ class Payment
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    /**
-     * @ORM\ManyToOne(targetEntity="Invoice", inversedBy="payments")
-     *
-     */
-    private $invoice;
 
     /**
      * @var date $date
      *
-     * @ORM\Column(name="date", type="date", nullable=true)
+     * @ORM\Column(name="date", type="date")
+     * @Assert\Date()
+     * @Assert\NotBlank()
      */
     private $date;
 
     /**
      * @var decimal $amount
      *
-     * @ORM\Column(name="amount", type="decimal", scale=3, precision=15, nullable=true)
+     * @ORM\Column(name="amount", type="decimal", scale=3, precision=15)
+     * @Assert\NotBlank()
      */
     private $amount;
 
@@ -47,6 +45,11 @@ class Payment
      * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
 
     /**
      * Set issue_date
@@ -107,26 +110,6 @@ class Payment
     public function getNotes()
     {
         return $this->notes;
-    }
-
-    /**
-     * Set invoice
-     *
-     * @param Siwapp\InvoiceBundle\Entity\Invoice $invoice
-     */
-    public function setInvoice(\Siwapp\InvoiceBundle\Entity\Invoice $invoice)
-    {
-        $this->invoice = $invoice;
-    }
-
-    /**
-     * Get invoice
-     *
-     * @return Siwapp\InvoiceBundle\Entity\Invoice
-     */
-    public function getInvoice()
-    {
-        return $this->invoice;
     }
 
     /**

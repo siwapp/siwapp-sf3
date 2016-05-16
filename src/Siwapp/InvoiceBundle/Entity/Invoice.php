@@ -2,6 +2,7 @@
 
 namespace Siwapp\InvoiceBundle\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,8 +25,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Invoice extends AbstractInvoice
 {
     /**
-     * @ORM\OneToMany(targetEntity="Payment", mappedBy="invoice", orphanRemoval=true, cascade={"all"})
-     *
+     * @ORM\ManyToMany(targetEntity="Payment", orphanRemoval=true, cascade={"all"})
+     * @ORM\JoinTable(name="invoices_payments",
+     *      joinColumns={@ORM\JoinColumn(name="invoice_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(
+     *          name="payment_id", referencedColumnName="id", unique=true, onDelete="CASCADE"
+     *      )}
+     * )
      */
     private $payments;
 
@@ -60,10 +66,10 @@ class Invoice extends AbstractInvoice
     private $due_date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"all"})
      * @ORM\JoinTable(name="invoices_items",
-     *      joinColumns={@ORM\JoinColumn(name="invoice_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true)}
+     *      joinColumns={@ORM\JoinColumn(name="invoice_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
      * )
      * @Assert\NotBlank()
      */
@@ -206,8 +212,6 @@ class Invoice extends AbstractInvoice
     public function addPayment(\Siwapp\InvoiceBundle\Entity\Payment $payment)
     {
         $this->payments[] = $payment;
-        $payment->setInvoice($this);
-        $this->setAmounts();
     }
 
     /**
@@ -223,7 +227,6 @@ class Invoice extends AbstractInvoice
                 break;
             }
         }
-        $this->setAmounts();
     }
 
     /**
@@ -307,30 +310,6 @@ class Invoice extends AbstractInvoice
         return parent::__isset($name);
     }
 
-    /**
-     * checkStatus
-     * checks and sets the status
-     *
-     * @return Siwapp\InvoiceBundle\Invoice $this
-     */
-    public function checkStatus()
-    {
-        if ($this->status == Invoice::DRAFT) {
-            return $this;
-        }
-        if ($this->isForcefullyClosed() || $this->getDueAmount() == 0) {
-            $this->setStatus(Invoice::CLOSED);
-        } else {
-            if ($this->getDueDate()->getTimestamp() > strtotime(date('Y-m-d'))) {
-                $this->setStatus(Invoice::OPENED);
-            } else {
-                $this->setStatus(Invoice::OVERDUE);
-            }
-        }
-
-        return $this;
-    }
-
     public function getStatusString()
     {
         switch ($this->status) {
@@ -353,12 +332,46 @@ class Invoice extends AbstractInvoice
         return $status;
     }
 
-    public function setAmounts()
+    /**
+     * checkStatus
+     * checks and sets the status
+     *
+     * @return Siwapp\InvoiceBundle\Invoice $this
+     */
+    public function checkStatus()
     {
-        parent::setAmounts();
+        if ($this->status == Invoice::DRAFT) {
+            return $this;
+        }
+        if ($this->isForcefullyClosed() || $this->getDueAmount() <= 0) {
+            $this->setStatus(Invoice::CLOSED);
+        } else {
+            if ($this->getDueDate()->getTimestamp() > strtotime(date('Y-m-d'))) {
+                $this->setStatus(Invoice::OPENED);
+            } else {
+                $this->setStatus(Invoice::OVERDUE);
+            }
+        }
+
+        return $this;
+    }
+
+    public function checkAmounts()
+    {
+        parent::checkAmounts();
         $this->setPaidAmount($this->calculate('paid_amount'));
 
         return $this;
+    }
+
+    public function checkNumber(LifecycleEventArgs $args)
+    {
+        // compute the number of invoice
+        if ((!$this->number && $this->status!=self::DRAFT) ||
+            ($args instanceof PreUpdateEventArgs && $args->hasChangedField('serie') && $this->status!=self::DRAFT)
+            ) {
+            $this->setNumber($args->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice')->getNextNumber($this->getSerie()));
+        }
     }
 
 
@@ -368,13 +381,10 @@ class Invoice extends AbstractInvoice
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function setNextNumber($event)
+    public function preSave(LifecycleEventArgs $args)
     {
-        // compute the number of invoice
-        if ((!$this->number && $this->status!=self::DRAFT) ||
-            ($event instanceof PreUpdateEventArgs && $event->hasChangedField('serie') && $this->status!=self::DRAFT)
-            ) {
-            $this->setNumber($event->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice')->getNextNumber($this->getSerie()));
-        }
+        $this->checkAmounts();
+        parent::presave($args);
+        $this->checkNumber($args);
     }
 }
