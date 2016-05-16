@@ -30,18 +30,13 @@ class LoadInvoiceData extends AbstractFixture implements OrderedFixtureInterface
         foreach ($value['Invoice'] as $ref => $values) {
             $invoice = new Invoice();
             foreach ($values as $fname => $fvalue) {
-                if (in_array($fname, ['Serie', 'Customer'])) {
+                if (in_array($fname, ['Serie'])) {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
 
-                if ($fname == 'Customer') {
-                    $invoice->setFromCustomer($fvalue);
-                }
-                else {
-                    $method = Inflector::camelize('set_' . $fname);
-                    if (is_callable(array($invoice, $method))) {
-                        call_user_func(array($invoice, $method), $fvalue);
-                    }
+                $method = Inflector::camelize('set_' . $fname);
+                if (is_callable(array($invoice, $method))) {
+                    call_user_func(array($invoice, $method), $fvalue);
                 }
             }
             $manager->persist($invoice);
