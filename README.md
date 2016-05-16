@@ -12,7 +12,7 @@ The following will ask you to setup the database info, so make sure you have one
     $ php bin/console assetic:dump --env=prod
 
 Make that the `var/` folder is writable by the webserver:
-sudo chown www-data:www-data -R var/
+    $ sudo chown www-data:www-data -R var/
 
 or check [this](https://symfony.com/doc/current/book/installation.html#book-installation-permissions).
 
