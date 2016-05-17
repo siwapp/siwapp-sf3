@@ -192,6 +192,7 @@ class InvoicesController extends Controller
         if ($form->isValid()) {
             $em->persist($invoice);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Invoice added.');
 
             return $this->redirect($this->generateUrl('invoice_edit', array('id' => $invoice->getId())));
         }
@@ -229,6 +230,7 @@ class InvoicesController extends Controller
             }
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Invoice updated.');
 
             return $this->redirect($this->generateUrl('invoice_edit', array('id' => $id)));
         }

@@ -96,6 +96,7 @@ class CustomersController extends Controller
         if ($form->isValid()) {
             $em->persist($customer);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Customer added.');
 
             return $this->redirect($this->generateUrl('customer_edit', array('id' => $customer->getId())));
         }
@@ -126,6 +127,7 @@ class CustomersController extends Controller
         if ($form->isValid()) {
             $em->persist($customer);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Customer updated.');
 
             return $this->redirect($this->generateUrl('customer_edit', array('id' => $customer->getId())));
         }

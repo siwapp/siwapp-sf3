@@ -83,6 +83,7 @@ class ProductsController extends Controller
         if ($form->isValid()) {
             $em->persist($product);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Product added.');
 
             return $this->redirect($this->generateUrl('product_edit', array('id' => $product->getId())));
         }
@@ -113,6 +114,7 @@ class ProductsController extends Controller
         if ($form->isValid()) {
             $em->persist($product);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Product updated.');
 
             return $this->redirect($this->generateUrl('product_edit', array('id' => $product->getId())));
         }

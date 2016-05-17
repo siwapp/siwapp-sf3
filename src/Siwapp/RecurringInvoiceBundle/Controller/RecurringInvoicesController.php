@@ -104,6 +104,7 @@ class RecurringInvoicesController extends Controller
         if ($form->isValid()) {
             $em->persist($invoice);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Recurring invoice added.');
 
             return $this->redirect($this->generateUrl('recurring_edit', array('id' => $invoice->getId())));
         }

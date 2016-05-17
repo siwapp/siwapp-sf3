@@ -190,6 +190,7 @@ class EstimatesController extends Controller
         if ($form->isValid()) {
             $em->persist($estimate);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Estimate added.');
 
             return $this->redirect($this->generateUrl('estimate_edit', array('id' => $estimate->getId())));
         }
@@ -227,6 +228,7 @@ class EstimatesController extends Controller
             }
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Estimate updated.');
 
             return $this->redirect($this->generateUrl('estimate_edit', array('id' => $id)));
         }
