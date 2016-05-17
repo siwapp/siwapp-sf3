@@ -47,53 +47,21 @@ class EstimatesController extends Controller
         $listForm->handleRequest($request);
         if ($listForm->isValid()) {
             $data = $listForm->getData();
-            if ($request->request->has('delete')) {
-                foreach ($data['estimates'] as $estimate) {
-                    $em->remove($estimate);
+            if (empty($data['estimates'])) {
+                $this->get('session')->getFlashBag()->add('warning', 'Please select something.');
+            }
+            else {
+                if ($request->request->has('delete')) {
+                    return $this->bulkDelete($data['estimates']);
+                } elseif ($request->request->has('pdf')) {
+                    return $this->bulkPdf($data['estimates']);
+                } elseif ($request->request->has('print')) {
+                    return $this->bulkPrint($data['estimates']);
+                } elseif ($request->request->has('email')) {
+                    return $this->bulkEmail($data['estimates']);
                 }
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Estimate(s) deleted.');
-
-                // Rebuild the query, since some objects are now missing.
-                return $this->redirect($this->generateUrl('estimate_index'));
-            } elseif ($request->request->has('pdf') || $request->request->has('print')) {
-                $pages = [];
-                $settings = $em->getRepository('SiwappConfigBundle:Property')->getAll();
-                foreach ($data['estimates'] as $estimate) {
-                    $pages[] = $this->renderView('SiwappEstimateBundle:Print:estimate.html.twig', array(
-                        'estimate'  => $estimate,
-                        'settings' => $settings,
-                        'print' => $request->request->has('print'),
-                    ));
-                }
-
-                $html = $this->get('siwapp_core.html_page_merger')->merge($pages, '<div class="pagebreak"> </div>');
-                if ($request->request->has('pdf')) {
-                    $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
-
-                    return new Response($pdf, 200, [
-                        'Content-Type' => 'application/pdf',
-                        'Content-Disposition' => 'attachment; filename="Estimates.pdf"'
-                    ]);
-                } else {
-                    return new Response($html);
-                }
-            } elseif ($request->request->has('email')) {
-                foreach ($data['estimates'] as $estimate) {
-                    $message = $this->getEmailMessage($estimate);
-                    $result = $this->get('mailer')->send($message);
-                    if ($result) {
-                        $estimate->setSentByEmail(true);
-                        $em->persist($estimate);
-                    }
-                }
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Estimate(s) sent by email.');
-
-                return $this->redirect($this->generateUrl('estimate_index'));
             }
         }
-
 
         return array(
             'estimates' => $pagination,
@@ -138,11 +106,7 @@ class EstimatesController extends Controller
             throw $this->createNotFoundException('Unable to find Estimate entity.');
         }
 
-        return array(
-            'estimate'  => $estimate,
-            'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
-            'print' => true,
-        );
+        return new Response($this->getEstimatePrintPdfHtml($estimate));
     }
 
     /**
@@ -157,10 +121,7 @@ class EstimatesController extends Controller
             throw $this->createNotFoundException('Unable to find Estimate entity.');
         }
 
-        $html = $this->renderView('SiwappEstimateBundle:Print:estimate.html.twig', array(
-            'estimate'  => $estimate,
-            'settings' => $this->getDoctrine()->getRepository('SiwappConfigBundle:Property')->getAll(),
-        ));
+        $html = $this->getEstimatePrintPdfHtml($estimate);
 
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
@@ -286,6 +247,94 @@ class EstimatesController extends Controller
         return $this->redirect($this->generateUrl('estimate_index'));
     }
 
+    /**
+     * @Route("/{id}/delete", name="estimate_delete")
+     */
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $estimate = $em->getRepository('SiwappEstimateBundle:Estimate')->find($id);
+        if (!$estimate) {
+            throw $this->createNotFoundException('Unable to find Estimate entity.');
+        }
+        $em->remove($estimate);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Estimate deleted.');
+
+        return $this->redirect($this->generateUrl('estimate_index'));
+    }
+
+
+    protected function getEstimatePrintPdfHtml(Estimate $estimate, $print = false)
+    {
+        $settings = $this->getDoctrine()
+            ->getRepository('SiwappConfigBundle:Property')
+            ->getAll();
+
+        return $this->renderView('SiwappEstimateBundle:Print:estimate.html.twig', [
+            'estimate'  => $estimate,
+            'settings' => $settings,
+            'print' => $print,
+        ]);
+    }
+
+    protected function bulkDelete(array $estimates)
+    {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($estimates as $estimate) {
+            $em->remove($estimate);
+        }
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Estimate(s) deleted.');
+
+        return $this->redirect($this->generateUrl('estimate_index'));
+    }
+
+    protected function bulkPdf(array $estimates)
+    {
+        $pages = [];
+        foreach ($estimates as $estimate) {
+            $pages[] = $this->getEstimatePrintPdfHtml($estimate);
+        }
+
+        $html = $this->get('siwapp_core.html_page_merger')->merge($pages, '<div class="pagebreak"> </div>');
+        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
+
+        return new Response($pdf, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="Estimates.pdf"'
+        ]);
+    }
+
+    protected function bulkPrint(array $estimates)
+    {
+        $pages = [];
+        foreach ($estimates as $estimate) {
+            $pages[] = $this->getEstimatePrintPdfHtml($estimate, true);
+        }
+
+        $html = $this->get('siwapp_core.html_page_merger')->merge($pages, '<div class="pagebreak"> </div>');
+
+        return new Response($html);
+    }
+
+    protected function bulkEmail(array $estimates)
+    {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($estimates as $estimate) {
+            $message = $this->getEmailMessage($estimate);
+            $result = $this->get('mailer')->send($message);
+            if ($result) {
+                $estimate->setSentByEmail(true);
+                $em->persist($estimate);
+            }
+        }
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('success', 'Estimate(s) sent by email.');
+
+        return $this->redirect($this->generateUrl('estimate_index'));
+    }
+
     protected function getEmailMessage($estimate)
     {
         $em = $this->getDoctrine()->getManager();
@@ -305,22 +354,5 @@ class EstimatesController extends Controller
             ->attach($attachment);
 
         return $message;
-    }
-
-    /**
-     * @Route("/{id}/delete", name="estimate_delete")
-     */
-    public function deleteAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $estimate = $em->getRepository('SiwappEstimateBundle:Estimate')->find($id);
-        if (!$estimate) {
-            throw $this->createNotFoundException('Unable to find Estimate entity.');
-        }
-        $em->remove($estimate);
-        $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Estimate deleted.');
-
-        return $this->redirect($this->generateUrl('estimate_index'));
     }
 }

@@ -19,7 +19,7 @@ class InvoiceRepository extends AbstractInvoiceRepository
 {
     protected function applySearchParamsToQuery(array $params, QueryBuilder $qb)
     {
-        $qb = parent::applySearchParamsToQuery($params, $qb);
+        parent::applySearchParamsToQuery($params, $qb);
         // For invoices we allow sorting by due.
         $qb->addSelect('i.gross_amount - i.paid_amount AS due_amount');
 

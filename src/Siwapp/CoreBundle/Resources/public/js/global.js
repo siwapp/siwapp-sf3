@@ -49,4 +49,11 @@ jQuery(function($){
       e.preventDefault();
     }
   });
+
+  // Make pdf action to open a new window.
+  $('[name="print"]').on('click', function(e) {
+    var $form = $(this).parents('form');
+    $form.attr('target', '_blank');
+    setTimeout(function () {$form.attr('target', null);}, 200);
+  });
 });
