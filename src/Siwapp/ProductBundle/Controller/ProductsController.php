@@ -36,7 +36,11 @@ class ProductsController extends Controller
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
         }
 
-        $listForm = $this->createForm('Siwapp\ProductBundle\Form\ProductListType', $pagination->getItems(), [
+        $products = [];
+        foreach ($pagination->getItems() as $item) {
+            $products[] = $item[0];
+        }
+        $listForm = $this->createForm('Siwapp\ProductBundle\Form\ProductListType', $products, [
             'action' => $this->generateUrl('product_index'),
         ]);
         $listForm->handleRequest($request);

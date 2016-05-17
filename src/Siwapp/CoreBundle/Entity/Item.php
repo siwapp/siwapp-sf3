@@ -65,7 +65,7 @@ class Item
     private $taxes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Siwapp\ProductBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Siwapp\ProductBundle\Entity\Product", inversedBy="items")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $product;

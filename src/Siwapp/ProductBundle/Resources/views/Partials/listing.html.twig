@@ -17,13 +17,13 @@
         {{ knp_pagination_sortable(products, 'Description'|trans, 'p.description') }}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {{ 'Price'|trans }}
+        {{ knp_pagination_sortable(products, 'Price'|trans, 'p.price') }}
       </th>
       <th class="cell-size-small-medium cell-align-right">
-        {{ 'Units'|trans }}
+        {{ knp_pagination_sortable(products, 'Items sold'|trans, 'num_sold') }}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {{ 'Sold'|trans }}
+        {{ knp_pagination_sortable(products, 'Revenue'|trans, 'revenue') }}
       </th>
     </tr>
   </thead>
@@ -33,16 +33,17 @@
         <td colspan="6">{% trans %}No products found.{% endtrans %}</td>
       </tr>
     {% endif %}
-    {% for key, entity in products %}
-      <tr data-link="{{ path('customer_edit', { 'id': entity.id }) }}">
+    {% for key, result in products %}
+      {% set entity = result[0] %}
+      <tr data-link="{{ path('product_edit', { 'id': entity.id }) }}">
         <td class="table-action cell-align-center no-link">
           {{ form_row(list_form.products[key]) }}
         </td>
         <td class="cell-size-medium">{{ entity.reference }}</td>
         <td>{{ entity.description }}</td>
-        <td class="cell-align-right">-</td>
-        <td class="cell-align-right">-</td>
-        <td class="cell-align-right">-</td>
+        <td class="cell-align-right">{{ entity.price }}</td>
+        <td class="cell-align-right">{{ result.num_sold }}</td>
+        <td class="cell-align-right">{{ result.revenue }}</td>
       </tr>
     {% endfor %}
   </tbody>

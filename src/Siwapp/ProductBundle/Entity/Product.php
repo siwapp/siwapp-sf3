@@ -42,6 +42,11 @@ class Product
      */
     private $price;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", mappedBy="product")
+     */
+    private $items;
+
 
     /**
      * Get id

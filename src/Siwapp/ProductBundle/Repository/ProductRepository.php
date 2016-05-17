@@ -36,6 +36,11 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
+        $qb->leftJoin('p.items', 'i');
+        $qb->addSelect('SUM(i.unitary_cost * i.quantity) AS revenue');
+        $qb->addSelect('SUM(i.quantity) AS num_sold');
+        $qb->groupBy('p.id');
+
         return $this->paginator->paginate($qb->getQuery(), $page, $limit);
     }
 

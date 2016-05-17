@@ -69,7 +69,7 @@ class Customer implements \JsonSerializable
     /**
      * @ORM\OneToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice", mappedBy="customer")
      */
-    public $invoices;
+    private $invoices;
 
     /**
      * Get id
