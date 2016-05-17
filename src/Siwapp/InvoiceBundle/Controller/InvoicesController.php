@@ -42,7 +42,11 @@ class InvoicesController extends Controller
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
         }
 
-        $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceListType', $pagination->getItems(), [
+        $invoices = [];
+        foreach ($pagination->getItems() as $item) {
+            $invoices[] = $item[0];
+        }
+        $listForm = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceListType', $invoices, [
             'action' => $this->generateUrl('invoice_index'),
         ]);
         $listForm->handleRequest($request);

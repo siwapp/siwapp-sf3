@@ -39,6 +39,7 @@ class AbstractInvoiceRepository extends EntityRepository
             ->createQueryBuilder()
             ->select('i')
             ->from($this->getEntityName(), 'i');
+        $qb->addSelect('i.gross_amount - i.paid_amount AS due_amount');
         $this->applySearchParamsToQuery($params, $qb);
 
         return $this->paginator->paginate($qb->getQuery(), $page, $limit, [

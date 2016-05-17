@@ -78,8 +78,11 @@
         {% endif %}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {# No sort here for now until we have a DB field #}
-        {{ 'Due'|trans }}
+        {% if sortable %}
+        {{ knp_pagination_sortable(invoices, 'Due'|trans, 'due_amount') }}
+        {% else %}
+        {% trans %}Due{% endtrans %}
+        {% endif %}
       </th>
       <th class="cell-size-medium cell-align-right">
         {% if sortable %}
@@ -97,7 +100,8 @@
         <td colspan="{{ table_columns }}">{% trans %}No invoices found.{% endtrans %}</td>
       </tr>
     {% endif %}
-    {% for key, entity in invoices %}
+    {% for key, result in invoices %}
+      {% set entity = result[0] %}
       <tr data-link="{{ path('invoice_show', { 'id': entity.id }) }}">
         {% if table_selectable %}
         <td class="table-action cell-align-center no-link">
