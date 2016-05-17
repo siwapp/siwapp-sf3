@@ -3,6 +3,7 @@
 namespace Siwapp\InvoiceBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 use Siwapp\CoreBundle\Entity\Serie;
 use Siwapp\CoreBundle\Repository\AbstractInvoiceRepository;
@@ -16,33 +17,12 @@ use Siwapp\InvoiceBundle\Entity\Invoice;
  */
 class InvoiceRepository extends AbstractInvoiceRepository
 {
-    /**
-     * getNextNumber
-     * Obtain the next numer available for the provided series
-     * @param \Siwapp\CoreBundle\Entity\Serie @serie
-     * @return integer
-     */
-    public function getNextNumber(Serie $series)
+    protected function applySearchParamsToQuery(array $params, QueryBuilder $qb)
     {
-        $found = $this->findBy([
-            'status' => [Invoice::DRAFT, '<>'],
-            'serie' => $series,
-        ]);
+        $qb = parent::applySearchParamsToQuery($params, $qb);
+        // For invoices we allow sorting by due.
+        $qb->addSelect('i.gross_amount - i.paid_amount AS due_amount');
 
-        if (count($found) > 0) {
-            $result = $this->getEntityManager()->createQueryBuilder()
-                ->select('MAX(i.number) AS max_number')
-                ->from(Invoice::class, 'i')
-                ->where('i.status <> :status')
-                ->andWhere('i.serie = :series')
-                ->setParameter('status', Invoice::DRAFT)
-                ->setParameter('series', $series)
-                ->getQuery()
-                ->getSingleResult();
-
-            return $result['max_number'] + 1;
-        } else {
-            return $series->getFirstNumber();
-        }
+        return $qb;
     }
 }

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
+use Siwapp\CoreBundle\Entity\Serie;
 
 /**
  * Repository class to be inherited by InvoiceRepository,
@@ -13,6 +14,36 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class AbstractInvoiceRepository extends EntityRepository
 {
+    /**
+     * getNextNumber
+     * Obtain the next numer available for the provided series
+     * @param \Siwapp\CoreBundle\Entity\Serie @serie
+     * @return integer
+     */
+    public function getNextNumber(Serie $series)
+    {
+        $class = $this->getEntityName();
+        $found = $this->findBy([
+            'status' => [$class::DRAFT, '<>'],
+            'serie' => $series,
+        ]);
+
+        if (count($found) > 0) {
+            $result = $this->getEntityManager()->createQueryBuilder()
+            ->select('MAX(i.number) AS max_number')
+            ->from($class, 'i')
+            ->where('i.status <> :status')
+            ->andWhere('i.serie = :series')
+            ->setParameter('status', $class::DRAFT)
+            ->setParameter('series', $series)
+            ->getQuery()
+            ->getSingleResult();
+
+            return $result['max_number'] + 1;
+        } else {
+            return $series->getFirstNumber();
+        }
+    }
     /**
      * Update totals for invoices, recurring or estimates
      * @param ArrayCollection of entities
@@ -39,7 +70,6 @@ class AbstractInvoiceRepository extends EntityRepository
             ->createQueryBuilder()
             ->select('i')
             ->from($this->getEntityName(), 'i');
-        $qb->addSelect('i.gross_amount - i.paid_amount AS due_amount');
         $this->applySearchParamsToQuery($params, $qb);
 
         return $this->paginator->paginate($qb->getQuery(), $page, $limit, [

@@ -14,33 +14,4 @@ use Siwapp\EstimateBundle\Entity\Estimate;
  */
 class EstimateRepository extends AbstractInvoiceRepository
 {
-    /**
-     * getNextNumber
-     * Obtain the next numer available for the provided series
-     * @param \Siwapp\CoreBundle\Entity\Serie @serie
-     * @return integer
-     */
-    public function getNextNumber(Serie $series)
-    {
-        $found = $this->findBy([
-            'status' => [Estimate::DRAFT, '<>'],
-            'serie' => $series,
-        ]);
-
-        if (count($found) > 0) {
-            $result = $this->getEntityManager()->createQueryBuilder()
-            ->select('MAX(i.number) AS max_number')
-            ->from(Estimate::class, 'i')
-            ->where('i.status <> :status')
-            ->andWhere('i.serie = :series')
-            ->setParameter('status', Estimate::DRAFT)
-            ->setParameter('series', $series)
-            ->getQuery()
-            ->getSingleResult();
-
-            return $result['max_number'] + 1;
-        } else {
-            return $series->getFirstNumber();
-        }
-    }
 }
