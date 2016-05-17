@@ -11,7 +11,7 @@ class HtmlPageMerger
         libxml_use_internal_errors(true);
         foreach ($pages as $page) {
             if (!$head) {
-                list($head, $body) = explode('<body', $page);
+                list($head, $body) = preg_split('/<body/i', $page);
             }
             $document = new \DOMDocument;
             $document->loadHTML($page);

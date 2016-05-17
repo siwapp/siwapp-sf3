@@ -13,7 +13,7 @@ use Siwapp\InvoiceBundle\Entity\Invoice;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/", name="dashboard_index")
+     * @Route("/dashboard", name="dashboard_index")
      * @Template("SiwappDashboardBundle:Default:index.html.twig")
      */
     public function indexAction(Request $request)
