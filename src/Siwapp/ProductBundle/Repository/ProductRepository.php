@@ -40,7 +40,7 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
         $qb->leftJoin('p.items', 'i');
         $qb->leftJoin('i.invoices', 'ii', 'WITH', 'ii.status <> ?1')
             ->setParameter(1, Invoice::DRAFT);
-        $qb->addSelect('SUM(CASE WHEN i.unitary_cost IS NULL THEN 0 ELSE i.quantity END * CASE WHEN i.unitary_cost IS NULL THEN 0 ELSE i.quantity END) AS revenue');
+        $qb->addSelect('SUM(CASE WHEN i.unitary_cost IS NULL THEN 0 ELSE i.unitary_cost END * CASE WHEN i.quantity IS NULL THEN 0 ELSE i.quantity END) AS revenue');
         $qb->addSelect('SUM(CASE WHEN i.quantity IS NULL THEN 0 ELSE i.quantity END) AS num_sold');
         $qb->groupBy('p.id');
 
