@@ -29,7 +29,7 @@ class AbstractInvoice
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Siwapp\CustomerBundle\Entity\Customer")
+     * @ORM\ManyToOne(targetEntity="Siwapp\CustomerBundle\Entity\Customer", inversedBy="invoices")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     protected $customer;

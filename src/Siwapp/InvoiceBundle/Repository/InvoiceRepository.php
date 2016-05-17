@@ -45,29 +45,4 @@ class InvoiceRepository extends AbstractInvoiceRepository
             return $series->getFirstNumber();
         }
     }
-
-    public function getTotalsAndDuePerCustomer()
-    {
-        $result = $this->getEntityManager()->createQueryBuilder()
-            ->select('SUM(i.gross_amount) as gross')
-            ->addSelect('SUM(i.gross_amount-i.paid_amount) as due')
-            ->addSelect('IDENTITY(i.customer) as customer_id')
-            ->from(Invoice::class, 'i')
-            ->where('i.status <> :status')
-            ->setParameter('status', Invoice::DRAFT)
-            ->groupBy('i.customer')
-            ->getQuery()
-            ->getResult();
-        $total = [];
-        foreach ($result as $row) {
-            $total[$row['customer_id']] = $row;
-        }
-
-        return $total;
-    }
-
-    public function getDuePerCustomer()
-    {
-
-    }
 }

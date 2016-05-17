@@ -50,6 +50,11 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
+        $qb->leftJoin('c.invoices', 'i');
+        $qb->addSelect('SUM(CASE WHEN i.gross_amount IS NULL THEN 0 ELSE i.gross_amount END) AS gross_amount');
+        $qb->addSelect('SUM(CASE WHEN i.gross_amount IS NULL THEN 0 ELSE i.gross_amount END - CASE WHEN i.paid_amount IS NULL THEN 0 ELSE i.paid_amount END) AS due_amount');
+        $qb->groupBy('c.id');
+
         return $this->paginator->paginate($qb->getQuery(), $page, $limit);
     }
 

@@ -17,10 +17,10 @@
         {{ knp_pagination_sortable(customers, 'Identification'|trans, 'c.identification') }}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {{ 'Due'|trans }}
+        {{ knp_pagination_sortable(customers, 'Due'|trans, 'due_amount') }}
       </th>
       <th class="cell-size-small-medium cell-align-right">
-        {{ 'Total'|trans }}
+        {{ knp_pagination_sortable(customers, 'Total'|trans, 'gross_amount') }}
       </th>
       <th class="cell-size-medium cell-align-right"></th>
     </tr>
@@ -31,20 +31,16 @@
         <td colspan="6">{% trans %}No customers found.{% endtrans %}</td>
       </tr>
     {% endif %}
-    {% for key, entity in customers %}
+    {% for key, result in customers %}
+      {% set entity = result[0] %}
       <tr data-link="{{ path('customer_edit', { 'id': entity.id }) }}">
         <td class="table-action cell-align-center no-link">
           {{ form_row(list_form.customers[key]) }}
         </td>
         <td class="cell-size-medium">{{ entity.name }}</td>
         <td>{{ entity.identification }}</td>
-        {% if totals[entity.id] is defined  %}
-        <td class="cell-align-right">{{ totals[entity.id].gross|localizedcurrency(currency) }}</td>
-        <td class="cell-align-right">{{ totals[entity.id].due|localizedcurrency(currency) }}</td>
-        {% else %}
-        <td class="cell-align-right">-</td>
-        <td class="cell-align-right">-</td>
-        {% endif %}
+        <td class="cell-align-right">{{ result.due_amount|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right">{{ result.gross_amount|localizedcurrency(currency) }}</td>
         <td class="cell-align-right"><a href="{{ path('invoice_index', {'search_invoice': {'customer': entity.identification}}) }}" class="btn btn-default btn-info"><span class="glyphicon glyphicon-book"></span> {% trans %}Invoices{% endtrans %}</a></td>
       </tr>
     {% endfor %}

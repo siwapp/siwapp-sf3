@@ -37,7 +37,11 @@ class CustomersController extends Controller
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
         }
 
-        $listForm = $this->createForm('Siwapp\CustomerBundle\Form\CustomerListType', $pagination->getItems(), [
+        $customers = [];
+        foreach ($pagination->getItems() as $item) {
+            $customers[] = $item[0];
+        }
+        $listForm = $this->createForm('Siwapp\CustomerBundle\Form\CustomerListType', $customers, [
             'action' => $this->generateUrl('customer_index'),
         ]);
         $listForm->handleRequest($request);
@@ -60,7 +64,6 @@ class CustomersController extends Controller
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
-            'totals' => $em->getRepository('SiwappInvoiceBundle:Invoice')->getTotalsAndDuePerCustomer(),
         );
     }
 
