@@ -71,6 +71,11 @@ class Item
     private $product;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice", mappedBy="items")
+     */
+    private $invoices;
+
+    /**
      * Get id
      *
      * @return integer
