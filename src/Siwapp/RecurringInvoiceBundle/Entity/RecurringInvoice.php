@@ -498,6 +498,7 @@ class RecurringInvoice extends AbstractInvoice
      */
     public function preSave(LifecycleEventArgs $args)
     {
+        $this->checkAmounts();
         parent::presave($args);
         $this->checkMustOccurrences();
     }
