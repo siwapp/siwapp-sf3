@@ -34,13 +34,14 @@ enviroment is ok.
 
 ### Overriding templates
 
-To override eg the invoice print template, copy
+To override templates, eg. the invoice print one, copy
 `src/Siwapp/InvoiceBundle/Resources/views/Invoice/print.html.twig` to `app/Resources/SiwappInvoiceBundle/views/Invoice/print.html.twig` and clear the
 cache:
+
     $ php bin/console cache:clear
 
 The above applies to [any template](https://symfony.com/doc/current/book/templating.html#overriding-bundle-templates),
-but the print and email ones are those that you are more insterested to.
+(probably the print and email ones are those that you are more insterested to).
 
 ### Automating recurring invoices generation
 
