@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+{% trans_default_domain 'SiwappCoreBundle' %}<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>{% block title %}Invoicing software{% endblock %} | Siwapp</title>
+  <title>{% block title %}{% trans %}html.title{% endtrans %}{% endblock %} | Siwapp</title>
   <link rel="shortcut icon" src="{{ asset('bundles/siwappcore/img/favicon.ico') }}">
   {% block stylesheets %}
   {% stylesheets
@@ -49,7 +49,7 @@
         <li>
           <a href="{{ path('global_settings') }}" data-shortcut="alt+g, s">
             <span class="glyphicon glyphicon-cog"></span>
-            {% trans %}Settings{% endtrans %}
+            {{ 'menu.settings_index'|trans({}, 'SiwappConfigBundle') }}
           </a>
         </li>
         <li>
@@ -64,7 +64,7 @@
         {% block actionlink %}
         <a href="{{ path('invoice_add') }}" class="btn btn-default btn-primary">
           <span class="glyphicon glyphicon-plus"></span>
-          {% trans %}New Invoice{% endtrans %}
+          {{ 'menu.invoice_add'|trans({}, 'SiwappInvoiceBundle') }}
         </a>
         {% endblock %}
       </div>
@@ -75,30 +75,30 @@
       <ul class="nav nav-tabs">
         {% if bundle_exists('SiwappDashboardBundle') %}
         <li class="{{ routename|menu_active_tab('dashboard_') }}">
-          <a href="{{ path('dashboard_index') }}" data-shortcut="alt+g, d">{% trans %}Dashboard{% endtrans %}</a>
+          <a href="{{ path('dashboard_index') }}">{{ 'menu.dashboard_index'|trans({}, 'SiwappDashboardBundle') }}</a>
         </li>
         {% endif %}
         <li class="{{ routename|menu_active_tab('invoice_') }}">
-          <a href="{{ path('invoice_index') }}" data-shortcut="alt+g, i">{% trans %}Invoices{% endtrans %}</a>
+          <a href="{{ path('invoice_index') }}">{{ 'menu.invoice_index'|trans({}, 'SiwappInvoiceBundle') }}</a>
         </li>
         {% if bundle_exists('SiwappRecurringInvoiceBundle') %}
         <li class="{{ routename|menu_active_tab('recurring_') }}">
-          <a href="{{ path('recurring_index') }}" data-shortcut="alt+g, r">{% trans %}Recurring Invoices{% endtrans %}</a>
+          <a href="{{ path('recurring_index') }}">{{ 'menu.recurring_index'|trans({}, 'SiwappRecurringInvoiceBundle') }}</a>
         </li>
         {% endif %}
         {% if bundle_exists('SiwappEstimateBundle') %}
         <li class="{{ routename|menu_active_tab('estimate_') }}">
-          <a href="{{ path('estimate_index') }}" data-shortcut="alt+g, e">{% trans %}Estimates{% endtrans %}</a>
+          <a href="{{ path('estimate_index') }}">{{ 'menu.estimate_index'|trans({}, 'SiwappEstimateBundle') }}</a>
         </li>
         {% endif %}
         {% if bundle_exists('SiwappCustomerBundle') %}
         <li class="{{ routename|menu_active_tab('customer_') }}">
-          <a href="{{ path('customer_index') }}" data-shortcut="alt+g, c">{% trans %}Customers{% endtrans %}</a>
+          <a href="{{ path('customer_index') }}">{{ 'menu.customer_index'|trans({}, 'SiwappCustomerBundle') }}</a>
         </li>
         {% endif %}
         {% if bundle_exists('SiwappCustomerBundle') %}
         <li class="{{ routename|menu_active_tab('product_') }}">
-          <a href="{{ path('product_index') }}" data-shortcut="alt+g, c">{% trans %}Products{% endtrans %}</a>
+          <a href="{{ path('product_index') }}">{{ 'menu.product_index'|trans({}, 'SiwappProductBundle') }}</a>
         </li>
         {% endif %}
       </ul>

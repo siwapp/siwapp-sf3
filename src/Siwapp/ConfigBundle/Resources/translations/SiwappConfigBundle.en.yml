@@ -3,6 +3,7 @@ flash:
     updated: 'Settings updated.'
 
 menu:
+    settings_index: 'Settings'
     global_settings: 'Global Settings'
     my_settings: 'My settings'
 
