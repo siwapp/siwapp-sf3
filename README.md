@@ -29,9 +29,11 @@ Check `/config.php` or `/web/config.php` to make sure that everything in your
 enviroment is ok.
 
 ### Loading demo data
+
     $ php bin/console doctrine:fixtures:load
 
 ### Overriding templates
+
 To override eg the invoice print template, copy
 `src/Siwapp/InvoiceBundle/Resources/views/Invoice/print.html.twig` to `app/Resources/SiwappInvoiceBundle/views/Invoice/print.html.twig` and clear the
 cache:
@@ -39,3 +41,7 @@ cache:
 
 The above applies to [any template](https://symfony.com/doc/current/book/templating.html#overriding-bundle-templates),
 but the print and email ones are those that you are more insterested to.
+
+### Automating recurring invoices generation
+
+Just add a cronjob that runs `php bin/console siwapp:recurring:generate-pending`
