@@ -1,7 +1,8 @@
+{% trans_default_domain 'SiwappRecurringInvoiceBundle' %}
 {{ form_start(list_form) }}
 <ul id="toolbar" class="table-actions list-inline list-unstyled">
   <li>
-    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
   </li>
 </ul>
 <table class="table table-condensed table-striped align-middle" data-type="recurring-invoices">
@@ -11,29 +12,29 @@
         <input type="checkbox" name="all" />
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(invoices, 'Series'|trans, 'ri.serie') }}
+        {{ knp_pagination_sortable(invoices, 'list.series'|trans, 'ri.serie') }}
       </th>
       <th>
-        {{ knp_pagination_sortable(invoices, 'Customer'|trans, 'ri.customer_name') }}
+        {{ knp_pagination_sortable(invoices, 'list.customer_name'|trans, 'ri.customer_name') }}
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(invoices, 'Period'|trans, 'ri.period_type') }}
+        {{ knp_pagination_sortable(invoices, 'list.period_type'|trans, 'ri.period_type') }}
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(invoices, 'Frequency'|trans, 'ri.period') }}
+        {{ knp_pagination_sortable(invoices, 'list.period'|trans, 'ri.period') }}
       </th>
       <th class="cell-size-small-medium cell-align-center">
-        {{ knp_pagination_sortable(invoices, 'Status'|trans, 'ri.status') }}
+        {{ knp_pagination_sortable(invoices, 'list.status'|trans, 'ri.status') }}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {{ knp_pagination_sortable(invoices, 'Total'|trans, 'ri.gross_amount') }}
+        {{ knp_pagination_sortable(invoices, 'list.gross_amount'|trans, 'ri.gross_amount') }}
       </th>
     </tr>
   </thead>
   <tbody>
     {% if invoices|length == 0 %}
       <tr>
-        <td colspan="7">{% trans %}No recurring invoices found.{% endtrans %}</td>
+        <td colspan="7">{% trans %}list.no_results{% endtrans %}</td>
       </tr>
     {% endif %}
     {% for key, entity in invoices %}
@@ -46,7 +47,7 @@
         <td>{{ entity.periodType }}</td>
         <td>{{ entity.period }}</td>
         <td class="cell-align-center">
-          <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
+          <span class="label {{ entity.statusString }}">{{ ('recurring_invoice.' ~ entity.statusString)|trans }}</span>
         </td>
         <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
       </tr>

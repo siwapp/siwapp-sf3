@@ -1,16 +1,18 @@
+{% trans_default_domain 'SiwappEstimateBundle' %}
+
 {{ form_start(list_form) }}
 <ul id="toolbar" class="table-actions list-inline list-unstyled">
   <li>
-    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
   </li>
   <li>
-    <button type="submit" name="print" class="btn btn-default" title="{% trans %}Print selected{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
+    <button type="submit" name="print" class="btn btn-default" title="{% trans %}list.bulk_print{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
   </li>
   <li>
-    <button type="submit" name="pdf" class="btn btn-default" title="{% trans %}Download as PDF{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
+    <button type="submit" name="pdf" class="btn btn-default" title="{% trans %}list.bulk_pdf{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
   </li>
   <li>
-    <button type="submit" name="email" class="btn btn-default" title="{% trans %}Email selected{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></button>
+    <button type="submit" name="email" class="btn btn-default" title="{% trans %}list.bulk_email{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></button>
   </li>
 </ul>
 <table class="table table-condensed table-striped align-middle" data-type="estimates">
@@ -20,26 +22,26 @@
         <input type="checkbox" name="all" />
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(estimates, 'Series'|trans, 'e.serie') }}
+        {{ knp_pagination_sortable(estimates, 'list.series'|trans, 'e.serie') }}
       </th>
       <th>
-        {{ knp_pagination_sortable(estimates, 'Customer'|trans, 'e.customer_name') }}
+        {{ knp_pagination_sortable(estimates, 'list.customer_name'|trans, 'e.customer_name') }}
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(estimates, 'Date'|trans, 'e.issue_date') }}
+        {{ knp_pagination_sortable(estimates, 'list.issue_date'|trans, 'e.issue_date') }}
       </th>
       <th class="cell-size-small-medium cell-align-center">
-        {{ knp_pagination_sortable(estimates, 'Status'|trans, 'e.status') }}
+        {{ knp_pagination_sortable(estimates, 'list.status'|trans, 'e.status') }}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {{ knp_pagination_sortable(estimates, 'Total'|trans, 'e.gross_amount') }}
+        {{ knp_pagination_sortable(estimates, 'list.gross_amount'|trans, 'e.gross_amount') }}
       </th>
     </tr>
   </thead>
   <tbody>
     {% if estimates|length == 0 %}
       <tr>
-        <td colspan="7">{% trans %}No estimates found.{% endtrans %}</td>
+        <td colspan="7">{% trans %}list.no_results{% endtrans %}</td>
       </tr>
     {% endif %}
     {% for key, entity in estimates %}
@@ -51,7 +53,7 @@
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
         <td class="cell-align-center">
-          <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
+          <span class="label {{ entity.statusString }}">{{ ('estimate.' ~ entity.statusString)|trans }}</span>
         </td>
         <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
       </tr>

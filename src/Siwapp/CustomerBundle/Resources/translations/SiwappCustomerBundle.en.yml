@@ -1,2 +1,17 @@
 menu:
     customer_index: 'Customers'
+    customer_add: 'New Customer'
+
+search:
+    terms: 'Terms'
+    submit: 'Search'
+    reset: 'Reset'
+
+list:
+    bulk_delete: 'Remove selected'
+    name: 'Name'
+    identification: 'Identification'
+    due_amount: 'Due'
+    gross_amount: 'Total'
+    invoices: 'Invoices'
+    no_results: 'No customers found.'

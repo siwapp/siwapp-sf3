@@ -16,23 +16,47 @@ class SearchEstimateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('terms', null, ['required' => false])
-            ->add('status', ChoiceType::class, ['choices' => [
-                'Draft' => Estimate::DRAFT,
-                'Pending' => Estimate::PENDING,
-                'Approved' => Estimate::APPROVED,
-                'Rejected' => Estimate::REJECTED,
-            ],'required' => false])
-            ->add('date_from', DateType::class, ['widget' => 'single_text', 'required' => false])
-            ->add('date_to', DateType::class, ['widget' => 'single_text', 'required' => false])
-            ->add('customer', null, ['required' => false])
+            ->add('terms', null, [
+                'required' => false,
+                'label' => 'search.terms',
+                'translation_domain' => 'SiwappEstimateBundle',
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'estimate.draft' => Estimate::DRAFT,
+                    'estimate.pending' => Estimate::PENDING,
+                    'estimate.approved' => Estimate::APPROVED,
+                    'estimate.rejected' => Estimate::REJECTED,
+                ],
+                'required' => false,
+                'label' => 'search.status',
+                'translation_domain' => 'SiwappEstimateBundle',
+            ])
+            ->add('date_from', DateType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+                'label' => 'search.date_from',
+                'translation_domain' => 'SiwappEstimateBundle',
+            ])
+            ->add('date_to', DateType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+                'label' => 'search.date_to',
+                'translation_domain' => 'SiwappEstimateBundle',
+            ])
+            ->add('customer', null, [
+                'required' => false,
+                'label' => 'search.customer',
+                'translation_domain' => 'SiwappEstimateBundle',
+            ])
         ;
 
         $builder->add('serie', EntityType::class, array(
             'class' => 'SiwappCoreBundle:Serie',
             'choice_label' => 'name',
-            'placeholder' => '-',
             'required' => false,
+            'label' => 'search.series',
+            'translation_domain' => 'SiwappEstimateBundle',
         ));
     }
 

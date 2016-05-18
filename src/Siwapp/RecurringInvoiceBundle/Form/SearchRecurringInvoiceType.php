@@ -25,10 +25,10 @@ class SearchRecurringInvoiceType extends AbstractType
                 'label' => 'search.status',
                 'translation_domain' => 'SiwappRecurringInvoiceBundle',
                 'choices' => [
-                    'Inactive' => RecurringInvoice::INACTIVE,
-                    'Active' => RecurringInvoice::ACTIVE,
-                    'Pending' => RecurringInvoice::PENDING,
-                    'Finished' => RecurringInvoice::FINISHED,
+                    'recurring_invoice.inactive' => RecurringInvoice::INACTIVE,
+                    'recurring_invoice.active' => RecurringInvoice::ACTIVE,
+                    'recurring_invoice.pending' => RecurringInvoice::PENDING,
+                    'recurring_invoice.finished' => RecurringInvoice::FINISHED,
                 ],
                 'required' => false])
             ->add('customer', null, [
@@ -43,7 +43,6 @@ class SearchRecurringInvoiceType extends AbstractType
             'translation_domain' => 'SiwappRecurringInvoiceBundle',
             'class' => 'SiwappCoreBundle:Serie',
             'choice_label' => 'name',
-            'placeholder' => '-',
             'required' => false,
         ]);
     }

@@ -1,2 +1,33 @@
+estimate:
+    draft: 'Draft'
+    pending: 'Pending'
+    approved: 'Approved'
+    rejected: 'Rejected'
+
 menu:
     estimate_index: 'Estimates'
+    estimate_add: 'New Estimate'
+
+search:
+    terms: 'Terms'
+    date_from: 'Date from'
+    date_to: 'to'
+    status: 'Status'
+    customer: 'Customer'
+    series: 'Series'
+    submit: 'Search'
+    advanced: 'Advanced'
+    reset: 'Reset'
+
+list:
+    bulk_delete: 'Remove selected'
+    bulk_print: 'Print selected'
+    bulk_pdf: 'Download as PDF'
+    bulk_email: 'Email selected'
+    series: 'Series'
+    customer_name: 'Customer'
+    issue_date: 'Date'
+    status: 'Status'
+    gross_amount: 'Total'
+    no_results: 'No estimates found.'
+    bulk_delete: 'Remove selected'

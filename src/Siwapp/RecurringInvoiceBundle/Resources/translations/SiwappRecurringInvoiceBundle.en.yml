@@ -1,2 +1,35 @@
+recurring_invoice:
+    active: 'Active'
+    inactive: 'Inactive'
+    pending: 'Pending'
+    finished: 'Finished'
+
 menu:
     recurring_index: 'Recurring invoices'
+    recurring_add: 'New Recurring Invoice'
+
+list:
+    average_turnover: 'Average turnover'
+    day: 'day'
+    week: 'week'
+    month: 'month'
+    year: 'year'
+    series: 'Series'
+    customer_name: 'Customer'
+    period_type: 'Period'
+    period: 'Frequency'
+    status: 'Status'
+    gross_amount: 'Total'
+    no_results: 'No recurring invoices found.'
+    bulk_delete: 'Remove selected'
+
+search:
+    terms: 'Terms'
+    status: 'Status'
+    customer: 'Customer'
+    series: 'Series'
+    submit: 'Search'
+    reset: 'Reset'
+
+generate:
+    submit: 'Generate all pending invoices now'

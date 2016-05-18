@@ -1,9 +1,10 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
+{% trans_default_domain 'SiwappEstimateBundle' %}
 
 {% block actionlink %}
 <a href="{{ path('estimate_add') }}" class="btn btn-default btn-primary">
   <span class="glyphicon glyphicon-plus"></span>
-  {% trans %}New Estimate{% endtrans %}
+  {% trans %}menu.estimate_add{% endtrans %}
 </a>
 {% endblock %}
 

@@ -14,7 +14,11 @@ class SearchCustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('terms', null, ['required' => false])
+            ->add('terms', null, [
+                'required' => false,
+                'label' => 'search.terms',
+                'translation_domain' => 'SiwappCustomerBundle',
+            ])
         ;
     }
 

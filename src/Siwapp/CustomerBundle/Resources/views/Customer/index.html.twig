@@ -1,9 +1,10 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
+{% trans_default_domain 'SiwappCustomerBundle' %}
 
 {% block actionlink %}
 <a href="{{ path('customer_add') }}" class="btn btn-default btn-primary">
   <span class="glyphicon glyphicon-plus"></span>
-  {% trans %}New Customer{% endtrans %}
+  {% trans %}menu.customer_add{% endtrans %}
 </a>
 {% endblock %}
 
@@ -13,6 +14,6 @@
 
 {% block body %}
   <div id="invoices-latest-recurring-invoices">
-    {% include "SiwappCustomerBundle:Customer:listing.html.twig" %}
+    {% include "SiwappCustomerBundle:Customer:list.html.twig" %}
   </div>
 {% endblock %}

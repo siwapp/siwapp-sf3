@@ -1,2 +1,17 @@
 menu:
     product_index: 'Products'
+    product_add: 'New Product'
+
+search:
+    terms: 'Terms'
+    series: 'Series'
+    submit: 'Search'
+    reset: 'Reset'
+
+list:
+    bulk_delete: 'Remove selected'
+    reference: 'Reference'
+    description: 'Description'
+    price: 'Price'
+    num_sold: 'Items sold'
+    revenue: 'Revenue'
