@@ -6,7 +6,8 @@ Siwapp
     $ git clone git@github.com:ParisLiakos/siwapp-sf3.git
     $ cd siwapp-sf3
 
-The following will ask you to setup the database info, so make sure you have one ready.
+The following will ask you to setup the database info, so make sure you have one
+ready.
 
     $ composer install
     $ php bin/console assetic:dump --env=prod
@@ -24,7 +25,17 @@ or check [this](https://symfony.com/doc/current/book/installation.html#book-inst
 
 Thats it!
 The siwapp installation should be reachable and working now.
-Check `/config.php` or `/web/config.php` to make sure that everything on your enviroment is ok.
+Check `/config.php` or `/web/config.php` to make sure that everything in your
+enviroment is ok.
 
 ### Loading demo data
     $ php bin/console doctrine:fixtures:load
+
+### Overriding templates
+To override eg the invoice print template, copy
+`src/Siwapp/InvoiceBundle/Resources/views/Invoice/print.html.twig` to `app/Resources/SiwappInvoiceBundle/views/Invoice/print.html.twig` and clear the
+cache:
+    $ php bin/console cache:clear
+
+The above applies to [any template](https://symfony.com/doc/current/book/templating.html#overriding-bundle-templates),
+but the print and email ones are those that you are more insterested to.
