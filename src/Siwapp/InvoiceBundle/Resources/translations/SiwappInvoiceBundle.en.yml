@@ -1,3 +1,95 @@
+invoice:
+    draft: 'Draft'
+    opened: 'Opened'
+    overdue: 'Overdue'
+    closed: 'Closed'
+    not_sent_by_email: 'Not Sent by Email'
+    sent_by_email: 'Sent by Email'
+
+payment:
+    flash:
+        added: 'Payment added.'
+        bulk_deleted: 'Payment(s) deleted.'
+    list:
+        payments: 'Payments'
+        date: 'Date'
+        description: 'Description'
+        amount: 'Amount'
+        bulk_delete: 'Remove selected'
+        add: 'Add payment'
+    form:
+        date: 'Date'
+        description: 'Description'
+        amount: 'Amount'
+        notes: 'Notes'
+        submit: 'Save'
+
+flash:
+    nothing_selected: 'Please select something.'
+    added: 'Invoice added.'
+    updated: 'Invoice updated.'
+    deleted: 'Invoice deleted.'
+    emailed: 'Invoice sent by email.'
+    bulk_emailed: 'Invoice(s) sent by email.'
+    bulk_deleted: 'Invoice(s) deleted.'
+
 menu:
     invoice_index: 'Invoices'
     invoice_add: 'New invoice'
+
+form:
+    customer: 'Customer Data'
+    customer_name: 'Name'
+    customer_identification: 'Identification'
+    customer_email: 'E-mail'
+    contact_person: 'Contact person'
+    invoicing_address: 'Invoicing address'
+    shipping_address: 'Shipping address'
+    properties: 'Properties'
+    issue_date: 'Issued on'
+    due_date: 'Due date'
+    series: 'Series'
+    items: 'Invoice items'
+    subtotal: 'Subtotal'
+    total_taxes: 'Taxes'
+    total: 'Invoice Total (%currency%)'
+    item_add: 'Add Item'
+    payment_add: 'Add payment'
+    terms: 'Terms'
+    notes: 'Notes'
+    submit: 'Save'
+    submit_draft: 'Save as draft'
+    submit_close: 'Save and close'
+    submit_delete: 'Delete'
+
+show:
+    print: 'Print'
+    pdf: 'PDF'
+    email: 'Send e-mail'
+
+search:
+    terms: 'Terms'
+    date_from: 'Date from'
+    date_to: 'to'
+    status: 'Status'
+    customer: 'Customer'
+    series: 'Series'
+    submit: 'Search'
+    advanced: 'Advanced'
+    reset: 'Reset'
+
+list:
+    bulk_delete: 'Remove selected'
+    bulk_email: 'Email selected'
+    bulk_pdf: 'Download as PDF'
+    bulk_print: 'Print selected'
+    number: 'Number'
+    customer: 'Customer'
+    issue_date: 'Date'
+    due_date: 'Due Date'
+    status: 'Status'
+    due_amount: 'Due'
+    gross_amount: 'Total'
+    payments: 'Payments'
+    no_results: 'No invoices found.'
+    payments_modal_close: 'Close'

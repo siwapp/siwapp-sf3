@@ -53,7 +53,7 @@ class InvoiceController extends Controller
         if ($listForm->isValid()) {
             $data = $listForm->getData();
             if (empty($data['invoices'])) {
-                $this->get('session')->getFlashBag()->add('warning', 'Please select something.');
+                $this->addTranslatedMessage('flash.nothing_selected', 'warning');
             }
             else {
                 if ($request->request->has('delete')) {
@@ -153,7 +153,7 @@ class InvoiceController extends Controller
         if ($form->isValid()) {
             $em->persist($invoice);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Invoice added.');
+            $this->addTranslatedMessage('flash.added');
 
             return $this->redirect($this->generateUrl('invoice_edit', array('id' => $invoice->getId())));
         }
@@ -191,7 +191,7 @@ class InvoiceController extends Controller
             }
             $em->persist($entity);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Invoice updated.');
+            $this->addTranslatedMessage('flash.updated');
 
             return $this->redirect($this->generateUrl('invoice_edit', array('id' => $id)));
         }
@@ -221,7 +221,7 @@ class InvoiceController extends Controller
             $invoice->setSentByEmail(true);
             $em->persist($invoice);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Invoice sent by email.');
+            $this->addTranslatedMessage('flash.emailed');
         }
 
         return $this->redirect($this->generateUrl('invoice_index'));
@@ -239,7 +239,7 @@ class InvoiceController extends Controller
         }
         $em->remove($invoice);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Invoice deleted.');
+        $this->addTranslatedMessage('flash.deleted');
 
         return $this->redirect($this->generateUrl('invoice_index'));
     }
@@ -263,7 +263,7 @@ class InvoiceController extends Controller
             $invoice->addPayment($payment);
             $em->persist($invoice);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Payment added.');
+            $this->addTranslatedMessage('payment.flash.added');
 
             // Rebuild the query, since we have new objects now.
             return $this->redirect($this->generateUrl('invoice_index'));
@@ -281,7 +281,7 @@ class InvoiceController extends Controller
                 $em->persist($invoice);
                 $em->flush();
             }
-            $this->get('session')->getFlashBag()->add('success', 'Payment(s) deleted.');
+            $this->addTranslatedMessage('payment.flash.bulk_deleted');
 
             // Rebuild the query, since some objects are now missing.
             return $this->redirect($this->generateUrl('invoice_index'));
@@ -292,6 +292,14 @@ class InvoiceController extends Controller
             'add_form' => $addForm->createView(),
             'list_form' => $listForm->createView(),
         ];
+    }
+
+    protected function addTranslatedMessage($message, $status = 'success')
+    {
+        $translator = $this->get('translator');
+        $this->get('session')
+            ->getFlashBag()
+            ->add($status, $translator->trans($message, [], 'SiwappInvoiceBundle'));
     }
 
     protected function getInvoicePrintPdfHtml(Invoice $invoice, $print = false)
@@ -314,7 +322,7 @@ class InvoiceController extends Controller
             $em->remove($invoice);
         }
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Invoice(s) deleted.');
+        $this->addTranslatedMessage('flash.bulk_deleted');
 
         return $this->redirect($this->generateUrl('invoice_index'));
     }
@@ -359,7 +367,7 @@ class InvoiceController extends Controller
             }
         }
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Invoice(s) sent by email.');
+        $this->addTranslatedMessage('flash.bulk_emailed');
 
         return $this->redirect($this->generateUrl('invoice_index'));
     }

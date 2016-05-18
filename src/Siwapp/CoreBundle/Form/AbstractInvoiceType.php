@@ -17,18 +17,42 @@ class AbstractInvoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('customer_name')
-            ->add('customer_identification')
-            ->add('customer_email')
+            ->add('customer_name', null, [
+                'label' => 'form.customer_name',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
+            ->add('customer_identification', null, [
+                'label' => 'form.customer_identification',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
+            ->add('customer_email', null, [
+                'label' => 'form.customer_email',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
             ->add('invoicing_address', null, [
                 'attr' => ['rows' => 3],
+                'label' => 'form.invoicing_address',
+                'translation_domain' => 'SiwappInvoiceBundle',
             ])
             ->add('shipping_address', null, [
                 'attr' => ['rows' => 3],
+                'label' => 'form.shipping_address',
+                'translation_domain' => 'SiwappInvoiceBundle',
             ])
-            ->add('contact_person')
-            ->add('terms', null, ['attr' => ['rows' => 5]])
-            ->add('notes', null, ['attr' => ['rows' => 5]])
+            ->add('contact_person', null, [
+                'label' => 'form.contact_person',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
+            ->add('terms', null, [
+                'attr' => ['rows' => 5],
+                'label' => 'form.terms',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
+            ->add('notes', null, [
+                'attr' => ['rows' => 5],
+                'label' => 'form.notes',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
         ;
 
         $builder->add('items', CollectionType::class, array(
@@ -43,7 +67,8 @@ class AbstractInvoiceType extends AbstractType
         $builder->add('serie', EntityType::class, array(
             'class' => 'SiwappCoreBundle:Serie',
             'choice_label' => 'name',
-            'placeholder' => '-',
+            'label' => 'form.series',
+            'translation_domain' => 'SiwappInvoiceBundle',
         ));
     }
 

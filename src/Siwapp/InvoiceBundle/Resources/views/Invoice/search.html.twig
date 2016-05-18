@@ -1,3 +1,4 @@
+{% trans_default_domain 'SiwappInvoiceBundle' %}
 {% set is_expanded = form.vars.value and (form.vars.value.customer is not null or form.vars.value.serie is not null or form.vars.value.status is not null) %}
 
 {{ form_start(form, {'attr': {'class': 'search form-inline'}}) }}
@@ -10,14 +11,14 @@
 
     <div class="form-group float-right btn-toolbar">
       <div class="btn-group">
-        <button id="search-submit" type="submit" class="btn btn-default btn-primary">{% trans %}Search{% endtrans %}</button>
+        <button id="search-submit" type="submit" class="btn btn-default btn-primary">{% trans %}search.submit{% endtrans %}</button>
         <a href="#search-secondary" data-toggle="collapse" class="btn btn-default"{% if is_expanded %} aria-expanded="true"{% endif %}" aria-controls="search-secondary">
-          {% trans %}Advanced{% endtrans %}
+          {% trans %}search.advanced{% endtrans %}
         <span class="caret"></span>
         </a>
       </div>
       <div class="btn-group">
-        <button id="search-reset" type="reset" class="btn btn-default btn-warning">{% trans %}Reset{% endtrans %}</button>
+        <button id="search-reset" type="reset" class="btn btn-default btn-warning">{% trans %}search.reset{% endtrans %}</button>
       </div>
     </div>
 

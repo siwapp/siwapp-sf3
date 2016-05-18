@@ -1,4 +1,5 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
+{% trans_default_domain 'SiwappInvoiceBundle' %}
 
 {% block searchform %}
 {% endblock %}
@@ -15,7 +16,7 @@
 {% endblock %}
 
 {% block body %}
-<h3 class="title">{% trans %}Payments{% endtrans %}</h3>
+<h3 class="title">{% trans %}payment.list.payments{% endtrans %}</h3>
 
 <div class="content">
   {{ form_start(list_form) }}
@@ -26,13 +27,13 @@
           <input type="checkbox" name="all" />
         </th>
         <th class="col-md-2 date">
-          {% trans %}Date{% endtrans %}
+          {% trans %}payment.list.date{% endtrans %}
         </th>
         <th class="col-md-7">
-          {% trans %}Description{% endtrans %}
+          {% trans %}payment.list.description{% endtrans %}
         </th>
         <th class="col-md-2 currency">
-          {% trans %}Amount{% endtrans %}
+          {% trans %}payment.list.amount{% endtrans %}
         </th>
       </tr>
     </thead>
@@ -51,8 +52,8 @@
     </tbody>
   </table>
   <div class="form-actions buttons">
-    <button type="submit" class="btn btn-default btn-danger float-left" name="remove"><span class="glyphicon glyphicon-trash"></span> {% trans %}Remove selected{% endtrans %}</button>
-    <a href="#payment-add-form" class="btn btn-default btn-info" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span> {% trans %}Add Payment{% endtrans %}</a>
+    <button type="submit" class="btn btn-default btn-danger float-left" name="remove"><span class="glyphicon glyphicon-trash"></span> {% trans %}payment.list.bulk_delete{% endtrans %}</button>
+    <a href="#payment-add-form" class="btn btn-default btn-info" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span> {% trans %}form.payment_add{% endtrans %}</a>
   </div>
   {{ form_end(list_form)}}
 
@@ -60,7 +61,7 @@
     {{ form_row(add_form.date) }}
     {{ form_row(add_form.amount) }}
     {{ form_row(add_form.notes) }}
-    <button type="submit" class="btn btn-default btn-primary success" name="add">{% trans %}Save{% endtrans %}</button>
+    <button type="submit" class="btn btn-default btn-primary success" name="add">{% trans %}payment.form.submit{% endtrans %}</button>
   {{ form_end(add_form)}}
 </div>
 {% endblock %}

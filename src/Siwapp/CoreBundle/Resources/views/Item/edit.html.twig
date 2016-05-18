@@ -1,7 +1,7 @@
 <tr>
   <td class="btn-group-xs">
     {# TODO: Make this pretty for row actions (add tax, add item before, add item after...) #}
-    <a class="btn btn-default btn-xs" title="{% trans %}Remove{% endtrans %}" href="#" onclick="jQuery(this).parents('tr').remove();return false;"><span class="glyphicon glyphicon-trash"></span></a>
+    <a class="btn btn-default btn-xs" title="{% trans from 'SiwappCoreBundle' %}item.form.remove{% endtrans %}" href="#" onclick="jQuery(this).parents('tr').remove();return false;"><span class="glyphicon glyphicon-trash"></span></a>
   </td>
   <td>
     {{ form_widget(form.description) }}

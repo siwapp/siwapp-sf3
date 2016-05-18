@@ -1,5 +1,4 @@
-{# entities variable MUST be defined from the outside #}
-
+{% trans_default_domain 'SiwappInvoiceBundle' %}
 {% set table_columns = 8 %}
 
 {% if not table_selectable is defined %}
@@ -20,16 +19,16 @@
 {{ form_start(list_form) }}
 <ul id="toolbar" class="table-actions list-inline list-unstyled">
   <li>
-    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}Remove selected{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
   </li>
   <li>
-    <button type="submit" name="print" class="btn btn-default" title="{% trans %}Print selected{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
+    <button type="submit" name="print" class="btn btn-default" title="{% trans %}list.bulk_print{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
   </li>
   <li>
-    <button type="submit" name="pdf" class="btn btn-default" title="{% trans %}Download as PDF{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
+    <button type="submit" name="pdf" class="btn btn-default" title="{% trans %}list.bulk_print{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
   </li>
   <li>
-    <button type="submit" name="email" class="btn btn-default" title="{% trans %}Email selected{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></button>
+    <button type="submit" name="email" class="btn btn-default" title="{% trans %}list.bulk_email{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></button>
   </li>
 </ul>
 {% endif %}
@@ -44,51 +43,51 @@
       {% endif %}
       <th class="cell-size-medium">
         {% if sortable %}
-        {{ knp_pagination_sortable(invoices, 'Number'|trans, 'i.number') }}
+        {{ knp_pagination_sortable(invoices, 'list.number'|trans, 'i.number') }}
         {% else %}
-        {% trans %}Number{% endtrans %}
+        {% trans %}list.number{% endtrans %}
         {% endif %}
       </th>
       <th>
         {% if sortable %}
-        {{ knp_pagination_sortable(invoices, 'Customer'|trans, 'i.customer_name') }}
+        {{ knp_pagination_sortable(invoices, 'list.customer'|trans, 'i.customer_name') }}
         {% else %}
-        {% trans %}Customer{% endtrans %}
+        {% trans %}list.customer{% endtrans %}
         {% endif %}
       </th>
       <th class="cell-size-medium">
         {% if sortable %}
-        {{ knp_pagination_sortable(invoices, 'Date'|trans, 'i.issue_date') }}
+        {{ knp_pagination_sortable(invoices, 'list.issue_date'|trans, 'i.issue_date') }}
         {% else %}
-        {% trans %}Date{% endtrans %}
+        {% trans %}list.issue_date{% endtrans %}
         {% endif %}
       </th>
       <th class="cell-size-medium">
         {% if sortable %}
-        {{ knp_pagination_sortable(invoices, 'Due Date'|trans, 'i.due_date') }}
+        {{ knp_pagination_sortable(invoices, 'list.due_date'|trans, 'i.due_date') }}
         {% else %}
-        {% trans %}Due Date{% endtrans %}
+        {% trans %}list.due_date{% endtrans %}
         {% endif %}
       </th>
       <th class="cell-size-small-medium cell-align-center">
         {% if sortable %}
-        {{ knp_pagination_sortable(invoices, 'Status'|trans, 'i.status') }}
+        {{ knp_pagination_sortable(invoices, 'list.status'|trans, 'i.status') }}
         {% else %}
-        {% trans %}Status{% endtrans %}
+        {% trans %}list.status{% endtrans %}
         {% endif %}
       </th>
       <th class="cell-size-medium cell-align-right">
         {% if sortable %}
-        {{ knp_pagination_sortable(invoices, 'Due'|trans, 'due_amount') }}
+        {{ knp_pagination_sortable(invoices, 'list.due_amount'|trans, 'due_amount') }}
         {% else %}
-        {% trans %}Due{% endtrans %}
+        {% trans %}list.due_amount{% endtrans %}
         {% endif %}
       </th>
       <th class="cell-size-medium cell-align-right">
         {% if sortable %}
-        {{ knp_pagination_sortable(invoices, 'Total'|trans, 'i.gross_amount') }}
+        {{ knp_pagination_sortable(invoices, 'list.gross_amount'|trans, 'i.gross_amount') }}
         {% else %}
-        {% trans %}Status{% endtrans %}
+        {% trans %}list.gross_amount{% endtrans %}
         {% endif %}
       </th>
       <th class="cell-size-medium"></th>
@@ -97,7 +96,7 @@
   <tbody>
     {% if invoices|length == 0 %}
       <tr>
-        <td colspan="{{ table_columns }}">{% trans %}No invoices found.{% endtrans %}</td>
+        <td colspan="{{ table_columns }}">{% trans %}list.no_results{% endtrans %}</td>
       </tr>
     {% endif %}
     {% for key, result in invoices %}
@@ -113,12 +112,12 @@
         <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
         <td>{{ entity.dueDate|localizeddate('short', 'none') }}</td>
         <td class="cell-align-center">
-          <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
+          <span class="label {{ entity.statusString }}">{{ ('invoice.' ~ entity.statusString)|trans }}</span>
         </td>
         <td class="cell-align-right">{{ entity.dueAmount|localizedcurrency(currency) }}</td>
         <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
         <td class="cell-align-right payments">
-          <a href="{{ path('invoice_payments', { 'invoiceId': entity.id }) }}" class="btn btn-default btn-info payments" title="Payments"  data-toggle="modal" data-target="#payment-modal" data-remote="false"><span class="glyphicon glyphicon-piggy-bank"></span> {% trans %}Payments{% endtrans %}</a>
+          <a href="{{ path('invoice_payments', { 'invoiceId': entity.id }) }}" class="btn btn-default btn-info payments" title="{% trans %}list.payments{% endtrans %}"  data-toggle="modal" data-target="#payment-modal" data-remote="false"><span class="glyphicon glyphicon-piggy-bank"></span> {% trans %}list.payments{% endtrans %}</a>
         </td>
       </tr>
     {% endfor %}
@@ -135,7 +134,7 @@
 <div id="payment-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="payments-modal-title">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="{% trans %}Close{% endtrans %}"><span aria-hidden="true">×</span></button> <h4 class="modal-title" id="payments-modal-title">Payments</h4> </div>
+      <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="{% trans %}list.payments_modal_close{% endtrans %}"><span aria-hidden="true">×</span></button> <h4 class="modal-title" id="payments-modal-title">{% trans %}list.payments{% endtrans %}</h4> </div>
       <div class="modal-body"></div>
     </div>
   </div>

@@ -13,9 +13,19 @@ class PaymentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DateType::class, ['widget' => 'single_text'])
-            ->add('amount', MoneyType::class)
-            ->add('notes')
+            ->add('date', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'payment.form.date',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
+            ->add('amount', MoneyType::class, [
+                'label' => 'payment.form.amount',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
+            ->add('notes', null, [
+                'label' => 'payment.form.notes',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
         ;
     }
 

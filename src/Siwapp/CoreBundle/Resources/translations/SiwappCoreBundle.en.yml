@@ -3,3 +3,13 @@ html:
 
 menu:
     settings: 'Settings'
+
+item:
+    form:
+        description: 'Description'
+        unitary_cost: 'Price'
+        quantity: 'Qty/Hours'
+        discount: 'Discount'
+        taxes: 'Taxes'
+        total: 'Line total'
+        remove: 'Remove'

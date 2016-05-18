@@ -20,8 +20,16 @@ class InvoiceType extends AbstractInvoiceType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('issue_date', DateType::class, ['widget' => 'single_text'])
-            ->add('due_date', DateType::class, ['widget' => 'single_text'])
+            ->add('issue_date', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'form.issue_date',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
+            ->add('due_date', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'form.due_date',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
         ;
     }
 

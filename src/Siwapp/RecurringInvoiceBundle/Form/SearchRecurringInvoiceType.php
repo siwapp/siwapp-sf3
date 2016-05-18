@@ -16,22 +16,36 @@ class SearchRecurringInvoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('terms', null, ['required' => false])
-            ->add('status', ChoiceType::class, ['choices' => [
-                'Inactive' => RecurringInvoice::INACTIVE,
-                'Active' => RecurringInvoice::ACTIVE,
-                'Pending' => RecurringInvoice::PENDING,
-                'Finished' => RecurringInvoice::FINISHED,
-            ],'required' => false])
-            ->add('customer', null, ['required' => false])
+            ->add('terms', null, [
+                'required' => false,
+                'label' => 'search.terms',
+                'translation_domain' => 'SiwappRecurringInvoiceBundle',
+            ])
+            ->add('status', ChoiceType::class, [
+                'label' => 'search.status',
+                'translation_domain' => 'SiwappRecurringInvoiceBundle',
+                'choices' => [
+                    'Inactive' => RecurringInvoice::INACTIVE,
+                    'Active' => RecurringInvoice::ACTIVE,
+                    'Pending' => RecurringInvoice::PENDING,
+                    'Finished' => RecurringInvoice::FINISHED,
+                ],
+                'required' => false])
+            ->add('customer', null, [
+                'label' => 'search.customer',
+                'translation_domain' => 'SiwappRecurringInvoiceBundle',
+                'required' => false,
+            ])
         ;
 
-        $builder->add('serie', EntityType::class, array(
+        $builder->add('serie', EntityType::class, [
+            'label' => 'search.series',
+            'translation_domain' => 'SiwappRecurringInvoiceBundle',
             'class' => 'SiwappCoreBundle:Serie',
             'choice_label' => 'name',
             'placeholder' => '-',
             'required' => false,
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
