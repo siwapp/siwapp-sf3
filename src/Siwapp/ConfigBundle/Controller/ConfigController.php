@@ -16,7 +16,7 @@ class ConfigController extends Controller
 {
     /**
      * @Route("/global_settings", name="global_settings")
-     * @Template("SiwappConfigBundle:Default:global_settings.html.twig")
+     * @Template("SiwappConfigBundle:Config:global_settings.html.twig")
      */
     public function globalSettingsAction(Request $request)
     {

@@ -14,13 +14,13 @@ use Siwapp\EstimateBundle\Entity\Estimate;
 use Siwapp\EstimateBundle\Form\EstimateType;
 
 /**
- * @Route("/estimates")
+ * @Route("/estimate")
  */
-class EstimatesController extends Controller
+class EstimateController extends Controller
 {
     /**
      * @Route("", name="estimate_index")
-     * @Template("SiwappEstimateBundle:Default:index.html.twig")
+     * @Template("SiwappEstimateBundle:Estimate:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -73,7 +73,7 @@ class EstimatesController extends Controller
 
     /**
      * @Route("/{id}/show", name="estimate_show")
-     * @Template("SiwappEstimateBundle:Default:show.html.twig")
+     * @Template("SiwappEstimateBundle:Estimate:show.html.twig")
      */
     public function showAction($id)
     {
@@ -95,7 +95,6 @@ class EstimatesController extends Controller
 
     /**
      * @Route("/{id}/show/print", name="estimate_show_print")
-     * @Template("SiwappEstimateBundle:Print:estimate.html.twig")
      */
     public function showPrintAction($id)
     {
@@ -135,7 +134,7 @@ class EstimatesController extends Controller
 
     /**
      * @Route("/add", name="estimate_add")
-     * @Template("SiwappEstimateBundle:Default:edit.html.twig")
+     * @Template("SiwappEstimateBundle:Estimate:edit.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -165,7 +164,7 @@ class EstimatesController extends Controller
 
     /**
      * @Route("/{id}/edit", name="estimate_edit")
-     * @Template("SiwappEstimateBundle:Default:edit.html.twig")
+     * @Template("SiwappEstimateBundle:Estimate:edit.html.twig")
      */
     public function editAction(Request $request, $id)
     {
@@ -271,7 +270,7 @@ class EstimatesController extends Controller
             ->getRepository('SiwappConfigBundle:Property')
             ->getAll();
 
-        return $this->renderView('SiwappEstimateBundle:Print:estimate.html.twig', [
+        return $this->renderView('SiwappEstimateBundle:Estimate:print.html.twig', [
             'estimate'  => $estimate,
             'settings' => $settings,
             'print' => $print,
@@ -340,7 +339,7 @@ class EstimatesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $configRepo = $em->getRepository('SiwappConfigBundle:Property');
 
-        $html = $this->renderView('SiwappEstimateBundle:Email:estimate.html.twig', array(
+        $html = $this->renderView('SiwappEstimateBundle:Estimate:mail.html.twig', array(
             'estimate'  => $estimate,
             'settings' => $em->getRepository('SiwappConfigBundle:Property')->getAll(),
         ));

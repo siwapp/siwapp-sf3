@@ -9,13 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Siwapp\ProductBundle\Entity\Product;
 
 /**
- * @Route("/products")
+ * @Route("/product")
  */
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     /**
      * @Route("", name="product_index")
-     * @Template("SiwappProductBundle:Default:index.html.twig")
+     * @Template("SiwappProductBundle:Product:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -68,7 +68,7 @@ class ProductsController extends Controller
 
     /**
      * @Route("/add", name="product_add")
-     * @Template("SiwappProductBundle:Default:edit.html.twig")
+     * @Template("SiwappProductBundle:Product:edit.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -96,7 +96,7 @@ class ProductsController extends Controller
 
     /**
      * @Route("/{id}/edit", name="product_edit")
-     * @Template("SiwappProductBundle:Default:edit.html.twig")
+     * @Template("SiwappProductBundle:Product:edit.html.twig")
      */
     public function editAction(Request $request, $id)
     {

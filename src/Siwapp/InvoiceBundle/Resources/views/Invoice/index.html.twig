@@ -11,12 +11,12 @@
 {% endblock %}
 
 {% block searchform %}
-  {% include "SiwappInvoiceBundle:Partials:search.html.twig" with {'form': search_form} %}
+  {% include "SiwappInvoiceBundle:Invoice:search.html.twig" with {'form': search_form} %}
 {% endblock %}
 
 {% block body %}
   <div id="invoices-latest-invoices">
-    {% include "SiwappInvoiceBundle:Partials:listing.html.twig" %}
+    {% include "SiwappInvoiceBundle:Invoice:list.html.twig" %}
   </div>
 
 {% endblock %}

@@ -15,11 +15,11 @@ use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 /**
  * @Route("/recurring")
  */
-class RecurringInvoicesController extends Controller
+class RecurringInvoiceController extends Controller
 {
     /**
      * @Route("", name="recurring_index")
-     * @Template("SiwappRecurringInvoiceBundle:Default:index.html.twig")
+     * @Template("SiwappRecurringInvoiceBundle:RecurringInvoice:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -78,7 +78,7 @@ class RecurringInvoicesController extends Controller
 
     /**
      * @Route("/{id}/show", name="recurring_show")
-     * @Template("SiwappRecurringInvoiceBundle:Default:show.html.twig")
+     * @Template("SiwappRecurringInvoiceBundle:RecurringInvoice:show.html.twig")
      */
     public function showAction($id)
     {
@@ -88,7 +88,7 @@ class RecurringInvoicesController extends Controller
 
     /**
      * @Route("/add", name="recurring_add")
-     * @Template("SiwappRecurringInvoiceBundle:Default:edit.html.twig")
+     * @Template("SiwappRecurringInvoiceBundle:RecurringInvoice:edit.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -118,7 +118,7 @@ class RecurringInvoicesController extends Controller
 
     /**
      * @Route("/{id}/edit", name="recurring_edit")
-     * @Template("SiwappRecurringInvoiceBundle:Default:edit.html.twig")
+     * @Template("SiwappRecurringInvoiceBundle:RecurringInvoice:edit.html.twig")
      */
     public function editAction(Request $request, $id)
     {

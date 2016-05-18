@@ -15,13 +15,13 @@ use Siwapp\InvoiceBundle\Entity\Payment;
 use Siwapp\InvoiceBundle\Form\InvoiceType;
 
 /**
- * @Route("/invoices")
+ * @Route("/invoice")
  */
-class InvoicesController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * @Route("", name="invoice_index")
-     * @Template("SiwappInvoiceBundle:Default:index.html.twig")
+     * @Template("SiwappInvoiceBundle:Invoice:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -78,7 +78,7 @@ class InvoicesController extends Controller
 
     /**
      * @Route("/{id}/show", name="invoice_show")
-     * @Template("SiwappInvoiceBundle:Default:show.html.twig")
+     * @Template("SiwappInvoiceBundle:Invoice:show.html.twig")
      */
     public function showAction($id)
     {
@@ -101,7 +101,6 @@ class InvoicesController extends Controller
 
     /**
      * @Route("/{id}/show/print", name="invoice_show_print")
-     * @Template("SiwappInvoiceBundle:Print:invoice.html.twig")
      */
     public function showPrintAction($id)
     {
@@ -138,7 +137,7 @@ class InvoicesController extends Controller
 
     /**
      * @Route("/new", name="invoice_add")
-     * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
+     * @Template("SiwappInvoiceBundle:Invoice:edit.html.twig")
      */
     public function newAction(Request $request)
     {
@@ -168,7 +167,7 @@ class InvoicesController extends Controller
 
     /**
      * @Route("/{id}/edit", name="invoice_edit")
-     * @Template("SiwappInvoiceBundle:Default:edit.html.twig")
+     * @Template("SiwappInvoiceBundle:Invoice:edit.html.twig")
      */
     public function editAction(Request $request, $id)
     {
@@ -247,7 +246,7 @@ class InvoicesController extends Controller
 
     /**
      * @Route("/{invoiceId}/payments", name="invoice_payments")
-     * @Template("SiwappInvoiceBundle:Partials:payments.html.twig")
+     * @Template("SiwappInvoiceBundle:Payment:list.html.twig")
      */
     public function paymentsAction(Request $request, $invoiceId)
     {
@@ -301,7 +300,7 @@ class InvoicesController extends Controller
             ->getRepository('SiwappConfigBundle:Property')
             ->getAll();
 
-        return $this->renderView('SiwappInvoiceBundle:Print:invoice.html.twig', [
+        return $this->renderView('SiwappInvoiceBundle:Invoice:print.html.twig', [
             'invoice'  => $invoice,
             'settings' => $settings,
             'print' => $print,
@@ -370,7 +369,7 @@ class InvoicesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $configRepo = $em->getRepository('SiwappConfigBundle:Property');
 
-        $html = $this->renderView('SiwappInvoiceBundle:Email:invoice.html.twig', array(
+        $html = $this->renderView('SiwappInvoiceBundle:Invoice:email.html.twig', array(
             'invoice'  => $invoice,
             'settings' => $em->getRepository('SiwappConfigBundle:Property')->getAll(),
         ));

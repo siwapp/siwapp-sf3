@@ -14,7 +14,7 @@ class DashboardController extends Controller
 {
     /**
      * @Route("/dashboard", name="dashboard_index")
-     * @Template("SiwappDashboardBundle:Default:index.html.twig")
+     * @Template("SiwappDashboardBundle:Dashboard:index.html.twig")
      */
     public function indexAction(Request $request)
     {

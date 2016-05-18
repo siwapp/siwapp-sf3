@@ -10,13 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Siwapp\CustomerBundle\Entity\Customer;
 
 /**
- * @Route("/customers")
+ * @Route("/customer")
  */
-class CustomersController extends Controller
+class CustomerController extends Controller
 {
     /**
      * @Route("", name="customer_index")
-     * @Template("SiwappCustomerBundle:Default:index.html.twig")
+     * @Template("SiwappCustomerBundle:Customer:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -81,7 +81,7 @@ class CustomersController extends Controller
 
     /**
      * @Route("/add", name="customer_add")
-     * @Template("SiwappCustomerBundle:Default:edit.html.twig")
+     * @Template("SiwappCustomerBundle:Customer:edit.html.twig")
      */
     public function addAction(Request $request)
     {
@@ -109,7 +109,7 @@ class CustomersController extends Controller
 
     /**
      * @Route("/{id}/edit", name="customer_edit")
-     * @Template("SiwappCustomerBundle:Default:edit.html.twig")
+     * @Template("SiwappCustomerBundle:Customer:edit.html.twig")
      */
     public function editAction(Request $request, $id)
     {

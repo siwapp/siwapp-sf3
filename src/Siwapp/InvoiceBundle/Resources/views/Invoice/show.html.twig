@@ -114,7 +114,7 @@
           </thead>
           <tbody>
             {% for item in entity.items %}
-              {{ include('SiwappCoreBundle:Partials:item_show.html.twig', { 'item': item, 'currency': currency }) }}
+              {{ include('SiwappCoreBundle:Item:show.html.twig', { 'item': item, 'currency': currency }) }}
             {% endfor %}
           </tbody>
         </table>

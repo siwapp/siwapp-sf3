@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block searchform %}
-  {% include "SiwappRecurringInvoiceBundle:Partials:search.html.twig" with {'form': search_form} %}
+  {% include "SiwappRecurringInvoiceBundle:RecurringInvoice:search.html.twig" with {'form': search_form} %}
 {% endblock %}
 
 {% block body %}
@@ -30,7 +30,7 @@
     </table>
   </div></div>
   <div id="invoices-latest-recurring-invoices">
-    {% include "SiwappRecurringInvoiceBundle:Partials:listing.html.twig" with {'list_form': list_form} %}
+    {% include "SiwappRecurringInvoiceBundle:RecurringInvoice:list.html.twig" with {'list_form': list_form} %}
   </div>
   <div class="float-right">
     <form action="{{ path('recurring_generate_pending') }}" method="post">

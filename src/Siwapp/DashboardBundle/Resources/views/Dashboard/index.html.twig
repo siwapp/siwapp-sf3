@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block searchform %}
-  {% include "SiwappInvoiceBundle:Partials:search.html.twig" with {'form': search_form} %}
+  {% include "SiwappInvoiceBundle:Invoice:search.html.twig" with {'form': search_form} %}
 {% endblock %}
 
 {% block body %}
@@ -94,12 +94,12 @@
   <div class="dashboard-listing">
     <h2>{% trans %}Recent invoices{% endtrans %}</h2>
     {% set table_selectable = false %}
-    {% include "SiwappInvoiceBundle:Partials:listing.html.twig" %}
+    {% include "SiwappInvoiceBundle:Invoice:list.html.twig" %}
   </div>
 
   <div class="dashboard-listing">
     <h2>{% trans %}Past due invoices{% endtrans %}</h2>
-    {% include "SiwappInvoiceBundle:Partials:listing.html.twig" with {'invoices': overdue_invoices} %}
+    {% include "SiwappInvoiceBundle:Invoice:list.html.twig" with {'invoices': overdue_invoices} %}
   </div>
 
 {% endblock %}

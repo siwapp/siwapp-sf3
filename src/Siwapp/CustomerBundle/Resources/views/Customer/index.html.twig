@@ -8,11 +8,11 @@
 {% endblock %}
 
 {% block searchform %}
-  {% include "SiwappCustomerBundle:Partials:search.html.twig" with {'form': search_form} %}
+  {% include "SiwappCustomerBundle:Customer:search.html.twig" with {'form': search_form} %}
 {% endblock %}
 
 {% block body %}
   <div id="invoices-latest-recurring-invoices">
-    {% include "SiwappCustomerBundle:Partials:listing.html.twig" %}
+    {% include "SiwappCustomerBundle:Customer:listing.html.twig" %}
   </div>
 {% endblock %}

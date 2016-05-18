@@ -1,9 +1,9 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 
 {% block actionlink %}
-<a href="{{ path('recurring_add') }}" class="btn btn-default btn-primary">
+<a href="{{ path('estimate_add') }}" class="btn btn-default btn-primary">
   <span class="glyphicon glyphicon-plus"></span>
-  {% trans %}New Recurring Invoice{% endtrans %}
+  {% trans %}New Estimate{% endtrans %}
 </a>
 {% endblock %}
 
@@ -20,16 +20,38 @@
 
 {% block searchform_container %}{% endblock %}
 
-
 {% block body %}
 
   <article class="invoice-like">
 
     <header id="invoice-like-title">
-      <h2>Recurring Invoice {{ entity.label() }}</h2>
+      {% if entity.id %}
+      <ul class="entity-actions list-inline float-right">
+        <li><a class="btn btn-default btn-info" href="{{ path('estimate_show_pdf', {'id': entity.id}) }}"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}PDF{% endtrans %}</a></li>
+        <li><a class="btn btn-default btn-info" href="{{ path('estimate_show_print', {'id': entity.id}) }}" target="_blank"><span class="glyphicon glyphicon-print"></span> {% trans %}Print{% endtrans %}</a></li>
+        <li><form action="{{ path('estimate_email', {'id': entity.id}) }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+          <button type="submit" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-envelope"></span> Send Email</button>
+          </form>
+        </li>
+        <li><form action="{{ path('estimate_generate_invoice', {'id': entity.id}) }}" method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+          <button type="submit" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-file"></span> Create invoice</button>
+          </form></li>
+      </ul>
+      {% endif %}
+
+      <h2>Estimate {{ entity.label() }}</h2>
       <ul id="invoice-like-status" class="list-unstyled">
         <li>
-          <span class="label {{ entity.statusString }}">{% trans with { '%status%': entity.statusString } %}%status%{% endtrans %}</span>
+          <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
+        </li>
+        <li>
+          {% if entity.sentByEmail %}
+          <span class="label notice">{% trans %}Sent by Email{% endtrans %}</span>
+          {% else %}
+          <span class="label">{% trans %}Not Sent by Email{% endtrans %}</span>
+          {% endif %}
         </li>
       </ul>
     </header>
@@ -39,50 +61,6 @@
       {{ form_errors(form) }}
 
       <div class="row">
-        <div id="invoice-like-execution-data" class="col-md-8">
-
-          <h3>{% trans %}Execution Time{% endtrans %}</h3>
-          <div class="row">
-            <div class="col-md-4 clearfix">
-              {{ form_row(form.starting_date) }}
-            </div>
-            <div class="col-md-4 clearfix">
-              {{ form_row(form.finishing_date) }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2">
-              {{ form_row(form.period) }}
-            </div>
-            <div class="col-md-3">
-              <label>&nbsp;</label>
-              {{ form_errors(form.period_type) }}
-              {{ form_widget(form.period_type) }}
-            </div>
-            <div class="col-md-2">
-              {{ form_row(form.max_occurrences) }}
-            </div>
-            <div class="col-md-2">
-              {{ form_row(form.days_to_due) }}
-            </div>
-          </div>
-        </div>
-
-        <div id="invoice-like-properties" class="col-md-4">
-          <div class="panel panel-default">
-            <h3 class="panel-heading">{% trans %}Properties{% endtrans %}</h3>
-
-            <div class="panel-body">
-              <div class="form-inline">
-                {{ form_row(form.serie) }}
-              </div>
-              <div class="form-inline">
-                {{ form_row(form.enabled) }}
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div id="invoice-like-customer-data" class="col-md-8">
 
           <h3>{% trans %}Customer Data{% endtrans %}</h3>
@@ -115,15 +93,26 @@
             <div class="col-md-6 clearfix">
               {{ form_row(form.shipping_address) }}
             </div>
-          </div>
-        </div>
+          </div><!-- inner row -->
+        </div><!-- span10 -->
 
+        <div id="invoice-like-properties" class="col-md-4"><div class="panel panel-default">
+          <h3 class="panel-heading">{% trans %}Properties{% endtrans %}</h3>
+
+          <div class="panel-body form-inline">
+            {{ form_row(form.serie) }}
+            {{ form_row(form.issue_date) }}
+            {% if form.status is defined %}
+            {{ form_row(form.status) }}
+            {% endif %}
+          </div><!-- form inline -->
+        </div></div><!-- span5 -->
       </div>
 
       <div class="row">
         <div class="col-md-12">
 
-          <h3>{% trans %}Invoice items{% endtrans %}</h3>
+          <h3>{% trans %}Estimate items{% endtrans %}</h3>
 
           <table id="invoice-like-items" class="table table-condensed table-striped align-middle">
             <thead>
@@ -137,9 +126,9 @@
                 <th colspan="2" class="cell-align-right">{% trans %}Line Total{% endtrans %}</th>
               </tr>
             </thead>
-            <tbody data-prototype="{{ include('SiwappCoreBundle:Partials:item_edit.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
+            <tbody data-prototype="{{ include('SiwappCoreBundle:Item:edit.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
               {% for item in form.items %}
-                {{ include('SiwappCoreBundle:Partials:item_edit.html.twig', { 'form': item, 'item': item.vars.value, 'currency': currency }) }}
+                {{ include('SiwappCoreBundle:Item:edit.html.twig', { 'form': item, 'item': item.vars.value, 'currency': currency }) }}
               {% endfor %}
               {# TODO: Action buttons: add/remove items, taxes, sort... #}
             </tbody>
@@ -197,9 +186,15 @@
 
       <div class="form-actions">
         <input type="submit" class="btn btn-default btn-primary" name="save" value="{% trans %}Save{% endtrans %}">
+        {% if not entity.id or entity.isDraft() %}
+        <input type="submit" class="btn btn-default" name="save_draft" value="{% trans %}Save as draft{% endtrans %}">
+        {% endif %}
+        {% if entity.isApproved() %}
+        <input type="submit" class="btn btn-default" name="save_close" value="{% trans %}Save and close{% endtrans %}">
+        {% endif %}
         <div class="float-right">
           {% if entity.id %}
-          <a class="btn btn-default btn-danger" href="{{ path('recurring_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
+          <a class="btn btn-default btn-danger" href="{{ path('estimate_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
           {% endif %}
         </div>
       </div>
