@@ -1,0 +1,27 @@
+flash:
+    logo_upload_error: 'Could not store the logo. Make sure the web/uploads folder exists and is writable.'
+    updated: 'Settings updated.'
+
+menu:
+    global_settings: 'Global Settings'
+    my_settings: 'My settings'
+
+form:
+    company: 'Company'
+    company_name: 'Company name'
+    company_address: 'Company address'
+    company_phone: 'Company phone'
+    company_fax: 'Company fax'
+    company_email: 'Company email'
+    company_url: 'Company URL'
+    company_logo: 'Company logo'
+    currency: 'Currency'
+    legal: 'Legal texts'
+    legal_terms: 'Legal terms'
+    pdf: 'PDF Settings'
+    pdf_size: 'PDF size'
+    pdf_orientation: 'PDF orientation'
+    taxes: 'Invoicing taxes'
+    series: 'Invoicing series'
+    add: 'Add'
+    save: 'Save'

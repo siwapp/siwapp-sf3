@@ -21,6 +21,7 @@ class ConfigController extends Controller
     public function globalSettingsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $translator = $this->get('translator');
         $property_repository = $em->getRepository('SiwappConfigBundle:Property');
 
         $data = $property_repository->getAll();
@@ -48,12 +49,14 @@ class ConfigController extends Controller
                         $data['company_logo'] = $newFile;
                     }
                     catch (FileException $e) {
-                        $this->get('session')->getFlashBag()->add('warning', 'Could not store the logo. Make sure the web/uploads folder exists and is writable.');
+                        $msg = $translator->trans('flash.logo_upload_error', [], 'SiwappConfigBundle');
+                        $this->get('session')->getFlashBag()->add('warning', $msg);
                     }
                 }
 
                 $property_repository->setPropertiesFromArray($data);
-                $this->get('session')->getFlashBag()->add('success', 'Settings updated.');
+                $msg = $translator->trans('flash.updated', [], 'SiwappConfigBundle');
+                $this->get('session')->getFlashBag()->add('success', $msg);
             }
         }
 
