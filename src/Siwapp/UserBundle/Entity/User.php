@@ -34,9 +34,30 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\Column(name="locale", type="string", length=5, nullable=true)
+     */
+    protected $locale;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

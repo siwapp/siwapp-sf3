@@ -81,6 +81,9 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Siwapp\UserBundle\Entity\User
+    profile:
+        form:
+            type: Siwapp\UserBundle\Form\ProfileFormType
 
 stof_doctrine_extensions:
     orm:
