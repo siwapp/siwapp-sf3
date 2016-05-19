@@ -89,6 +89,10 @@ class RecurringInvoiceController extends Controller
         $em = $this->getDoctrine()->getManager();
         $invoice = new RecurringInvoice();
         $invoice->addItem(new Item());
+        $terms = $em->getRepository('SiwappConfigBundle:Property')->get('legal_terms');
+        if ($terms) {
+            $invoice->setTerms($terms);
+        }
 
         $form = $this->createForm('Siwapp\RecurringInvoiceBundle\Form\RecurringInvoiceType', $invoice, [
             'action' => $this->generateUrl('recurring_add'),

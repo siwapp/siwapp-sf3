@@ -141,6 +141,10 @@ class EstimateController extends Controller
         $em = $this->getDoctrine()->getManager();
         $estimate = new Estimate();
         $estimate->addItem(new Item());
+        $terms = $em->getRepository('SiwappConfigBundle:Property')->get('legal_terms');
+        if ($terms) {
+            $invoice->setTerms($terms);
+        }
 
         $form = $this->createForm(EstimateType::class, $estimate, [
             'action' => $this->generateUrl('estimate_add'),

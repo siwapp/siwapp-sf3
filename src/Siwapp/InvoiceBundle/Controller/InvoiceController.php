@@ -144,6 +144,10 @@ class InvoiceController extends Controller
         $em = $this->getDoctrine()->getManager();
         $invoice = new Invoice();
         $invoice->addItem(new Item());
+        $terms = $em->getRepository('SiwappConfigBundle:Property')->get('legal_terms');
+        if ($terms) {
+            $invoice->setTerms($terms);
+        }
 
         $form = $this->createForm('Siwapp\InvoiceBundle\Form\InvoiceType', $invoice, [
             'action' => $this->generateUrl('invoice_add'),
