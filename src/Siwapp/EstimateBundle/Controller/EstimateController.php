@@ -350,7 +350,7 @@ class EstimateController extends Controller
         $em = $this->getDoctrine()->getManager();
         $configRepo = $em->getRepository('SiwappConfigBundle:Property');
 
-        $html = $this->renderView('SiwappEstimateBundle:Estimate:mail.html.twig', array(
+        $html = $this->renderView('SiwappEstimateBundle:Estimate:email.html.twig', array(
             'estimate'  => $estimate,
             'settings' => $em->getRepository('SiwappConfigBundle:Property')->getAll(),
         ));

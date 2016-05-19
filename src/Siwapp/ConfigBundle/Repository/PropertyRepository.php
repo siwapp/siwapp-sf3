@@ -38,7 +38,7 @@ class PropertyRepository extends EntityRepository
     {
         if (!$property = $this->findOneBy(array('key' => $key))) {
             $property = new Property();
-            $property->setKeey($key);
+            $property->setKey($key);
         }
 
         $property->setValue($value);

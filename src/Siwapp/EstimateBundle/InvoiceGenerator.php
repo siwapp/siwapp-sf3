@@ -25,7 +25,7 @@ class InvoiceGenerator
         $invoice->setContactPerson($estimate->getContactPerson());
         $invoice->setInvoicingAddress($estimate->getInvoicingAddress());
         $invoice->setShippingAddress($estimate->getShippingAddress());
-        $invoice->setSerie($estimate->getSerie());
+        $invoice->setSeries($estimate->getSeries());
         foreach ($estimate->getItems() as $item) {
             $invoiceItem = new Item;
             $invoiceItem->setDescription($item->getDescription());

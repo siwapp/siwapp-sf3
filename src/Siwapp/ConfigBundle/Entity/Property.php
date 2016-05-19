@@ -16,7 +16,7 @@ class Property
     /**
      * @var string $keey
      *
-     * @ORM\Column(name="key", type="string", length=50, unique=true)
+     * @ORM\Column(name="keey", type="string", length=50, unique=true)
      * @ORM\Id
      */
     private $key;
