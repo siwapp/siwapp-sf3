@@ -34,6 +34,10 @@ class LoadEstimateData extends AbstractFixture implements OrderedFixtureInterfac
                 if ($fname == 'Series') {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
+                elseif (in_array($fname, ['created_at', 'updated_at'])) {
+                    $fvalue = new \DateTime($fvalue);
+                }
+
                 $method = 'set'.Inflector::camelize($fname);
                 if (is_callable(array($estimate, $method))) {
                     call_user_func(array($estimate, $method), $fvalue);

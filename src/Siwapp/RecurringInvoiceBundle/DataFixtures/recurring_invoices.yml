@@ -15,6 +15,8 @@ RecurringInvoice:
     period: '50'
     period_type: year
     starting_date: '2006-06-30'
+    created_at: '2006-06-29 23:30:04'
+    updated_at: '2006-06-30 00:30:04'
 
   RecurringInvoice_22:
     Series: Series_2
@@ -34,6 +36,8 @@ RecurringInvoice:
     period_type: week
     starting_date: '2004-12-02'
     finishing_date: '2037-06-04'
+    created_at: '2006-06-29 23:30:04'
+    updated_at: '2006-06-30 00:30:04'
 
   RecurringInvoice_23:
     Series: Series_2
@@ -53,6 +57,8 @@ RecurringInvoice:
     max_occurrences: '15'
     starting_date: '2005-03-10'
     finishing_date: '2037-10-31'
+    created_at: '2006-06-29 23:30:04'
+    updated_at: '2006-06-30 00:30:04'
 
 Item:
   Item_94:

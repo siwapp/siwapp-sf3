@@ -33,6 +33,9 @@ class LoadInvoiceData extends AbstractFixture implements OrderedFixtureInterface
                 if (in_array($fname, ['Series'])) {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
+                elseif (in_array($fname, ['created_at', 'updated_at'])) {
+                    $fvalue = new \DateTime($fvalue);
+                }
 
                 $method = Inflector::camelize('set_' . $fname);
                 if (is_callable(array($invoice, $method))) {
