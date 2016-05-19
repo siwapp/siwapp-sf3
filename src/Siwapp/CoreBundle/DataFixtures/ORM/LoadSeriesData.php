@@ -8,9 +8,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-use Siwapp\CoreBundle\Entity\Serie;
+use Siwapp\CoreBundle\Entity\Series;
 
-class LoadSerieData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadSeriesData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     private $container;
 
@@ -22,19 +22,19 @@ class LoadSerieData extends AbstractFixture implements OrderedFixtureInterface, 
     public function load(ObjectManager $manager)
     {
         $series = array(
-                       'Serie_1'=>array(
+                       'Series_1'=>array(
                                       'name'=>'Internet',
                                       'value'=>'ASET-',
                                       'first_number'=>1,
                                       'enabled'=>true
                                       ),
-                       'Serie_2'=>array(
+                       'Series_2'=>array(
                                       'name'=>'Design',
                                       'value'=>'BSET-',
                                       'first_number'=>4,
                                       'enabled'=>true
                                       ),
-                       'Serie_3'=>array(
+                       'Series_3'=>array(
                                       'name'=>'Others',
                                       'value'=>'CSET-',
                                       'first_number'=>1,
@@ -42,7 +42,7 @@ class LoadSerieData extends AbstractFixture implements OrderedFixtureInterface, 
                                       )
                        );
         foreach ($series as $ref => $values) {
-            $serie = new Serie();
+            $serie = new Series();
             foreach ($values as $fname => $fvalue) {
                 $method = 'set'.Inflector::camelize($fname);
                 if (is_callable(array($serie, $method))) {
@@ -54,7 +54,7 @@ class LoadSerieData extends AbstractFixture implements OrderedFixtureInterface, 
             $this->addReference($ref, $serie);
         }
     }
-    
+
     public function getOrder()
     {
         return '0';

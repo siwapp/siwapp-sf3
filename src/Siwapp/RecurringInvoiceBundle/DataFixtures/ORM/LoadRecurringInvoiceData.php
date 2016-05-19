@@ -28,11 +28,11 @@ class LoadRecurringInvoiceData extends AbstractFixture implements OrderedFixture
       // TODO: find a way of obtainin Bundle's path with the help of $this->container
         $bpath = $this->container->get('kernel')->getBundle('SiwappRecurringInvoiceBundle')->getPath();
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/recurring_invoices.yml'));
-      
+
         foreach ($value['RecurringInvoice'] as $ref => $values) {
             $recurring_invoice = new RecurringInvoice();
             foreach ($values as $fname => $fvalue) {
-                if ($fname == 'Serie') {
+                if ($fname == 'Series') {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
                 $method = 'set'.Inflector::camelize($fname);

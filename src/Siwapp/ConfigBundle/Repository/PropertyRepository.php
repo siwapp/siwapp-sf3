@@ -21,7 +21,7 @@ class PropertyRepository extends EntityRepository
      **/
     public function get($key, $value = null)
     {
-        if ($property =  $this->findOneBy(array('keey' => $key))) {
+        if ($property =  $this->findOneBy(array('key' => $key))) {
             $value = $property->getValue();
         }
 
@@ -36,7 +36,7 @@ class PropertyRepository extends EntityRepository
      **/
     public function setProperty($key, $value = null)
     {
-        if (!$property = $this->findOneBy(array('keey' => $key))) {
+        if (!$property = $this->findOneBy(array('key' => $key))) {
             $property = new Property();
             $property->setKeey($key);
         }
@@ -56,7 +56,7 @@ class PropertyRepository extends EntityRepository
     {
         $result = array();
         foreach ($this->findAll() as $property) {
-            $result[$property->getKeey()] = $property->getValue();
+            $result[$property->getKey()] = $property->getValue();
         }
 
         return $result;

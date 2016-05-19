@@ -16,10 +16,10 @@ class Property
     /**
      * @var string $keey
      *
-     * @ORM\Column(name="keey", type="string", length=50, unique=true)
+     * @ORM\Column(name="key", type="string", length=50, unique=true)
      * @ORM\Id
      */
-    private $keey;
+    private $key;
 
     /**
      * @var text $value
@@ -38,9 +38,9 @@ class Property
      *
      * @param string $keey
      */
-    public function setKeey($keey)
+    public function setKey($keey)
     {
-        $this->keey = $keey;
+        $this->key = $keey;
     }
 
     /**
@@ -48,9 +48,9 @@ class Property
      *
      * @return string
      */
-    public function getKeey()
+    public function getKey()
     {
-        return $this->keey;
+        return $this->key;
     }
 
     /**
@@ -94,7 +94,7 @@ class Property
     {
         $value = json_decode($this->getRawValue(), true);
 
-        if ($value && $this->keey == 'company_logo') {
+        if ($value && $this->key == 'company_logo') {
             $value = new File($value);
         }
 

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
 use Symfony\Component\Validator\Constraints as Assert;
+use Siwapp\CoreBundle\Entity\Series;
 use Siwapp\CustomerBundle\Entity\Customer;
 
 /**
@@ -142,13 +143,13 @@ class AbstractInvoice
     protected $status = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Siwapp\CoreBundle\Entity\Serie")
-     * @ORM\JoinColumn(name="serie_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Siwapp\CoreBundle\Entity\Series")
+     * @ORM\JoinColumn(name="series_id", referencedColumnName="id")
      * @Assert\NotBlank()
      *
      * unidirectional many-to-one
      */
-    private $serie;
+    private $series;
 
     public function __construct()
     {
@@ -505,21 +506,21 @@ class AbstractInvoice
     /**
      * Set serie
      *
-     * @param Siwapp\CoreBundle\Entity\Serie $serie
+     * @param Siwapp\CoreBundle\Entity\Series $series
      */
-    public function setSerie(\Siwapp\CoreBundle\Entity\Serie $serie)
+    public function setSeries(Series $series)
     {
-        $this->serie = $serie;
+        $this->series = $series;
     }
 
     /**
      * Get serie
      *
-     * @return Siwapp\CoreBundle\Entity\Serie
+     * @return Siwapp\CoreBundle\Entity\Series
      */
-    public function getSerie()
+    public function getSeries()
     {
-        return $this->serie;
+        return $this->series;
     }
 
     /**

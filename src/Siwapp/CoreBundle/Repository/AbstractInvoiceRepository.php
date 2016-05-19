@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
-use Siwapp\CoreBundle\Entity\Serie;
+use Siwapp\CoreBundle\Entity\Series;
 
 /**
  * Repository class to be inherited by InvoiceRepository,
@@ -17,15 +17,15 @@ class AbstractInvoiceRepository extends EntityRepository
     /**
      * getNextNumber
      * Obtain the next numer available for the provided series
-     * @param \Siwapp\CoreBundle\Entity\Serie @serie
+     * @param \Siwapp\CoreBundle\Entity\Series @serie
      * @return integer
      */
-    public function getNextNumber(Serie $series)
+    public function getNextNumber(Series $series)
     {
         $class = $this->getEntityName();
         $found = $this->findBy([
             'status' => [$class::DRAFT, '<>'],
-            'serie' => $series,
+            'series' => $series,
         ]);
 
         if (count($found) > 0) {
@@ -33,7 +33,7 @@ class AbstractInvoiceRepository extends EntityRepository
             ->select('MAX(i.number) AS max_number')
             ->from($class, 'i')
             ->where('i.status <> :status')
-            ->andWhere('i.serie = :series')
+            ->andWhere('i.series = :series')
             ->setParameter('status', $class::DRAFT)
             ->setParameter('series', $series)
             ->getQuery()
@@ -130,7 +130,7 @@ class AbstractInvoiceRepository extends EntityRepository
                 continue;
             }
             if ($field == 'terms') {
-                $qb->join('i.serie', 's', 'WITH', 'i.serie = s.id');
+                $qb->join('i.series', 's', 'WITH', 'i.series = s.id');
                 $terms = $qb->expr()->literal("%$value%");
                 $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->like('i.number', $terms),
@@ -152,8 +152,8 @@ class AbstractInvoiceRepository extends EntityRepository
                     $qb->expr()->like('i.customer_name', $customer),
                     $qb->expr()->like('i.customer_identification', $customer)
                 ));
-            } elseif ($field == 'serie') {
-                $qb->andWhere('i.serie = :series');
+            } elseif ($field == 'series') {
+                $qb->andWhere('i.series = :series');
                 $qb->setParameter('series', $value);
             } elseif ($field == 'tax') {
                 $qb->join('i.items', 'it');

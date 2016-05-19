@@ -26,7 +26,7 @@ class ConfigController extends Controller
 
         $data = $property_repository->getAll();
         $data['taxes'] = $em->getRepository('SiwappCoreBundle:Tax')->findAll();
-        $data['series'] = $em->getRepository('SiwappCoreBundle:Serie')->findAll();
+        $data['series'] = $em->getRepository('SiwappCoreBundle:Series')->findAll();
 
         $form = $this->createForm('Siwapp\ConfigBundle\Form\GlobalSettingsType', $data);
 

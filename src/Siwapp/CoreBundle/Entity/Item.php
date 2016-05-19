@@ -313,6 +313,8 @@ class Item
     public function __construct()
     {
         $this->taxes = new ArrayCollection();
+        $this->quantity = 1;
+        $this->discount = 0;
     }
 
     /**

@@ -64,8 +64,8 @@ class AbstractInvoiceType extends AbstractType
             'label' => false,
         ));
 
-        $builder->add('serie', EntityType::class, array(
-            'class' => 'SiwappCoreBundle:Serie',
+        $builder->add('series', EntityType::class, array(
+            'class' => 'SiwappCoreBundle:Series',
             'choice_label' => 'name',
             'label' => 'form.series',
             'translation_domain' => 'SiwappInvoiceBundle',

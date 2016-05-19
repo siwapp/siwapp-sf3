@@ -97,7 +97,7 @@ class GlobalSettingsType extends AbstractType
         $builder->add('series', CollectionType::class, array(
             'label' => 'form.series',
             'translation_domain' => 'SiwappConfigBundle',
-            'entry_type' => 'Siwapp\CoreBundle\Form\SerieType',
+            'entry_type' => 'Siwapp\CoreBundle\Form\SeriesType',
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,

@@ -12,7 +12,7 @@
         <input type="checkbox" name="all" />
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(invoices, 'list.series'|trans, 'ri.serie') }}
+        {{ knp_pagination_sortable(invoices, 'list.series'|trans, 'ri.series') }}
       </th>
       <th>
         {{ knp_pagination_sortable(invoices, 'list.customer_name'|trans, 'ri.customer_name') }}
@@ -42,7 +42,7 @@
         <td class="table-action cell-align-center no-link">
           {{ form_row(list_form.recurring_invoices[key]) }}
         </td>
-        <td class="cell-size-medium cell-align-center">{{ entity.serie.getName() }}</td>
+        <td class="cell-size-medium cell-align-center">{{ entity.series }}</td>
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.periodType }}</td>
         <td>{{ entity.period }}</td>

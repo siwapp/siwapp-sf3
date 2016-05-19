@@ -22,7 +22,7 @@
         <input type="checkbox" name="all" />
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(estimates, 'list.series'|trans, 'e.serie') }}
+        {{ knp_pagination_sortable(estimates, 'list.series'|trans, 'e.series') }}
       </th>
       <th>
         {{ knp_pagination_sortable(estimates, 'list.customer_name'|trans, 'e.customer_name') }}
@@ -49,7 +49,7 @@
         <td class="table-action cell-align-center no-link">
           {{ form_row(list_form.estimates[key]) }}
         </td>
-        <td class="cell-size-medium cell-align-center">{{ entity.serie.getName() }}</td>
+        <td class="cell-size-medium cell-align-center">{{ entity.series }}</td>
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
         <td class="cell-align-center">

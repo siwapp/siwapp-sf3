@@ -51,10 +51,10 @@ class SearchInvoiceType extends AbstractType
             ])
         ;
 
-        $builder->add('serie', EntityType::class, [
+        $builder->add('series', EntityType::class, [
             'label' => 'search.series',
             'translation_domain' => 'SiwappInvoiceBundle',
-            'class' => 'SiwappCoreBundle:Serie',
+            'class' => 'SiwappCoreBundle:Series',
             'choice_label' => 'name',
             'required' => false,
         ]);

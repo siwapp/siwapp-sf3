@@ -30,7 +30,7 @@ class LoadInvoiceData extends AbstractFixture implements OrderedFixtureInterface
         foreach ($value['Invoice'] as $ref => $values) {
             $invoice = new Invoice();
             foreach ($values as $fname => $fvalue) {
-                if (in_array($fname, ['Serie'])) {
+                if (in_array($fname, ['Series'])) {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
 

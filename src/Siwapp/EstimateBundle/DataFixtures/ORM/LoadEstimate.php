@@ -27,11 +27,11 @@ class LoadEstimateData extends AbstractFixture implements OrderedFixtureInterfac
         $yaml = new Parser();
         $bpath = $this->container->get('kernel')->getBundle('SiwappEstimateBundle')->getPath();
         $value = $yaml->parse(file_get_contents($bpath.'/DataFixtures/estimates.yml'));
-      
+
         foreach ($value['Estimate'] as $ref => $values) {
             $estimate = new Estimate();
             foreach ($values as $fname => $fvalue) {
-                if ($fname == 'Serie') {
+                if ($fname == 'Series') {
                     $fvalue = $manager->merge($this->getReference($fvalue));
                 }
                 $method = 'set'.Inflector::camelize($fname);
