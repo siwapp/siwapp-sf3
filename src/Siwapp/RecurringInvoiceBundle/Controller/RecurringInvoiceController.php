@@ -48,7 +48,7 @@ class RecurringInvoiceController extends Controller
             $data = $listForm->getData();
             if ($request->request->has('delete')) {
                 if (empty($data['recurring_invoices'])) {
-                    $this->addTranslatedMessage('flash.nothing_selected', 'warning');
+                    $this->addTranslatedMessage('flash.nothing_selected', [], 'warning');
                 }
                 else {
                     foreach ($data['recurring_invoices'] as $recurring) {
