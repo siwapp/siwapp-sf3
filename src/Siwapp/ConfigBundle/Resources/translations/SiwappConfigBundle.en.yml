@@ -23,6 +23,8 @@ form:
     pdf: 'PDF Settings'
     pdf_size: 'PDF size'
     pdf_orientation: 'PDF orientation'
+    pdf_landscape: 'Landscape'
+    pdf_portrait: 'Portrait'
     taxes: 'Invoicing taxes'
     series: 'Invoicing series'
     add: 'Add'

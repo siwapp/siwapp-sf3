@@ -79,8 +79,8 @@ class GlobalSettingsType extends AbstractType
                 'label' => 'form.pdf_orientation',
                 'translation_domain' => 'SiwappConfigBundle',
                 'choices' => array(
-                    'portrait' => 'Portrait',
-                    'landscape' => 'Landscape'
+                    'form.pdf_portrait' => 'Portrait',
+                    'form.pdf_landscape' => 'Landscape',
                 )
             ])
         ;

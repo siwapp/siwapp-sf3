@@ -127,7 +127,7 @@ class InvoiceController extends Controller
         }
 
         $html = $this->getInvoicePrintPdfHtml($invoice);
-        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
+        $pdf = $this->getPdf($html);
 
         return new Response($pdf, 200, [
             'Content-Type' => 'application/pdf',
@@ -335,7 +335,7 @@ class InvoiceController extends Controller
         }
 
         $html = $this->get('siwapp_core.html_page_merger')->merge($pages, '<div class="pagebreak"> </div>');
-        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
+        $pdf = $this->getPdf($html);
 
         return new Response($pdf, 200, [
             'Content-Type' => 'application/pdf',
@@ -381,7 +381,7 @@ class InvoiceController extends Controller
             'invoice'  => $invoice,
             'settings' => $em->getRepository('SiwappConfigBundle:Property')->getAll(),
         ));
-        $pdf = $this->get('knp_snappy.pdf')->getOutputFromHtml($html);
+        $pdf = $this->getPdf($html);
         $attachment = new \Swift_Attachment($pdf, $invoice->getId().'.pdf', 'application/pdf');
         $message = \Swift_Message::newInstance()
             ->setSubject($invoice->label())
@@ -391,5 +391,21 @@ class InvoiceController extends Controller
             ->attach($attachment);
 
         return $message;
+    }
+
+    protected function getPdf($html)
+    {
+        $config = $this->getDoctrine()->getRepository('SiwappConfigBundle:Property');
+        $pdfSize = $config->get('pdf_size');
+        $pdfOrientation = $config->get('pdf_orientation');
+        $config = [];
+        if ($pdfSize) {
+            $config['page-size'] = $pdfSize;
+        }
+        if ($pdfOrientation) {
+            $config['orientation'] = $pdfOrientation;
+        }
+
+        return $this->get('knp_snappy.pdf')->getOutputFromHtml($html, $config);
     }
 }
