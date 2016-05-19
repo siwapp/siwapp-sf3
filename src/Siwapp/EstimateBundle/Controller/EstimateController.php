@@ -143,7 +143,7 @@ class EstimateController extends Controller
         $estimate->addItem(new Item());
         $terms = $em->getRepository('SiwappConfigBundle:Property')->get('legal_terms');
         if ($terms) {
-            $invoice->setTerms($terms);
+            $estimate->setTerms($terms);
         }
 
         $form = $this->createForm(EstimateType::class, $estimate, [
