@@ -44,7 +44,7 @@ jQuery(function($){
   ;
 
   // Make all btn-danger buttons ask for confirmation.
-  $('button.btn-danger, input.btn-danger').on('click', function (e) {
+  $('a.btn.btn-danger, button.btn-danger, input.btn-danger').on('click', function (e) {
     if (!confirm('Are you sure?')) {
       e.preventDefault();
     }

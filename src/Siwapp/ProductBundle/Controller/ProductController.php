@@ -47,14 +47,19 @@ class ProductController extends Controller
         if ($listForm->isValid()) {
             $data = $listForm->getData();
             if ($request->request->has('delete')) {
-                foreach ($data['products'] as $product) {
-                    $em->remove($product);
+                if (empty($data['products'])) {
+                    $this->addTranslatedMessage('flash.nothing_selected', 'warning');
                 }
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Product(s) deleted.');
+                else {
+                    foreach ($data['products'] as $product) {
+                        $em->remove($product);
+                    }
+                    $em->flush();
+                    $this->addTranslatedMessage('flash.bulk_deleted');
 
-                // Rebuild the query, since some objects are now missing.
-                return $this->redirect($this->generateUrl('product_index'));
+                    // Rebuild the query, since some objects are now missing.
+                    return $this->redirect($this->generateUrl('product_index'));
+                }
             }
         }
 
@@ -83,7 +88,7 @@ class ProductController extends Controller
         if ($form->isValid()) {
             $em->persist($product);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Product added.');
+            $this->addTranslatedMessage('flash.added');
 
             return $this->redirect($this->generateUrl('product_edit', array('id' => $product->getId())));
         }
@@ -107,14 +112,14 @@ class ProductController extends Controller
         }
 
         $form = $this->createForm('Siwapp\ProductBundle\Form\ProductType', $product, [
-            'action' => $this->generateUrl('product_add'),
+            'action' => $this->generateUrl('product_edit', ['id' => $id]),
         ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em->persist($product);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Product updated.');
+            $this->addTranslatedMessage('flash.updated');
 
             return $this->redirect($this->generateUrl('product_edit', array('id' => $product->getId())));
         }
@@ -137,8 +142,16 @@ class ProductController extends Controller
         }
         $em->remove($product);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Product deleted.');
+        $this->addTranslatedMessage('flash.deleted');
 
         return $this->redirect($this->generateUrl('product_index'));
+    }
+
+    protected function addTranslatedMessage($message, $status = 'success')
+    {
+        $translator = $this->get('translator');
+        $this->get('session')
+            ->getFlashBag()
+            ->add($status, $translator->trans($message, [], 'SiwappProductBundle'));
     }
 }

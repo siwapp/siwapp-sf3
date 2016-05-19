@@ -38,7 +38,7 @@
       </tr>
     {% endif %}
     {% for key, entity in invoices %}
-      <tr data-link="{{ path('recurring_show', { 'id': entity.id }) }}">
+      <tr data-link="{{ path('recurring_edit', { 'id': entity.id }) }}">
         <td class="table-action cell-align-center no-link">
           {{ form_row(list_form.recurring_invoices[key]) }}
         </td>

@@ -1,0 +1,53 @@
+{% trans_default_domain 'SiwappCustomerBundle' %}
+{{ form_start(list_form) }}
+<ul id="toolbar" class="table-actions list-inline list-unstyled">
+  <li>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+  </li>
+</ul>
+<table class="table table-condensed table-striped align-middle" data-type="customers">
+  <thead>
+    <tr>
+      <th class="cell-size-tiny cell-align-center">
+        <input type="checkbox" name="all" />
+      </th>
+      <th class="cell-size-medium">
+        {{ knp_pagination_sortable(customers, 'list.name'|trans, 'c.name') }}
+      </th>
+      <th>
+        {{ knp_pagination_sortable(customers, 'list.identification'|trans, 'c.identification') }}
+      </th>
+      <th class="cell-size-medium cell-align-right">
+        {{ knp_pagination_sortable(customers, 'list.due_amount'|trans, 'due_amount') }}
+      </th>
+      <th class="cell-size-small-medium cell-align-right">
+        {{ knp_pagination_sortable(customers, 'list.gross_amount'|trans, 'gross_amount') }}
+      </th>
+      <th class="cell-size-medium cell-align-right"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if customers|length == 0 %}
+      <tr>
+        <td colspan="6">{% trans %}list.no_results{% endtrans %}</td>
+      </tr>
+    {% endif %}
+    {% for key, result in customers %}
+      {% set entity = result[0] %}
+      <tr data-link="{{ path('customer_edit', { 'id': entity.id }) }}">
+        <td class="table-action cell-align-center no-link">
+          {{ form_row(list_form.customers[key]) }}
+        </td>
+        <td class="cell-size-medium">{{ entity.name }}</td>
+        <td>{{ entity.identification }}</td>
+        <td class="cell-align-right">{{ result.due_amount|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right">{{ result.gross_amount|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right"><a href="{{ path('invoice_index', {'search_invoice': {'customer': entity.identification}}) }}" class="btn btn-default btn-info"><span class="glyphicon glyphicon-book"></span> {% trans %}list.invoices{% endtrans %}</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{{ form_end(list_form) }}
+<div class="navigation">
+    {{ knp_pagination_render(customers) }}
+</div>

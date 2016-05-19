@@ -6,7 +6,7 @@
     {{ item.quantity }}
   </td>
   <td class="cell-align-right">
-    {{ item.unitary_cost }}
+    {{ item.unitaryCost|localizedcurrency(currency) }}
   </td>
   <td class="cell-align-right">
     {{ item.discount }}

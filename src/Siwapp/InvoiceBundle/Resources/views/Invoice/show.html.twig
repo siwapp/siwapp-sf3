@@ -35,9 +35,9 @@
         </li>
         <li>
           {% if entity.sentByEmail %}
-          <span class="label notice">{% trans %}Sent by Email{% endtrans %}</span>
+          <span class="label notice">{% trans %}invoice.sent_by_email{% endtrans %}</span>
           {% else %}
-          <span class="label">{% trans %}Not Sent by Email{% endtrans %}</span>
+          <span class="label">{% trans %}invoice.not_sent_by_email{% endtrans %}</span>
           {% endif %}
         </li>
       </ul>
@@ -45,52 +45,52 @@
     <div class="row">
       <div id="invoice-like-customer-data" class="col-md-8">
 
-        <h3>{% trans %}Customer Data{% endtrans %}</h3>
+        <h3>{% trans %}show.customer{% endtrans %}</h3>
 
         <div class="row">
           <div class="col-md-6 clearfix">
-            <label>{% trans %}Customer name{% endtrans %}:</label>
+            <label>{% trans %}show.customer_name{% endtrans %}:</label>
             {{ entity.customer_name }}
           </div>
           <div class="col-md-6 clearfix">
-            <label>{% trans %}Customer Identification{% endtrans %}:</label>
+            <label>{% trans %}show.customer_identification{% endtrans %}:</label>
             {{ entity.customer_identification }}
           </div>
           <div class="col-md-6 clearfix">
-            <label>{% trans %}Contact person{% endtrans %}:</label>
+            <label>{% trans %}show.contact_person{% endtrans %}:</label>
             {{ entity.contact_person }}
           </div>
 
           <div class="col-md-6 clearfix">
-            <label>{% trans %}Customer email{% endtrans %}:</label>
+            <label>{% trans %}show.customer_email{% endtrans %}:</label>
             <a href="mailto:{{ entity.customer_email }}">{{ entity.customer_email }}</a>
           </div>
 
           <div class="col-md-6 clearfix">
-            <label>{% trans %}Invoicing address{% endtrans %}:</label>
+            <label>{% trans %}show.invoicing_address{% endtrans %}:</label>
             <p>{{ entity.invoicing_address|nl2br }}</p>
           </div>
           <div class="col-md-6 clearfix">
-            <label>{% trans %}Shipping address{% endtrans %}:</label>
+            <label>{% trans %}show.shipping_address{% endtrans %}:</label>
             <p>{{ entity.shipping_address|nl2br }}</p>
           </div>
         </div>
       </div>
 
       <div id="invoice-like-properties" class="col-md-4"><div class="panel panel-default">
-        <h3 class="panel-heading">{% trans %}Properties{% endtrans %}</h3>
+        <h3 class="panel-heading">{% trans %}show.properties{% endtrans %}</h3>
 
         <div class="panel-body">
           <div class="col-md-12">
-            <label>{% trans %}Series{% endtrans %}:</label>
+            <label>{% trans %}show.series{% endtrans %}:</label>
             {{ entity.serie }}
           </div>
           <div class="col-md-12">
-            <label>{% trans %}Issue date{% endtrans %}:</label>
+            <label>{% trans %}show.issue_date{% endtrans %}:</label>
             {{ entity.issue_date|localizeddate('medium', 'none') }}
           </div>
           <div class="col-md-12">
-            <label>{% trans %}Due date{% endtrans %}:</label>
+            <label>{% trans %}show.due_date{% endtrans %}:</label>
             {{ entity.due_date|localizeddate('medium', 'none') }}
           </div>
         </div>
@@ -100,17 +100,17 @@
     <div class="row">
       <div class="col-md-12">
 
-        <h3>{% trans %}Invoice items{% endtrans %}</h3>
+        <h3>{% trans %}show.items{% endtrans %}</h3>
 
         <table id="invoice-like-items" class="table table-condensed table-striped align-middle">
           <thead>
             <tr>
-              <th class="">{% trans %}Concept{% endtrans %}</th>
-              <th class="col-md-1 cell-align-center">{% trans %}Qty/Hours{% endtrans %}</th>
-              <th class="col-md-2 cell-align-center">{% trans %}Price{% endtrans %}</th>
-              <th class="col-md-1 cell-align-center">{% trans %}Discount{% endtrans %}</th>
-              <th class="col-md-2 cell-align-left">{% trans %}Taxes{% endtrans %}</th>
-              <th colspan="2" class="cell-align-right">{% trans %}Line Total{% endtrans %}</th>
+              <th class="">{% trans from 'SiwappCoreBundle' %}item.show.description{% endtrans %}</th>
+              <th class="col-md-1 cell-align-center">{% trans from 'SiwappCoreBundle' %}item.show.quantity{% endtrans %}</th>
+              <th class="col-md-2 cell-align-center">{% trans from 'SiwappCoreBundle' %}item.show.unitary_cost{% endtrans %}</th>
+              <th class="col-md-1 cell-align-center">{% trans from 'SiwappCoreBundle' %}item.show.discount{% endtrans %}</th>
+              <th class="col-md-2 cell-align-left">{% trans from 'SiwappCoreBundle' %}item.show.taxes{% endtrans %}</th>
+              <th colspan="2" class="cell-align-right">{% trans from 'SiwappCoreBundle' %}item.show.total{% endtrans %}</th>
             </tr>
           </thead>
           <tbody>
@@ -128,15 +128,15 @@
         <table id="invoice-like-totals" class="table table-condensed table-striped">
           <tbody>
             <tr>
-              <th class="cell-size-large">{% trans %}Subtotal{% endtrans %}</th>
+              <th class="cell-size-large">{% trans %}show.subtotal{% endtrans %}</th>
               <td class="cell-align-right">{{ entity.baseAmount|localizedcurrency(currency) }}</td>
             </tr>
             <tr>
-              <th>{% trans %}Taxes{% endtrans %}</th>
+              <th>{% trans %}show.total_taxes{% endtrans %}</th>
               <td class="cell-align-right">{{ entity.taxAmount|localizedcurrency(currency) }}</td>
             </tr>
             <tr>
-              <th>Invoice Total ({{ currency }})</th>
+              <th>{% trans with {'%currency%': currency} %}show.total{% endtrans %}</th>
               <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
             </tr>
           </tbody>
@@ -146,19 +146,19 @@
 
     <div id="invoice-like-notes" class="row">
       <div class="col-md-6">
-        <label>{% trans %}Terms & conditions{% endtrans %}:</label>
+        <label>{% trans %}show.terms{% endtrans %}:</label>
         <p>{{ entity.terms|nl2br }}</p>
       </div>
       <div class="col-md-6">
-        <label>{% trans %}Notes{% endtrans %}:</label>
+        <label>{% trans %}show.notes{% endtrans %}:</label>
         <p>{{ entity.notes|nl2br }}</p>
       </div>
     </div>
 
     <div class="entity-actions clearfix">
       <ul class="list-inline float-right">
-        <li><a class="btn btn-default" href="{{ path('invoice_edit', {'id': entity.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}Edit{% endtrans %}</a></li>
-        <li><a class="btn btn-default btn-danger" href="{{ path('invoice_delete', {'id': entity.id}) }}"><span class="glyphicon glyphicon-trash"></span> {% trans %}Delete{% endtrans %}</a></li>
+        <li><a class="btn btn-default" href="{{ path('invoice_edit', {'id': entity.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}show.edit{% endtrans %}</a></li>
+        <li><a class="btn btn-default btn-danger" href="{{ path('invoice_delete', {'id': entity.id}) }}"><span class="glyphicon glyphicon-trash"></span> {% trans %}show.delete{% endtrans %}</a></li>
       </ul>
     </div>
 

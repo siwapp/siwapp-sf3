@@ -2,6 +2,13 @@ menu:
     product_index: 'Products'
     product_add: 'New Product'
 
+flash:
+    nothing_selected: 'Please select something.'
+    added: 'Product added.'
+    updated: 'Product updated.'
+    deleted: 'Product deleted.'
+    bulk_deleted: 'Product(s) deleted.'
+
 search:
     terms: 'Terms'
     series: 'Series'
@@ -15,3 +22,11 @@ list:
     price: 'Price'
     num_sold: 'Items sold'
     revenue: 'Revenue'
+    no_results: 'No products found.'
+
+form:
+    reference: 'Reference'
+    description: 'Description'
+    price: 'Price'
+    submit: 'Save'
+    submit_delete: 'Delete'

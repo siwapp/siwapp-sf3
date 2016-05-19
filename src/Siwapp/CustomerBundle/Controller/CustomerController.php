@@ -48,14 +48,19 @@ class CustomerController extends Controller
         if ($listForm->isValid()) {
             $data = $listForm->getData();
             if ($request->request->has('delete')) {
-                foreach ($data['customers'] as $customer) {
-                    $em->remove($customer);
+                if (empty($data['customers'])) {
+                    $this->addTranslatedMessage('flash.nothing_selected', 'warning');
                 }
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Customer(s) deleted.');
+                else {
+                    foreach ($data['customers'] as $customer) {
+                        $em->remove($customer);
+                    }
+                    $em->flush();
+                    $this->addTranslatedMessage('flash.bulk_deleted');
 
-                // Rebuild the query, since some objects are now missing.
-                return $this->redirect($this->generateUrl('customer_index'));
+                    // Rebuild the query, since some objects are now missing.
+                    return $this->redirect($this->generateUrl('customer_index'));
+                }
             }
         }
 
@@ -96,7 +101,7 @@ class CustomerController extends Controller
         if ($form->isValid()) {
             $em->persist($customer);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Customer added.');
+            $this->addTranslatedMessage('flash.added');
 
             return $this->redirect($this->generateUrl('customer_edit', array('id' => $customer->getId())));
         }
@@ -120,14 +125,14 @@ class CustomerController extends Controller
         }
 
         $form = $this->createForm('Siwapp\CustomerBundle\Form\CustomerType', $customer, [
-            'action' => $this->generateUrl('customer_add'),
+            'action' => $this->generateUrl('customer_edit', ['id' => $id]),
         ]);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em->persist($customer);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Customer updated.');
+            $this->addTranslatedMessage('flash.updated');
 
             return $this->redirect($this->generateUrl('customer_edit', array('id' => $customer->getId())));
         }
@@ -150,8 +155,16 @@ class CustomerController extends Controller
         }
         $em->remove($customer);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Customer deleted.');
+        $this->addTranslatedMessage('flash.deleted');
 
         return $this->redirect($this->generateUrl('customer_index'));
+    }
+
+    protected function addTranslatedMessage($message, $status = 'success')
+    {
+        $translator = $this->get('translator');
+        $this->get('session')
+            ->getFlashBag()
+            ->add($status, $translator->trans($message, [], 'SiwappCustomerBundle'));
     }
 }

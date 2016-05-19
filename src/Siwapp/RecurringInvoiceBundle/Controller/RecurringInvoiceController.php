@@ -47,14 +47,19 @@ class RecurringInvoiceController extends Controller
         if ($listForm->isValid()) {
             $data = $listForm->getData();
             if ($request->request->has('delete')) {
-                foreach ($data['recurring_invoices'] as $recurring) {
-                    $em->remove($recurring);
+                if (empty($data['recurring_invoices'])) {
+                    $this->addTranslatedMessage('flash.nothing_selected', 'warning');
                 }
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Recurring invoice(s) deleted.');
+                else {
+                    foreach ($data['recurring_invoices'] as $recurring) {
+                        $em->remove($recurring);
+                    }
+                    $em->flush();
+                    $this->addTranslatedMessage('flash.bulk_deleted');
 
-                // Rebuild the query, since some objects are now missing.
-                return $this->redirect($this->generateUrl('recurring_index'));
+                    // Rebuild the query, since some objects are now missing.
+                    return $this->redirect($this->generateUrl('recurring_index'));
+                }
             }
         }
 
@@ -63,8 +68,7 @@ class RecurringInvoiceController extends Controller
             $pending += $recurring->countPendingInvoices($recurring);
         }
         if ($pending) {
-            $this->get('session')->getFlashBag()
-                ->add('warning', sprintf('There are %d recurring invoices that were not executed.', $pending));
+            $this->addTranslatedMessage('flash.invoices_pending', ['%count%' => $pending], 'warning');
         }
 
         return array(
@@ -74,16 +78,6 @@ class RecurringInvoiceController extends Controller
             'list_form' => $listForm->createView(),
             'expected' => $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')->getAverageDayAmount(),
         );
-    }
-
-    /**
-     * @Route("/{id}/show", name="recurring_show")
-     * @Template("SiwappRecurringInvoiceBundle:RecurringInvoice:show.html.twig")
-     */
-    public function showAction($id)
-    {
-        // No show for now, always redirect to edit.
-        return $this->redirect($this->generateUrl('recurring_edit', ['id' => $id]));
     }
 
     /**
@@ -104,7 +98,7 @@ class RecurringInvoiceController extends Controller
         if ($form->isValid()) {
             $em->persist($invoice);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Recurring invoice added.');
+            $this->addTranslatedMessage('flash.added');
 
             return $this->redirect($this->generateUrl('recurring_edit', array('id' => $invoice->getId())));
         }
@@ -137,7 +131,7 @@ class RecurringInvoiceController extends Controller
         if ($form->isValid()) {
             $em->persist($invoice);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Recurring invoice was updated.');
+            $this->addTranslatedMessage('flash.updated');
         }
 
         return array(
@@ -154,7 +148,7 @@ class RecurringInvoiceController extends Controller
     public function generatePendingAction()
     {
         $count = $this->get('siwapp_recurring_invoice.invoice_generator')->generateAll();
-        $this->get('session')->getFlashBag()->add('success', sprintf('%d invoices were generated.', $count));
+        $this->addTranslatedMessage('flash.invoices_generated', ['%count%' => $count]);
 
         return $this->redirect($this->generateUrl('recurring_index'));
     }
@@ -171,8 +165,16 @@ class RecurringInvoiceController extends Controller
         }
         $em->remove($recurring);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Recurring invoice deleted.');
+        $this->addTranslatedMessage('flash.deleted');
 
         return $this->redirect($this->generateUrl('recurring_index'));
+    }
+
+    protected function addTranslatedMessage($message, array $params = [], $status = 'success')
+    {
+        $translator = $this->get('translator');
+        $this->get('session')
+            ->getFlashBag()
+            ->add($status, $translator->trans($message, $params, 'SiwappRecurringInvoiceBundle'));
     }
 }

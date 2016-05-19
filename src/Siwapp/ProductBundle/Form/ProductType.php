@@ -14,9 +14,18 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('reference')
-            ->add('description')
-            ->add('price')
+            ->add('reference', null, [
+                'label' => 'form.reference',
+                'translation_domain' => 'SiwappProductBundle',
+            ])
+            ->add('description', null, [
+                'label' => 'form.description',
+                'translation_domain' => 'SiwappProductBundle',
+            ])
+            ->add('price', null, [
+                'label' => 'form.price',
+                'translation_domain' => 'SiwappProductBundle',
+            ])
         ;
     }
 

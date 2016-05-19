@@ -16,15 +16,21 @@ class EstimateType extends AbstractInvoiceType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('issue_date', DateType::class, ['widget' => 'single_text'])
+            ->add('issue_date', DateType::class, [
+                'widget' => 'single_text',
+                'label' => 'form.issue_date',
+                'translation_domain' => 'SiwappEstimateBundle',
+            ])
         ;
 
         if (!$builder->getData()->isDraft()) {
             $builder->add('status', ChoiceType::class, [
+                'label' => 'form.status',
+                'translation_domain' => 'SiwappEstimateBundle',
                 'choices' => [
-                    'Pending' => Estimate::PENDING,
-                    'Approved' => Estimate::APPROVED,
-                    'Rejected' => Estimate::REJECTED,
+                    'estimate.pending' => Estimate::PENDING,
+                    'estimate.approved' => Estimate::APPROVED,
+                    'estimate.rejected' => Estimate::REJECTED,
                 ],
             ]);
         }

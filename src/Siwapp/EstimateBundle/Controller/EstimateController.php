@@ -48,7 +48,7 @@ class EstimateController extends Controller
         if ($listForm->isValid()) {
             $data = $listForm->getData();
             if (empty($data['estimates'])) {
-                $this->get('session')->getFlashBag()->add('warning', 'Please select something.');
+                $this->addTranslatedMessage('flash.nothing_selected', 'warning');
             }
             else {
                 if ($request->request->has('delete')) {
@@ -150,7 +150,7 @@ class EstimateController extends Controller
         if ($form->isValid()) {
             $em->persist($estimate);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Estimate added.');
+            $this->addTranslatedMessage('flash.added');
 
             return $this->redirect($this->generateUrl('estimate_edit', array('id' => $estimate->getId())));
         }
@@ -188,7 +188,7 @@ class EstimateController extends Controller
             }
             $em->persist($entity);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Estimate updated.');
+            $this->addTranslatedMessage('flash.updated');
 
             return $this->redirect($this->generateUrl('estimate_edit', array('id' => $id)));
         }
@@ -218,7 +218,7 @@ class EstimateController extends Controller
             $estimate->setSentByEmail(true);
             $em->persist($estimate);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Estimate sent by email.');
+            $this->addTranslatedMessage('flash.emailed');
         }
 
         return $this->redirect($this->generateUrl('estimate_index'));
@@ -238,7 +238,7 @@ class EstimateController extends Controller
 
         $invoice = $this->get('siwapp_estimate.invoice_generator')->generate($estimate);
         if ($invoice) {
-            $this->get('session')->getFlashBag()->add('success', 'Invoice generated.');
+            $this->addTranslatedMessage('flash.invoice_generated');
 
             return $this->redirect($this->generateUrl('invoice_edit', ['id' => $invoice->getId()]));
         }
@@ -258,11 +258,18 @@ class EstimateController extends Controller
         }
         $em->remove($estimate);
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Estimate deleted.');
+        $this->addTranslatedMessage('flash.deleted');
 
         return $this->redirect($this->generateUrl('estimate_index'));
     }
 
+    protected function addTranslatedMessage($message, $status = 'success')
+    {
+        $translator = $this->get('translator');
+        $this->get('session')
+            ->getFlashBag()
+            ->add($status, $translator->trans($message, [], 'SiwappEstimateBundle'));
+    }
 
     protected function getEstimatePrintPdfHtml(Estimate $estimate, $print = false)
     {
@@ -284,7 +291,7 @@ class EstimateController extends Controller
             $em->remove($estimate);
         }
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Estimate(s) deleted.');
+        $this->addTranslatedMessage('flash.bulk_deleted');
 
         return $this->redirect($this->generateUrl('estimate_index'));
     }
@@ -329,7 +336,7 @@ class EstimateController extends Controller
             }
         }
         $em->flush();
-        $this->get('session')->getFlashBag()->add('success', 'Estimate(s) sent by email.');
+        $this->addTranslatedMessage('flash.bulk_emailed');
 
         return $this->redirect($this->generateUrl('estimate_index'));
     }

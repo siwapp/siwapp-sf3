@@ -17,7 +17,7 @@
             {{ form_row(form.company_email) }}
             {{ form_row(form.company_url) }}
             {% if form.company_logo.vars.data %}
-            <img src="{{ asset(form.company_logo.vars.data.pathname) }}" alt="Logo" title="Current logo" height="100">
+            <img src="{{ asset(form.company_logo.vars.data.pathname) }}" alt="Logo" title="{% trans %}form.current_logo{% endtrans %}" height="100">
             {% endif %}
             {{ form_row(form.company_logo) }}
             {{ form_row(form.currency) }}

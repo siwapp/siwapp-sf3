@@ -1,11 +1,12 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
+{% trans_default_domain 'SiwappProductBundle' %}
 
 {% block searchform_container %}{% endblock %}
 
 {% block actionlink %}
 <a href="{{ path('product_add') }}" class="btn btn-default btn-primary">
   <span class="glyphicon glyphicon-plus"></span>
-  {% trans %}New Product{% endtrans %}
+  {% trans %}menu.product_add{% endtrans %}
 </a>
 {% endblock %}
 
@@ -14,7 +15,7 @@
   <article class="invoice-like">
 
     <header id="invoice-like-title" class="clearfix">
-      <h2>Customer {{ entity.label() }}</h2>
+      <h2>Product {{ entity.label() }}</h2>
     </header>
 
     {{ form_start(form, {'attr': {'class': 'form-stacked' } }) }}
@@ -36,10 +37,10 @@
       {{ form_rest(form) }}
 
       <div class="form-actions">
-        <input type="submit" class="btn btn-default btn-primary" name="save" value="{% trans %}Save{% endtrans %}">
+        <input type="submit" class="btn btn-default btn-primary" name="save" value="{% trans %}form.submit{% endtrans %}">
         <div class="float-right">
           {% if entity.id %}
-          <a class="btn btn-default btn-danger" href="{{ path('product_delete', {'id': entity.id}) }}">{% trans %}Delete{% endtrans %}</a>
+          <a class="btn btn-default btn-danger" href="{{ path('product_delete', {'id': entity.id}) }}">{% trans %}form.submit_delete{% endtrans %}</a>
           {% endif %}
         </div>
       </div>

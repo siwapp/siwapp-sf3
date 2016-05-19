@@ -19,9 +19,7 @@ class InvoiceListType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => $builder->getData(),
-                'choice_label' => function ($invoice) {
-                    return ' ';
-                },
+                'choice_label' => false,
                 'choice_value' => function ($invoice) {
                     return $invoice->getId();
                 },

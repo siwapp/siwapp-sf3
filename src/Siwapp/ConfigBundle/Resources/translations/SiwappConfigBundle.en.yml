@@ -16,6 +16,7 @@ form:
     company_email: 'Company email'
     company_url: 'Company URL'
     company_logo: 'Company logo'
+    current_logo: 'Current logo'
     currency: 'Currency'
     legal: 'Legal texts'
     legal_terms: 'Legal terms'
