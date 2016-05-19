@@ -14,6 +14,19 @@ use Siwapp\ProductBundle\Entity\Product;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLike($term)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from(Product::class, 'p')
+            ->where('p.reference LIKE :term')
+            //->orWhere('p.description LIKE :term')
+            ->setParameter('term', '%'. $term .'%')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function paginatedSearch(array $params, $limit = 50, $page = 1)
     {
         if (!$this->paginator) {

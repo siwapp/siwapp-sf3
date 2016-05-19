@@ -3,6 +3,32 @@
     {# TODO: Make this pretty for row actions (add tax, add item before, add item after...) #}
     <a class="btn btn-default btn-xs" title="{% trans from 'SiwappCoreBundle' %}item.form.remove{% endtrans %}" href="#" onclick="jQuery(this).parents('tr').remove();return false;"><span class="glyphicon glyphicon-trash"></span></a>
   </td>
+  {% if bundle_exists('SiwappProductBundle') %}
+  <td class="col-md-xs">
+    <input type="text" class="product-autocomplete form-control">
+    <script>
+    $(function(){
+      $('.product-autocomplete:not(.ui-autocomplete-input)').each(function () {
+        $(this).autocomplete({
+          source: '{{ path('product_autocomplete') }}',
+          select: function (event, ui) {
+            var $target = $(this);
+            $target.val(ui.item.reference);
+            var $row = $target.parents('tr');
+            $row.find('[name$="[unitary_cost]"]').val(ui.item.price);
+            $row.find('[name$="[description]"]').val(ui.item.description);
+            return false;
+          },
+        }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            .append( "<a>" + item.reference + "</a>" )
+            .appendTo( ul );
+        };
+      });
+    });
+    </script>
+  </td>
+  {% endif %}
   <td>
     {{ form_widget(form.description) }}
     {{ form_errors(form.description) }}

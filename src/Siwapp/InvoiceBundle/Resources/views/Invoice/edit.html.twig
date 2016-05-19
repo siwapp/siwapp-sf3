@@ -110,12 +110,15 @@
             <thead>
               <tr>
                 <th></th>
+                {% if bundle_exists('SiwappProductBundle') %}
+                <th class="col-md-1 cell-align-center">{% trans from 'SiwappCoreBundle' %}item.form.product{% endtrans %}</th>
+                {% endif %}
                 <th class="">{% trans from 'SiwappCoreBundle' %}item.form.description{% endtrans %}</th>
                 <th class="col-md-1 cell-align-center">{% trans from 'SiwappCoreBundle' %}item.form.quantity{% endtrans %}</th>
                 <th class="col-md-2 cell-align-center">{% trans from 'SiwappCoreBundle' %}item.form.unitary_cost{% endtrans %}</th>
                 <th class="col-md-1 cell-align-center">{% trans from 'SiwappCoreBundle' %}item.form.discount{% endtrans %}</th>
                 <th class="col-md-2 cell-align-left">{% trans from 'SiwappCoreBundle' %}item.form.taxes{% endtrans %}</th>
-                <th colspan="2" class="cell-align-right">{% trans from 'SiwappCoreBundle' %}item.form.total{% endtrans %}</th>
+                <th class="cell-align-right">{% trans from 'SiwappCoreBundle' %}item.form.total{% endtrans %}</th>
               </tr>
             </thead>
             <tbody data-prototype="{{ include('SiwappCoreBundle:Item:edit.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">

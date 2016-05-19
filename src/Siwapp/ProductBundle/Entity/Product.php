@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="Siwapp\ProductBundle\Repository\ProductRepository")
  */
-class Product
+class Product implements \JsonSerializable
 {
     /**
      * @var int
@@ -128,6 +128,16 @@ class Product
     public function getPrice()
     {
         return $this->price;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'reference' => $this->getReference(),
+            'price'=> $this->getPrice(),
+            'description' => $this->getDescription(),
+        ];
     }
 
     public function label() {

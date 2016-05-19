@@ -6,6 +6,7 @@ menu:
 
 item:
     form:
+        product: 'Product'
         description: 'Description'
         unitary_cost: 'Price'
         quantity: 'Qty/Hours'

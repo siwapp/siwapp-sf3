@@ -4,6 +4,7 @@ namespace Siwapp\ProductBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Siwapp\ProductBundle\Entity\Product;
@@ -69,6 +70,18 @@ class ProductController extends Controller
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
         );
+    }
+
+    /**
+     * @Route("/autocomplete", name="product_autocomplete")
+     */
+    public function autocompleteAction(Request $request)
+    {
+        $entities = $this->getDoctrine()
+            ->getRepository('SiwappProductBundle:Product')
+            ->findLike($request->get('term'));
+
+        return new JsonResponse($entities);
     }
 
     /**
