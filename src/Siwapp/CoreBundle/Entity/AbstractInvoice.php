@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Util\Inflector;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Timestampable\Timestampable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Siwapp\CoreBundle\Entity\Series;
 use Siwapp\CustomerBundle\Entity\Customer;
@@ -17,7 +18,7 @@ use Siwapp\CustomerBundle\Entity\Customer;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  */
-class AbstractInvoice
+abstract class AbstractInvoice implements Timestampable
 {
     use TimestampableEntity;
 
