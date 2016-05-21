@@ -38,7 +38,7 @@ class InvoiceGenerator
             $invoice->setContactPerson($recurring->getContactPerson());
             $invoice->setInvoicingAddress($recurring->getInvoicingAddress());
             $invoice->setShippingAddress($recurring->getShippingAddress());
-            $invoice->setSerie($recurring->getSerie());
+            $invoice->setSeries($recurring->getSeries());
             foreach ($recurring->getItems() as $item) {
                 $invoiceItem = new Item;
                 $invoiceItem->setDescription($item->getDescription());
