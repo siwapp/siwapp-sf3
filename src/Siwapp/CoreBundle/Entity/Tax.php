@@ -13,35 +13,37 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Tax
 {
-  /**
-   * @var integer $id
-   *
-   * @ORM\Column(type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
 
-  /**
-   * @var string $name
-   * @ORM\Column
-   */
+    /**
+     * @var string $name
+     * @ORM\Column
+     */
     private $name;
-  /**
-   * @var string $value
-   * @ORM\Column
-   */
+
+    /**
+     * @var string $value
+     * @ORM\Column
+     */
     private $value;
-  /**
-   * @var boolean $active
-   * @ORM\Column(type="boolean")
-   */
+
+    /**
+     * @var boolean $active
+     * @ORM\Column(type="boolean")
+     */
     private $active;
 
-  /**
-   * @var boolean $is_default
-   * @ORM\Column(type="boolean")
-   */
+    /**
+     * @var boolean $is_default
+     * @ORM\Column(type="boolean")
+     */
     private $is_default;
 
     /**

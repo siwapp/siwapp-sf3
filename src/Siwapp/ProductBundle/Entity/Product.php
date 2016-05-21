@@ -3,6 +3,8 @@
 namespace Siwapp\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Timestampable\Timestampable;
 
 /**
  * Product
@@ -10,8 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="Siwapp\ProductBundle\Repository\ProductRepository")
  */
-class Product implements \JsonSerializable
+class Product implements \JsonSerializable, Timestampable
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
@@ -24,7 +28,7 @@ class Product implements \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="reference", type="string", length=100)
+     * @ORM\Column(name="reference", type="string", length=100, unique=true)
      */
     private $reference;
 
@@ -140,7 +144,13 @@ class Product implements \JsonSerializable
         ];
     }
 
-    public function label() {
+    public function label()
+    {
         return $this->getReference();
+    }
+
+    public function __toString()
+    {
+        return $this->label();
     }
 }

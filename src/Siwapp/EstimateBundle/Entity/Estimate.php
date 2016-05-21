@@ -249,6 +249,7 @@ class Estimate extends AbstractInvoice
      */
     public function preSave(LifecycleEventArgs $args)
     {
+        $this->checkAmounts();
         parent::presave($args);
         $this->checkNumber($args);
     }

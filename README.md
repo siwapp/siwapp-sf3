@@ -28,6 +28,13 @@ The siwapp installation should be reachable and working now.
 Check `/config.php` or `/web/config.php` to make sure that everything in your
 enviroment is ok.
 
+### Upgrading from v0.4.x
+
+Replace the DB_* values with the one of your old database and then run:
+
+    $ php bin/console siwapp:upgrade:db DB_DRIVER DB_USER DB_PASSWORD DB_NAME
+
+
 ### Loading demo data
 
     $ php bin/console doctrine:fixtures:load
