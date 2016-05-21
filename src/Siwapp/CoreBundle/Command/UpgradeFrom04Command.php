@@ -31,7 +31,7 @@ class UpgradeFrom04Command extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('siwapp:upgrade:db')
+            ->setName('siwapp:upgrade-db:0.4-1.0')
             ->setDescription('Upgrade from v0.4')
             ->addArgument(
                 'driver',
