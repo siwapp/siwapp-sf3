@@ -88,7 +88,7 @@ fos_user:
 stof_doctrine_extensions:
     orm:
         default:
-            sluggable: true
+            timestampable: true
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
