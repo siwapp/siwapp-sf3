@@ -33,9 +33,11 @@
   <div id="invoices-latest-recurring-invoices">
     {% include "SiwappRecurringInvoiceBundle:RecurringInvoice:list.html.twig" with {'list_form': list_form} %}
   </div>
+  {% if pending_num %}
   <div class="float-right">
     <form action="{{ path('recurring_generate_pending') }}" method="post">
       <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span> {% trans %}generate.submit{% endtrans %}</button>
     </form>
   </div>
+  {% endif %}
 {% endblock %}

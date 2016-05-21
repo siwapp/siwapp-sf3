@@ -77,6 +77,7 @@ class RecurringInvoiceController extends Controller
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
             'expected' => $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')->getAverageDayAmount(),
+            'pending_num' => $pending,
         );
     }
 
