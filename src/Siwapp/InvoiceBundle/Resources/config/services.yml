@@ -1,1 +1,5 @@
 services:
+    siwapp_invoice.listener.item_listener:
+        class: Siwapp\InvoiceBundle\EventListener\ItemListener
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }

@@ -78,6 +78,16 @@ class Item
     private $invoice;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice", mappedBy="items")
+     */
+    private $recurring_invoice;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Siwapp\EstimateBundle\Entity\Estimate", mappedBy="items")
+     */
+    private $estimate;
+
+    /**
      * Get id
      *
      * @return integer
@@ -206,7 +216,6 @@ class Item
     {
         $this->product = $product;
     }
-
 
     /** **************** CUSTOM METHODS ************* */
 

@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Estimate extends AbstractInvoice
 {
     /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"all"}, inversedBy="estimate")
      * @ORM\JoinTable(name="estimates_items",
      *      joinColumns={@ORM\JoinColumn(name="estimate_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}

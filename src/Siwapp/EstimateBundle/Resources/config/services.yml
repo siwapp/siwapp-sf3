@@ -3,3 +3,8 @@ services:
         class: Siwapp\EstimateBundle\InvoiceGenerator
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    siwapp_estimate.listener.item_listener:
+        class: Siwapp\EstimateBundle\EventListener\ItemListener
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }

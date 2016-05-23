@@ -15,3 +15,7 @@ services:
         class: Siwapp\RecurringInvoiceBundle\EventListener\InvoiceListener
         tags:
             - { name: doctrine.event_listener, event: preRemove }
+    siwapp_recurring_invoice.listener.item_listener:
+        class: Siwapp\RecurringInvoiceBundle\EventListener\ItemListener
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }

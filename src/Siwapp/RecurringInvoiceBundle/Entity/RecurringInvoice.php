@@ -97,7 +97,7 @@ class RecurringInvoice extends AbstractInvoice
     private $last_execution_date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="Siwapp\CoreBundle\Entity\Item", cascade={"all"}, inversedBy="recurring_invoice")
      * @ORM\JoinTable(name="recurring_invoices_items",
      *      joinColumns={@ORM\JoinColumn(name="recurring_invoice_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
+use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\CoreBundle\Entity\Series;
 
 /**
@@ -58,6 +59,19 @@ class AbstractInvoiceRepository extends EntityRepository
         }
         $em->flush();
         return $this;
+    }
+
+
+    public function findByItem(Item $item)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('i')
+            ->from($this->getEntityName(), 'i')
+            ->join('i.items', 'ii')
+            ->where('ii.id = ?1')
+            ->setParameter(1, $item->getId());
+
+        return $qb->getQuery()->getResult();
     }
 
     public function paginatedSearch(array $params, $limit = 50, $page = 1)
