@@ -2,19 +2,30 @@
 
 namespace Siwapp\CoreBundle\Form;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ItemType extends AbstractType
 {
+    private $manager;
+
+    public function __construct(ObjectManager $manager)
+    {
+        $this->manager = $manager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('product', TextType::class)
             ->add('quantity', NumberType::class)
             ->add('discount', PercentType::class)
             ->add('description')
@@ -27,6 +38,21 @@ class ItemType extends AbstractType
             'expanded' => true,
             'multiple' => true,
         ));
+
+        $builder->get('product')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($product) {
+                    return $product ? $product->getReference() : '';
+                },
+                function ($reference) {
+                    $product = $this->manager
+                        ->getRepository('SiwappProductBundle:Product')
+                        ->findOneBy(['reference' => $reference]);
+
+                    return $product;
+                }
+            ))
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

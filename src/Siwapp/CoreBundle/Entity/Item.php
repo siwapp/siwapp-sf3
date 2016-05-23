@@ -166,6 +166,16 @@ class Item
     }
 
     /**
+     * Get product
+     *
+     * @return \Siwapp\ProductBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
      * Set product
      *
      * @param \Siwapp\ProductBundle\Entity\Product $product

@@ -10,3 +10,9 @@ services:
             - { name: twig.extension }
     siwapp_core.html_page_merger:
         class: Siwapp\CoreBundle\HtmlPageMerger
+
+    siwapp_core.form.type.item:
+        class: Siwapp\CoreBundle\Form\ItemType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }

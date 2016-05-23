@@ -5,7 +5,8 @@
   </td>
   {% if bundle_exists('SiwappProductBundle') %}
   <td class="col-md-xs">
-    <input type="text" class="product-autocomplete form-control">
+    {{ form_widget(form.product, {'attr': {'class': 'product-autocomplete'}}) }}
+    {{ form_errors(form.product) }}
     <script>
     $(function(){
       $('.product-autocomplete:not(.ui-autocomplete-input)').each(function () {
