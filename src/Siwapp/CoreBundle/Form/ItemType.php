@@ -25,7 +25,7 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('product', TextType::class)
+            ->add('product', TextType::class, ['required' => false])
             ->add('quantity', NumberType::class)
             ->add('discount', PercentType::class)
             ->add('description')
