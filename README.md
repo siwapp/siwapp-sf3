@@ -3,7 +3,7 @@ Siwapp
 
 ## Installation
 
-    $ git clone git@github.com:ParisLiakos/siwapp-sf3.git
+    $ git clone git@github.com:siwapp/siwapp-sf3.git
     $ cd siwapp-sf3
 
 The following will ask you to setup the database info, so make sure you have one
