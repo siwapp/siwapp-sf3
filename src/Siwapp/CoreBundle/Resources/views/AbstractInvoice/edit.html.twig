@@ -1,0 +1,182 @@
+{% extends "SiwappCoreBundle::base.html.twig" %}
+{% trans_default_domain 'SiwappCoreBundle' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% stylesheets
+    'bundles/siwappinvoice/css/invoice.css'
+    filter='cssrewrite'
+    filter='?yui_css'
+  %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+{% endblock %}
+{% block searchform_container %}{% endblock %}
+
+{% block body %}
+
+  <article class="invoice-like">
+
+    <header id="invoice-like-title" class="clearfix">
+      {% block invoice_actions %}{% endblock %}
+      {% block invoice_label %}{% endblock %}
+    </header>
+
+    {{ form_start(form, {'attr': {'class': 'form-stacked' } }) }}
+
+      {{ form_errors(form) }}
+
+      <div class="row">
+        <div id="invoice-like-customer-data" class="col-md-8">
+
+          <h3>{% trans %}abstract_invoice.form.customer{% endtrans %}</h3>
+
+          <div class="row">
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.customer_name) }}
+            </div>
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.customer_identification) }}
+            </div>
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.contact_person) }}
+            </div>
+
+            <div class="col-md-6 clearfix">
+              <div class="form-group">
+                {{ form_label(form.customer_email) }}
+                <div class="input-group">
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                  {{ form_widget(form.customer_email) }}
+                </div>
+                {{ form_errors(form.customer_email) }}
+              </div>
+            </div>
+
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.invoicing_address) }}
+            </div>
+            <div class="col-md-6 clearfix">
+              {{ form_row(form.shipping_address) }}
+            </div>
+          </div>
+        </div>
+
+        <div id="invoice-like-properties" class="col-md-4"><div class="panel panel-default">
+          <h3 class="panel-heading">{% trans %}abstract_invoice.form.properties{% endtrans %}</h3>
+
+          <div class="panel-body form-inline">
+            {% block properties_form %}{% endblock %}
+          </div>
+        </div></div>
+
+        {% block additional_form_data %}{% endblock %}
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+
+          <h3>{% trans %}abstract_invoice.form.items{% endtrans %}</h3>
+
+          <table id="invoice-like-items" class="table table-condensed table-striped align-middle">
+            <thead>
+              <tr>
+                <th></th>
+                {% if bundle_exists('SiwappProductBundle') %}
+                <th class="col-md-1 cell-align-center">{% trans %}item.form.product{% endtrans %}</th>
+                {% endif %}
+                <th class="">{% trans %}item.form.description{% endtrans %}</th>
+                <th class="col-md-1 cell-align-center">{% trans %}item.form.quantity{% endtrans %}</th>
+                <th class="col-md-2 cell-align-center">{% trans %}item.form.unitary_cost{% endtrans %}</th>
+                <th class="col-md-1 cell-align-center">{% trans %}item.form.discount{% endtrans %}</th>
+                <th class="col-md-2 cell-align-left">{% trans %}item.form.taxes{% endtrans %}</th>
+                <th class="cell-align-right">{% trans %}item.form.total{% endtrans %}</th>
+              </tr>
+            </thead>
+            <tbody data-prototype="{{ include('SiwappCoreBundle:Item:edit.html.twig', { 'form': form.items.vars.prototype, 'currency': currency })|e }}">
+              {% for item in form.items %}
+                {{ include('SiwappCoreBundle:Item:edit.html.twig', { 'form': item, 'entity': item.vars.value, 'currency': currency }) }}
+              {% endfor %}
+              {# TODO: Action buttons: add/remove items, taxes, sort... #}
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+      <div class="row totals">
+        <div class="col-md-6">
+
+          <a id="invoice-like-add-item" href="#" class="btn btn-default btn-info"><span class="glyphicon glyphicon-plus glyphicon-white"></span> {% trans %}abstract_invoice.form.item_add{% endtrans %}</a>
+          <script type="text/javascript">
+              $('#invoice-like-add-item').on('click', function(event){
+                  event.preventDefault();
+                  var collectionHolder = $('#invoice-like-items tbody');
+                  var prototype = collectionHolder.attr('data-prototype');
+                  form = prototype.replace(/__name__/g, collectionHolder.children().length);
+                  collectionHolder.append(form);
+              });
+          </script>
+
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+          <table id="invoice-like-totals" class="table table-condensed table-striped">
+            <tbody>
+              <tr>
+                <th class="cell-size-large">{% trans %}abstract_invoice.form.subtotal{% endtrans %}</th>
+                <td class="cell-align-right">{{ entity.baseAmount|localizedcurrency(currency) }}</td>
+              </tr>
+              <tr>
+                <th>{% trans %}abstract_invoice.form.total_taxes{% endtrans %}</th>
+                <td class="cell-align-right">{{ entity.taxAmount|localizedcurrency(currency) }}</td>
+              </tr>
+              <tr>
+                <th>{% trans with {'%currency%': currency} %}abstract_invoice.form.total{% endtrans %}</th>
+                <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="invoice-like-notes" class="row">
+        <div class="col-md-6">
+          {{ form_row(form.terms) }}
+        </div>
+        <div class="col-md-6">
+          {{ form_row(form.notes) }}
+        </div>
+      </div>
+
+      {{ form_rest(form) }}
+
+      <div class="form-actions">
+        {% block form_actions %}{% endblock %}
+      </div>
+    {{ form_end(form) }}
+
+  </article>
+
+  {% if bundle_exists('SiwappCustomerBundle') %}
+  <script>
+  $(document).ready(function () {
+    $( "#invoice_customer_name" ).autocomplete({
+      source: '{{ path('customer_autocomplete') }}',
+      select: function (event, ui) {
+        $("#invoice_customer_name").val(ui.item.name);
+        $("#invoice_customer_email").val(ui.item.email);
+        $("#invoice_customer_identification").val(ui.item.identification);
+        $("#invoice_contact_person").val(ui.item.contact_person);
+        $("#invoice_invoicing_address").val(ui.item.invoicing_address);
+        $("#invoice_shipping_address").val(ui.item.shipping_address);
+        return false;
+      },
+    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+        .append( "<a>" + item.name + "</a>" )
+        .appendTo( ul );
+    };
+  });
+  </script>
+  {% endif %}
+{% endblock %}

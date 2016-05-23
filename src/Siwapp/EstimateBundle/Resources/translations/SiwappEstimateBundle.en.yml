@@ -70,15 +70,8 @@ show:
     delete: 'Delete'
 
 form:
-    customer: 'Customer Data'
-    properties: 'Properties'
     issue_date: 'Issue date'
     status: 'Status'
-    items: 'Estimate items'
-    subtotal: 'Subtotal'
-    total_taxes: 'Taxes'
-    total: 'Estimate Total (%currency%)'
-    item_add: 'Add item'
     submit: 'Save'
     submit_draft: 'Save as draft'
     submit_close: 'Save and close'

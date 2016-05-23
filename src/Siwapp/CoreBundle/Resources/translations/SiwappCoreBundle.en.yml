@@ -21,3 +21,28 @@ item:
         discount: 'Discount'
         taxes: 'Taxes'
         total: 'Line total'
+
+abstract_invoice:
+    show:
+        customer: 'Customer Data'
+        customer_name: 'Customer name'
+        customer_identification: 'Identification'
+        customer_email: 'E-mail'
+        contact_person: 'Contact person'
+        invoicing_address: 'Invoicing address'
+        shipping_address: 'Shipping address'
+        properties: 'Properties'
+        items: 'Line items'
+        subtotal: 'Subtotal'
+        total_taxes: 'Taxes'
+        total: 'Total (%currency%)'
+        terms: 'Terms'
+        notes: 'Notes'
+    form:
+        customer: 'Customer Data'
+        properties: 'Properties'
+        items: 'Line items'
+        item_add: 'Add Item'
+        subtotal: 'Subtotal'
+        total_taxes: 'Taxes'
+        total: 'Total (%currency%)'
