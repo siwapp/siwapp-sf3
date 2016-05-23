@@ -20,40 +20,42 @@ class Item
 {
 
     /**
-    * @var integer $id
-    *
-    * @ORM\Column(type="integer")
-    * @ORM\Id
-    * @ORM\GeneratedValue(strategy="AUTO")
-    */
+     * @var integer $id
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
 
     /**
-    * @var integer $quantity
-    *
-    * @ORM\Column(type="integer")
-    */
+     * @var integer $quantity
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     */
     private $quantity;
 
     /**
-    * @var decimal $discount
-    *
-    * @ORM\Column(type="decimal", precision=5, scale=2)
-    */
+     * @var decimal $discount
+     *
+     * @ORM\Column(type="decimal", precision=5, scale=2)
+     */
     private $discount;
 
     /**
-    * @var string $description
-    *
-    * @ORM\Column()
-    */
+     * @var string $description
+     *
+     * @ORM\Column()
+     */
     private $description;
 
     /**
-    * @var decimal $unitary_cost
-    *
-    * @ORM\Column(type="decimal", precision=15, scale=3)
-    */
+     * @var decimal $unitary_cost
+     *
+     * @ORM\Column(type="decimal", precision=15, scale=3)
+     * @Assert\NotBlank()
+     */
     private $unitary_cost;
 
     /**
@@ -73,7 +75,7 @@ class Item
     /**
      * @ORM\ManyToMany(targetEntity="Siwapp\InvoiceBundle\Entity\Invoice", mappedBy="items")
      */
-    private $invoices;
+    private $invoice;
 
     /**
      * Get id
@@ -123,6 +125,26 @@ class Item
     public function setDiscount($discount)
     {
         $this->discount = $discount;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return decimal
+     */
+    public function getDiscountPercent()
+    {
+        return $this->discount/100;
+    }
+
+    /**
+     * Set Discount
+     *
+     * @param decimal $discount
+     */
+    public function setDiscountPercent($discount)
+    {
+        $this->discount = $discount*100;
     }
 
     /**
@@ -188,21 +210,6 @@ class Item
 
     /** **************** CUSTOM METHODS ************* */
 
-
-    /**
-     * reCalculate
-     * recalculate invoice's amounts
-     *
-     * @ORM\PreUpdate
-     * @author JoeZ99 <jzarate@gmail.com>
-     */
-    public function reCalculate()
-    {
-        if ($this->getInvoice() instanceof \Siwapp\CoreBundle\Entity\AbstractInvoice) {
-            $this->getInvoice()->setAmounts();
-        }
-    }
-
     /**
      * Get base amount
      *
@@ -230,7 +237,7 @@ class Item
      */
     public function getDiscountAmount()
     {
-        return $this->getBaseAmount() * $this->discount / 100;
+        return $this->getBaseAmount() * $this->getDiscountPercent();
     }
 
     /**

@@ -27,7 +27,7 @@ class ItemType extends AbstractType
         $builder
             ->add('product', TextType::class, ['required' => false])
             ->add('quantity', NumberType::class)
-            ->add('discount', PercentType::class)
+            ->add('discount_percent', PercentType::class, ['scale' => 2])
             ->add('description')
             ->add('unitary_cost', MoneyType::class)
         ;
