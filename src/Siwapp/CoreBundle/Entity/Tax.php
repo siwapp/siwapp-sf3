@@ -25,6 +25,7 @@ class Tax
     /**
      * @var string $name
      * @ORM\Column
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -45,6 +46,11 @@ class Tax
      * @ORM\Column(type="boolean")
      */
     private $is_default;
+
+    public function __construct()
+    {
+        $this->active = 1;
+    }
 
     /**
      * Set name

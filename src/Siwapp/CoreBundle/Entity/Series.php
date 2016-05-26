@@ -25,13 +25,14 @@ class Series
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @var string $value
      *
-     * @ORM\Column(name="value", type="string", length=255)
+     * @ORM\Column(name="value", type="string", length=255, nullable=true)
      */
     private $value;
 
@@ -49,6 +50,11 @@ class Series
      */
     private $enabled;
 
+    public function __construct()
+    {
+        $this->first_number = 1;
+        $this->enabled = 1;
+    }
 
     /**
      * Get id

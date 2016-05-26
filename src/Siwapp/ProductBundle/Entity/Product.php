@@ -29,6 +29,7 @@ class Product implements \JsonSerializable, Timestampable
      * @var string
      *
      * @ORM\Column(name="reference", type="string", length=100, unique=true)
+     * @Assert\NotBlank()
      */
     private $reference;
 
@@ -43,6 +44,7 @@ class Product implements \JsonSerializable, Timestampable
      * @var string
      *
      * @ORM\Column(name="price", type="decimal", precision=15, scale=3)
+     * @Assert\NotBlank()
      */
     private $price;
 
