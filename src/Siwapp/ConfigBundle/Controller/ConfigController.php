@@ -23,10 +23,12 @@ class ConfigController extends Controller
         $em = $this->getDoctrine()->getManager();
         $translator = $this->get('translator');
         $property_repository = $em->getRepository('SiwappConfigBundle:Property');
+        $all_taxes = $em->getRepository('SiwappCoreBundle:Tax')->findAll();
+        $all_series = $em->getRepository('SiwappCoreBundle:Series')->findAll();
 
         $data = $property_repository->getAll();
-        $data['taxes'] = $em->getRepository('SiwappCoreBundle:Tax')->findAll();
-        $data['series'] = $em->getRepository('SiwappCoreBundle:Series')->findAll();
+        $data['taxes'] = $all_taxes;
+        $data['series'] = $all_series;
 
         $form = $this->createForm('Siwapp\ConfigBundle\Form\GlobalSettingsType', $data);
 
@@ -34,6 +36,8 @@ class ConfigController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $data = $form->getData();
+                $series = $data['series'];
+                $taxes = $data['taxes'];
                 unset($data['series'], $data['taxes']);
 
                 if (!empty($data['company_logo'])) {
@@ -55,6 +59,27 @@ class ConfigController extends Controller
                 }
 
                 $property_repository->setPropertiesFromArray($data);
+                // Save series.
+                foreach ($series as $item) {
+                    $em->persist($item);
+                }
+                // Remove series.
+                foreach ($all_series as $item) {
+                    if (!in_array($item, $series)) {
+                        $em->remove($item);
+                    }
+                }
+                // Save taxes.
+                foreach ($taxes as $tax) {
+                    $em->persist($tax);
+                }
+                // Remove taxes.
+                foreach ($all_taxes as $item) {
+                    if (!in_array($item, $taxes)) {
+                        $em->remove($item);
+                    }
+                }
+                $em->flush();
                 $msg = $translator->trans('flash.updated', [], 'SiwappConfigBundle');
                 $this->get('session')->getFlashBag()->add('success', $msg);
             }
