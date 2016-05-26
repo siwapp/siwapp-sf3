@@ -92,6 +92,7 @@ class GlobalSettingsType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
+            'entry_options' => ['label' => false],
         ));
 
         $builder->add('series', CollectionType::class, array(
@@ -101,6 +102,7 @@ class GlobalSettingsType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
+            'entry_options' => ['label' => false],
         ));
     }
 }

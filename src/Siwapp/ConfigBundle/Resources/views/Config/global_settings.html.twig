@@ -32,21 +32,15 @@
             {{ form_row(form.pdf_orientation) }}
         </fieldset>
         <fieldset class="col-md-12">
-            <h3>{% trans %}form.taxes{% endtrans %}</h3>
-            <div id="global_settings_taxes" data-prototype="{{ form_widget(form.taxes.vars.prototype)|e }}" class="form-inline">
-              {% for tax in form.taxes %}
-                {{ form_errors(tax) }}
-                {{ form_widget(tax) }}
-              {% endfor %}
+            <h3>{{ form_label(form.taxes) }}</h3>
+            <div class="form-inline">
+              {{ form_row(form.taxes) }}
             </div>
         </fieldset>
         <fieldset class="col-md-12">
-            <h3>{% trans %}form.series{% endtrans %}</h3>
-            <div id="global_settings_series" data-prototype="{{ form_widget(form.series.vars.prototype)|e }}" class="form-inline">
-              {% for series in form.series %}
-                {{ form_errors(series) }}
-                {{ form_widget(series) }}
-              {% endfor %}
+            <h3>{{ form_label(form.series) }}</h3>
+            <div class="form-inline">
+              {{ form_row(form.series) }}
             </div>
         </fieldset>
         {{ form_widget(form) }}
@@ -67,11 +61,11 @@
           $collection.append($form);
         });
         // Remove links.
-        $collection.find('>div').each(function () { addRemoveLink(this); });
+        $collection.find('>div').each(function () { addRemoveLink($(this)); });
       });
-      function addRemoveLink(el) {
+      function addRemoveLink($el) {
         var $removeLink = $('<a href="#" class="btn"><span class="glyphicon glyphicon-trash"></span></a>');
-        $removeLink.prependTo(el);
+        $removeLink.prependTo($el.find('>div'));
         $removeLink.on('click', function(event) {
           event.preventDefault();
           $(this).parent().remove();
