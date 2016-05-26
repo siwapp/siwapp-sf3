@@ -11,6 +11,7 @@
         <fieldset class="col-md-6">
             <h3>{% trans %}form.company{% endtrans %}</h3>
             {{ form_row(form.company_name) }}
+            {{ form_row(form.company_identification) }}
             {{ form_row(form.company_address) }}
             {{ form_row(form.company_phone) }}
             {{ form_row(form.company_fax) }}
@@ -34,13 +35,15 @@
         <fieldset class="col-md-12">
             <h3>{{ form_label(form.taxes) }}</h3>
             <div class="form-inline">
-              {{ form_row(form.taxes) }}
+              {{ form_errors(form.taxes) }}
+              {{ form_widget(form.taxes) }}
             </div>
         </fieldset>
         <fieldset class="col-md-12">
             <h3>{{ form_label(form.series) }}</h3>
             <div class="form-inline">
-              {{ form_row(form.series) }}
+              {{ form_errors(form.series) }}
+              {{ form_widget(form.series) }}
             </div>
         </fieldset>
         {{ form_widget(form) }}

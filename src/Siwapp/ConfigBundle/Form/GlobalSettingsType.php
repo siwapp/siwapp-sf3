@@ -30,6 +30,11 @@ class GlobalSettingsType extends AbstractType
                 'label' => 'form.company_name',
                 'translation_domain' => 'SiwappConfigBundle',
             ])
+            ->add('company_identification', TextType::class, [
+                'required' => false,
+                'label' => 'form.company_identification',
+                'translation_domain' => 'SiwappConfigBundle',
+            ])
             ->add('company_address', TextareaType::class, [
                 'required' => false,
                 'label' => 'form.company_address',

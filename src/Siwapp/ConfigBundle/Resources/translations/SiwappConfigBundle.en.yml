@@ -10,6 +10,7 @@ menu:
 form:
     company: 'Company'
     company_name: 'Company name'
+    company_identification: 'Company identification'
     company_address: 'Company address'
     company_phone: 'Company phone'
     company_fax: 'Company fax'
