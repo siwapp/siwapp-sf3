@@ -22,10 +22,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><strong>{{ expected|localizedcurrency(currency) }}</strong> /{% trans %}list.day{% endtrans %}</td>
-          <td><strong>{{ (expected*7)|localizedcurrency(currency) }}</strong> /{% trans %}list.week{% endtrans %}</td>
-          <td><strong>{{ (expected*30)|localizedcurrency(currency) }}</strong> /{% trans %}list.month{% endtrans %}</td>
-          <td><strong>{{ (expected*365)|localizedcurrency(currency) }}</strong> /{% trans %}list.year{% endtrans %}</td>
+          <td><strong>{{ expected|localizedcurrency(currency, app.request.locale) }}</strong> /{% trans %}list.day{% endtrans %}</td>
+          <td><strong>{{ (expected*7)|localizedcurrency(currency, app.request.locale) }}</strong> /{% trans %}list.week{% endtrans %}</td>
+          <td><strong>{{ (expected*30)|localizedcurrency(currency, app.request.locale) }}</strong> /{% trans %}list.month{% endtrans %}</td>
+          <td><strong>{{ (expected*365)|localizedcurrency(currency, app.request.locale) }}</strong> /{% trans %}list.year{% endtrans %}</td>
         </tr>
       </tbody>
     </table>

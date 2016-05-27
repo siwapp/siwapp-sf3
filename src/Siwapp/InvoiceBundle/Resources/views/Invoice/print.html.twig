@@ -139,7 +139,7 @@
               <td>
                 {{item.description}}
               </td>
-              <td class="right">{{item.unitary_cost|localizedcurrency(settings.currency)}}</td>
+              <td class="right">{{item.unitary_cost|localizedcurrency(settings.currency, app.request.locale)}}</td>
               <td class="right">{{item.quantity}}</td>
               <td class="right">
                 {% for tax in item.Taxes %}
@@ -147,9 +147,9 @@
                 {% endfor %}
               </td>
               {% if invoice.discount_amount %}
-              <td class="right">{{item.discount_amount|localizedcurrency(settings.currency)}}</td>
+              <td class="right">{{item.discount_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
               {% endif %}
-              <td class="right">{{item.gross_amount|localizedcurrency(settings.currency)}}</td>
+              <td class="right">{{item.gross_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
             </tr>
           {% endfor %}
         </tbody>
@@ -157,29 +157,29 @@
           <tr>
             <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Base</th>
-            <td class="right">{{invoice.base_amount|localizedcurrency(settings.currency)}}</td>
+            <td class="right">{{invoice.base_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           {% if invoice.discount_amount %}
           <tr>
             <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Discount</th>
-            <td class="td_global_discount right">{{invoice.discount_amount|localizedcurrency(settings.currency)}}</td>
+            <td class="td_global_discount right">{{invoice.discount_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           {% endif %}
           <tr>
             <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Subtotal</th>
-            <td class="td_subtotal right">{{invoice.net_amount|localizedcurrency(settings.currency)}}</td>
+            <td class="td_subtotal right">{{invoice.net_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           <tr>
             <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Taxes</th>
-            <td class="td_total_taxes right">{{invoice.tax_amount|localizedcurrency(settings.currency)}}</td>
+            <td class="td_total_taxes right">{{invoice.tax_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           <tr class="strong">
             <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Total</th>
-            <td class="td_total right">{{invoice.gross_amount|localizedcurrency(settings.currency)}}</td>
+            <td class="td_total right">{{invoice.gross_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
         </tfoot>
       </table>

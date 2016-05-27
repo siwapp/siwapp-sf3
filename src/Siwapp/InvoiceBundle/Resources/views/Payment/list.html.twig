@@ -44,7 +44,7 @@
           {{ form_label(payment, {'attr': {'class': 'sr-only' }}) }}
           {{ form_widget(payment) }}
         </td>
-        <td class="date">{{ list_form.vars.value[payment.vars.name].date|localizeddate('medium', 'none') }}</td>
+        <td class="date">{{ list_form.vars.value[payment.vars.name].date|localizeddate('medium', 'none', app.request.locale) }}</td>
         <td>{{ list_form.vars.value[payment.vars.name].notes }}</td>
         <td class="currency">{{ list_form.vars.value[payment.vars.name].amount }}</td>
       </tr>

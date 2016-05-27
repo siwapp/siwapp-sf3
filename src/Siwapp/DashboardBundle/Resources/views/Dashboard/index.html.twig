@@ -39,15 +39,15 @@
       <tbody>
         <tr class="receipts">
           <th>{% trans %}list.payments_received{% endtrans %}</th>
-          <td>{{ totals.paid|localizedcurrency(currency) }}</td>
+          <td>{{ totals.paid|localizedcurrency(currency, app.request.locale) }}</td>
         </tr>
         <tr class="due">
           <th>{% trans %}list.payments_due{% endtrans %}</th>
-          <td>{{ totals.due|localizedcurrency(currency) }}</td>
+          <td>{{ totals.due|localizedcurrency(currency, app.request.locale) }}</td>
         </tr>
         <tr class="overdue">
           <th>{% trans %}list.payments_overdue{% endtrans %}</th>
-          <td>{{ totals.overdue|localizedcurrency(currency) }}</td>
+          <td>{{ totals.overdue|localizedcurrency(currency, app.request.locale) }}</td>
         </tr>
       </tbody>
     </table>
@@ -61,15 +61,15 @@
       <tbody>
         <tr class="total">
           <th>{% trans %}list.balance_total{% endtrans %}</th>
-          <td>{{ totals.gross|localizedcurrency(currency) }}</td>
+          <td>{{ totals.gross|localizedcurrency(currency, app.request.locale) }}</td>
         </tr>
         <tr class="net">
           <th>{% trans %}list.balance_net{% endtrans %}</th>
-          <td>{{ totals.net|localizedcurrency(currency) }}</td>
+          <td>{{ totals.net|localizedcurrency(currency, app.request.locale) }}</td>
         </tr>
         <tr class="taxes">
           <th>{% trans %}list.balance_taxes{% endtrans %}</th>
-          <td>{{ totals.tax|localizedcurrency(currency) }}</td>
+          <td>{{ totals.tax|localizedcurrency(currency, app.request.locale) }}</td>
         </tr>
       </tbody>
     </table>
@@ -84,7 +84,7 @@
         {% for tax in taxes %}
         <tr>
           <th>{{ tax.name }}</th>
-          <td>{{ totals.taxes[tax.id]|localizedcurrency(currency) }}</td>
+          <td>{{ totals.taxes[tax.id]|localizedcurrency(currency, app.request.locale) }}</td>
         </tr>
         {% endfor %}
       </tbody>

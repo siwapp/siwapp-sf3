@@ -6,7 +6,7 @@
     {{ item.quantity }}
   </td>
   <td class="cell-align-right">
-    {{ item.unitaryCost|localizedcurrency(currency) }}
+    {{ item.unitaryCost|localizedcurrency(currency, app.request.locale) }}
   </td>
   <td class="cell-align-right">
     {{ item.discount }}
@@ -17,6 +17,6 @@
     {% endfor %}
   </td>
   <td class="cell-align-right">
-    {{ item.grossAmount|localizedcurrency(currency) }}
+    {{ item.grossAmount|localizedcurrency(currency, app.request.locale) }}
   </td>
 </tr>

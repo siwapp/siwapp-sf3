@@ -49,7 +49,7 @@
         <td class="cell-align-center">
           <span class="label {{ entity.statusString }}">{{ ('recurring_invoice.' ~ entity.statusString)|trans }}</span>
         </td>
-        <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency, app.request.locale) }}</td>
       </tr>
     {% endfor %}
   </tbody>

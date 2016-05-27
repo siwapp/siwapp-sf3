@@ -51,7 +51,7 @@
     {{ form_errors(form.taxes) }}
   </td>
   <td class="cell-align-right">
-    {{ entity.grossAmount|localizedcurrency(currency) }}
+    {{ entity.grossAmount|localizedcurrency(currency, app.request.locale) }}
   </td>
 </tr>
 {{ form_widget(form) }}

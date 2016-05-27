@@ -39,11 +39,11 @@
   </div>
   <div class="col-md-12">
     <label>{% trans %}show.issue_date{% endtrans %}:</label>
-    {{ entity.issue_date|localizeddate('medium', 'none') }}
+    {{ entity.issue_date|localizeddate('medium', 'none', app.request.locale) }}
   </div>
   <div class="col-md-12">
     <label>{% trans %}show.due_date{% endtrans %}:</label>
-    {{ entity.due_date|localizeddate('medium', 'none') }}
+    {{ entity.due_date|localizeddate('medium', 'none', app.request.locale) }}
   </div>
 {% endblock %}
 

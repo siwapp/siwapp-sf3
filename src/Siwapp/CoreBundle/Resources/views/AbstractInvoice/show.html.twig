@@ -99,15 +99,15 @@
           <tbody>
             <tr>
               <th class="cell-size-large">{% trans %}abstract_invoice.show.subtotal{% endtrans %}</th>
-              <td class="cell-align-right">{{ entity.baseAmount|localizedcurrency(currency) }}</td>
+              <td class="cell-align-right">{{ entity.baseAmount|localizedcurrency(currency, app.request.locale) }}</td>
             </tr>
             <tr>
               <th>{% trans %}abstract_invoice.show.total_taxes{% endtrans %}</th>
-              <td class="cell-align-right">{{ entity.taxAmount|localizedcurrency(currency) }}</td>
+              <td class="cell-align-right">{{ entity.taxAmount|localizedcurrency(currency, app.request.locale) }}</td>
             </tr>
             <tr>
               <th>{% trans with {'%currency%': currency} %}abstract_invoice.show.total{% endtrans %}</th>
-              <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
+              <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency, app.request.locale) }}</td>
             </tr>
           </tbody>
         </table>

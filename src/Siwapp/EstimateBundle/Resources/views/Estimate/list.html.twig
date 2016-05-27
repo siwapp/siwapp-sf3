@@ -51,11 +51,11 @@
         </td>
         <td class="cell-size-medium cell-align-center">{{ entity.series }}</td>
         <td>{{ entity.getCustomerName }}</td>
-        <td>{{ entity.issueDate|localizeddate('short', 'none') }}</td>
+        <td>{{ entity.issueDate|localizeddate('short', 'none', app.request.locale) }}</td>
         <td class="cell-align-center">
           <span class="label {{ entity.statusString }}">{{ ('estimate.' ~ entity.statusString)|trans }}</span>
         </td>
-        <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency) }}</td>
+        <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency, app.request.locale) }}</td>
       </tr>
     {% endfor %}
   </tbody>
