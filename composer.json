@@ -1,7 +1,9 @@
 {
-    "name": "parisliakos/siwapp-sf3",
+    "name": "siwapp/siwapp-sf3",
+    "description": "Online Invoice Management",
     "license": "MIT",
     "type": "project",
+    "homepage": "http://www.siwapp.com/",
     "autoload": {
         "psr-4": {
             "": "src/"
