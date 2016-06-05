@@ -1,5 +1,7 @@
 <?php
 
+namespace Siwapp\InvoiceBundle\Tests\Entity;
+
 use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\CoreBundle\Entity\Item;
 

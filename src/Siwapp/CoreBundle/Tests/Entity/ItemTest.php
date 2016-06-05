@@ -1,9 +1,11 @@
 <?php
 
+namespace Siwapp\CoreBundle\Tests\Entity;
+
 use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\CoreBundle\Entity\Tax;
 
-class InvoiceTest extends \PHPUnit_Framework_TestCase
+class ItemTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetBaseAmount()
     {
