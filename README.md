@@ -11,7 +11,7 @@
 The following will ask you to setup the database info, so make sure you have one
 ready.
 
-    $ composer create-project --stability=dev siwapp/siwapp-sf3 my_siwapp
+    $ composer create-project --stability=dev siwapp/siwapp-sf3 my_siwapp; cd my_siwapp
     $ php bin/console assetic:dump --env=prod
     $ php bin/console doctrine:schema:create
 
