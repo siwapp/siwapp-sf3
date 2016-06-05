@@ -8,13 +8,10 @@
 
 ## Installation
 
-    $ git clone git@github.com:siwapp/siwapp-sf3.git
-    $ cd siwapp-sf3
-
 The following will ask you to setup the database info, so make sure you have one
 ready.
 
-    $ composer install
+    $ composer create-project --stability=dev siwapp/siwapp-sf3 my_siwapp
     $ php bin/console assetic:dump --env=prod
     $ php bin/console doctrine:schema:create
 
