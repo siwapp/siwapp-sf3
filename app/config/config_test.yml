@@ -17,7 +17,7 @@ swiftmailer:
 
 doctrine:
     dbal:
-      dbname: %database_name%_test
+      dbname: '%database_name%_test'
       driver: pdo_sqlite
       path: :memory:
       memory: true
