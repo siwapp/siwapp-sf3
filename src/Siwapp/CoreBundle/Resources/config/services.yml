@@ -5,7 +5,7 @@ services:
             - { name: twig.extension }
     twig.extension.siwapp_core:
         class: Siwapp\CoreBundle\Extension\SiwappCoreTwigExtension
-        arguments: [%kernel.bundles%]
+        arguments: ['%kernel.bundles%']
         tags:
             - { name: twig.extension }
     siwapp_core.html_page_merger:
@@ -13,6 +13,6 @@ services:
 
     siwapp_core.form.type.item:
         class: Siwapp\CoreBundle\Form\ItemType
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: form.type }

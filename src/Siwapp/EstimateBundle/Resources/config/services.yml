@@ -2,7 +2,7 @@ services:
     siwapp_estimate.invoice_generator:
         class: Siwapp\EstimateBundle\InvoiceGenerator
         arguments:
-            - "@doctrine.orm.entity_manager"
+            - '@doctrine.orm.entity_manager'
 
     siwapp_estimate.listener.item_listener:
         class: Siwapp\EstimateBundle\EventListener\ItemListener

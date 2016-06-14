@@ -2,12 +2,12 @@ services:
     siwapp_recurring_invoice.invoice_generator:
         class: Siwapp\RecurringInvoiceBundle\InvoiceGenerator
         arguments:
-            - "@doctrine.orm.entity_manager"
+            - '@doctrine.orm.entity_manager'
 
     siwapp_recurring_invoice.command.generate_pending:
         class: Siwapp\RecurringInvoiceBundle\Command\GeneratePendingCommand
         arguments:
-            - "@siwapp_recurring_invoice.invoice_generator"
+            - '@siwapp_recurring_invoice.invoice_generator'
         tags:
             -  { name: console.command }
 
