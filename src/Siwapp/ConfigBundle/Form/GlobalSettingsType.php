@@ -3,6 +3,7 @@
 namespace Siwapp\ConfigBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 use Siwapp\CoreBundle\Form\TaxType;
 use Siwapp\CoreBundle\Form\SerieType;
@@ -88,6 +90,19 @@ class GlobalSettingsType extends AbstractType
                     'form.pdf_landscape' => 'Landscape',
                 )
             ])
+        ;
+
+        $data = $builder->getData();
+        $uploadsDir = $data['uploads_dir'];
+        $builder->get('company_logo')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($filename) use ($uploadsDir) {
+                    return $filename ? new File($filename, false) : null;
+                },
+                function ($file) {
+                    return $file;
+                }
+            ))
         ;
 
         $builder->add('taxes', CollectionType::class, array(

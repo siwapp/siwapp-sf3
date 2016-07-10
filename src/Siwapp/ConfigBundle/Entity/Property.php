@@ -92,12 +92,6 @@ class Property
      **/
     public function getValue()
     {
-        $value = json_decode($this->getRawValue(), true);
-
-        if ($value && $this->key == 'company_logo') {
-            $value = new File($value);
-        }
-
-        return $value;
+        return json_decode($this->getRawValue(), true);
     }
 }

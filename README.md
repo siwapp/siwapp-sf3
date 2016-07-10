@@ -14,7 +14,7 @@ ready.
     $ composer create-project --stability=dev siwapp/siwapp-sf3 my_siwapp; cd my_siwapp
 
 You will need to have Java installed and available in your path (for yuicompressor).
-On Debian/Ubuntu-based systems you can install it:
+On Debian/Ubuntu-based systems you can install it using the following:
 
     $ sudo apt-get install default-jre-headless
 
@@ -30,9 +30,10 @@ Creating the first (admin) user:
 
     $ php bin/console fos:user:create admin mail@example.com 1234 --super-admin
 
-Make sure that the `var/` folder is writable by the webserver:
+Make sure that the `var/` and `web/uploads` folders are writable by the webserver:
 
     $ sudo chown www-data:www-data -R var/
+    $ sudo chown www-data:www-data -R web/uploads
 
 or check [this](https://symfony.com/doc/current/book/installation.html#book-installation-permissions).
 

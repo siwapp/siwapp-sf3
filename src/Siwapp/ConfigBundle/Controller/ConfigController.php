@@ -50,7 +50,7 @@ class ConfigController extends Controller
                     try {
                         $newFile = $file->move($uploadsDir, $fileName);
                         // Update the property to the new file name.
-                        $data['company_logo'] = $newFile;
+                        $data['company_logo'] = 'uploads/' . $newFile->getFileName();
                     }
                     catch (FileException $e) {
                         $msg = $translator->trans('flash.logo_upload_error', [], 'SiwappConfigBundle');
@@ -87,6 +87,7 @@ class ConfigController extends Controller
 
         return array(
             'form' => $form->createView(),
+            'settings' => $data,
         );
     }
 }
