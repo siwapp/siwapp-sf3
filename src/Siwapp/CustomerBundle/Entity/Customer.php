@@ -34,14 +34,14 @@ class Customer implements \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="identification", type="string", length=128, nullable=true, unique=true)
+     * @ORM\Column(name="identification", type="string", length=128, nullable=true)
      */
     private $identification;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
 
