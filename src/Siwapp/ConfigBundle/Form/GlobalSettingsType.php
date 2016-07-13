@@ -92,11 +92,9 @@ class GlobalSettingsType extends AbstractType
             ])
         ;
 
-        $data = $builder->getData();
-        $uploadsDir = $data['uploads_dir'];
         $builder->get('company_logo')
             ->addModelTransformer(new CallbackTransformer(
-                function ($filename) use ($uploadsDir) {
+                function ($filename) {
                     return $filename ? new File($filename, false) : null;
                 },
                 function ($file) {
