@@ -37,6 +37,16 @@ Make sure that the `var/` and `web/uploads` folders are writable by the webserve
 
 or check [this](https://symfony.com/doc/current/book/installation.html#book-installation-permissions).
 
+Finally, you need [wkhtmltopdf](http://wkhtmltopdf.org/) installed for PDF generation
+to work.
+On Debian/Ubuntu-based systems you can install it using the following:
+
+    $ sudo apt-get install wkhtmltopdf
+
+Although the above should work, sometimes the alpha version of wkhtmltopdf
+produces better results. You can [download](http://wkhtmltopdf.org/downloads.html)
+and try it.
+
 Thats it!
 The siwapp installation should be reachable and working now.
 Check `/config.php` or `/web/config.php` to make sure that everything in your
