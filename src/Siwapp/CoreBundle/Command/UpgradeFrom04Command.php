@@ -154,7 +154,7 @@ class UpgradeFrom04Command extends ContainerAwareCommand
         foreach ($sth->fetchAll(\PDO::FETCH_ASSOC) as $row) {
             $customer = new Customer;
             $customer->setName($row['name']);
-            if ($row['identification'] !== 'Client Legal Id') {
+            if ($row['identification'] && $row['identification'] !== 'Client Legal Id') {
                 $customer->setIdentification($row['identification']);
             }
             $customer->setEmail($row['email']);
