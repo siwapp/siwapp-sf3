@@ -76,7 +76,7 @@ class UpgradeFrom04Command extends ContainerAwareCommand
             $input->getArgument('db')
         );
         $dbh = new \PDO($dsn, $input->getArgument('username'), $input->getArgument('password'), $options);
-        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $em = $this->getContainer()->get('doctrine')->getManager();
 
         $types = ['Properties', 'Series', 'Taxes', 'Customers', 'Products', 'Estimates', 'RecurringInvoices', 'Invoices', 'Templates'];
         foreach ($types as $type) {
@@ -317,7 +317,9 @@ class UpgradeFrom04Command extends ContainerAwareCommand
 
     protected function setCommonInvoiceProperties(AbstractInvoice $invoice, array $row)
     {
-        $invoice->setSeries($this->mapping['series'][$row['series_id']]);
+        if (!empty($row['series_id'])) {
+            $invoice->setSeries($this->mapping['series'][$row['series_id']]);
+        }
         $invoice->setCustomerName($row['customer_name']);
         $invoice->setCustomerIdentification($row['customer_identification']);
         $invoice->setCustomerEmail($row['customer_email']);
