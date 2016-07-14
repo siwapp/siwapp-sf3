@@ -18,7 +18,7 @@ class AbstractInvoiceRepository extends EntityRepository
     /**
      * getNextNumber
      * Obtain the next numer available for the provided series
-     * @param \Siwapp\CoreBundle\Entity\Series @serie
+     * @param \Siwapp\CoreBundle\Entity\Series $serie
      * @return integer
      */
     public function getNextNumber(Series $series)
