@@ -1,0 +1,64 @@
+estimate:
+    draft: 'Borrador'
+    pending: 'Pendiente'
+    approved: 'Aprovado'
+    rejected: 'Rechazado'
+    not_sent_by_email: 'No enviado por correo electrónico'
+    sent_by_email: 'Enviado por correo electrónico'
+
+menu:
+    estimate_index: 'Presupuestos'
+    estimate_add: 'Nuevo presupuesto'
+
+flash:
+    nothing_selected: 'Por favor, seleccione algo.'
+    added: 'Presupuesto creado.'
+    updated: 'Presupuesto actualizado.'
+    deleted: 'Presupuesto borrado.'
+    emailed: 'Presupuesto enviado por correo electrónico.'
+    bulk_emailed: 'Presupuesto(s) enviado(s) por correo electrónico.'
+    bulk_deleted: 'Presupuesto(s) borrado(s).'
+    invoice_generated: 'Factura generada.'
+
+search:
+    terms: 'Términos'
+    date_from: 'Fecha de creación'
+    date_to: 'hasta'
+    status: 'Estado'
+    customer: 'Cliente'
+    series: 'Serie'
+    submit: 'Buscar'
+    advanced: 'Avanzado'
+    reset: 'Limpiar'
+
+list:
+    bulk_delete: 'Borrar seleccionados'
+    bulk_print: 'Imprimir seleccionados'
+    bulk_pdf: 'Descargar como PDF'
+    bulk_email: 'Correo electrónico seleccionado'
+    series: 'Serie'
+    customer_name: 'Cliente'
+    issue_date: 'Fecha'
+    status: 'Estado'
+    gross_amount: 'Total'
+    no_results: 'No se han encontrado presupuestos.'
+    bulk_delete: 'Borrar seleccionados'
+
+show:
+    print: 'Imprimir'
+    pdf: 'PDF'
+    email: 'Enviar por correo electrónico'
+    generate_invoice: 'Generar factura'
+    issue_date: 'Fecha de creación'
+    status: 'Estado'
+    series: 'Serie'
+    edit: 'Editar'
+    delete: 'Borrar'
+
+form:
+    issue_date: 'Fecha de cración'
+    status: 'Estado'
+    submit: 'Guarar'
+    submit_draft: 'Guardar como borrador'
+    submit_close: 'Guardar y cerrar'
+    submit_delete: 'Borrar'

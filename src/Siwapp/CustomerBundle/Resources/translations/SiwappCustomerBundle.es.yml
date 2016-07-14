@@ -1,0 +1,34 @@
+menu:
+    customer_index: 'Clientes'
+    customer_add: 'Nuevo cliente'
+
+flash:
+    nothing_selected: 'Por favor, seleccione algo.'
+    added: 'Cliente guardado.'
+    updated: 'Cliente actualizado.'
+    deleted: 'Cliente borrado.'
+    bulk_deleted: 'Cliente(s) borrado(s).'
+
+search:
+    terms: 'Términos'
+    submit: 'Buscar'
+    reset: 'Limpiar'
+
+form:
+    name: 'Nombre'
+    identification: 'Identificación'
+    email: 'Correo electrónico'
+    contact_person: 'Persona de contacto'
+    invoicing_address: 'Dirección de facturación'
+    shipping_address: 'Dirección de envío'
+    submit: 'Guardar'
+    submit_delete: 'Borrar'
+
+list:
+    bulk_delete: 'Borrar seleccionados'
+    name: 'Nombre'
+    identification: 'Identificación'
+    due_amount: 'Pendiente'
+    gross_amount: 'Total'
+    invoices: 'Facturas'
+    no_results: 'No se han encontrado clientes.'

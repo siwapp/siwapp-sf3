@@ -1,0 +1,59 @@
+recurring_invoice:
+    active: 'Activa'
+    inactive: 'Inactiva'
+    pending: 'Pendiente'
+    finished: 'Finalizada'
+
+menu:
+    recurring_index: 'Facturas periódicas'
+    recurring_add: 'Nueva factura periódica'
+
+flash:
+    nothing_selected: 'Por favor, seleccione algo.'
+    added: 'Factura periódica añadida.'
+    updated: 'Factura periódica actualizada.'
+    deleted: 'Factura periódica borrada.'
+    bulk_deleted: 'Factura(s) periódica(s) borrada(s).'
+    invoices_generated: '%count% facturas han sido generadas.'
+    invoices_pending: 'Hay %count% facturas periódicas que no han podido ser ejecutadas.'
+
+list:
+    average_turnover: 'Promedio'
+    day: 'día'
+    week: 'semana'
+    month: 'mes'
+    year: 'año'
+    series: 'Serie'
+    customer_name: 'Cliente'
+    period_type: 'Periodo'
+    period: 'Frequencia'
+    status: 'Estado'
+    gross_amount: 'Total'
+    no_results: 'No se han encontrado facturas periódicas.'
+    bulk_delete: 'Borrar seleccionadas'
+
+search:
+    terms: 'Términos'
+    status: 'Estado'
+    customer: 'Cliente'
+    series: 'Serie'
+    submit: 'Buscar'
+    reset: 'Limpiar'
+
+generate:
+    submit: 'Crear todas las facturas pendientes ahora'
+
+form:
+    enabled: 'Activada'
+    days_to_due: 'Días para vencer'
+    starting_date: 'Fecha de inicio'
+    finishing_date: 'Fecha de finalización'
+    max_occurrences: 'Número máximo de ocurrencias'
+    dates: 'Ejecutada'
+    period: 'Crear cada'
+    day: 'Días'
+    week: 'Semanas'
+    month: 'Meses'
+    year: 'Años'
+    submit: 'Guardar'
+    submit_delete: 'Borrar'
