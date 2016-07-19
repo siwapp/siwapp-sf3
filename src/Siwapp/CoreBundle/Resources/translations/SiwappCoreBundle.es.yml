@@ -1,0 +1,48 @@
+html:
+    title: 'Aplicación de facturación'
+
+menu:
+    settings: 'Ajustes'
+
+item:
+    form:
+        product: 'Producto'
+        description: 'Descripción'
+        unitary_cost: 'Precio'
+        quantity: 'Cant./Horas'
+        discount: 'Descuento'
+        taxes: 'Impuestos'
+        total: 'Linea total'
+        remove: 'Borrar'
+    show:
+        description: 'Descripción'
+        unitary_cost: 'Precio'
+        quantity: 'Cant./Horas'
+        discount: 'Descuento'
+        taxes: 'Impuestos'
+        total: 'Línea total'
+
+abstract_invoice:
+    show:
+        customer: 'Datos del cliente'
+        customer_name: 'Nombre del cliente'
+        customer_identification: 'Identificación'
+        customer_email: 'Correo electrónico'
+        contact_person: 'Persona de contacto'
+        invoicing_address: 'Dirección de facturación'
+        shipping_address: 'Dirección de envío'
+        properties: 'Propiedades'
+        items: 'Líneas de artículos'
+        subtotal: 'Subtotal'
+        total_taxes: 'Impuestos'
+        total: 'Total (%currency%)'
+        terms: 'Términos'
+        notes: 'Notas'
+    form:
+        customer: 'Datos del cliente'
+        properties: 'Propiedades'
+        items: 'Líneas de artículos'
+        item_add: 'Añadir una línea'
+        subtotal: 'Subtotal'
+        total_taxes: 'Impuestos'
+        total: 'Total (%currency%)'

@@ -1,0 +1,94 @@
+invoice:
+    draft: 'Borrador'
+    opened: 'Abierta'
+    overdue: 'Vencida'
+    closed: 'Cerrada'
+    not_sent_by_email: 'No enviada por correo electrónico'
+    sent_by_email: 'Enviada por correo electrónico'
+
+payment:
+    flash:
+        added: 'Pago añadido.'
+        bulk_deleted: 'Pago(s) borrado(s).'
+    list:
+        payments: 'Pagos'
+        date: 'Fecha'
+        description: 'Descripción'
+        amount: 'Importe'
+        bulk_delete: 'Borrar seleccionadas'
+        add: 'Añadir pago'
+    form:
+        date: 'Fecha'
+        description: 'Descripción'
+        amount: 'Importe'
+        notes: 'Notas'
+        submit: 'Guardar'
+
+flash:
+    nothing_selected: 'Por favor, seleccione algo.'
+    added: 'Factura añadida.'
+    updated: 'Factura actualizada.'
+    deleted: 'Factura borrada.'
+    emailed: 'Factura enviada por correo electrónico.'
+    bulk_emailed: 'Factura(s) enviada(s) por correo electrónico.'
+    bulk_deleted: 'Invoice(s) deleted.'
+
+menu:
+    invoice_index: 'Facturas'
+    invoice_add: 'Nueva factura'
+
+form:
+    customer_name: 'Nombre'
+    customer_identification: 'Identificación'
+    customer_email: 'Correo electrónico'
+    contact_person: 'Persona de contacto'
+    invoicing_address: 'Dirección de facturación'
+    shipping_address: 'Dirección de envío'
+    issue_date: 'Creada el'
+    due_date: 'Fecha de vencimiento'
+    series: 'Serie'
+    payment_add: 'Agregar pago'
+    terms: 'Términos'
+    notes: 'Notas'
+    submit: 'Guardar'
+    submit_draft: 'Guardar como borrador'
+    submit_close: 'Guardar y cerrar'
+    submit_delete: 'Borrar'
+
+show:
+    print: 'Imprimir'
+    pdf: 'PDF'
+    email: 'Enviar correo electrónico'
+    issue_date: 'Fecha de creación'
+    due_date: 'Fecha de vencimiento'
+    status: 'Estado'
+    series: 'Serie'
+    edit: 'Editar'
+    delete: 'Borrar'
+
+search:
+    terms: 'Términos'
+    date_from: 'Desde la fecha'
+    date_to: 'hasta'
+    status: 'Estado'
+    customer: 'Cliente'
+    series: 'Serie'
+    submit: 'Buscar'
+    advanced: 'Avanzado'
+    reset: 'Limpiar'
+
+list:
+    bulk_delete: 'Borrar seleccionadas'
+    bulk_email: 'Correo electrónico seleccionado'
+    bulk_pdf: 'Descargar como PDF'
+    bulk_print: 'Imprimir seleccionadas'
+    number: 'Número'
+    customer: 'Cliente'
+    issue_date: 'Fecha'
+    due_date: 'Fecha de vencimiento'
+    status: 'Estado'
+    due_amount: 'Vencido'
+    gross_amount: 'Total'
+    payments: 'Pago'
+    no_results: 'No se han encontrado facturas.'
+    payments_modal_close: 'Cerrar'

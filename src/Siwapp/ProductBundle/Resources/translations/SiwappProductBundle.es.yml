@@ -1,0 +1,32 @@
+menu:
+    product_index: 'Productos'
+    product_add: 'Nuevo producto'
+
+flash:
+    nothing_selected: 'Por favor, seleccione algo.'
+    added: 'Producto creado.'
+    updated: 'Producto actualizado.'
+    deleted: 'Producto borrado.'
+    bulk_deleted: 'Producto(s) borrado(s).'
+
+search:
+    terms: 'Términos'
+    series: 'Serie'
+    submit: 'Buscar'
+    reset: 'Limpiar'
+
+list:
+    bulk_delete: 'Borrar seleccionados'
+    reference: 'Referencia'
+    description: 'Descripción'
+    price: 'Pricio'
+    num_sold: 'Elementos vendidos'
+    revenue: 'Vendido'
+    no_results: 'No se han encontrado productos.'
+
+form:
+    reference: 'Referencia'
+    description: 'Descripción'
+    price: 'Pricio'
+    submit: 'Guardar'
+    submit_delete: 'Borrar'

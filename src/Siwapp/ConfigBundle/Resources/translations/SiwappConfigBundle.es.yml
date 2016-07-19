@@ -1,0 +1,32 @@
+flash:
+    logo_upload_error: 'No se ha podido guardar el logo. Asegúrese de que la carpeta web/uploads existe y tiene permisos de escritura.'
+    updated: 'Ajustes actualziados.'
+
+menu:
+    settings_index: 'Ajustes'
+    global_settings: 'Ajustes globales'
+    my_settings: 'Mis ajustes'
+
+form:
+    company: 'Empresa'
+    company_name: 'Nombre de la empresa'
+    company_identification: 'Identificación de la empresa'
+    company_address: 'Dirección de la empresa'
+    company_phone: 'Teléfono de la empresa'
+    company_fax: 'Fax de la empresa'
+    company_email: 'Correo electrónico de la empresa'
+    company_url: 'Sitio web de la empresa'
+    company_logo: 'Logo de la empresa'
+    current_logo: 'Logo actual de la empresa'
+    currency: 'Moneda'
+    legal: 'Textos legales'
+    legal_terms: 'Terminos legales'
+    pdf: 'Ajustes del PDF'
+    pdf_size: 'Tamaño del PDF'
+    pdf_orientation: 'Orientación del PDF'
+    pdf_landscape: 'Horizontal'
+    pdf_portrait: 'Vertical'
+    taxes: 'Impuestos de facturación'
+    series: 'Series de facturación'
+    add: 'Añadir'
+    save: 'Guardar'
