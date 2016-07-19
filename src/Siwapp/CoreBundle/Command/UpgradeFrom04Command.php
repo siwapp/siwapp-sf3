@@ -84,6 +84,7 @@ class UpgradeFrom04Command extends ContainerAwareCommand
             $output->writeln(sprintf('Imported %d %s', $count, $type));
         }
         $output->writeln('You may have to perform additional actions in order to correctly port your templates.');
+        $output->writeln('You must copy your logo from the previous Siwapp instalation to "web/uploads".');
 
         $em->flush();
     }
