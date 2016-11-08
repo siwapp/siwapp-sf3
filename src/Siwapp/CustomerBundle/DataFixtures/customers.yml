@@ -118,10 +118,3 @@ Customer:
     invoicing_address: "Fake Dir n 763\nMadrid\nSpain"
     shipping_address: "Fake Dir n 763\nMadrid\nSpain"
     contact_person: 'Mary Ellen Ingram'
-  Customer_18:
-    name: 'Big Kahuna Burger'
-    identification: 3641026692R
-    email: mary_ellen_ingram@example.com
-    invoicing_address: "Fake Dir n 763\nMadrid\nSpain"
-    shipping_address: "Fake Dir n 763\nMadrid\nSpain"
-    contact_person: 'Mary Ellen Ingram'
