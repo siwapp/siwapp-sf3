@@ -153,6 +153,10 @@ class UpgradeFrom04Command extends ContainerAwareCommand
         $sth = $dbh->prepare('SELECT * FROM customer');
         $sth->execute();
         foreach ($sth->fetchAll(\PDO::FETCH_ASSOC) as $row) {
+            if (!array_filter($row)) {
+                // Do not import empty records.
+                continue;
+            }
             $customer = new Customer;
             $customer->setName($row['name']);
             if ($row['identification'] && $row['identification'] !== 'Client Legal Id') {
