@@ -77,3 +77,9 @@ The above applies to [any template](https://symfony.com/doc/current/book/templat
 ### Automating recurring invoices generation
 
 Just add a cronjob that runs `php bin/console siwapp:recurring:generate-pending`
+
+### Interface language
+
+To have the siwapp interface in another language you will need the php intl extension installed.
+Then visit your profile page and change your locale.
+Siwapp is translated only to Spanish for now, feel free to contribute more!
