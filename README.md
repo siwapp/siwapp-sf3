@@ -81,5 +81,5 @@ Just add a cronjob that runs `php bin/console siwapp:recurring:generate-pending`
 ### Interface language
 
 To have the siwapp interface in another language you will need the php intl extension installed.
-Then visit your profile page and change your locale and then log out. When you log in again the interface language should be switched.
-Siwapp is translated only to Spanish for now, feel free to contribute more!
+Then visit your profile page, change your locale and then log out. When you log back in the interface language should be switched.
+Siwapp is translated only to Spanish for now, feel free to contribute more translations!
