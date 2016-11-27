@@ -24,13 +24,7 @@ class AbstractInvoiceRepository extends EntityRepository
     public function getNextNumber(Series $series)
     {
         $class = $this->getEntityName();
-        $found = $this->findBy([
-            'status' => [$class::DRAFT, '<>'],
-            'series' => $series,
-        ]);
-
-        if (count($found) > 0) {
-            $result = $this->getEntityManager()->createQueryBuilder()
+        $result = $this->getEntityManager()->createQueryBuilder()
             ->select('MAX(i.number) AS max_number')
             ->from($class, 'i')
             ->where('i.status <> :status')
@@ -40,11 +34,11 @@ class AbstractInvoiceRepository extends EntityRepository
             ->getQuery()
             ->getSingleResult();
 
-            return $result['max_number'] + 1;
-        } else {
-            return $series->getFirstNumber();
-        }
+        return !empty($result['max_number'])
+            ? $result['max_number'] + 1
+            : $series->getFirstNumber();
     }
+
     /**
      * Update totals for invoices, recurring or estimates
      * @param ArrayCollection of entities
