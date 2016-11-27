@@ -47,11 +47,16 @@ Although the above should work, sometimes the alpha version of wkhtmltopdf
 produces better results. You can [download](http://wkhtmltopdf.org/downloads.html)
 and try it.
 
-If you are on a shared host you can require the binaries locally [using composer](https://github.com/KnpLabs/snappy#wkhtmltopdf-binary-as-composer-dependencies)
-, change the `knp_snappy.pdf.binary` path in app/config/config.yml to
-`"%kernel.root_dir%/../vendor/bin/wkhtmltopdf-amd64"` if you required the 64bit
-one, or `"%kernel.root_dir%/../vendor/bin/wkhtmltopdf-i386"` for the 32bit and
-then upload siwapp to your host.
+If you are on a shared host you can require the binaries locally [using composer](https://github.com/KnpLabs/snappy#wkhtmltopdf-binary-as-composer-dependencies),
+change the `knp_snappy.pdf.binary` path in `app/config/config.yml` to
+
+    "%kernel.root_dir%/../vendor/bin/wkhtmltopdf-amd64"
+
+if you required the 64bit one, or
+
+    "%kernel.root_dir%/../vendor/bin/wkhtmltopdf-i386"
+
+for the 32bit and then upload siwapp to your host.
 
 
 Thats it!
