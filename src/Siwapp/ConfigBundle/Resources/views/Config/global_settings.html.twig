@@ -17,7 +17,7 @@
             {{ form_row(form.company_fax) }}
             {{ form_row(form.company_email) }}
             {{ form_row(form.company_url) }}
-            {% if settings.company_logo is defined %}
+            {% if settings.company_logo is defined and settings.company_logo %}
             <img src="{{ asset(settings.company_logo) }}" alt="Logo" title="{% trans %}form.current_logo{% endtrans %}" height="100">
             {% endif %}
             {{ form_row(form.company_logo) }}
