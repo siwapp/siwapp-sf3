@@ -17,9 +17,9 @@ use Siwapp\InvoiceBundle\Entity\Invoice;
  */
 class InvoiceRepository extends AbstractInvoiceRepository
 {
-    protected function applySearchParamsToQuery(array $params, QueryBuilder $qb)
+    protected function addPaginatedSearchSelects(QueryBuilder $qb)
     {
-        parent::applySearchParamsToQuery($params, $qb);
+        parent::addPaginatedSearchSelects($qb);
         // For invoices we allow sorting by due.
         $qb->addSelect('i.gross_amount - i.paid_amount AS due_amount');
 

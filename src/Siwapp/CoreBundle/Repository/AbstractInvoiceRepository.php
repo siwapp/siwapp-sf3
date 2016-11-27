@@ -82,8 +82,8 @@ class AbstractInvoiceRepository extends EntityRepository
 
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('i')
             ->from($this->getEntityName(), 'i');
+        $this->addPaginatedSearchSelects($qb);
         $this->applySearchParamsToQuery($params, $qb);
 
         return $this->paginator->paginate($qb->getQuery(), $page, $limit, [
@@ -104,7 +104,6 @@ class AbstractInvoiceRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('i')
             ->from($this->getEntityName(), 'i');
         $this->applySearchParamsToQuery($params, $qb);
 
@@ -176,5 +175,11 @@ class AbstractInvoiceRepository extends EntityRepository
                 $qb->setParameter('tax', $value);
             }
         }
+    }
+
+    protected function addPaginatedSearchSelects(QueryBuilder $qb)
+    {
+        // Select everything by default.
+        $qb->select('i');
     }
 }

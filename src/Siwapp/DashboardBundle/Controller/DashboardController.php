@@ -23,9 +23,7 @@ class DashboardController extends Controller
         $invoiceRepo->setPaginator($this->get('knp_paginator'));
 
         $taxRepo = $em->getRepository('SiwappCoreBundle:Tax');
-
         $taxes = $taxRepo->findAll();
-        $qb = $invoiceRepo->createQueryBuilder('i');
 
         $form = $this->createForm('Siwapp\InvoiceBundle\Form\SearchInvoiceType', null, [
             'action' => $this->generateUrl('dashboard_index'),
@@ -60,7 +58,7 @@ class DashboardController extends Controller
             $totals['taxes'][$taxId] = $taxTotals['tax_' . $taxId];
         }
 
-        return array(
+        return [
             'invoices' => $pagination,
             'overdue_invoices' => $paginationDue,
             'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
@@ -69,6 +67,6 @@ class DashboardController extends Controller
             'taxes' => $taxes,
             'paginatable' => false,
             'sortable' => false,
-        );
+        ];
     }
 }
