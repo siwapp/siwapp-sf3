@@ -45,7 +45,7 @@ class CustomerRepository extends \Doctrine\ORM\EntityRepository
                 $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->like('c.name', $terms),
                     $qb->expr()->like('c.identification', $terms),
-                    $qb->expr()->like('c.contact_person', $terms)
+                    $qb->expr()->like('c.contactPerson', $terms)
                 ));
             }
         }
