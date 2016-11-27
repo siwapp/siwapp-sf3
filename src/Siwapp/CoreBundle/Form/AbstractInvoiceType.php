@@ -2,6 +2,7 @@
 
 namespace Siwapp\CoreBundle\Form;
 
+use Siwapp\CoreBundle\Entity\Item;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -62,6 +63,7 @@ class AbstractInvoiceType extends AbstractType
             'prototype' => true,
             'by_reference' => false,
             'label' => false,
+            'prototype_data' => new Item(),
         ));
 
         $builder->add('series', EntityType::class, array(
