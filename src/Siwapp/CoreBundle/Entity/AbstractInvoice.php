@@ -9,6 +9,7 @@ use Doctrine\Common\Util\Inflector;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Timestampable\Timestampable;
 use Symfony\Component\Validator\Constraints as Assert;
+use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\CoreBundle\Entity\Series;
 use Siwapp\CustomerBundle\Entity\Customer;
 
@@ -530,7 +531,7 @@ abstract class AbstractInvoice implements Timestampable
      *
      * @param Siwapp\InvoiceBundle\Entity\Item $item
      */
-    public function addItem(\Siwapp\CoreBundle\Entity\Item $item)
+    public function addItem(Item $item)
     {
         $this->items[] = $item;
     }
@@ -572,7 +573,7 @@ abstract class AbstractInvoice implements Timestampable
      */
     public function removeItem($mixed)
     {
-        if ($mixed instanceof \Siwapp\CoreBundle\Entity\AbstractItem) {
+        if ($mixed instanceof Item) {
             $items = $this->getItems();
             foreach ($items as $ref => $item) {
                 if ($item === $mixed) {
