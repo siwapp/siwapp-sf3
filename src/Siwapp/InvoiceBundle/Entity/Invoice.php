@@ -303,6 +303,10 @@ class Invoice extends AbstractInvoice
             return true;
         }
 
+        if (in_array($name, ['due_amount'])) {
+            return true;
+        }
+
         if (in_array($name, array_keys(get_object_vars($this)))) {
             return true;
         }
