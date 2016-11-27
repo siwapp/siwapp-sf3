@@ -19,7 +19,7 @@ list:
     bulk_delete: 'Borrar seleccionados'
     reference: 'Referencia'
     description: 'Descripción'
-    price: 'Pricio'
+    price: 'Precio'
     num_sold: 'Elementos vendidos'
     revenue: 'Vendido'
     no_results: 'No se han encontrado productos.'
@@ -27,6 +27,6 @@ list:
 form:
     reference: 'Referencia'
     description: 'Descripción'
-    price: 'Pricio'
+    price: 'Precio'
     submit: 'Guardar'
     submit_delete: 'Borrar'
