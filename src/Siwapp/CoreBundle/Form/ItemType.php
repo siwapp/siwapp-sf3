@@ -35,7 +35,6 @@ class ItemType extends AbstractType
         $builder->add('taxes', EntityType::class, array(
             'class' => 'SiwappCoreBundle:Tax',
             'choice_label' => 'name',
-            'expanded' => true,
             'multiple' => true,
         ));
 

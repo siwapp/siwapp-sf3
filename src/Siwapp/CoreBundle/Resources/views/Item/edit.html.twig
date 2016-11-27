@@ -49,6 +49,11 @@
   <td class="taxes form-inline">
     {{ form_widget(form.taxes) }}
     {{ form_errors(form.taxes) }}
+    <script type="text/javascript">
+      $(function(){
+        $('td.taxes select').select2();
+      });
+    </script>
   </td>
   <td class="cell-align-right">
     {{ entity.grossAmount|localizedcurrency(currency, app.request.locale) }}
