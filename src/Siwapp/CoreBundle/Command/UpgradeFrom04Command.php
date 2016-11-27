@@ -162,7 +162,12 @@ class UpgradeFrom04Command extends ContainerAwareCommand
             if ($row['identification'] && $row['identification'] !== 'Client Legal Id') {
                 $customer->setIdentification($row['identification']);
             }
-            $customer->setEmail($row['email']);
+            $email = $row['email'];
+            // In previous version email was optional.
+            if (!$email) {
+                $email = strtolower(str_replace(' ', '-', $name)) . '@upgradefrom04.fixme';
+            }
+            $customer->setEmail($email);
             $customer->setContactPerson($row['contact_person']);
             $customer->setInvoicingAddress($row['invoicing_address']);
             $customer->setShippingAddress($row['shipping_address']);

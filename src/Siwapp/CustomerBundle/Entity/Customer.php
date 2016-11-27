@@ -6,12 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 use Siwapp\EstimateBundle\Entity\Estimate;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Customer
  *
  * @ORM\Table(name="customer")
  * @ORM\Entity(repositoryClass="Siwapp\CustomerBundle\Repository\CustomerRepository")
+ * @UniqueEntity("email")
  */
 class Customer implements \JsonSerializable
 {
@@ -41,7 +44,8 @@ class Customer implements \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\Email()
      */
     private $email;
 
