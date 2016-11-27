@@ -155,6 +155,11 @@ class InvoiceController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            if ($request->request->has('save_draft')) {
+                $invoice->setStatus(Invoice::DRAFT);
+            } elseif ($request->request->has('save')) {
+                $invoice->setStatus(Invoice::OPENED);
+            }
             $em->persist($invoice);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
