@@ -36,6 +36,7 @@ class ItemType extends AbstractType
             'class' => 'SiwappCoreBundle:Tax',
             'choice_label' => 'name',
             'multiple' => true,
+            'required' => false,
         ));
 
         $builder->get('product')
