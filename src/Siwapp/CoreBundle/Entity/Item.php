@@ -313,9 +313,9 @@ class Item
      */
     public function __get($name)
     {
-        if (in_array($name, array('base_amount', 'discount_amount', 'net_amount', 'tax_amount', 'gross_amount'))) {
-            $m = Inflector::camelize("get_{$name}");
-            return $this->$m();
+        $method = Inflector::camelize("get_{$name}");
+        if (method_exists($this, $method)) {
+            return $this->$method();
         }
         return false;
     }
@@ -325,9 +325,10 @@ class Item
      */
     public function __isset($name)
     {
-        if (in_array($name, array('base_amount', 'discount_amount', 'net_amount', 'tax_amount', 'gross_amount'))) {
+        if (in_array($name, array_keys(get_object_vars($this)))) {
             return true;
         }
+
         return false;
     }
 
