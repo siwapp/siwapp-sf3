@@ -343,7 +343,7 @@ class Invoice extends AbstractInvoice
         if ($this->status == Invoice::DRAFT) {
             return $this;
         }
-        if ($this->isForcefullyClosed() || $this->getDueAmount() <= 0) {
+        if ($this->isForcefullyClosed() || $this->getDueAmount() == 0) {
             $this->setStatus(Invoice::CLOSED);
         } else {
             if ($this->getDueDate()->getTimestamp() > strtotime(date('Y-m-d'))) {
