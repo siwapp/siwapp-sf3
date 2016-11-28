@@ -48,7 +48,7 @@ form:
     days_to_due: 'Días para vencer'
     starting_date: 'Fecha de inicio'
     finishing_date: 'Fecha de finalización'
-    max_occurrences: 'Número máximo de ocurrencias'
+    max_occurrences: 'Máx. repeticiones'
     dates: 'Ejecutada'
     period: 'Crear cada'
     day: 'Días'
