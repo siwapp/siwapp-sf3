@@ -4,6 +4,8 @@ namespace Siwapp\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,10 +14,24 @@ class TaxType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('value')
-            ->add('active')
-            ->add('is_default')
+            ->add('name', TextType::class, [
+                'required' => false,
+                'label' => 'tax.form.name',
+                'translation_domain' => 'SiwappCoreBundle',
+            ])
+            ->add('value', NumberType::class, [
+                'required' => false,
+                'label' => 'tax.form.value',
+                'translation_domain' => 'SiwappCoreBundle',
+            ])
+            ->add('active', CheckboxType::class, [
+                'label' => 'tax.form.active',
+                'translation_domain' => 'SiwappCoreBundle',
+            ])
+            ->add('is_default', CheckboxType::class, [
+                'label' => 'tax.form.is_default',
+                'translation_domain' => 'SiwappCoreBundle',
+            ])
         ;
     }
 

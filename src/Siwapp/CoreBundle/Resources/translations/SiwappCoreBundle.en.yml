@@ -46,3 +46,18 @@ abstract_invoice:
         subtotal: 'Subtotal'
         total_taxes: 'Taxes'
         total: 'Total (%currency%)'
+
+tax:
+    form:
+        name: 'Name'
+        value: 'Value'
+        first_number: 'First number'
+        is_default: 'Is default'
+        active: 'Active'
+
+series:
+    form:
+        name: 'Name'
+        value: 'Value'
+        first_number: 'First number'
+        enabled: 'Enabled'
