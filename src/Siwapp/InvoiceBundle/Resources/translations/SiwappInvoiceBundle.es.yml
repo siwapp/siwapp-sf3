@@ -5,6 +5,7 @@ invoice:
     closed: 'Cerrada'
     not_sent_by_email: 'No enviada por correo electrónico'
     sent_by_email: 'Enviada por correo electrónico'
+    invoice: 'Factura'
 
 payment:
     flash:

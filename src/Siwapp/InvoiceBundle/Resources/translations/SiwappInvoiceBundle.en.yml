@@ -5,6 +5,7 @@ invoice:
     closed: 'Closed'
     not_sent_by_email: 'Not Sent by Email'
     sent_by_email: 'Sent by Email'
+    invoice: 'Invoice'
 
 payment:
     flash:

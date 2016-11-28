@@ -21,7 +21,7 @@
 
 
 {% block invoice_label %}
-  <h2>Invoice {{ entity.label() }}</h2>
+  <h2>{% trans %}invoice.invoice{% endtrans %} {{ entity.label() }}</h2>
 
   <ul class="list-inline list-unstyled">
     <li>
