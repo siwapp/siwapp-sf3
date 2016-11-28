@@ -1,7 +1,7 @@
 estimate:
     draft: 'Borrador'
     pending: 'Pendiente'
-    approved: 'Aprovado'
+    approved: 'Aprobado'
     rejected: 'Rechazado'
     not_sent_by_email: 'No enviado por correo electrónico'
     sent_by_email: 'Enviado por correo electrónico'
@@ -56,7 +56,7 @@ show:
     delete: 'Borrar'
 
 form:
-    issue_date: 'Fecha de cración'
+    issue_date: 'Fecha de creación'
     status: 'Estado'
     submit: 'Guarar'
     submit_draft: 'Guardar como borrador'

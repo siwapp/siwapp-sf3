@@ -1,6 +1,6 @@
 flash:
     logo_upload_error: 'No se ha podido guardar el logo. Asegúrese de que la carpeta web/uploads existe y tiene permisos de escritura.'
-    updated: 'Ajustes actualziados.'
+    updated: 'Ajustes actualizados.'
 
 menu:
     settings_index: 'Ajustes'
@@ -18,7 +18,7 @@ form:
     company_url: 'Sitio web de la empresa'
     company_logo: 'Logo de la empresa'
     current_logo: 'Logo actual de la empresa'
-    currency: 'Moneda'
+    currency: 'Divisa'
     legal: 'Textos legales'
     legal_terms: 'Terminos legales'
     pdf: 'Ajustes del PDF'
