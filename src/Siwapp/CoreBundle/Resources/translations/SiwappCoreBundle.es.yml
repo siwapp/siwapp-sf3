@@ -12,7 +12,7 @@ item:
         quantity: 'Cant./Horas'
         discount: 'Descuento'
         taxes: 'Impuestos'
-        total: 'Linea total'
+        total: 'Total de línea'
         remove: 'Borrar'
     show:
         description: 'Descripción'
@@ -20,7 +20,7 @@ item:
         quantity: 'Cant./Horas'
         discount: 'Descuento'
         taxes: 'Impuestos'
-        total: 'Línea total'
+        total: 'Total de línea'
 
 abstract_invoice:
     show:

@@ -31,7 +31,7 @@ flash:
     deleted: 'Factura borrada.'
     emailed: 'Factura enviada por correo electrónico.'
     bulk_emailed: 'Factura(s) enviada(s) por correo electrónico.'
-    bulk_deleted: 'Invoice(s) deleted.'
+    bulk_deleted: 'Factura(s) borrada(s).'
 
 menu:
     invoice_index: 'Facturas'
@@ -47,7 +47,7 @@ form:
     issue_date: 'Creada el'
     due_date: 'Fecha de vencimiento'
     series: 'Serie'
-    payment_add: 'Agregar pago'
+    payment_add: 'Añadir pago'
     terms: 'Términos'
     notes: 'Notas'
     submit: 'Guardar'
@@ -87,7 +87,7 @@ list:
     issue_date: 'Fecha'
     due_date: 'Fecha de vencimiento'
     status: 'Estado'
-    due_amount: 'Vencido'
+    due_amount: 'Debido'
     gross_amount: 'Total'
     payments: 'Pago'
     no_results: 'No se han encontrado facturas.'
