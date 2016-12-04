@@ -25,7 +25,7 @@
 
   <ul class="list-inline list-unstyled">
     <li>
-      <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
+      <span class="label {{ entity.statusString }}">{{ ('invoice.' ~ entity.statusString)|trans }}</span>
     </li>
     <li>
       {% if entity.sentByEmail %}

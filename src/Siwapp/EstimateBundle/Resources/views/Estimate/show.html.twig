@@ -30,7 +30,7 @@
   <h2>Estimate {{ entity.label() }}</h2>
   <ul class="list-inline list-unstyled">
     <li>
-      <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
+      <span class="label {{ entity.statusString }}">{{ ('estimate.' ~ entity.statusString)|trans }}</span>
     </li>
     <li>
       {% if entity.sentByEmail %}
