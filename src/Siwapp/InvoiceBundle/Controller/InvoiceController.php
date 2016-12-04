@@ -36,7 +36,7 @@ class InvoiceController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -50,7 +50,7 @@ class InvoiceController extends Controller
             'action' => $this->generateUrl('invoice_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isValid()) {
+        if ($listForm->isSubmitted()) {
             $data = $listForm->getData();
             if (empty($data['invoices'])) {
                 $this->addTranslatedMessage('flash.nothing_selected', 'warning');
@@ -154,7 +154,7 @@ class InvoiceController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             if ($request->request->has('save_draft')) {
                 $invoice->setStatus(Invoice::DRAFT);
             } elseif ($request->request->has('save')) {
@@ -190,7 +190,7 @@ class InvoiceController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Invoice::DRAFT);
             } elseif ($request->request->has('save_close')) {
@@ -268,7 +268,7 @@ class InvoiceController extends Controller
             'action' => $this->generateUrl('invoice_payments', ['invoiceId' => $invoiceId]),
         ]);
         $addForm->handleRequest($request);
-        if ($addForm->isValid() && $invoice) {
+        if ($addForm->isSubmitted() && $invoice) {
             $invoice->addPayment($payment);
             $em->persist($invoice);
             $em->flush();
@@ -283,7 +283,7 @@ class InvoiceController extends Controller
         ]);
         $listForm->handleRequest($request);
 
-        if ($listForm->isValid() && $invoice) {
+        if ($listForm->isSubmitted() && $invoice) {
             $data = $listForm->getData();
             foreach ($data['payments'] as $payment) {
                 $invoice->removePayment($payment);

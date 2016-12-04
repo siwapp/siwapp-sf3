@@ -30,7 +30,7 @@ class DashboardController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $params = $form->getData();
         } else {
             $params = [];

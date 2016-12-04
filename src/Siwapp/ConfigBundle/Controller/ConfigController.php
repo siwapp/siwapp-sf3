@@ -34,7 +34,7 @@ class ConfigController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted()) {
                 $data = $form->getData();
                 $series = $data['series'];
                 $taxes = $data['taxes'];

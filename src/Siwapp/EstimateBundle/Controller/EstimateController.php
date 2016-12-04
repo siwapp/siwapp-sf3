@@ -35,7 +35,7 @@ class EstimateController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -45,7 +45,7 @@ class EstimateController extends Controller
             'action' => $this->generateUrl('estimate_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isValid()) {
+        if ($listForm->isSubmitted()) {
             $data = $listForm->getData();
             if (empty($data['estimates'])) {
                 $this->addTranslatedMessage('flash.nothing_selected', 'warning');
@@ -151,7 +151,7 @@ class EstimateController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $em->persist($estimate);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
@@ -182,7 +182,7 @@ class EstimateController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Estimate::DRAFT);
             } elseif ($request->request->has('save_close')) {
