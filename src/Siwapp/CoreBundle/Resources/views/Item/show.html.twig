@@ -9,7 +9,7 @@
     {{ item.unitaryCost|localizedcurrency(currency, app.request.locale) }}
   </td>
   <td class="cell-align-right">
-    {{ item.discount }}
+    {{ item.discount }}%
   </td>
   <td class="taxes form-inline">
     {% for tax in item.taxes %}
