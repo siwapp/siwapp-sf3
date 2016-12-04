@@ -18,3 +18,6 @@ before_install:
 install:
     - composer install
     - php bin/console doctrine:schema:create
+
+script:
+    - vendor/bin/phpunit --colors
