@@ -356,8 +356,9 @@ class EstimateController extends Controller
         ));
         $pdf = $this->getPdf($html);
         $attachment = new \Swift_Attachment($pdf, $estimate->getId().'.pdf', 'application/pdf');
+        $subject = '[' . $this->get('translator')->trans('estimate.estimate', [], 'SiwappEstimateBundle') . ': ' . $estimate->label() . ']';
         $message = \Swift_Message::newInstance()
-            ->setSubject($estimate->label())
+            ->setSubject($subject)
             ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
             ->setTo($estimate->getCustomerEmail(), $estimate->getCustomerName())
             ->setBody($html, 'text/html')
