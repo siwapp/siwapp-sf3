@@ -392,8 +392,9 @@ class InvoiceController extends Controller
         ));
         $pdf = $this->getPdf($html);
         $attachment = new \Swift_Attachment($pdf, $invoice->getId().'.pdf', 'application/pdf');
+        $subject = '[' . $this->get('translator')->trans('invoice.invoice', [], 'SiwappInvoiceBundle') . ': ' . $invoice->label() . ']';
         $message = \Swift_Message::newInstance()
-            ->setSubject($invoice->label())
+            ->setSubject($subject)
             ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
             ->setTo($invoice->getCustomerEmail(), $invoice->getCustomerName())
             ->setBody($html, 'text/html')
