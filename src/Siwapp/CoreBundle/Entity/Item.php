@@ -246,7 +246,7 @@ class Item
      */
     public function getDiscountAmount()
     {
-        return $this->getBaseAmount() * $this->getDiscountPercent();
+        return abs($this->getBaseAmount()) * $this->getDiscountPercent();
     }
 
     /**

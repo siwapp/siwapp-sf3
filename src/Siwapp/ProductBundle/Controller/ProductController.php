@@ -31,7 +31,7 @@ class ProductController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -45,7 +45,7 @@ class ProductController extends Controller
             'action' => $this->generateUrl('product_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isValid()) {
+        if ($listForm->isSubmitted()) {
             $data = $listForm->getData();
             if ($request->request->has('delete')) {
                 if (empty($data['products'])) {
@@ -98,7 +98,7 @@ class ProductController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $em->persist($product);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
@@ -129,7 +129,7 @@ class ProductController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $em->persist($product);
             $em->flush();
             $this->addTranslatedMessage('flash.updated');

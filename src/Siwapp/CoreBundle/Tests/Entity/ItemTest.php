@@ -42,6 +42,11 @@ class ItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(8, $item->getDiscountAmount());
         $item->setDiscount(2);
         $this->assertEquals(1.6, $item->getDiscountAmount());
+
+        // Make sure that discount is always positive.
+        $item->setUnitaryCost(-10);
+        $item->setDiscount(2);
+        $this->assertEquals(0.2, $item->getDiscountAmount());
     }
 
     public function testGetTaxAmount()
