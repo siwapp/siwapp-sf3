@@ -5,6 +5,7 @@ estimate:
     rejected: 'Rechazado'
     not_sent_by_email: 'No enviado por correo electrónico'
     sent_by_email: 'Enviado por correo electrónico'
+    estimate: 'Presupuesto'
 
 menu:
     estimate_index: 'Presupuestos'

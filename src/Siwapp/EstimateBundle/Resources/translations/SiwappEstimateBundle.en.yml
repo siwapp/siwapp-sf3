@@ -5,6 +5,7 @@ estimate:
     rejected: 'Rejected'
     not_sent_by_email: 'Not Sent by Email'
     sent_by_email: 'Sent by Email'
+    estimate: 'Estimate'
 
 menu:
     estimate_index: 'Estimates'
