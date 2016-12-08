@@ -10,6 +10,6 @@ list:
     balance_total: 'Total'
     balance_net: 'Neto'
     balance_taxes: 'Impuestos'
-    taxes: 'Retención de impuestos'
+    taxes: 'Impuestos retenidos'
     invoices_latest: 'Facturas recientes'
     invoices_due: 'Facturas vencidas'

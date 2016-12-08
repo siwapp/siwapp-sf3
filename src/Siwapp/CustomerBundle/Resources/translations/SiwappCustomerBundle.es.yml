@@ -15,6 +15,7 @@ search:
     reset: 'Limpiar'
 
 form:
+    customer: 'Cliente'
     name: 'Nombre'
     identification: 'Identificación'
     email: 'Correo electrónico'

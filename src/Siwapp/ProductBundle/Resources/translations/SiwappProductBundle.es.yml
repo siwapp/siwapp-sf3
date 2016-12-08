@@ -20,11 +20,12 @@ list:
     reference: 'Referencia'
     description: 'Descripción'
     price: 'Precio'
-    num_sold: 'Elementos vendidos'
+    num_sold: 'Unidades vendidas'
     revenue: 'Vendido'
     no_results: 'No se han encontrado productos.'
 
 form:
+    product: 'Producto'
     reference: 'Referencia'
     description: 'Descripción'
     price: 'Precio'
