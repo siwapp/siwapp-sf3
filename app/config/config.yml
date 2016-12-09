@@ -49,6 +49,16 @@ assetic:
             jar: '%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar'
         yui_css:
             jar: '%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar'
+    bundles:
+        - SiwappConfigBundle
+        - SiwappCoreBundle
+        - SiwappInvoiceBundle
+        - SiwappCustomerBundle
+        - SiwappProductBundle
+        - SiwappDashboardBundle
+        - SiwappEstimateBundle
+        - SiwappRecurringInvoiceBundle
+        - SiwappUserBundle
 
 # Doctrine Configuration
 doctrine:
