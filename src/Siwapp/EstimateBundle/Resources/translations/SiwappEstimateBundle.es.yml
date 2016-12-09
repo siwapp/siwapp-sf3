@@ -43,7 +43,6 @@ list:
     status: 'Estado'
     gross_amount: 'Total'
     no_results: 'No se han encontrado presupuestos.'
-    bulk_delete: 'Borrar seleccionados'
 
 show:
     print: 'Imprimir'

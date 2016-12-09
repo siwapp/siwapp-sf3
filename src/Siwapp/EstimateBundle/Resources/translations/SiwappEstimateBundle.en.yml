@@ -43,7 +43,6 @@ list:
     status: 'Status'
     gross_amount: 'Total'
     no_results: 'No estimates found.'
-    bulk_delete: 'Remove selected'
 
 show:
     print: 'Print'
