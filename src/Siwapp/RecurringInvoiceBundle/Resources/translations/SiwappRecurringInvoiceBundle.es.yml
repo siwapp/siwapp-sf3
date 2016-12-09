@@ -3,6 +3,7 @@ recurring_invoice:
     inactive: 'Inactiva'
     pending: 'Pendiente'
     finished: 'Finalizada'
+    recurring_invoice: 'Factura periódica'
 
 menu:
     recurring_index: 'Facturas periódicas'

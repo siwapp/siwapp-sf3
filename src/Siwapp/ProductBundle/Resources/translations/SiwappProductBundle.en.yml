@@ -25,6 +25,7 @@ list:
     no_results: 'No products found.'
 
 form:
+    product: 'Product'
     reference: 'Reference'
     description: 'Description'
     price: 'Price'

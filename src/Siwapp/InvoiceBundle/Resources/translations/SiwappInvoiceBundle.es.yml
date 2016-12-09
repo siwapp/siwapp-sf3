@@ -80,7 +80,7 @@ search:
 
 list:
     bulk_delete: 'Borrar seleccionadas'
-    bulk_email: 'Correo electrónico seleccionado'
+    bulk_email: 'Enviar por email seleccionadas'
     bulk_pdf: 'Descargar como PDF'
     bulk_print: 'Imprimir seleccionadas'
     number: 'Número'
@@ -90,6 +90,6 @@ list:
     status: 'Estado'
     due_amount: 'Debido'
     gross_amount: 'Total'
-    payments: 'Pago'
+    payments: 'Pagos'
     no_results: 'No se han encontrado facturas.'
     payments_modal_close: 'Cerrar'
