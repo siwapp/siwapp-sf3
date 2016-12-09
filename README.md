@@ -13,11 +13,6 @@ ready.
 
     $ composer create-project --stability=dev siwapp/siwapp-sf3 my_siwapp; cd my_siwapp
 
-You will need to have Java installed and available in your path (for yuicompressor).
-On Debian/Ubuntu-based systems you can install it using the following:
-
-    $ sudo apt-get install default-jre-headless
-
 Then you can dump the assets:
 
     $ php bin/console assetic:dump --env=prod

@@ -45,10 +45,6 @@ assetic:
     use_controller: '%kernel.debug%'
     filters:
         cssrewrite: ~
-        yui_js:
-            jar: '%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar'
-        yui_css:
-            jar: '%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar'
     bundles:
         - SiwappConfigBundle
         - SiwappCoreBundle
