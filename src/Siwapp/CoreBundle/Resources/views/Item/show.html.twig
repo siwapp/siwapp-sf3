@@ -6,14 +6,14 @@
     {{ item.quantity }}
   </td>
   <td class="cell-align-right">
-    {{ item.unitaryCost|localizedcurrency(currency, app.request.locale) }}
+    {{ item.unitary_cost|localizedcurrency(currency, app.request.locale) }}
   </td>
   <td class="cell-align-right">
     {{ item.discount }}%
   </td>
   <td class="taxes form-inline">
     {% for tax in item.taxes %}
-    {{ tax.name }}
+    {{ tax.label() }}
     {% endfor %}
   </td>
   <td class="cell-align-right">
