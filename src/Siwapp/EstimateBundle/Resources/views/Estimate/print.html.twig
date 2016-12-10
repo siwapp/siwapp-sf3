@@ -1,4 +1,57 @@
-<!doctype html">
+{#
+Available variables:
+ App:
+ - app.request.locale
+ Settings:
+ - settings.company_name
+ - settings.company_identification
+ - settings.company_address
+ - settings.company_phone
+ - settings.company_fax
+ - settings.company_email
+ - settings.company_url
+ - settings.company_logo
+ - settings.currency
+ - settings.legal_terms
+ - settings.pdf_size
+ - settings.pdf_orientation
+ Estimate:
+ - estimate.series
+ - estimate.series.name
+ - estimate.series.value
+ - estimate.series.fist_number
+ - estimate.series.enabled
+ - estimate.number
+ - estimate.status
+ - estimate.status_string
+ - estimate.customer_name
+ - estimate.customer_identification
+ - estimate.customer_email
+ - estimate.contact_person
+ - estimate.issue_date
+ - estimate.sent_by_email
+ - estimate.base_amount
+ - estimate.discount_amount
+ - estimate.net_amount
+ - estimate.gross_amount
+ - estimate.tax_amount
+ - estimate.items
+ - estimate.invoicing_address
+ - estimate.shipping_address
+ - estimate.terms
+ - estimate.notes
+ Item:
+ - item.description
+ - item.unitary_cost
+ - item.discount
+ - item.discount_amount
+ - item.quantity
+ - item.base_amount
+ - item.net_amount
+ - item.gross_amount
+ - item.tax_amount
+ - item.taxes_percent
+#}<!doctype html">
 <html lang="{{ app.request.locale }}">
 <head>
   <meta charset="utf-8" />
