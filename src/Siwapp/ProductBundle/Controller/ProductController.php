@@ -73,13 +73,25 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/autocomplete", name="product_autocomplete")
+     * @Route("/autocomplete-reference", name="product_autocomplete_reference")
      */
-    public function autocompleteAction(Request $request)
+    public function autocompleteReferenceAction(Request $request)
     {
         $entities = $this->getDoctrine()
             ->getRepository('SiwappProductBundle:Product')
-            ->findLike($request->get('term'));
+            ->findLikeReference($request->get('term'));
+
+        return new JsonResponse($entities);
+    }
+
+    /**
+     * @Route("/autocomplete-description", name="product_autocomplete_description")
+     */
+    public function autocompleteDescriptionAction(Request $request)
+    {
+        $entities = $this->getDoctrine()
+            ->getRepository('SiwappProductBundle:Product')
+            ->findLikeDescription($request->get('term'));
 
         return new JsonResponse($entities);
     }

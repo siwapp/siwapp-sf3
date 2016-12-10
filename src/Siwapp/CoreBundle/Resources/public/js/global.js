@@ -1,4 +1,4 @@
-jQuery(function($){
+jQuery(function($) {
 
   // HTML5 Placeholders for forms
   $('input, textarea').placeholder();

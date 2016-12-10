@@ -179,3 +179,15 @@
   </script>
   {% endif %}
 {% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  {% if bundle_exists('SiwappProductBundle') %}
+  {% javascripts
+    'bundles/siwappproduct/js/products.js'
+  %}
+  <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+  {% endif %}
+{% endblock %}

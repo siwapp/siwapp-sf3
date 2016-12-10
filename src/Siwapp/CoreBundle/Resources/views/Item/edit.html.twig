@@ -5,34 +5,36 @@
   </td>
   {% if bundle_exists('SiwappProductBundle') %}
   <td class="col-md-xs">
-    {{ form_widget(form.product, {'attr': {'class': 'product-autocomplete'}}) }}
+    {{ form_widget(form.product, {'attr': {'class': 'product-autocomplete-name'}}) }}
     {{ form_errors(form.product) }}
     <script>
-    $(function(){
-      $('.product-autocomplete:not(.ui-autocomplete-input)').each(function () {
+    $(function() {
+      $('.product-autocomplete-name:not(.ui-autocomplete-input)').each(function () {
         $(this).autocomplete({
-          source: '{{ path('product_autocomplete') }}',
-          select: function (event, ui) {
-            var $target = $(this);
-            $target.val(ui.item.reference);
-            var $row = $target.parents('tr');
-            $row.find('[name$="[unitary_cost]"]').val(ui.item.price);
-            $row.find('[name$="[description]"]').val(ui.item.description);
-            return false;
-          },
-        }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-          return $( "<li>" )
-            .append( "<a>" + item.reference + "</a>" )
-            .appendTo( ul );
-        };
+          source: '{{ path('product_autocomplete_reference') }}',
+          select: selectProductAutocompleteItem,
+        }).autocomplete( "instance" )._renderItem = renderProductAutocompleteItem;
       });
     });
     </script>
   </td>
   {% endif %}
   <td>
-    {{ form_widget(form.description) }}
+    {{ form_widget(form.description, {'attr': {'class': 'product-autocomplete-description'}}) }}
     {{ form_errors(form.description) }}
+
+    {% if bundle_exists('SiwappProductBundle') %}
+    <script>
+    $(function() {
+      $('.product-autocomplete-description:not(.ui-autocomplete-input)').each(function () {
+        $(this).autocomplete({
+          source: '{{ path('product_autocomplete_description') }}',
+          select: selectProductAutocompleteItem,
+        }).autocomplete( "instance" )._renderItem = renderProductAutocompleteItem;
+      });
+    });
+    </script>
+    {% endif %}
   </td>
   <td class="cell-align-right">
     {{ form_widget(form.quantity) }}
