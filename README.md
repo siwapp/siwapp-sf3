@@ -8,8 +8,8 @@
 
 ## Installation
 
-The following will ask you to setup the database info, so make sure you have one
-ready.
+Make sure you have [composer](https://getcomposer.org/) installed.
+Then run the following: (it will ask you for database info, so make sure you have one ready).
 
     $ composer create-project --stability=dev siwapp/siwapp-sf3 my_siwapp; cd my_siwapp
 
