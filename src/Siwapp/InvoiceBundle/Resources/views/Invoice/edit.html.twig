@@ -59,3 +59,16 @@
     {% endif %}
   </div>
 {% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script>
+  jQuery(function($) {
+    $(document).on('change', '.edit-item-row select, .edit-item-row input', function () {
+      updateInvoiceTotals('{{ path('invoice_form_totals') }}', $(this).parents('tr'));
+    });
+  });
+  </script>
+{% endblock %}

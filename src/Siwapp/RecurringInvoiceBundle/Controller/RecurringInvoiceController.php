@@ -2,20 +2,20 @@
 
 namespace Siwapp\RecurringInvoiceBundle\Controller;
 
-use Doctrine\ORM\QueryBuilder;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\CoreBundle\Controller\AbstractInvoiceController;
 use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 
 /**
  * @Route("/recurring")
  */
-class RecurringInvoiceController extends Controller
+class RecurringInvoiceController extends AbstractInvoiceController
 {
     /**
      * @Route("", name="recurring_index")
@@ -173,6 +173,21 @@ class RecurringInvoiceController extends Controller
         $this->addTranslatedMessage('flash.deleted');
 
         return $this->redirect($this->generateUrl('recurring_index'));
+    }
+
+    /**
+     * @Route("/form-totals", name="recurring_invoice_form_totals")
+     */
+    public function getInvoiceFormTotals(Request $request)
+    {
+        $post = $request->request->get('recurring_invoice');
+        if (!$post) {
+            throw new NotFoundHttpException;
+        }
+
+        $response = $this->getInvoiceTotalsFromPost($post, new RecurringInvoice, $request->getLocale());
+
+        return new JsonResponse($response);
     }
 
     protected function addTranslatedMessage($message, array $params = [], $status = 'success')

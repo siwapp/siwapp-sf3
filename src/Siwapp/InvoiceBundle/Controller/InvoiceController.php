@@ -2,13 +2,15 @@
 
 namespace Siwapp\InvoiceBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\CoreBundle\Controller\AbstractInvoiceController;
 use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\InvoiceBundle\Entity\Payment;
@@ -17,7 +19,7 @@ use Siwapp\InvoiceBundle\Form\InvoiceType;
 /**
  * @Route("/invoice")
  */
-class InvoiceController extends Controller
+class InvoiceController extends AbstractInvoiceController
 {
     /**
      * @Route("", name="invoice_index")
@@ -303,6 +305,21 @@ class InvoiceController extends Controller
         ];
     }
 
+    /**
+     * @Route("/form-totals", name="invoice_form_totals")
+     */
+    public function getInvoiceFormTotals(Request $request)
+    {
+        $post = $request->request->get('invoice');
+        if (!$post) {
+            throw new NotFoundHttpException;
+        }
+
+        $response = $this->getInvoiceTotalsFromPost($post, new Invoice, $request->getLocale());
+
+        return new JsonResponse($response);
+    }
+
     protected function addTranslatedMessage($message, $status = 'success')
     {
         $translator = $this->get('translator');
@@ -401,21 +418,5 @@ class InvoiceController extends Controller
             ->attach($attachment);
 
         return $message;
-    }
-
-    protected function getPdf($html)
-    {
-        $config = $this->getDoctrine()->getRepository('SiwappConfigBundle:Property');
-        $pdfSize = $config->get('pdf_size');
-        $pdfOrientation = $config->get('pdf_orientation');
-        $config = [];
-        if ($pdfSize) {
-            $config['page-size'] = $pdfSize;
-        }
-        if ($pdfOrientation) {
-            $config['orientation'] = $pdfOrientation;
-        }
-
-        return $this->get('knp_snappy.pdf')->getOutputFromHtml($html, $config);
     }
 }

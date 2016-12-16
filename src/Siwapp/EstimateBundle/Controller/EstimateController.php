@@ -2,13 +2,14 @@
 
 namespace Siwapp\EstimateBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\CoreBundle\Controller\AbstractInvoiceController;
 use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\EstimateBundle\Entity\Estimate;
 use Siwapp\EstimateBundle\Form\EstimateType;
@@ -16,7 +17,7 @@ use Siwapp\EstimateBundle\Form\EstimateType;
 /**
  * @Route("/estimate")
  */
-class EstimateController extends Controller
+class EstimateController extends AbstractInvoiceController
 {
     /**
      * @Route("", name="estimate_index")
@@ -267,6 +268,21 @@ class EstimateController extends Controller
         return $this->redirect($this->generateUrl('estimate_index'));
     }
 
+    /**
+     * @Route("/form-totals", name="estimate_form_totals")
+     */
+    public function getInvoiceFormTotals(Request $request)
+    {
+        $post = $request->request->get('estimate');
+        if (!$post) {
+            throw new NotFoundHttpException;
+        }
+
+        $response = $this->getInvoiceTotalsFromPost($post, new Estimate, $request->getLocale());
+
+        return new JsonResponse($response);
+    }
+
     protected function addTranslatedMessage($message, $status = 'success')
     {
         $translator = $this->get('translator');
@@ -365,21 +381,5 @@ class EstimateController extends Controller
             ->attach($attachment);
 
         return $message;
-    }
-
-    protected function getPdf($html)
-    {
-        $config = $this->getDoctrine()->getRepository('SiwappConfigBundle:Property');
-        $pdfSize = $config->get('pdf_size');
-        $pdfOrientation = $config->get('pdf_orientation');
-        $config = [];
-        if ($pdfSize) {
-            $config['page-size'] = $pdfSize;
-        }
-        if ($pdfOrientation) {
-            $config['orientation'] = $pdfOrientation;
-        }
-
-        return $this->get('knp_snappy.pdf')->getOutputFromHtml($html, $config);
     }
 }
