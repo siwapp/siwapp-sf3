@@ -302,6 +302,7 @@ class InvoiceController extends AbstractInvoiceController
             'invoiceId' => $invoiceId,
             'add_form' => $addForm->createView(),
             'list_form' => $listForm->createView(),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
         ];
     }
 

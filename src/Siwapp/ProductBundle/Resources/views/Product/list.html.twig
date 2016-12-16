@@ -43,9 +43,9 @@
         </td>
         <td class="cell-size-medium">{{ entity.reference }}</td>
         <td>{{ entity.description }}</td>
-        <td class="cell-align-right">{{ entity.price }}</td>
+        <td class="cell-align-right">{{ entity.price|localizedcurrency(currency, app.request.locale) }}</td>
         <td class="cell-align-right">{{ result.num_sold }}</td>
-        <td class="cell-align-right">{{ result.revenue }}</td>
+        <td class="cell-align-right">{{ result.revenue|localizedcurrency(currency, app.request.locale) }}</td>
       </tr>
     {% endfor %}
   </tbody>
