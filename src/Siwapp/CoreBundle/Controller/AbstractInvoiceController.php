@@ -29,7 +29,7 @@ abstract class AbstractInvoiceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $taxRepo = $em->getRepository('SiwappCoreBundle:Tax');
-        $currency = $em->getRepository('SiwappConfigBundle:Property')->get('currency');
+        $currency = $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR');
         $formatter = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
 
         $totals = [];

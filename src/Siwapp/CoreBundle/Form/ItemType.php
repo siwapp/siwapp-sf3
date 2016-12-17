@@ -25,12 +25,15 @@ class ItemType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $currency = $this->manager->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR');
         $builder
             ->add('product', TextType::class, ['required' => false])
             ->add('quantity', NumberType::class)
             ->add('discount_percent', PercentType::class, ['scale' => 2])
             ->add('description')
-            ->add('unitary_cost', MoneyType::class)
+            ->add('unitary_cost', MoneyType::class, [
+                'currency' => $currency,
+            ])
         ;
 
         $builder->add('taxes', EntityType::class, array(

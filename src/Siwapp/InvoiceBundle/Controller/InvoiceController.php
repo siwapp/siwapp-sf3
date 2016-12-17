@@ -72,7 +72,7 @@ class InvoiceController extends AbstractInvoiceController
 
         return array(
             'invoices' => $pagination,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
         );
@@ -97,7 +97,7 @@ class InvoiceController extends AbstractInvoiceController
 
         return array(
             'entity' => $entity,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -172,7 +172,7 @@ class InvoiceController extends AbstractInvoiceController
         return array(
             'form' => $form->createView(),
             'entity' => $invoice,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -210,7 +210,7 @@ class InvoiceController extends AbstractInvoiceController
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -305,7 +305,7 @@ class InvoiceController extends AbstractInvoiceController
             'invoiceId' => $invoiceId,
             'add_form' => $addForm->createView(),
             'list_form' => $listForm->createView(),
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         ];
     }
 
