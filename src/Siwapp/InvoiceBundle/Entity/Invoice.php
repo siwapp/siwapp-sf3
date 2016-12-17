@@ -377,7 +377,7 @@ class Invoice extends AbstractInvoice
             $repo = $args->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice');
             $series = $this->getSeries();
             if ($repo && $series) {
-                $this->setNumber($repo->getNextNumber());
+                $this->setNumber($repo->getNextNumber($series));
             }
         }
     }
