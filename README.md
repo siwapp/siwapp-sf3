@@ -8,15 +8,10 @@
 
 ## Installation
 
-The following will ask you to setup the database info, so make sure you have one
-ready.
+Make sure you have [composer](https://getcomposer.org/) installed.
+Then run the following (it will ask you for database info, so make sure you have one ready):
 
     $ composer create-project --stability=dev siwapp/siwapp-sf3 my_siwapp; cd my_siwapp
-
-You will need to have Java installed and available in your path (for yuicompressor).
-On Debian/Ubuntu-based systems you can install it using the following:
-
-    $ sudo apt-get install default-jre-headless
 
 Then you can dump the assets:
 
@@ -92,6 +87,8 @@ Just add a cronjob that runs `php bin/console siwapp:recurring:generate-pending`
 
 ### Interface language
 
-To have the siwapp interface in another language you will need the php intl extension installed.
-Then visit your profile page, change your locale and then log out. When you log back in the interface language should be switched.
+To have the siwapp interface in another language you will need the php-intl extension installed.
+
+Visit your profile page, change your locale and then log out. When you log back in the interface language should be switched.
+
 Siwapp is translated only to Spanish for now, feel free to contribute more translations!

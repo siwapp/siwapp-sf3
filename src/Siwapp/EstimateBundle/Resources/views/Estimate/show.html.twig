@@ -52,10 +52,6 @@
     <label>{% trans %}show.issue_date{% endtrans %}:</label>
     {{ entity.issue_date|localizeddate('medium', 'none', app.request.locale) }}
   </div>
-  <div class="col-md-12">
-    <label>{% trans %}show.status{% endtrans %}:</label>
-    {{ entity.status }}
-  </div>
 {% endblock %}
 
 

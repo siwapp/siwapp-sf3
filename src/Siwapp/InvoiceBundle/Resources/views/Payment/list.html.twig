@@ -9,7 +9,6 @@
   {% stylesheets
     'bundles/siwappinvoice/css/payments.css'
     filter='cssrewrite'
-    filter='?yui_css'
   %}
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
@@ -46,7 +45,7 @@
         </td>
         <td class="date">{{ list_form.vars.value[payment.vars.name].date|localizeddate('medium', 'none', app.request.locale) }}</td>
         <td>{{ list_form.vars.value[payment.vars.name].notes }}</td>
-        <td class="currency">{{ list_form.vars.value[payment.vars.name].amount }}</td>
+        <td class="currency">{{ list_form.vars.value[payment.vars.name].amount|localizedcurrency(currency, app.request.locale) }}</td>
       </tr>
       {% endfor %}
     </tbody>

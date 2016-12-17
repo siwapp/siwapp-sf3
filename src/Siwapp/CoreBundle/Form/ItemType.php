@@ -3,6 +3,7 @@
 namespace Siwapp\CoreBundle\Form;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Siwapp\CoreBundle\Entity\Tax;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -34,7 +35,9 @@ class ItemType extends AbstractType
 
         $builder->add('taxes', EntityType::class, array(
             'class' => 'SiwappCoreBundle:Tax',
-            'choice_label' => 'name',
+            'choice_label' => function (Tax $value, $key, $index) {
+                return $value->label();
+            },
             'multiple' => true,
             'required' => false,
         ));

@@ -29,7 +29,7 @@
 
 
 {% block invoice_label %}
-  <h2>Estimate {{ entity.label() }}</h2>
+  <h2>{% trans %}estimate.estimate{% endtrans %} {{ entity.label() }}</h2>
   <ul id="invoice-like-status" class="list-unstyled">
     <li>
       <span class="label {{ entity.statusString }}">{{ ('estimate.' ~ entity.statusString)|trans }}</span>
@@ -51,6 +51,7 @@
   {% if form.status is defined %}
   {{ form_row(form.status) }}
   {% endif %}
+  {{ form_row(form.sent_by_email) }}
 {% endblock %}
 
 {% block form_actions %}
@@ -66,4 +67,17 @@
     <a class="btn btn-default btn-danger" href="{{ path('estimate_delete', {'id': entity.id}) }}">{% trans %}form.submit_delete{% endtrans %}</a>
     {% endif %}
   </div>
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script>
+  jQuery(function($) {
+    $(document).on('change', '.edit-item-row select, .edit-item-row input', function () {
+      updateInvoiceTotals('{{ path('estimate_form_totals') }}', $(this).parents('tr'));
+    });
+  });
+  </script>
 {% endblock %}

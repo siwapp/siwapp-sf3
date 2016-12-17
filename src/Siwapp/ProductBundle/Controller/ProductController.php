@@ -31,7 +31,7 @@ class ProductController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -45,7 +45,7 @@ class ProductController extends Controller
             'action' => $this->generateUrl('product_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isSubmitted()) {
+        if ($listForm->isSubmitted() && $listForm->isValid()) {
             $data = $listForm->getData();
             if ($request->request->has('delete')) {
                 if (empty($data['products'])) {
@@ -73,13 +73,25 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/autocomplete", name="product_autocomplete")
+     * @Route("/autocomplete-reference", name="product_autocomplete_reference")
      */
-    public function autocompleteAction(Request $request)
+    public function autocompleteReferenceAction(Request $request)
     {
         $entities = $this->getDoctrine()
             ->getRepository('SiwappProductBundle:Product')
-            ->findLike($request->get('term'));
+            ->findLikeReference($request->get('term'));
+
+        return new JsonResponse($entities);
+    }
+
+    /**
+     * @Route("/autocomplete-description", name="product_autocomplete_description")
+     */
+    public function autocompleteDescriptionAction(Request $request)
+    {
+        $entities = $this->getDoctrine()
+            ->getRepository('SiwappProductBundle:Product')
+            ->findLikeDescription($request->get('term'));
 
         return new JsonResponse($entities);
     }
@@ -98,7 +110,7 @@ class ProductController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($product);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
@@ -129,7 +141,7 @@ class ProductController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($product);
             $em->flush();
             $this->addTranslatedMessage('flash.updated');

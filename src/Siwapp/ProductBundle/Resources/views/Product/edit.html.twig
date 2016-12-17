@@ -15,7 +15,7 @@
   <article class="invoice-like">
 
     <header id="invoice-like-title" class="clearfix">
-      <h2>Product {{ entity.label() }}</h2>
+      <h2>{% trans %}form.product{% endtrans %} {{ entity.label() }}</h2>
     </header>
 
     {{ form_start(form, {'attr': {'class': 'form-stacked' } }) }}

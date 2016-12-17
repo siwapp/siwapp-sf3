@@ -1,4 +1,65 @@
-<!doctype html>
+{#
+Available variables:
+ App:
+ - app.request.locale
+ Settings:
+ - settings.company_name
+ - settings.company_identification
+ - settings.company_address
+ - settings.company_phone
+ - settings.company_fax
+ - settings.company_email
+ - settings.company_url
+ - settings.company_logo
+ - settings.currency
+ - settings.legal_terms
+ - settings.pdf_size
+ - settings.pdf_orientation
+ Invoice:
+ - invoice.series
+ - invoice.series.name
+ - invoice.series.value
+ - invoice.series.fist_number
+ - invoice.series.enabled
+ - invoice.number
+ - invoice.status
+ - invoice.status_string
+ - invoice.customer_name
+ - invoice.customer_identification
+ - invoice.customer_email
+ - invoice.contact_person
+ - invoice.issue_date
+ - invoice.due_date
+ - invoice.sent_by_email
+ - invoice.forcefully_closed
+ - invoice.base_amount
+ - invoice.discount_amount
+ - invoice.net_amount
+ - invoice.gross_amount
+ - invoice.tax_amount
+ - invoice.paid_amount
+ - invoice.items
+ - invoice.payments
+ - invoice.invoicing_address
+ - invoice.shipping_address
+ - invoice.terms
+ - invoice.notes
+ Item:
+ - item.description
+ - item.unitary_cost
+ - item.discount
+ - item.discount_amount
+ - item.quantity
+ - item.base_amount
+ - item.net_amount
+ - item.gross_amount
+ - item.tax_amount
+ - item.taxes_percent
+ Payment:
+ - payment.date
+ - payment.amount
+ - payment.notes
+#}<!doctype html>
 <html lang="{{ app.request.locale }}">
 <head>
   <meta charset="utf-8" />
@@ -59,6 +120,7 @@
     <div class="company-data">
       <ul>
         <li>Company: {{settings.company_name}}</li>
+        <li>Company ID: {{settings.company_identification}}</li>
         <li>Address: {{settings.company_address|nl2br}}</li>
         <li>Phone: {{settings.company_phone}}</li>
         <li>Fax: {{settings.company_fax}}</li>

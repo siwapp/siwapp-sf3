@@ -5,6 +5,7 @@ estimate:
     rejected: 'Rejected'
     not_sent_by_email: 'Not Sent by Email'
     sent_by_email: 'Sent by Email'
+    estimate: 'Estimate'
 
 menu:
     estimate_index: 'Estimates'
@@ -34,7 +35,7 @@ search:
 list:
     bulk_delete: 'Remove selected'
     bulk_print: 'Print selected'
-    bulk_pdf: 'Download as PDF'
+    bulk_pdf: 'Download selected as PDF'
     bulk_email: 'Email selected'
     series: 'Series'
     customer_name: 'Customer'
@@ -42,7 +43,6 @@ list:
     status: 'Status'
     gross_amount: 'Total'
     no_results: 'No estimates found.'
-    bulk_delete: 'Remove selected'
 
 show:
     print: 'Print'
@@ -57,6 +57,7 @@ show:
 
 form:
     issue_date: 'Issue date'
+    sent_by_email: 'Mark as sent by email'
     status: 'Status'
     submit: 'Save'
     submit_draft: 'Save as draft'

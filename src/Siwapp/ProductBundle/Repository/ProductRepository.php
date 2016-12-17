@@ -14,14 +14,26 @@ use Siwapp\ProductBundle\Entity\Product;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findLike($term)
+
+    public function findLikeReference(string $term): array
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('p')
             ->from(Product::class, 'p')
             ->where('p.reference LIKE :term')
-            //->orWhere('p.description LIKE :term')
+            ->setParameter('term', '%'. $term .'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLikeDescription(string $term): array
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from(Product::class, 'p')
+            ->orWhere('p.description LIKE :term')
             ->setParameter('term', '%'. $term .'%')
             ->getQuery()
             ->getResult();
