@@ -57,6 +57,7 @@ show:
 
 form:
     issue_date: 'Fecha de creación'
+    sent_by_email: 'Marcar como enviado por email'
     status: 'Estado'
     submit: 'Guarar'
     submit_draft: 'Guardar como borrador'

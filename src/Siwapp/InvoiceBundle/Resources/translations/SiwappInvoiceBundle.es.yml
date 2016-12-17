@@ -47,6 +47,8 @@ form:
     shipping_address: 'Dirección de envío'
     issue_date: 'Creada el'
     due_date: 'Fecha de vencimiento'
+    forcefully_closed: 'Forzarla a ser cerrada'
+    sent_by_email: 'Marcar como enviada por email'
     series: 'Serie'
     payment_add: 'Añadir pago'
     terms: 'Términos'
