@@ -87,7 +87,7 @@ class Invoice extends AbstractInvoice
         parent::__construct();
         $this->payments = new ArrayCollection();
         $this->issue_date = new \DateTime();
-        $this->due_date = new \DateTime();
+        $this->due_date = new \DateTime('+7 days');
     }
 
     /**
