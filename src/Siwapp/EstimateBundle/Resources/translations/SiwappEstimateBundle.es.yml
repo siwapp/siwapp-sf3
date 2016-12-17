@@ -35,7 +35,7 @@ search:
 list:
     bulk_delete: 'Borrar seleccionados'
     bulk_print: 'Imprimir seleccionados'
-    bulk_pdf: 'Descargar como PDF'
+    bulk_pdf: 'Descargar seleccionados como PDF'
     bulk_email: 'Correo electrónico seleccionado'
     series: 'Serie'
     customer_name: 'Cliente'

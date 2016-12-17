@@ -81,7 +81,7 @@ search:
 list:
     bulk_delete: 'Borrar seleccionadas'
     bulk_email: 'Enviar por email seleccionadas'
-    bulk_pdf: 'Descargar como PDF'
+    bulk_pdf: 'Descargar seleccionadas como PDF'
     bulk_print: 'Imprimir seleccionadas'
     number: 'Número'
     customer: 'Cliente'
