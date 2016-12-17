@@ -27,18 +27,6 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function findLikeDescription(string $term): array
-    {
-        return $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p')
-            ->orWhere('p.description LIKE :term')
-            ->setParameter('term', '%'. $term .'%')
-            ->getQuery()
-            ->getResult();
-    }
-
     public function paginatedSearch(array $params, $limit = 50, $page = 1)
     {
         if (!$this->paginator) {

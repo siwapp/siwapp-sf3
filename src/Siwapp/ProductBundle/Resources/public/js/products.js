@@ -23,12 +23,3 @@ function addProductNameAutocomplete(path) {
         }).autocomplete( "instance" )._renderItem = renderProductAutocompleteItem;
     });
 }
-
-function addProductDescriptionAutocomplete(path) {
-    $('.product-autocomplete-description:not(.ui-autocomplete-input)').each(function () {
-        $(this).autocomplete({
-            source: path,
-            select: selectProductAutocompleteItem,
-        }).autocomplete( "instance" )._renderItem = renderProductAutocompleteItem;
-    });
-}

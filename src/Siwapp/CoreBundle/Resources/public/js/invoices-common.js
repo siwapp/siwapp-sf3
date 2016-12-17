@@ -12,3 +12,28 @@ function updateInvoiceTotals(path, $changedItem) {
             }
         });
 }
+
+function selectInvoiceItemAutocomplete(event, ui) {
+    var $target = $(this);
+    $target.val(ui.item.reference);
+    var $row = $target.parents('tr');
+    $row.find('[name$="[unitary_cost]"]').val(ui.item.unitary_cost).trigger('change');
+    $row.find('[name$="[description]"]').val(ui.item.description);
+
+    return false;
+}
+
+function renderInvoiceItemAutocomplete(ul, item) {
+    return $('<li>')
+        .append('<a>' + item.description + '</a>')
+        .appendTo(ul);
+}
+
+function addInvoiceItemDescriptionAutocomplete(path) {
+    $('.product-autocomplete-description:not(.ui-autocomplete-input)').each(function () {
+        $(this).autocomplete({
+            source: path,
+            select: selectInvoiceItemAutocomplete,
+        }).autocomplete( "instance" )._renderItem = renderInvoiceItemAutocomplete;
+    });
+}

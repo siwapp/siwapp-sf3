@@ -11,12 +11,12 @@ use Siwapp\ProductBundle\Entity\Product;
 /**
  * Siwapp\InvoiceBundle\Entity\Item
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Siwapp\CoreBundle\Repository\ItemRepository")
  * @ORM\Table(indexes={
  *    @ORM\Index(name="invoice_item_desc_idx", columns={"description"})
  * })
  */
-class Item
+class Item implements \JsonSerializable
 {
 
     /**
@@ -375,5 +375,14 @@ class Item
     public function removeTax(\Siwapp\CoreBundle\Entity\Tax $tax)
     {
         $this->taxes->removeElement($tax);
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'unitary_cost' => $this->getUnitaryCost(),
+            'description' => $this->getDescription(),
+        ];
     }
 }

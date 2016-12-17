@@ -85,18 +85,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/autocomplete-description", name="product_autocomplete_description")
-     */
-    public function autocompleteDescriptionAction(Request $request)
-    {
-        $entities = $this->getDoctrine()
-            ->getRepository('SiwappProductBundle:Product')
-            ->findLikeDescription($request->get('term'));
-
-        return new JsonResponse($entities);
-    }
-
-    /**
      * @Route("/add", name="product_add")
      * @Template("SiwappProductBundle:Product:edit.html.twig")
      */

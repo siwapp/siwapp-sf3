@@ -11,7 +11,7 @@
     {% if bundle_exists('SiwappProductBundle') %}
     <script>
     $(function() {
-      addProductNameAutocomplete('{{ path('product_autocomplete_description') }}');
+      addProductNameAutocomplete('{{ path('product_autocomplete_reference') }}');
     });
     </script>
     {% endif %}
@@ -21,13 +21,11 @@
     {{ form_widget(form.description, {'attr': {'class': 'product-autocomplete-description'}}) }}
     {{ form_errors(form.description) }}
 
-    {% if bundle_exists('SiwappProductBundle') %}
     <script>
     $(function() {
-      addProductDescriptionAutocomplete('{{ path('product_autocomplete_description') }}');
+      addInvoiceItemDescriptionAutocomplete('{{ path('item_autocomplete_description') }}');
     });
     </script>
-    {% endif %}
   </td>
   <td class="cell-align-right">
     {{ form_widget(form.quantity) }}
