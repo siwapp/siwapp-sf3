@@ -47,6 +47,8 @@ form:
     shipping_address: 'Dirección de envío'
     issue_date: 'Creada el'
     due_date: 'Fecha de vencimiento'
+    forcefully_closed: 'Forzarla a ser cerrada'
+    sent_by_email: 'Marcar como enviada por email'
     series: 'Serie'
     payment_add: 'Añadir pago'
     terms: 'Términos'
@@ -81,7 +83,7 @@ search:
 list:
     bulk_delete: 'Borrar seleccionadas'
     bulk_email: 'Enviar por email seleccionadas'
-    bulk_pdf: 'Descargar como PDF'
+    bulk_pdf: 'Descargar seleccionadas como PDF'
     bulk_print: 'Imprimir seleccionadas'
     number: 'Número'
     customer: 'Cliente'
