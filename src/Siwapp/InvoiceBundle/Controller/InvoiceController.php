@@ -38,7 +38,7 @@ class InvoiceController extends AbstractInvoiceController
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -52,7 +52,7 @@ class InvoiceController extends AbstractInvoiceController
             'action' => $this->generateUrl('invoice_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isSubmitted()) {
+        if ($listForm->isSubmitted() && $listForm->isValid()) {
             $data = $listForm->getData();
             if (empty($data['invoices'])) {
                 $this->addTranslatedMessage('flash.nothing_selected', 'warning');
@@ -156,7 +156,7 @@ class InvoiceController extends AbstractInvoiceController
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($request->request->has('save_draft')) {
                 $invoice->setStatus(Invoice::DRAFT);
             } elseif ($request->request->has('save')) {
@@ -192,7 +192,7 @@ class InvoiceController extends AbstractInvoiceController
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Invoice::DRAFT);
             } elseif ($request->request->has('save_close')) {
@@ -264,13 +264,16 @@ class InvoiceController extends AbstractInvoiceController
         // Return all payments
         $em = $this->getDoctrine()->getManager();
         $invoice = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($invoiceId);
+        if (!$invoice) {
+            throw $this->createNotFoundException('Unable to find Invoice entity.');
+        }
 
         $payment = new Payment;
         $addForm = $this->createForm('Siwapp\InvoiceBundle\Form\PaymentType', $payment, [
             'action' => $this->generateUrl('invoice_payments', ['invoiceId' => $invoiceId]),
         ]);
         $addForm->handleRequest($request);
-        if ($addForm->isSubmitted() && $invoice) {
+        if ($addForm->isSubmitted() && $addForm->isValid()) {
             $invoice->addPayment($payment);
             $em->persist($invoice);
             $em->flush();
@@ -285,7 +288,7 @@ class InvoiceController extends AbstractInvoiceController
         ]);
         $listForm->handleRequest($request);
 
-        if ($listForm->isSubmitted() && $invoice) {
+        if ($listForm->isSubmitted() && $listForm->isValid()) {
             $data = $listForm->getData();
             foreach ($data['payments'] as $payment) {
                 $invoice->removePayment($payment);

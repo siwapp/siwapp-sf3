@@ -34,7 +34,7 @@ class RecurringInvoiceController extends AbstractInvoiceController
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -44,7 +44,7 @@ class RecurringInvoiceController extends AbstractInvoiceController
             'action' => $this->generateUrl('recurring_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isSubmitted()) {
+        if ($listForm->isSubmitted() && $listForm->isValid()) {
             $data = $listForm->getData();
             if ($request->request->has('delete')) {
                 if (empty($data['recurring_invoices'])) {
@@ -100,7 +100,7 @@ class RecurringInvoiceController extends AbstractInvoiceController
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($invoice);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
@@ -133,7 +133,7 @@ class RecurringInvoiceController extends AbstractInvoiceController
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($invoice);
             $em->flush();
             $this->addTranslatedMessage('flash.updated');
