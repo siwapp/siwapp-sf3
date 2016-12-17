@@ -47,6 +47,8 @@ form:
     shipping_address: 'Shipping address'
     issue_date: 'Issued on'
     due_date: 'Due date'
+    forcefully_closed: 'Force to be closed'
+    sent_by_email: 'Mark as sent by email'
     series: 'Series'
     payment_add: 'Add payment'
     terms: 'Terms'

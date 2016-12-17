@@ -30,6 +30,14 @@ class InvoiceType extends AbstractInvoiceType
                 'label' => 'form.due_date',
                 'translation_domain' => 'SiwappInvoiceBundle',
             ])
+            ->add('forcefully_closed', null, [
+                'label' => 'form.forcefully_closed',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
+            ->add('sent_by_email', null, [
+                'label' => 'form.sent_by_email',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
         ;
     }
 

@@ -57,6 +57,7 @@ show:
 
 form:
     issue_date: 'Issue date'
+    sent_by_email: 'Mark as sent by email'
     status: 'Status'
     submit: 'Save'
     submit_draft: 'Save as draft'

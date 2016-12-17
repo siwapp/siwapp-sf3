@@ -51,6 +51,7 @@
   {% if form.status is defined %}
   {{ form_row(form.status) }}
   {% endif %}
+  {{ form_row(form.sent_by_email) }}
 {% endblock %}
 
 {% block form_actions %}
