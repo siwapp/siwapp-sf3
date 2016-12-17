@@ -35,7 +35,7 @@ search:
 list:
     bulk_delete: 'Remove selected'
     bulk_print: 'Print selected'
-    bulk_pdf: 'Download as PDF'
+    bulk_pdf: 'Download selected as PDF'
     bulk_email: 'Email selected'
     series: 'Series'
     customer_name: 'Customer'
