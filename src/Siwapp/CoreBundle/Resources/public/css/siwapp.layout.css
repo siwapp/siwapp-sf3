@@ -132,6 +132,7 @@ a.btn-primary:active:hover,
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
+  cursor: pointer;
 }
 #bd {
   padding: 0;
