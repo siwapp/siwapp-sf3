@@ -1,32 +1,63 @@
-flash:
-    logo_upload_error: 'Το λογότυπό σας δεν κατάφερε να αποθηκευτεί. Ελέγξτε αν ο φάκελος web/uploads υπάρχει και είναι εγγράψιμος.'
-    updated: 'Οι ρυθμίσεις σας ενημερώθηκαν.'
+html:
+    title: 'Invoicing software'
 
 menu:
-    settings_index: 'Ρυθμίσεις'
-    global_settings: 'Γενικές ρυθμίσεις'
-    my_settings: 'Οι ρυθμίσεις μου'
+    settings: 'Settings'
 
-form:
-    company: 'Εταιρεία'
-    company_name: 'Επωνυμία εταιρείας'
-    company_identification: 'Α.Φ.Μ.'
-    company_address: 'Διεύθυνση εταιρείας'
-    company_phone: 'Τηλέφωνο εταιρείας'
-    company_fax: 'Fax εταιρείας'
-    company_email: 'E-mail εταιρείας'
-    company_url: 'Ιστοσελίδα εταιρείας'
-    company_logo: 'Λογότυπο εταιρείας'
-    current_logo: 'Λογότυπο σε χρήση'
-    currency: 'Νόμισμα'
-    legal: 'Νομικά'
-    legal_terms: 'Νομικοί όροι'
-    pdf: 'Ρυθμίσεις PDF'
-    pdf_size: 'Μέγεθος PDF'
-    pdf_orientation: 'PDF'
-    pdf_landscape: 'Τοπίο'
-    pdf_portrait: 'Πορτρέτο'
-    taxes: 'Φόροι'
-    series: 'Αριθμός τιμολογίου'
-    add: 'Προσθήκη'
-    save: 'Αποθήκευση'
+item:
+    form:
+        product: 'Product'
+        description: 'Description'
+        unitary_cost: 'Price'
+        quantity: 'Qty/Hours'
+        discount: 'Discount'
+        taxes: 'Taxes'
+        total: 'Line total'
+        remove: 'Remove'
+    show:
+        description: 'Description'
+        unitary_cost: 'Price'
+        quantity: 'Qty/Hours'
+        discount: 'Discount'
+        taxes: 'Taxes'
+        total: 'Line total'
+
+abstract_invoice:
+    show:
+        customer: 'Customer Data'
+        customer_name: 'Customer name'
+        customer_identification: 'Identification'
+        customer_email: 'E-mail'
+        contact_person: 'Contact person'
+        invoicing_address: 'Invoicing address'
+        shipping_address: 'Shipping address'
+        properties: 'Properties'
+        items: 'Line items'
+        subtotal: 'Subtotal'
+        total_taxes: 'Taxes'
+        total: 'Total (%currency%)'
+        terms: 'Terms'
+        notes: 'Notes'
+    form:
+        customer: 'Customer Data'
+        properties: 'Properties'
+        items: 'Line items'
+        item_add: 'Add Item'
+        subtotal: 'Subtotal'
+        total_taxes: 'Taxes'
+        total: 'Total (%currency%)'
+
+tax:
+    form:
+        name: 'Name'
+        value: 'Value'
+        first_number: 'First number'
+        is_default: 'Is default'
+        active: 'Active'
+
+series:
+    form:
+        name: 'Name'
+        value: 'Value'
+        first_number: 'First number'
+        enabled: 'Enabled'
