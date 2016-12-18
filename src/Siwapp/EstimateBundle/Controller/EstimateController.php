@@ -184,18 +184,46 @@ class EstimateController extends AbstractInvoiceController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $redirectRoute = 'estimate_edit';
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Estimate::DRAFT);
             } elseif ($request->request->has('save_close')) {
                 $entity->setStatus(Estimate::REJECTED);
-            } elseif ($entity->isDraft() && $request->request->has('save')) {
+            } elseif ($entity->isDraft()) {
                 $entity->setStatus(Estimate::APPROVED);
+            }
+            // See if one of PDF/Print buttons was clicked.
+            if ($request->request->has('save_pdf')) {
+                $redirectRoute = 'estimate_show_pdf';
+            } elseif ($request->request->has('save_print')) {
+                $redirectRoute = 'estimate_show_print';
             }
             $em->persist($entity);
             $em->flush();
             $this->addTranslatedMessage('flash.updated');
 
-            return $this->redirect($this->generateUrl('estimate_edit', array('id' => $id)));
+            // Send the email after the estimate is updated.
+            if ($request->request->has('save_email')) {
+                $message = $this->getEmailMessage($entity);
+                $result = $this->get('mailer')->send($message);
+                if ($result) {
+                    $this->addTranslatedMessage('flash.emailed');
+                    if (!$entity->isSentByEmail()) {
+                        $entity->setSentByEmail(true);
+                        $em->persist($entity);
+                        $em->flush();
+                    }
+                }
+            }
+            // Generate the invoice.
+            if ($request->request->has('save_generate')) {
+                $invoice = $this->get('siwapp_estimate.invoice_generator')->generate($entity);
+                if ($invoice) {
+                    $this->addTranslatedMessage('flash.invoice_generated');
+                }
+            }
+
+            return $this->redirect($this->generateUrl($redirectRoute, array('id' => $id)));
         }
 
         return array(

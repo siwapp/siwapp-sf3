@@ -133,9 +133,9 @@ class Estimate extends AbstractInvoice
      *
      * @return boolean
      */
-    public function getSentByEmail()
+    public function isSentByEmail(): bool
     {
-        return $this->sent_by_email;
+        return (bool) $this->sent_by_email;
     }
 
     /**

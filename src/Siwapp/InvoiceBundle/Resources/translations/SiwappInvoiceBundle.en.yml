@@ -56,6 +56,9 @@ form:
     submit: 'Save'
     submit_draft: 'Save as draft'
     submit_close: 'Save and close'
+    submit_print: 'Save and print'
+    submit_pdf: 'Save and download PDF'
+    submit_email: 'Save and send by email'
     submit_delete: 'Delete'
 
 show:
