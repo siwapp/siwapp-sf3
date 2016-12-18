@@ -15,35 +15,31 @@ Available variables:
  - settings.legal_terms
  - settings.pdf_size
  - settings.pdf_orientation
- Invoice:
- - invoice.series
- - invoice.series.name
- - invoice.series.value
- - invoice.series.fist_number
- - invoice.series.enabled
- - invoice.number
- - invoice.status
- - invoice.status_string
- - invoice.customer_name
- - invoice.customer_identification
- - invoice.customer_email
- - invoice.contact_person
- - invoice.issue_date
- - invoice.due_date
- - invoice.sent_by_email
- - invoice.forcefully_closed
- - invoice.base_amount
- - invoice.discount_amount
- - invoice.net_amount
- - invoice.gross_amount
- - invoice.tax_amount
- - invoice.paid_amount
- - invoice.items
- - invoice.payments
- - invoice.invoicing_address
- - invoice.shipping_address
- - invoice.terms
- - invoice.notes
+ Estimate:
+ - estimate.series
+ - estimate.series.name
+ - estimate.series.value
+ - estimate.series.fist_number
+ - estimate.series.enabled
+ - estimate.number
+ - estimate.status
+ - estimate.status_string
+ - estimate.customer_name
+ - estimate.customer_identification
+ - estimate.customer_email
+ - estimate.contact_person
+ - estimate.issue_date
+ - estimate.sent_by_email
+ - estimate.base_amount
+ - estimate.discount_amount
+ - estimate.net_amount
+ - estimate.gross_amount
+ - estimate.tax_amount
+ - estimate.items
+ - estimate.invoicing_address
+ - estimate.shipping_address
+ - estimate.terms
+ - estimate.notes
  Item:
  - item.description
  - item.unitary_cost
@@ -55,15 +51,11 @@ Available variables:
  - item.gross_amount
  - item.tax_amount
  - item.taxes_percent
- Payment:
- - payment.date
- - payment.amount
- - payment.notes
-#}<!doctype html>
+#}<!doctype html">
 <html lang="{{ app.request.locale }}">
 <head>
   <meta charset="utf-8" />
-  <title>Factura</title>
+  <title>Presupuesto</title>
   <style type="text/css">
     /* Custom CSS code */
     table {border-spacing:0; border-collapse: collapse;}
@@ -112,9 +104,8 @@ Available variables:
       <img src="{{ absolute_url(asset(settings.company_logo)) }}" alt="{{ settings.company_name }}" />
     </div>
   {% endif %}
-
   <div class="h2">
-    <h2>Factura #{{invoice}}</h2>
+    <h2>Presupuesto #{{estimate}}</h2>
   </div>
   <div class="section">
     <div class="company-data">
@@ -137,13 +128,13 @@ Available variables:
           <td>
             <span class="left">
               <label>Cliente:</label>
-              {{invoice.customer_name}}
+              {{estimate.customer_name}}
             </span>
           </td>
           <td>
             <span class="right">
               <label>Identificación del cliente:</label>
-              {{invoice.customer_identification}}
+              {{estimate.customer_identification}}
             </span>
           </td>
         </tr>
@@ -151,13 +142,13 @@ Available variables:
           <td>
             <span class="left">
               <label>Persona de contacto:</label>
-              {{invoice.contact_person}}
+              {{estimate.contact_person}}
             </span>
           </td>
           <td>
             <span class="right">
               <label>Email:</label>
-              {{invoice.customer_email}}
+              {{estimate.customer_email}}
             </span>
           </td>
         </tr>
@@ -165,13 +156,13 @@ Available variables:
           <td>
             <span class="left">
               <label>Dirección de facturación:</label>
-              {{invoice.invoicing_address|nl2br}}
+              {{estimate.invoicing_address|nl2br}}
             </span>
           </td>
           <td>
             <span class="right">
               <label>Dirección de envío:</label>
-              {{invoice.shipping_address|nl2br}}
+              {{estimate.shipping_address|nl2br}}
             </span>
           </td>
         </tr>
@@ -189,14 +180,14 @@ Available variables:
             <th class="right">Cant.</th>
             <th class="right">Impuestos</th>
             {# show discounts only if there is some discount #}
-            {% if invoice.discount_amount %}
+            {% if estimate.discount_amount %}
             <th class="right">Descuento</th>
             {% endif %}
             <th class="right">Precio</th>
           </tr>
         </thead>
         <tbody>
-          {% for item in invoice.Items %}
+          {% for item in estimate.Items %}
             <tr>
               <td>
                 {{item.description}}
@@ -208,7 +199,7 @@ Available variables:
                   <span class="tax">{{tax.name}}</span>
                 {% endfor %}
               </td>
-              {% if invoice.discount_amount %}
+              {% if estimate.discount_amount %}
               <td class="right">{{item.discount_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
               {% endif %}
               <td class="right">{{item.gross_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
@@ -217,41 +208,40 @@ Available variables:
         </tbody>
         <tfoot>
           <tr>
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Base</th>
-            <td class="right">{{invoice.base_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
+            <td class="right">{{estimate.base_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
-          {% if invoice.discount_amount %}
+          {% if estimate.discount_amount %}
           <tr>
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Descuento</th>
-            <td class="td_global_discount right">{{invoice.discount_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
+            <td class="td_global_discount right">{{estimate.discount_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           {% endif %}
           <tr>
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Subtotal</th>
-            <td class="td_subtotal right">{{invoice.net_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
+            <td class="td_subtotal right">{{estimate.net_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           <tr>
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Impuestos</th>
-            <td class="td_total_taxes right">{{invoice.tax_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
+            <td class="td_total_taxes right">{{estimate.tax_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           <tr class="strong">
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
             <th class="right">Total</th>
-            <td class="td_total right">{{invoice.gross_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
+            <td class="td_total right">{{estimate.gross_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
         </tfoot>
       </table>
     </div>
   </div>
-
   <div class="section">
     <h3>Términos y condiciones</h3>
     <div class="terms">
-      {{invoice.terms|nl2br}}
+      {{estimate.terms|nl2br}}
     </div>
   </div>
 </body>
