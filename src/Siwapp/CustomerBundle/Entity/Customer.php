@@ -33,7 +33,7 @@ class Customer implements \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=191)
      */
     private $name;
 
