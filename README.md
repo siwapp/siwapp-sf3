@@ -8,7 +8,7 @@
 
 ## Installation
 
-See [here](https://github.com/siwapp/siwapp-sf3/wiki/Installation)
+See [here](https://github.com/siwapp/siwapp-sf3/wiki/Installation).
 
 ### Upgrading from v0.4.x
 
@@ -23,7 +23,7 @@ Replace the DB_* values with the one of your old database and then run:
 
 ### Overriding templates
 
-See [here](https://github.com/siwapp/siwapp-sf3/wiki/The-templates)
+See [here](https://github.com/siwapp/siwapp-sf3/wiki/The-templates).
 
 ### Automating recurring invoices generation
 
