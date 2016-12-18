@@ -73,7 +73,7 @@ class RecurringInvoiceController extends AbstractInvoiceController
 
         return array(
             'invoices' => $pagination,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
             'expected' => $em->getRepository('SiwappRecurringInvoiceBundle:RecurringInvoice')->getAverageDayAmount(),
@@ -111,7 +111,7 @@ class RecurringInvoiceController extends AbstractInvoiceController
         return array(
             'form' => $form->createView(),
             'entity' => $invoice,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -142,7 +142,7 @@ class RecurringInvoiceController extends AbstractInvoiceController
         return array(
             'form' => $form->createView(),
             'entity' => $invoice,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 

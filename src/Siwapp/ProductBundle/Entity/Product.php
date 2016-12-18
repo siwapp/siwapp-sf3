@@ -142,7 +142,7 @@ class Product implements \JsonSerializable, Timestampable
         return [
             'id' => $this->getId(),
             'reference' => $this->getReference(),
-            'price'=> $this->getPrice(),
+            'price' => $this->getPrice(),
             'description' => $this->getDescription(),
         ];
     }
