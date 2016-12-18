@@ -66,7 +66,7 @@ class ProductController extends Controller
 
         return array(
             'products' => $pagination,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
         );
@@ -80,18 +80,6 @@ class ProductController extends Controller
         $entities = $this->getDoctrine()
             ->getRepository('SiwappProductBundle:Product')
             ->findLikeReference($request->get('term'));
-
-        return new JsonResponse($entities);
-    }
-
-    /**
-     * @Route("/autocomplete-description", name="product_autocomplete_description")
-     */
-    public function autocompleteDescriptionAction(Request $request)
-    {
-        $entities = $this->getDoctrine()
-            ->getRepository('SiwappProductBundle:Product')
-            ->findLikeDescription($request->get('term'));
 
         return new JsonResponse($entities);
     }

@@ -51,6 +51,7 @@ Available variables:
  - item.gross_amount
  - item.tax_amount
  - item.taxes_percent
+ - item.taxes
 #}<!doctype html">
 <html lang="{{ app.request.locale }}">
 <head>
@@ -195,8 +196,8 @@ Available variables:
               <td class="right">{{item.unitary_cost|localizedcurrency(settings.currency, app.request.locale)}}</td>
               <td class="right">{{item.quantity}}</td>
               <td class="right">
-                {% for tax in item.Taxes %}
-                  <span class="tax">{{tax.name}}</span>
+                {% for tax in item.taxes %}
+                  <span class="tax">{{tax}}</span>
                 {% endfor %}
               </td>
               {% if estimate.discount_amount %}

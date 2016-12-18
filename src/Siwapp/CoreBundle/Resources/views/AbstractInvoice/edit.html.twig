@@ -115,9 +115,9 @@
                   form = prototype.replace(/__name__/g, collectionHolder.children().length);
                   collectionHolder.append(form);
                   {% if bundle_exists('SiwappProductBundle') %}
-                  addProductNameAutocomplete('{{ path('product_autocomplete_description') }}');
-                  addProductDescriptionAutocomplete('{{ path('product_autocomplete_description') }}');
+                  addProductNameAutocomplete('{{ path('product_autocomplete_reference') }}');
                   {% endif %}
+                  addInvoiceItemDescriptionAutocomplete('{{ path('item_autocomplete_description') }}');
               });
           </script>
 
