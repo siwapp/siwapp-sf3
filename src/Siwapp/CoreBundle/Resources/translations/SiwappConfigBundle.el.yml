@@ -52,7 +52,7 @@ tax:
         name: 'Ονοματεπώνυμο'
         value: 'Όρος αναζήτησης - to check'
         first_number: 'Πρώτος αριθμός'
-        is_default: 'Is default'
+        is_default: 'Is default - to check'
         active: 'Ενεργό'
 
 series:

@@ -1,0 +1,15 @@
+menu:
+    dashboard_index: 'Πίνακας διαχείρησης'
+
+list:
+    payments: 'Περίληψη πληρωμών'
+    payments_received: 'Αποδείξης'
+    payments_due: 'Εκπρόθεσμες οφειλές'
+    payments_overdue: 'Ληξιπρόθεσμες οφειλές'
+    balance: 'Ισολογισμός'
+    balance_total: 'Σύνολο'
+    balance_net: 'Καθαρά - to check'
+    balance_taxes: 'Φόροι'
+    taxes: 'Withholding Taxes'
+    invoices_latest: 'Πρόσφατα τιμολόγια'
+    invoices_due: 'Παλαιά ληξιπρόθεσμα τιμολόγια'

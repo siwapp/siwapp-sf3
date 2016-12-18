@@ -1,0 +1,69 @@
+estimate:
+    draft: 'Πρόχειρο'
+    pending: 'Eκκρεμές'
+    approved: 'Εγκρίθηκε'
+    rejected: 'Απορρίφθηκε'
+    not_sent_by_email: 'Δεν έχει σταλεί με e-mail'
+    sent_by_email: 'Απεσταλμένο με e-mail'
+    estimate: 'Εκτίμηση'
+
+menu:
+    estimate_index: 'Εκτιμήσεις'
+    estimate_add: 'Νέα εκτίμηση'
+
+flash:
+    nothing_selected: 'Παρακαλώ επιλέξτε κάτι.'
+    added: 'Η εκτίμηση προστέθηκε.'
+    updated: 'Η εκτίμηση ανανεώθηκε.'
+    deleted: 'Η εκτίμηση διαγράφτηκε.'
+    emailed: 'Η εκτίμηση έχει σταλεί με e-mail.'
+    bulk_emailed: 'Οι εκτιμήσεις έχουν σταλεί με e-mail.'
+    bulk_deleted: 'Οι εκτιμήσεις διαγράφτηκαν.'
+    invoice_generated: 'Το τιμολόγιό σας εκδόθηκε.'
+
+search:
+    terms: 'Όροι'
+    date_from: 'Από'
+    date_to: 'έως - to check'
+    status: 'Κατάσταση'
+    customer: 'Πελάτης'
+    series: 'Κωδικός'
+    submit: 'Αναζήτηση'
+    advanced: 'Προχωρημένη αναζήτηση'
+    reset: 'Καθαρισμός'
+
+list:
+    bulk_delete: 'Διαγραφή επιλεγμένων'
+    bulk_print: 'Εκτύπωση επιλεγμένων'
+    bulk_pdf: 'Μεταμόρφωση επιλεγμένων ως PDF'
+    bulk_email: 'Επιλογή e-mai'
+    series: 'Κωδικοί'
+    customer_name: 'Πελάτης'
+    issue_date: 'Ημερομηνία'
+    status: 'Κατάσταση'
+    gross_amount: 'Σύνολο'
+    no_results: 'Δεν βρέθηκαν εκτιμήσεις.'
+
+show:
+    print: 'Εκτύπωση'
+    pdf: 'PDF'
+    email: 'Αποστολή e-mail'
+    generate_invoice: 'Έκδοση τιμολογίου'
+    issue_date: 'Ημερομηνία έκδοσης'
+    status: 'Κατάσταση'
+    series: 'Κωδικός'
+    edit: 'Επεξεργασία'
+    delete: 'Διαγραφή'
+
+form:
+    issue_date: 'Ημερομηνία έκδοσης'
+    sent_by_email: 'Σημείωση ως απεσταλμένο με e-mail'
+    status: 'Κατάσταση'
+    submit: 'Αποθήκευση'
+    submit_draft: 'Αποθήκευση ως πρόχειρο'
+    submit_close: 'Αποθήκευση και κλείσιμο'
+    submit_pdf: 'Αποθήκευση και μεταμόρφωση ως PDF'
+    submit_print: 'Αποθήκευση και εκτύπωση'
+    submit_email: 'Αποθήκευση και αποστολή με e-mail'
+    submit_generate: 'Αποθήκευση και έκδοση τιμολογίου'
+    submit_delete: 'Διαγραφή'
