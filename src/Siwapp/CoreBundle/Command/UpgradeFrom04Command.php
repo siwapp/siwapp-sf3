@@ -215,6 +215,7 @@ class UpgradeFrom04Command extends ContainerAwareCommand
                 $status--;
             }
             $estimate->setStatus($status);
+            $estimate->setNumber($row['number']);
             $estimate->setSentByEmail($row['sent_by_email']);
             $estimate->setIssueDate($row['issue_date']);
 

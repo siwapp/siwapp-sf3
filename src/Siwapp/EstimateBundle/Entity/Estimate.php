@@ -236,8 +236,12 @@ class Estimate extends AbstractInvoice
         // compute the number of invoice
         if ((!$this->number && $this->status!=self::DRAFT) ||
             ($args instanceof PreUpdateEventArgs && $args->hasChangedField('series') && $this->status!=self::DRAFT)
-            ) {
-            $this->setNumber($args->getEntityManager()->getRepository('SiwappEstimateBundle:Estimate')->getNextNumber($this->getSeries()));
+        ) {
+            $repo = $args->getEntityManager()->getRepository('SiwappEstimateBundle:Estimate');
+            $series = $this->getSeries();
+            if ($repo && $series) {
+                $this->setNumber($repo->getNextNumber($series));
+            }
         }
     }
 

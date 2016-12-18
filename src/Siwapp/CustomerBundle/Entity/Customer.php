@@ -12,7 +12,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Customer
  *
- * @ORM\Table(name="customer")
+ * @ORM\Table(name="customer", uniqueConstraints={@ORM\UniqueConstraint(name="customer_unique", columns={
+ *     "name",
+ *     "email"
+ * })})
  * @ORM\Entity(repositoryClass="Siwapp\CustomerBundle\Repository\CustomerRepository")
  * @UniqueEntity("email")
  */
@@ -44,7 +47,7 @@ class Customer implements \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=191, unique=true)
+     * @ORM\Column(name="email", type="string", length=191)
      * @Assert\Email()
      */
     private $email;
