@@ -10,7 +10,7 @@ flash:
     bulk_deleted: 'Οι πελάτες διαγράφτηκαν.'
 
 search:
-    terms: 'Όροι'
+    terms: 'Λέξεις κλειδιά'
     submit: 'Αναζήτηση'
     reset: 'Καθαρισμός'
 

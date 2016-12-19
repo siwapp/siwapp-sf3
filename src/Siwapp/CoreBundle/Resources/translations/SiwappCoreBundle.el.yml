@@ -49,15 +49,15 @@ abstract_invoice:
 
 tax:
     form:
-        name: 'Ονοματεπώνυμο'
-        value: 'Όρος αναζήτησης - to check'
+        name: 'Ονομασία'
+        value: 'Κωδικός αναζήτησης'
         first_number: 'Πρώτος αριθμός'
-        is_default: 'Is default'
+        is_default: 'Προεπιλεγμένο'
         active: 'Ενεργό'
 
 series:
     form:
-        name: 'Ονοματεπώνυμο'
-        value: 'Όρος αναζήτησης - to check'
+        name: 'Ονομασία'
+        value: 'Κωδικός αναζήτησης'
         first_number: 'Πρώτος αριθμός'
         enabled: 'Ενεργοποιημένο'

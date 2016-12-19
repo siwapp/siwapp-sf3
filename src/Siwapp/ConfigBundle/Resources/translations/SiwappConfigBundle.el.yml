@@ -10,7 +10,7 @@ menu:
 form:
     company: 'Εταιρεία'
     company_name: 'Επωνυμία εταιρείας'
-    company_identification: 'Α.Φ.Μ.'
+    company_identification: 'Α.Φ.Μ. εταιρείας'
     company_address: 'Διεύθυνση εταιρείας'
     company_phone: 'Τηλέφωνο εταιρείας'
     company_fax: 'Fax εταιρείας'
@@ -30,3 +30,12 @@ form:
     series: 'Αριθμός τιμολογίου'
     add: 'Προσθήκη'
     save: 'Αποθήκευση'
+
+show:
+    company_name: 'Επωνυμία εταιρείας'
+    company_identification: 'Α.Φ.Μ. εταιρείας'
+    company_address: 'Διεύθυνση εταιρείας'
+    company_phone: 'Τηλέφωνο εταιρείας'
+    company_fax: 'Fax εταιρείας'
+    company_email: 'E-mail εταιρείας'
+    company_url: 'Ιστοσελίδα εταιρείας'
