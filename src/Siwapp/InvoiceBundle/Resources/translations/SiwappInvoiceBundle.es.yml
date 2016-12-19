@@ -54,8 +54,9 @@ form:
     terms: 'Términos'
     notes: 'Notas'
     submit: 'Guardar'
-    submit_draft: 'Guardar como borrador'
-    submit_close: 'Guardar y cerrar'
+    submit_print: 'Guardar e imprimir'
+    submit_pdf: 'Guardar y descargar como PDF'
+    submit_email: 'Guardar y enviar por email'
     submit_delete: 'Borrar'
 
 show:
