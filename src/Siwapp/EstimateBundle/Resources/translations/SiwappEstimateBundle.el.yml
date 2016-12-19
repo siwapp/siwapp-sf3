@@ -22,14 +22,14 @@ flash:
     invoice_generated: 'Το τιμολόγιό σας εκδόθηκε.'
 
 search:
-    terms: 'Όροι'
+    terms: 'Λέξεις κλειδιά'
     date_from: 'Από'
-    date_to: 'έως - to check'
+    date_to: 'έως'
     status: 'Κατάσταση'
     customer: 'Πελάτης'
     series: 'Κωδικός'
     submit: 'Αναζήτηση'
-    advanced: 'Προχωρημένη αναζήτηση'
+    advanced: 'Προχωρημένη'
     reset: 'Καθαρισμός'
 
 list:
@@ -37,7 +37,7 @@ list:
     bulk_print: 'Εκτύπωση επιλεγμένων'
     bulk_pdf: 'Μεταμόρφωση επιλεγμένων ως PDF'
     bulk_email: 'Επιλογή e-mai'
-    series: 'Κωδικοί'
+    series: 'Ονομασία'
     customer_name: 'Πελάτης'
     issue_date: 'Ημερομηνία'
     status: 'Κατάσταση'
@@ -51,7 +51,7 @@ show:
     generate_invoice: 'Έκδοση τιμολογίου'
     issue_date: 'Ημερομηνία έκδοσης'
     status: 'Κατάσταση'
-    series: 'Κωδικός'
+    series: 'Ονομασία'
     edit: 'Επεξεργασία'
     delete: 'Διαγραφή'
 

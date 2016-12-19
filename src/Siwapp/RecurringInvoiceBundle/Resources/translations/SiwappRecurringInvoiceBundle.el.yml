@@ -2,7 +2,7 @@ recurring_invoice:
     active: 'Ενεργό'
     inactive: 'Ανενεργό'
     pending: 'Εκκρεμές'
-    finished: 'Εξοφλημένο; - να δω τι νοημα εχει εντος κειμενου'
+    finished: 'Εξοφλημένο'
     recurring_invoice: 'Επαναλαμβανόμενο τιμολόγιο'
 
 menu:
@@ -24,7 +24,7 @@ list:
     week: 'εβδομάδα'
     month: 'μήνας'
     year: 'χρόνος'
-    series: 'Σειρές - τσεκ'
+    series: 'Ονομασία'
     customer_name: 'Πελάτης'
     period_type: 'Περίοδος'
     period: 'Συχνότητα'
@@ -37,7 +37,7 @@ search:
     terms: 'Όροι'
     status: 'Κατάσταση'
     customer: 'Πελάτης'
-    series: 'Σειρές - τσεκ'
+    series: 'Ονομασία'
     submit: 'Αναζήτηση'
     reset: 'Καθαρισμός'
 

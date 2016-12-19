@@ -10,8 +10,8 @@ flash:
     bulk_deleted: 'Το προϊόντα διαγράφηκαν.'
 
 search:
-    terms: 'Όροι'
-    series: 'Σειρές'
+    terms: 'Λέξεις κλειδιά'
+    series: 'Ονομασία'
     submit: 'Αναζήτηση'
     reset: 'Καθαρισμός'
 
@@ -20,8 +20,8 @@ list:
     reference: 'Αναφορά'
     description: 'Περιγραφή'
     price: 'Τιμή'
-    num_sold: Πωληθέντα τεμάχια '
-    revenue: 'Revenue'
+    num_sold: Πωληθέντα τεμάχια'
+    revenue: 'Πρόσοδος'
     no_results: 'Δεν βρέθηκαν προϊόντα.'
 
 form:
