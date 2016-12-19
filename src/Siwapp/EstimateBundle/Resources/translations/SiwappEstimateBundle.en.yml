@@ -62,4 +62,8 @@ form:
     submit: 'Save'
     submit_draft: 'Save as draft'
     submit_close: 'Save and close'
+    submit_pdf: 'Save and donwload as PDF'
+    submit_print: 'Save and print'
+    submit_email: 'Save and send by email'
+    submit_generate: 'Save and generate invoice'
     submit_delete: 'Delete'

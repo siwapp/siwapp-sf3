@@ -81,7 +81,7 @@
       <tbody>
         {% for tax in taxes %}
         <tr>
-          <th>{{ tax.name }}</th>
+          <th>{{ tax }}</th>
           <td>{{ totals.taxes[tax.id]|localizedcurrency(currency, app.request.locale) }}</td>
         </tr>
         {% endfor %}

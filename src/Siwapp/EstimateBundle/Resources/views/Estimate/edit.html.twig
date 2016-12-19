@@ -9,25 +9,6 @@
 {% endblock %}
 
 
-{% block invoice_actions %}
-  {% if entity.id %}
-  <ul class="entity-actions list-inline float-right">
-    <li><a class="btn btn-default btn-info" href="{{ path('estimate_show_pdf', {'id': entity.id}) }}"><span class="glyphicon glyphicon-download-alt"></span> {% trans %}show.pdf{% endtrans %}</a></li>
-    <li><a class="btn btn-default btn-info" href="{{ path('estimate_show_print', {'id': entity.id}) }}" target="_blank"><span class="glyphicon glyphicon-print"></span> {% trans %}show.print{% endtrans %}</a></li>
-    <li><form action="{{ path('estimate_email', {'id': entity.id}) }}" method="post">
-      <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-      <button type="submit" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-envelope"></span> {% trans %}show.email{% endtrans %}</button>
-      </form>
-    </li>
-    <li><form action="{{ path('estimate_generate_invoice', {'id': entity.id}) }}" method="post">
-      <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-      <button type="submit" class="btn btn-default btn-warning"><span class="glyphicon glyphicon-file"></span> {% trans %}show.generate_invoice{% endtrans %}</button>
-      </form></li>
-  </ul>
-  {% endif %}
-{% endblock %}
-
-
 {% block invoice_label %}
   <h2>{% trans %}estimate.estimate{% endtrans %} {{ entity.label() }}</h2>
   <ul id="invoice-like-status" class="list-unstyled">
@@ -62,6 +43,14 @@
   {% if entity.isApproved() %}
   <input type="submit" class="btn btn-default" name="save_close" value="{% trans %}form.submit_close{% endtrans %}">
   {% endif %}
+
+  {% if entity.id %}
+  <input type="submit" class="btn btn-default btn-info" name="save_pdf" value="{% trans %}form.submit_pdf{% endtrans %}">
+  <input type="submit" class="btn btn-default btn-info" name="save_print" value="{% trans %}form.submit_print{% endtrans %}">
+  <input type="submit" class="btn btn-default btn-warning" name="save_email" value="{% trans %}form.submit_email{% endtrans %}">
+  <input type="submit" class="btn btn-default btn-warning" name="save_generate" value="{% trans %}form.submit_generate{% endtrans %}">
+  {% endif %}
+
   <div class="float-right">
     {% if entity.id %}
     <a class="btn btn-default btn-danger" href="{{ path('estimate_delete', {'id': entity.id}) }}">{% trans %}form.submit_delete{% endtrans %}</a>

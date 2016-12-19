@@ -165,7 +165,7 @@ class UpgradeFrom04Command extends ContainerAwareCommand
             $email = $row['email'];
             // In previous version email was optional.
             if (!$email) {
-                $email = strtolower(str_replace(' ', '-', $name)) . '@upgradefrom04.fixme';
+                $email = strtolower(str_replace(' ', '-', $row['name'])) . '@upgradefrom04.fixme';
             }
             $customer->setEmail($email);
             $customer->setContactPerson($row['contact_person']);
@@ -215,6 +215,7 @@ class UpgradeFrom04Command extends ContainerAwareCommand
                 $status--;
             }
             $estimate->setStatus($status);
+            $estimate->setNumber($row['number']);
             $estimate->setSentByEmail($row['sent_by_email']);
             $estimate->setIssueDate($row['issue_date']);
 

@@ -1,0 +1,63 @@
+html:
+    title: 'Λογισμικό τιμολόγισης'
+
+menu:
+    settings: 'Ρυθμίσεις'
+
+item:
+    form:
+        product: 'Προϊόν'
+        description: 'Περιγραφή'
+        unitary_cost: 'Τιμή'
+        quantity: 'Ποσότητα/Ώρες'
+        discount: 'Έκπτωση'
+        taxes: 'Φόροι'
+        total: 'Σύνολο'
+        remove: 'Αφαίρεση'
+    show:
+        description: 'Περιγραφή'
+        unitary_cost: 'Τιμή'
+        quantity: 'Ποσότητα/Ώρες'
+        discount: 'Έκπτωση'
+        taxes: 'Φόροι'
+        total: 'Σύνολο'
+
+abstract_invoice:
+    show:
+        customer: 'Στοιχεία πελάτη'
+        customer_name: 'Ονοματεπώνυμο Πελάτη'
+        customer_identification: 'Κωδικός'
+        customer_email: 'E-mail'
+        contact_person: 'Επαφή επικοινωνίας'
+        invoicing_address: 'Διεύθυνση τιμολόγισης'
+        shipping_address: 'Διεύθυνση αποστολής'
+        properties: 'Ιδιότητες'
+        items: 'Τεμάχια'
+        subtotal: 'Υποσύνολο'
+        total_taxes: 'Φόροι'
+        total: 'Σύνολο (%currency%)'
+        terms: 'Όροι'
+        notes: 'Σημειώσεις'
+    form:
+        customer: 'Στοιχεία πελατη'
+        properties: 'Ιδιότητες'
+        items: 'Τεμάχια'
+        item_add: 'Προσθήκη τεμαχίου'
+        subtotal: 'Υποσύνολο'
+        total_taxes: 'Φόροι'
+        total: 'Σύνολο (%currency%)'
+
+tax:
+    form:
+        name: 'Ονοματεπώνυμο'
+        value: 'Όρος αναζήτησης - to check'
+        first_number: 'Πρώτος αριθμός'
+        is_default: 'Is default'
+        active: 'Ενεργό'
+
+series:
+    form:
+        name: 'Ονοματεπώνυμο'
+        value: 'Όρος αναζήτησης - to check'
+        first_number: 'Πρώτος αριθμός'
+        enabled: 'Ενεργοποιημένο'

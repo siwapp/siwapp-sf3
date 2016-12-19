@@ -30,3 +30,12 @@ form:
     series: 'Invoicing series'
     add: 'Add'
     save: 'Save'
+
+show:
+    company_name: 'Company name'
+    company_identification: 'Company identification'
+    company_address: 'Company address'
+    company_phone: 'Company phone'
+    company_fax: 'Company fax'
+    company_email: 'Company email'
+    company_url: 'Company URL'

@@ -34,6 +34,8 @@ abstract_invoice:
         properties: 'Properties'
         items: 'Line items'
         subtotal: 'Subtotal'
+        total_net: 'Net'
+        total_discount: 'Discount'
         total_taxes: 'Taxes'
         total: 'Total (%currency%)'
         terms: 'Terms'

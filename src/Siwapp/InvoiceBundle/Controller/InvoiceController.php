@@ -193,18 +193,41 @@ class InvoiceController extends AbstractInvoiceController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $redirectRoute = 'invoice_edit';
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Invoice::DRAFT);
             } elseif ($request->request->has('save_close')) {
                 $entity->setForcefullyClosed(true);
-            } elseif ($entity->isDraft() && $request->request->has('save')) {
+            } elseif ($entity->isDraft()) {
+                // Any save action transforms this to opened.
                 $entity->setStatus(Invoice::OPENED);
             }
+            // See if one of PDF/Print buttons was clicked.
+            if ($request->request->has('save_pdf')) {
+                $redirectRoute = 'invoice_show_pdf';
+            } elseif ($request->request->has('save_print')) {
+                $redirectRoute = 'invoice_show_print';
+            }
+            // Save.
             $em->persist($entity);
             $em->flush();
             $this->addTranslatedMessage('flash.updated');
 
-            return $this->redirect($this->generateUrl('invoice_edit', array('id' => $id)));
+            // Send the email after the invoice is updated.
+            if ($request->request->has('save_email')) {
+                $message = $this->getEmailMessage($entity);
+                $result = $this->get('mailer')->send($message);
+                if ($result) {
+                    $this->addTranslatedMessage('flash.emailed');
+                    if (!$entity->isSentByEmail()) {
+                        $entity->setSentByEmail(true);
+                        $em->persist($entity);
+                        $em->flush();
+                    }
+                }
+            }
+
+            return $this->redirect($this->generateUrl($redirectRoute, array('id' => $id)));
         }
 
         return array(
