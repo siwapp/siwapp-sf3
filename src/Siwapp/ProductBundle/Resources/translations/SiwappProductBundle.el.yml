@@ -20,7 +20,7 @@ list:
     reference: 'Αναφορά'
     description: 'Περιγραφή'
     price: 'Τιμή'
-    num_sold: Πωληθέντα τεμάχια'
+    num_sold: 'Πωληθέντα τεμάχια'
     revenue: 'Πρόσοδος'
     no_results: 'Δεν βρέθηκαν προϊόντα.'
 
