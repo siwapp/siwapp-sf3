@@ -1,0 +1,35 @@
+menu:
+    customer_index: 'Customers'
+    customer_add: 'New Customer'
+
+flash:
+    nothing_selected: 'Please select something.'
+    added: 'Customer added.'
+    updated: 'Customer updated.'
+    deleted: 'Customer deleted.'
+    bulk_deleted: 'Customer(s) deleted.'
+
+search:
+    terms: 'Terms'
+    submit: 'Search'
+    reset: 'Reset'
+
+form:
+    customer: 'Customer'
+    name: 'Name'
+    identification: 'Identification'
+    email: 'E-mail'
+    contact_person: 'Contact person'
+    invoicing_address: 'Invoicing address'
+    shipping_address: 'Shipping address'
+    submit: 'Save'
+    submit_delete: 'Delete'
+
+list:
+    bulk_delete: 'Remove selected'
+    name: 'Name'
+    identification: 'Identification'
+    due_amount: 'Due'
+    gross_amount: 'Total'
+    invoices: 'Invoices'
+    no_results: 'No customers found.'

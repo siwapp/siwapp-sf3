@@ -1,0 +1,15 @@
+menu:
+    dashboard_index: 'Dashboard'
+
+list:
+    payments: 'Payments Summary'
+    payments_received: 'Receipts'
+    payments_due: 'Due'
+    payments_overdue: 'Overdue'
+    balance: 'Balance'
+    balance_total: 'Total'
+    balance_net: 'Net'
+    balance_taxes: 'Taxes'
+    taxes: 'Withholding Taxes'
+    invoices_latest: 'Recent invoices'
+    invoices_due: 'Past due invoices'

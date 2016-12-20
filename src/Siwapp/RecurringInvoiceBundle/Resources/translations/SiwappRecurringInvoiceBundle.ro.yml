@@ -1,0 +1,60 @@
+recurring_invoice:
+    active: 'Active'
+    inactive: 'Inactive'
+    pending: 'Pending'
+    finished: 'Finished'
+    recurring_invoice: 'Recurring Invoice'
+
+menu:
+    recurring_index: 'Recurring invoices'
+    recurring_add: 'New Recurring Invoice'
+
+flash:
+    nothing_selected: 'Please select something.'
+    added: 'Recurring invoice added.'
+    updated: 'Recurring invoice updated.'
+    deleted: 'Recurring invoice deleted.'
+    bulk_deleted: 'Recurring invoice(s) deleted.'
+    invoices_generated: '%count% invoices were generated.'
+    invoices_pending: 'There are %count% recurring invoices that were not executed.'
+
+list:
+    average_turnover: 'Average turnover'
+    day: 'day'
+    week: 'week'
+    month: 'month'
+    year: 'year'
+    series: 'Series'
+    customer_name: 'Customer'
+    period_type: 'Period'
+    period: 'Frequency'
+    status: 'Status'
+    gross_amount: 'Total'
+    no_results: 'No recurring invoices found.'
+    bulk_delete: 'Remove selected'
+
+search:
+    terms: 'Terms'
+    status: 'Status'
+    customer: 'Customer'
+    series: 'Series'
+    submit: 'Search'
+    reset: 'Reset'
+
+generate:
+    submit: 'Generate all pending invoices now'
+
+form:
+    enabled: 'Enabled'
+    days_to_due: 'Days to due'
+    starting_date: 'Start date'
+    finishing_date: 'Finish date'
+    max_occurrences: 'Max occurrences'
+    dates: 'Execution Time'
+    period: 'Create every'
+    day: 'Days'
+    week: 'Weeks'
+    month: 'Months'
+    year: 'Years'
+    submit: 'Save'
+    submit_delete: 'Delete'
