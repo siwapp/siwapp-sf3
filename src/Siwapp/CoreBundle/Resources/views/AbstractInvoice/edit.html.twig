@@ -6,7 +6,6 @@
   {% stylesheets
     'bundles/siwappinvoice/css/invoice.css'
     filter='cssrewrite'
-    filter='?yui_css'
   %}
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
@@ -115,6 +114,10 @@
                   var prototype = collectionHolder.attr('data-prototype');
                   form = prototype.replace(/__name__/g, collectionHolder.children().length);
                   collectionHolder.append(form);
+                  {% if bundle_exists('SiwappProductBundle') %}
+                  addProductNameAutocomplete('{{ path('product_autocomplete_reference') }}');
+                  {% endif %}
+                  addInvoiceItemDescriptionAutocomplete('{{ path('item_autocomplete_description') }}');
               });
           </script>
 
@@ -124,15 +127,15 @@
             <tbody>
               <tr>
                 <th class="cell-size-large">{% trans %}abstract_invoice.form.subtotal{% endtrans %}</th>
-                <td class="cell-align-right">{{ entity.baseAmount|localizedcurrency(currency, app.request.locale) }}</td>
+                <td class="cell-align-right base-amount">{{ entity.baseAmount|localizedcurrency(currency, app.request.locale) }}</td>
               </tr>
               <tr>
                 <th>{% trans %}abstract_invoice.form.total_taxes{% endtrans %}</th>
-                <td class="cell-align-right">{{ entity.taxAmount|localizedcurrency(currency, app.request.locale) }}</td>
+                <td class="cell-align-right tax-amount">{{ entity.taxAmount|localizedcurrency(currency, app.request.locale) }}</td>
               </tr>
               <tr>
                 <th>{% trans with {'%currency%': currency} %}abstract_invoice.form.total{% endtrans %}</th>
-                <td class="cell-align-right">{{ entity.grossAmount|localizedcurrency(currency, app.request.locale) }}</td>
+                <td class="cell-align-right gross-amount">{{ entity.grossAmount|localizedcurrency(currency, app.request.locale) }}</td>
               </tr>
             </tbody>
           </table>
@@ -178,5 +181,18 @@
     };
   });
   </script>
+  {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  {% if bundle_exists('SiwappProductBundle') %}
+  {% javascripts
+    'bundles/siwappproduct/js/products.js'
+    'bundles/siwappcore/js/invoices-common.js'
+  %}
+  <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
+  {% endjavascripts %}
   {% endif %}
 {% endblock %}

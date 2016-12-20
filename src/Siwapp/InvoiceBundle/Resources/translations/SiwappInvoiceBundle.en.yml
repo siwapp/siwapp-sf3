@@ -47,6 +47,8 @@ form:
     shipping_address: 'Shipping address'
     issue_date: 'Issued on'
     due_date: 'Due date'
+    forcefully_closed: 'Force to be closed'
+    sent_by_email: 'Mark as sent by email'
     series: 'Series'
     payment_add: 'Add payment'
     terms: 'Terms'
@@ -54,6 +56,9 @@ form:
     submit: 'Save'
     submit_draft: 'Save as draft'
     submit_close: 'Save and close'
+    submit_print: 'Save and print'
+    submit_pdf: 'Save and download PDF'
+    submit_email: 'Save and send by email'
     submit_delete: 'Delete'
 
 show:
@@ -81,7 +86,7 @@ search:
 list:
     bulk_delete: 'Remove selected'
     bulk_email: 'Email selected'
-    bulk_pdf: 'Download as PDF'
+    bulk_pdf: 'Download selected as PDF'
     bulk_print: 'Print selected'
     number: 'Number'
     customer: 'Customer'

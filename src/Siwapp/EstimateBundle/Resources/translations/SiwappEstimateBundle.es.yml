@@ -35,7 +35,7 @@ search:
 list:
     bulk_delete: 'Borrar seleccionados'
     bulk_print: 'Imprimir seleccionados'
-    bulk_pdf: 'Descargar como PDF'
+    bulk_pdf: 'Descargar seleccionados como PDF'
     bulk_email: 'Correo electrónico seleccionado'
     series: 'Serie'
     customer_name: 'Cliente'
@@ -43,7 +43,6 @@ list:
     status: 'Estado'
     gross_amount: 'Total'
     no_results: 'No se han encontrado presupuestos.'
-    bulk_delete: 'Borrar seleccionados'
 
 show:
     print: 'Imprimir'
@@ -58,6 +57,7 @@ show:
 
 form:
     issue_date: 'Fecha de creación'
+    sent_by_email: 'Marcar como enviado por email'
     status: 'Estado'
     submit: 'Guarar'
     submit_draft: 'Guardar como borrador'

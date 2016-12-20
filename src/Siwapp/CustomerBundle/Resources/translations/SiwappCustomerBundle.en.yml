@@ -15,6 +15,7 @@ search:
     reset: 'Reset'
 
 form:
+    customer: 'Customer'
     name: 'Name'
     identification: 'Identification'
     email: 'E-mail'

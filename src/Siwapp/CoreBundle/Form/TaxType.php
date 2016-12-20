@@ -25,10 +25,12 @@ class TaxType extends AbstractType
                 'translation_domain' => 'SiwappCoreBundle',
             ])
             ->add('active', CheckboxType::class, [
+                'required' => false,
                 'label' => 'tax.form.active',
                 'translation_domain' => 'SiwappCoreBundle',
             ])
             ->add('is_default', CheckboxType::class, [
+                'required' => false,
                 'label' => 'tax.form.is_default',
                 'translation_domain' => 'SiwappCoreBundle',
             ])

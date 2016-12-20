@@ -1,0 +1,33 @@
+menu:
+    product_index: 'Προϊόντα'
+    product_add: 'Νέο προϊόν'
+
+flash:
+    nothing_selected: 'Παρακαλώ επιλέξτε κάτι.'
+    added: 'Το προϊόν προστέθηκε.'
+    updated: 'Το προϊόν  ανανεώθηκε.'
+    deleted: 'Το προϊόν διαγράφηκε.'
+    bulk_deleted: 'Το προϊόντα διαγράφηκαν.'
+
+search:
+    terms: 'Λέξεις κλειδιά'
+    series: 'Ονομασία'
+    submit: 'Αναζήτηση'
+    reset: 'Καθαρισμός'
+
+list:
+    bulk_delete: 'Διαγραφή επιλεγμένων'
+    reference: 'Αναφορά'
+    description: 'Περιγραφή'
+    price: 'Τιμή'
+    num_sold: 'Πωληθέντα τεμάχια'
+    revenue: 'Πρόσοδος'
+    no_results: 'Δεν βρέθηκαν προϊόντα.'
+
+form:
+    product: 'Προϊόν'
+    reference: 'Αναφορά'
+    description: 'Περιγραφή'
+    price: 'Τιμή'
+    submit: 'Αποθήκευση'
+    submit_delete: 'Διαγραφή'

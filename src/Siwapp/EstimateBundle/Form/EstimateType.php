@@ -21,6 +21,10 @@ class EstimateType extends AbstractInvoiceType
                 'label' => 'form.issue_date',
                 'translation_domain' => 'SiwappEstimateBundle',
             ])
+            ->add('sent_by_email', null, [
+                'label' => 'form.sent_by_email',
+                'translation_domain' => 'SiwappInvoiceBundle',
+            ])
         ;
 
         if (!$builder->getData()->isDraft()) {

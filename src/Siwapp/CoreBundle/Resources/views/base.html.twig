@@ -14,7 +14,6 @@
     'bundles/siwappcore/css/siwapp.patterns.css'
     'bundles/siwappcore/css/siwapp.autocomplete.css'
     filter='cssrewrite'
-    filter='?yui_css'
   %}
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
@@ -24,7 +23,6 @@
     'bundles/siwappcore/vendor/jquery-2.2.3.min.js'
     'bundles/siwappcore/vendor/modernizr-custom.js'
     output='js/core.js'
-    filter='?yui_js'
   %}
   <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
   {% endjavascripts %}
@@ -145,7 +143,6 @@
     'bundles/siwappcore/vendor/select2/js/select2.min.js'
     'bundles/siwappcore/js/global.js'
     output='js/frameworks.js'
-    filter='?yui_js'
   %}
   <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
   {% endjavascripts %}

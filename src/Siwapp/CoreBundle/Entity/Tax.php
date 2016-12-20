@@ -143,8 +143,13 @@ class Tax
         return $this->id;
     }
 
-    public function __toString()
+    public function label(): string
     {
-        return $this->getName();
+        return $this->getName() . ' (' . $this->getValue() . '%)';
+    }
+
+    public function __toString(): string
+    {
+        return $this->label();
     }
 }

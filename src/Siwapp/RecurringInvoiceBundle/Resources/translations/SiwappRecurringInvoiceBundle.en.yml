@@ -3,6 +3,7 @@ recurring_invoice:
     inactive: 'Inactive'
     pending: 'Pending'
     finished: 'Finished'
+    recurring_invoice: 'Recurring Invoice'
 
 menu:
     recurring_index: 'Recurring invoices'

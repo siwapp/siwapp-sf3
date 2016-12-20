@@ -30,7 +30,7 @@ class DashboardController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $params = $form->getData();
         } else {
             $params = [];
@@ -61,7 +61,7 @@ class DashboardController extends Controller
         return [
             'invoices' => $pagination,
             'overdue_invoices' => $paginationDue,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
             'search_form' => $form->createView(),
             'totals' => $totals,
             'taxes' => $taxes,
