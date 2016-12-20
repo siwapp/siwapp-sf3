@@ -206,7 +206,7 @@ class InvoiceController extends AbstractInvoiceController
             if ($request->request->has('save_pdf')) {
                 $redirectRoute = 'invoice_show_pdf';
             } elseif ($request->request->has('save_print')) {
-                $redirectRoute = 'invoice_show_print';
+                $this->get('session')->set('invoice_auto_print', $id);
             }
             // Save.
             $em->persist($entity);

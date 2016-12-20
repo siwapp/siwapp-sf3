@@ -33,6 +33,7 @@ flash:
     emailed: 'Invoice sent by email.'
     bulk_emailed: 'Invoice(s) sent by email.'
     bulk_deleted: 'Invoice(s) deleted.'
+    no_js_invoice_print: 'Click here to print your invoice if it does not happen automatically.'
 
 menu:
     invoice_index: 'Invoices'

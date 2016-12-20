@@ -153,3 +153,7 @@ a.btn-primary:active:hover,
 .entity-actions {
   margin-top: 1.2em;
 }
+
+html.js .js-hide {
+  display: none;
+}

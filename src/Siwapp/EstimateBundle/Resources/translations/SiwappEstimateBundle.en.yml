@@ -20,6 +20,7 @@ flash:
     bulk_emailed: 'Estimate(s) sent by email.'
     bulk_deleted: 'Estimate(s) deleted.'
     invoice_generated: 'Invoice generated.'
+    no_js_estimate_print: 'Click here to print your estimate if it does not happen automatically.'
 
 search:
     terms: 'Terms'

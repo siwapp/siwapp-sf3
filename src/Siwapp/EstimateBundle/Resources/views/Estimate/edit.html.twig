@@ -1,6 +1,19 @@
 {% extends "SiwappCoreBundle:AbstractInvoice:edit.html.twig" %}
 {% trans_default_domain 'SiwappEstimateBundle' %}
 
+
+{% block page_messages %}
+  {{ parent() }}
+
+  {% if app.request.session.get('estimate_auto_print') %}
+  <div class="alert alert-warning fade in js-hide">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <a href="{{ path('invoice_show_print', {'id': app.request.session.remove('estimate_auto_print')}) }}" class="js-auto-click">{% trans %}flash.no_js_estimate_print{% endtrans %}</a>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
 {% block actionlink %}
 <a href="{{ path('estimate_add') }}" class="btn btn-default btn-primary">
   <span class="glyphicon glyphicon-plus"></span>

@@ -2,6 +2,18 @@
 {% trans_default_domain 'SiwappInvoiceBundle' %}
 
 
+{% block page_messages %}
+  {{ parent() }}
+
+  {% if app.request.session.get('invoice_auto_print') %}
+  <div class="alert alert-warning fade in js-hide">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <a href="{{ path('invoice_show_print', {'id': app.request.session.remove('invoice_auto_print')}) }}" class="js-auto-click">{% trans %}flash.no_js_invoice_print{% endtrans %}</a>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
 {% block invoice_label %}
   <h2>{% trans %}invoice.invoice{% endtrans %} {{ entity.label() }}</h2>
 
