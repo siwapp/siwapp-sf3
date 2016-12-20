@@ -51,7 +51,7 @@ form:
     sent_by_email: 'Σημείωση ως απεσταλμένο με e-mail'
     series: 'Ονομασία'
     payment_add: 'Προσθήκη πληρωμής'
-    terms: 'Όροι'
+    terms: 'Λέξεις κλειδιά'
     notes: 'Σημειώσεις'
     submit: 'Αποθήκευση'
     submit_draft: 'Αποθήκευση ως πρόχειρο'
@@ -73,7 +73,7 @@ show:
     delete: 'Διαγραφή'
 
 search:
-    terms: 'Όροι'
+    terms: 'Λέξεις κλειδιά'
     date_from: 'Από'
     date_to: 'έως'
     status: 'Κατάσταση'
