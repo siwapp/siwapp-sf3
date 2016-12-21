@@ -11,7 +11,7 @@ item:
         unitary_cost: 'Preț'
         quantity: 'Cantitate/Ore'
         discount: 'Reducere'
-        taxes: 'Taxe'
+        taxes: 'Impozite'
         total: 'Total'
         remove: 'Ștergere'
     show:
@@ -19,7 +19,7 @@ item:
         unitary_cost: 'Preț'
         quantity: 'Cantitate/Ore'
         discount: 'Reducere'
-        taxes: 'Taxe'
+        taxes: 'Impozite'
         total: 'Total'
 
 abstract_invoice:
@@ -36,7 +36,7 @@ abstract_invoice:
         subtotal: 'Subtotal'
         total_net: 'Net'
         total_discount: 'Reducere'
-        total_taxes: 'Taxe'
+        total_taxes: 'Impozite'
         total: 'Total (%currency%)'
         terms: 'Termeni'
         notes: 'Notițe'
@@ -46,7 +46,7 @@ abstract_invoice:
         items: 'Articole'
         item_add: 'Adaugare articole'
         subtotal: 'Subtotal'
-        total_taxes: 'Taxe'
+        total_taxes: 'Impozite'
         total: 'Total (%currency%)'
 
 tax:

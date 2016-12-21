@@ -4,7 +4,7 @@ flash:
 
 menu:
     settings_index: 'Settings'
-    global_settings: 'Global Settings'
+    global_settings: 'Global settings'
     my_settings: 'My settings'
 
 form:
@@ -15,7 +15,7 @@ form:
     company_phone: 'Company phone'
     company_fax: 'Company fax'
     company_email: 'Company e-mail'
-    company_url: 'Company URL'
+    company_url: 'Company website'
     company_logo: 'Company logo'
     current_logo: 'Current logo'
     currency: 'Currency'
@@ -38,4 +38,4 @@ show:
     company_phone: 'Company phone'
     company_fax: 'Company fax'
     company_email: 'Company e-mail'
-    company_url: 'Company URL'
+    company_url: 'Company website'

@@ -1,9 +1,9 @@
 menu:
-    customer_index: 'Clients'
+    customer_index: 'Clienți'
     customer_add: 'Client nou'
 
 flash:
-    nothing_selected: 'Va rog selectαați ceva.'
+    nothing_selected: 'Vă rog selectαați ceva.'
     added: 'Client adăugat.'
     updated: 'Client actualizat.'
     deleted: 'Clientul s-a șters.'
@@ -29,7 +29,7 @@ list:
     bulk_delete: 'Șterge selecția'
     name: 'Nume'
     identification: 'Identificare'
-    due_amount: 'D'
+    due_amount: 'Datorie'
     gross_amount: 'Total'
     invoices: 'Facturi'
-    no_results: 'No customers found.'
+    no_results: 'Nu s-au găsit clienți.'

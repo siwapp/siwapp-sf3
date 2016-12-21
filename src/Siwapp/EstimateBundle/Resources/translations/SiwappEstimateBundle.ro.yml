@@ -1,25 +1,25 @@
 estimate:
-    draft: 'Draft'
-    pending: 'Pending'
-    approved: 'Approved'
-    rejected: 'Rejected'
-    not_sent_by_email: 'Not sent by e-mail'
-    sent_by_email: 'Sent by e-mail'
-    estimate: 'Estimate'
+    draft: 'Ciornă'
+    pending: 'În aşteptarea'
+    approved: 'Aprobat'
+    rejected: 'Respins'
+    not_sent_by_email: 'Nu a fost trimis prin e-mail'
+    sent_by_email: 'Trimis prin e-mail'
+    estimate: 'Estimăre'
 
 menu:
-    estimate_index: 'Estimates'
-    estimate_add: 'New Estimate'
+    estimate_index: 'Estimări'
+    estimate_add: 'Estimăre nouă'
 
 flash:
-    nothing_selected: 'Please select something.'
-    added: 'Estimate added.'
-    updated: 'Estimate updated.'
-    deleted: 'Estimate deleted.'
-    emailed: 'Estimate sent by e-mail.'
-    bulk_emailed: 'Estimate(s) sent by e-mail.'
-    bulk_deleted: 'Estimate(s) deleted.'
-    invoice_generated: 'Invoice generated.'
+    nothing_selected: 'Vă rog selectăți ceva.'
+    added: 'Estimărea adăugata.'
+    updated: 'Estimărea actualizată.'
+    deleted: 'Estimărea s-a șters.'
+    emailed: 'Estimărea trimisă prin e-mail'
+    bulk_emailed: 'Estimările trimise prin e-mail'
+    bulk_deleted: 'Estimările s-au șters.'
+    invoice_generated: 'Factură generata.'
 
 search:
     terms: 'Terms'
