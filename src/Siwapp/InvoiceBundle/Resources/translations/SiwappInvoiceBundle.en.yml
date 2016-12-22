@@ -3,8 +3,8 @@ invoice:
     opened: 'Opened'
     overdue: 'Overdue'
     closed: 'Closed'
-    not_sent_by_email: 'Not Sent by Email'
-    sent_by_email: 'Sent by Email'
+    not_sent_by_email: 'Not sent by e-mail'
+    sent_by_email: 'Sent by e-mail'
     invoice: 'Invoice'
 
 payment:
@@ -30,9 +30,10 @@ flash:
     added: 'Invoice added.'
     updated: 'Invoice updated.'
     deleted: 'Invoice deleted.'
-    emailed: 'Invoice sent by email.'
-    bulk_emailed: 'Invoice(s) sent by email.'
+    emailed: 'Invoice sent by e-mail.'
+    bulk_emailed: 'Invoice(s) sent by e-mail.'
     bulk_deleted: 'Invoice(s) deleted.'
+    no_js_invoice_print: 'Click here to print your invoice if it does not happen automatically.'
 
 menu:
     invoice_index: 'Invoices'
@@ -48,7 +49,7 @@ form:
     issue_date: 'Issued on'
     due_date: 'Due date'
     forcefully_closed: 'Force to be closed'
-    sent_by_email: 'Mark as sent by email'
+    sent_by_email: 'Mark as sent by e-mail'
     series: 'Series'
     payment_add: 'Add payment'
     terms: 'Terms'
@@ -58,7 +59,7 @@ form:
     submit_close: 'Save and close'
     submit_print: 'Save and print'
     submit_pdf: 'Save and download PDF'
-    submit_email: 'Save and send by email'
+    submit_email: 'Save and send by e-mail'
     submit_delete: 'Delete'
 
 show:
@@ -85,7 +86,7 @@ search:
 
 list:
     bulk_delete: 'Remove selected'
-    bulk_email: 'Email selected'
+    bulk_email: 'E-mail selected'
     bulk_pdf: 'Download selected as PDF'
     bulk_print: 'Print selected'
     number: 'Number'

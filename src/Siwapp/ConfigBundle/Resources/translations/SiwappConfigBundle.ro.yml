@@ -1,0 +1,41 @@
+flash:
+    logo_upload_error: 'Nu a putut stoca logo-ul. Asigurați-vă că folderul web/uploads există și este inscriptibil.'
+    updated: 'Setări actualizate.'
+
+menu:
+    settings_index: 'Setări'
+    global_settings: 'Setări generale'
+    my_settings: 'Setările mele'
+
+form:
+    company: 'Companie'
+    company_name: 'Numele companiei'
+    company_identification: 'Codul de identificare a companiei'
+    company_address: 'Adresă companiei'
+    company_phone: 'Tel. companie'
+    company_fax: 'Fax companie'
+    company_email: 'E-mail companie'
+    company_url: 'Site-ul web companie'
+    company_logo: 'Logo companie'
+    current_logo: 'Logo-ul current'
+    currency: 'Monedă'
+    legal: 'Texte juridice'
+    legal_terms: 'Termeni legali'
+    pdf: 'Setări PDF'
+    pdf_size: 'Mărimea PDF'
+    pdf_orientation: 'Orientare PDF'
+    pdf_landscape: 'Peisaj'
+    pdf_portrait: 'Portret'
+    taxes: 'Impozite'
+    series: 'Seria de identificare factură'
+    add: 'Add'
+    save: 'Save'
+
+show:
+    company_name: 'Numele companiei'
+    company_identification: 'Codul de identificare a companiei'
+    company_address: 'Adresă companiei'
+    company_phone: 'Tel. companie'
+    company_fax: 'Fax companie'
+    company_email: 'E-mail companie'
+    company_url: 'Site-ul web companie'
