@@ -1,6 +1,6 @@
 menu:
     customer_index: 'Customers'
-    customer_add: 'New Customer'
+    customer_add: 'New customer'
 
 flash:
     nothing_selected: 'Please select something.'

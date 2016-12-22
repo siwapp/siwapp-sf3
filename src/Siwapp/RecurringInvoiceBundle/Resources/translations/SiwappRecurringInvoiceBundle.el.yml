@@ -34,7 +34,7 @@ list:
     bulk_delete: 'Διαγραφή επιλεγμένων'
 
 search:
-    terms: 'Όροι'
+    terms: 'Λέξεις κλειδιά'
     status: 'Κατάσταση'
     customer: 'Πελάτης'
     series: 'Ονομασία'

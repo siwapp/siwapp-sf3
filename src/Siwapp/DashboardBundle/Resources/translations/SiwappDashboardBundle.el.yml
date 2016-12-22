@@ -3,7 +3,7 @@ menu:
 
 list:
     payments: 'Περίληψη πληρωμών'
-    payments_received: 'Αποδείξης'
+    payments_received: 'Εισπράξεις'
     payments_due: 'Εκπρόθεσμες οφειλές'
     payments_overdue: 'Ληξιπρόθεσμες οφειλές'
     balance: 'Ισολογισμός'
