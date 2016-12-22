@@ -1,0 +1,35 @@
+menu:
+    customer_index: 'Clienți'
+    customer_add: 'Client nou'
+
+flash:
+    nothing_selected: 'Vă rog selectαați ceva.'
+    added: 'Client adăugat.'
+    updated: 'Client actualizat.'
+    deleted: 'Clientul s-a șters.'
+    bulk_deleted: 'Clienți s-au șters.'
+
+search:
+    terms: 'Termeni'
+    submit: 'Căutare'
+    reset: 'Reset'
+
+form:
+    customer: 'Client'
+    name: 'Nume'
+    identification: 'Identificare'
+    email: 'E-mail'
+    contact_person: 'Persoană de contact'
+    invoicing_address: 'Adresă de facturare'
+    shipping_address: 'Adresă de livrare'
+    submit: 'Salvează'
+    submit_delete: 'Șterge'
+
+list:
+    bulk_delete: 'Șterge selecția'
+    name: 'Nume'
+    identification: 'Identificare'
+    due_amount: 'Datorie'
+    gross_amount: 'Total'
+    invoices: 'Facturi'
+    no_results: 'Nu s-au găsit clienți.'

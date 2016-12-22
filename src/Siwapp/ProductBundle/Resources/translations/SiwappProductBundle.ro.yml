@@ -1,0 +1,33 @@
+menu:
+    product_index: 'Produse'
+    product_add: 'Produs nou'
+
+flash:
+    nothing_selected: 'Vă rog selectați ceva.'
+    added: 'Produs adăugat.'
+    updated: 'Produs actualizat.'
+    deleted: 'Produsul s-a șters.'
+    bulk_deleted: 'Produse s-au șters.'
+
+search:
+    terms: 'Termeni'
+    series: 'Serie'
+    submit: 'Căutare'
+    reset: 'Reset'
+
+list:
+    bulk_delete: 'Șterge selecția'
+    reference: 'Referinţă'
+    description: 'Descriere'
+    price: 'Preț'
+    num_sold: 'Articole vândute'
+    revenue: 'Încasari'
+    no_results: 'Nu s-au găsit produse.'
+
+form:
+    product: 'Produs'
+    reference: 'Referinţă'
+    description: 'Descriere'
+    price: 'Preț'
+    submit: 'Salvează'
+    submit_delete: 'Șterge'
