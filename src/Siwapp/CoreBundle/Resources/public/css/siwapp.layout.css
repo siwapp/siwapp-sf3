@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+
 html,
 body {
   padding: 0;
@@ -158,12 +164,15 @@ a.btn-primary:active:hover,
   cursor: pointer;
 }
 
-/* Start of ure CSS3 responsive menu */
+.nav-tabs > li > a {
+  padding: 10px;
+}
+
+/* Responsive menu toggler */
 .toggle, [id^=drop] {
   display: none;
   cursor: pointer;
 }
-/* End of pure CSS3 responsive menu */
 
 #bd {
   padding: 0;
