@@ -59,19 +59,12 @@
 
     <nav class="main">
 
-      <div id="create-button" class="btn-group">
-        {% block actionlink %}
-        <a href="{{ path('invoice_add') }}" class="btn btn-default btn-primary">
-          <span class="glyphicon glyphicon-plus"></span>
-          {{ 'menu.invoice_add'|trans({}, 'SiwappInvoiceBundle') }}
-        </a>
-        {% endblock %}
-      </div>
-
-
       {% set routename = app.request.attributes.get('_route') %}
 
-      <ul class="nav nav-tabs">
+      <label for="drop" class="toggle">MENU</label>
+      <input type="checkbox" id="drop" />
+
+      <ul class="nav nav-tabs menu">
         {% if bundle_exists('SiwappDashboardBundle') %}
         <li class="{{ routename|menu_active_tab('dashboard_') }}">
           <a href="{{ path('dashboard_index') }}">{{ 'menu.dashboard_index'|trans({}, 'SiwappDashboardBundle') }}</a>
@@ -101,6 +94,16 @@
         </li>
         {% endif %}
       </ul>
+
+      <div id="create-button" class="btn-group">
+        {% block actionlink %}
+        <a href="{{ path('invoice_add') }}" class="btn btn-default btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+          {{ 'menu.invoice_add'|trans({}, 'SiwappInvoiceBundle') }}
+        </a>
+        {% endblock %}
+      </div>
+
     </nav>
 
     </div>

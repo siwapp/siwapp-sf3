@@ -1,15 +1,125 @@
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 980px) {
 
 }
 
 @media screen and (max-width: 768px) {
 
+#hd {
+  background: #fff;
+  border-bottom: 0;
+}
+
+#hd nav.main #create-button {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  float: right;
+  clear: both;
+  margin: 10px 0;
+}
+
+#hd nav.main .nav-tabs {
+  padding: 0;
+}
+
+#hd nav.main label {
+  margin-bottom: 0;
+}
+
+#hd nav.main .nav-tabs {
+  margin: 0;
+  padding: 0;
+  background: #222;
+}
+
+#hd nav.main .nav-tabs:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#hd nav.main .nav-tabs ul {
+  float: right;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  position: relative;
+}
+
+#hd nav.main .nav-tabs ul li {
+  margin: 0px;
+  display: inline-block;
+  float: left;
+  background: #222;
+}
+
+#hd nav.main .nav-tabs a {
+  display: block;
+  padding: 0 20px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 60px;
+  text-decoration: none;
+}
+
+
+
+#hd nav.main .nav-tabs > li.active > a, #hd nav.main .nav-tabs > li > a:hover {
+  background: #353535;
+  border: none;
+  color: #fff;
+}
+
+.nav-tabs > li> a {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
+
+  #hd nav.main .nav-tabs {
+    margin: 0;
+  }
+
+  .toggle + a, .menu {
+    display: none;
+  }
+
+   #hd nav.main .nav-tabs > .toggle, #hd nav.main .nav-tabs ul li .toggle.active {
+    background: #000;
+   }
+
+  .toggle {
+    display: block;
+    background: #000;
+    padding: 0 20px;
+    color: #FFF;
+    font-size: 20px;
+    line-height: 60px;
+    text-decoration: none;
+    border: none;
+  }
+
+
+  [id^=drop]:checked + ul {
+    display: block;
+  }
+
+  #hd nav.main .nav-tabs > li {
+    display: block;
+    width: 100%;
+  }
+
 }
 
 @media screen and (max-width: 480px) {
-
+  #hd nav.main #create-button {
+    float: left;
+  }
 }
 
 @media screen and (max-width: 320px) {
-
+  #hd nav.main .nav-tabs ul li {
+    display: block;
+    width: 94%;
+  }
 }
