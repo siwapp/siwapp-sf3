@@ -196,7 +196,7 @@ class EstimateController extends AbstractInvoiceController
             if ($request->request->has('save_pdf')) {
                 $redirectRoute = 'estimate_show_pdf';
             } elseif ($request->request->has('save_print')) {
-                $redirectRoute = 'estimate_show_print';
+                $this->get('session')->set('estimate_auto_print', $id);
             }
             $em->persist($entity);
             $em->flush();

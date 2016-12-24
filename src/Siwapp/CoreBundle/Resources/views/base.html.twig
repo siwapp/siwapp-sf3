@@ -1,5 +1,5 @@
 {% trans_default_domain 'SiwappCoreBundle' %}<!DOCTYPE html>
-<html>
+<html class="no-js">
 <head>
   <meta charset="utf-8" />
   <title>{% block title %}{% trans %}html.title{% endtrans %}{% endblock %} | Siwapp</title>
@@ -125,6 +125,7 @@
     {% endblock %}
 
     <div class="container">
+      {% block page_messages %}
       {% for type, flashes in app.session.flashbag.all %}
         {% for flash in flashes %}
           <div class="alert alert-{{ type }} fade in">
@@ -133,6 +134,8 @@
           </div>
         {% endfor %}
       {% endfor %}
+      {% endblock %}
+
       {% block body %}{% endblock %}
     </div>
   </section>

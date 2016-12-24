@@ -59,7 +59,7 @@
         $addLink.on('click', function(event) {
           event.preventDefault();
           var prototype = $collection.data('prototype');
-          var $form = $(prototype.replace(/\$\$name\$\$/g, $collection.children().length));
+          var $form = $(prototype.replace(/__name__/g, $collection.children().length));
           addRemoveLink($form);
           $collection.append($form);
         });

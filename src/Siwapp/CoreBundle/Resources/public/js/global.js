@@ -56,4 +56,9 @@ jQuery(function($) {
     $form.attr('target', '_blank');
     setTimeout(function () {$form.attr('target', null);}, 200);
   });
+
+  $('.js-auto-click').each(function () {
+    var $link = $(this);
+    window.open($link.attr('href'), $link.attr('target'));
+  });
 });
