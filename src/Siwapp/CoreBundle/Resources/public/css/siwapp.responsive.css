@@ -24,14 +24,6 @@
     background: #222;
   }
 
-  #hd nav.main .nav-tabs ul {
-    float: right;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    position: relative;
-  }
-
   #hd nav.main .nav-tabs ul li {
     margin: 0px;
     display: inline-block;
@@ -59,7 +51,7 @@
     border: none;
   }
 
-    #hd nav.main .nav-tabs {
+  #hd nav.main .nav-tabs {
     margin: 0;
   }
 
@@ -67,13 +59,9 @@
     display: none;
   }
 
-   #hd nav.main .nav-tabs > .toggle, #hd nav.main .nav-tabs ul li .toggle.active {
-    background: #000;
-   }
-
   .toggle {
     display: block;
-    background: #000;
+    background: #d74714;
     padding: 0 20px;
     color: #FFF;
     font-size: 20px;
@@ -94,6 +82,7 @@
   #hd nav.main .nav-tabs > li {
     display: block;
     width: 100%;
+    border-top: 1px solid #000;
     border-bottom: 1px solid #000;
   }
 
@@ -113,6 +102,14 @@
 
   #hd nav.main #create-button {
     float: left;
+  }
+
+  .form-group.float-right.btn-toolbar {
+    float: left;
+  }
+
+  .form-group.float-right.btn-toolbar .btn-group {
+    margin: 5px 0 0 0;
   }
 
 }
