@@ -36,7 +36,6 @@
     margin: 0px;
     display: inline-block;
     float: left;
-    background: #222;
   }
 
   #hd nav.main .nav-tabs a {
@@ -83,6 +82,11 @@
     border: none;
   }
 
+  .toggle span.glyphicon {
+    font-size: 18px;
+    margin-right: 2px;
+  }
+
   [id^=drop]:checked + ul {
     display: block;
   }
@@ -90,6 +94,7 @@
   #hd nav.main .nav-tabs > li {
     display: block;
     width: 100%;
+    border-bottom: 1px solid #000;
   }
 
   table {
