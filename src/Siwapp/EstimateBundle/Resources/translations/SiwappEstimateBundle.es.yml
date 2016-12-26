@@ -20,6 +20,7 @@ flash:
     bulk_emailed: 'Presupuesto(s) enviado(s) por correo electrónico.'
     bulk_deleted: 'Presupuesto(s) borrado(s).'
     invoice_generated: 'Factura generada.'
+    no_js_estimate_print: 'Pulsa aquí para imprimir tu presupuesto si no sucede automáticamente.'
 
 search:
     terms: 'Términos'
