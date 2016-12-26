@@ -1,6 +1,6 @@
 menu:
     product_index: 'Products'
-    product_add: 'New Product'
+    product_add: 'New product'
 
 flash:
     nothing_selected: 'Please select something.'
