@@ -21,6 +21,7 @@ class AbstractInvoiceType extends AbstractType
             ->add('customer_name', null, [
                 'label' => 'form.customer_name',
                 'translation_domain' => 'SiwappInvoiceBundle',
+                'required' => 'true',
             ])
             ->add('customer_identification', null, [
                 'label' => 'form.customer_identification',
@@ -29,6 +30,7 @@ class AbstractInvoiceType extends AbstractType
             ->add('customer_email', null, [
                 'label' => 'form.customer_email',
                 'translation_domain' => 'SiwappInvoiceBundle',
+                'required' => 'true',
             ])
             ->add('invoicing_address', null, [
                 'attr' => ['rows' => 3],

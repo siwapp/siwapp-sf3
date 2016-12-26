@@ -154,18 +154,20 @@ class UpgradeFrom04Command extends ContainerAwareCommand
         $sth->execute();
         foreach ($sth->fetchAll(\PDO::FETCH_ASSOC) as $row) {
             if (empty($row['name'])) {
-                // Do not import records with empty name.
-                continue;
+                // In previous version name was optional.
+                $name = 'Upgradefrom04 Default Name';
+            } else {
+                $name = $row['name'];
             }
             $customer = new Customer;
-            $customer->setName($row['name']);
+            $customer->setName($name);
             if ($row['identification'] && $row['identification'] !== 'Client Legal Id') {
                 $customer->setIdentification($row['identification']);
             }
             $email = $row['email'];
             // In previous version email was optional.
             if (!$email) {
-                $email = strtolower(str_replace(' ', '-', $row['name'])) . '@upgradefrom04.fixme';
+                $email = strtolower(str_replace(' ', '-', $name)) . '@upgradefrom04.fixme';
             }
             $customer->setEmail($email);
             $customer->setContactPerson($row['contact_person']);
