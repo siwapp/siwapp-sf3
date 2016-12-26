@@ -35,4 +35,4 @@ To have the siwapp interface in another language you will need the php-intl exte
 
 Visit your profile page, change your locale and then log out. When you log back in the interface language should be switched.
 
-Siwapp is translated only to Spanish for now, feel free to contribute more translations!
+Siwapp is translated to Spanish, Greek, and Romanian for now, feel free to contribute more translations!

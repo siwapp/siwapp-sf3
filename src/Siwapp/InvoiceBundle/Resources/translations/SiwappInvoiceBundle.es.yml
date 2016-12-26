@@ -33,6 +33,7 @@ flash:
     emailed: 'Factura enviada por correo electrónico.'
     bulk_emailed: 'Factura(s) enviada(s) por correo electrónico.'
     bulk_deleted: 'Factura(s) borrada(s).'
+    no_js_invoice_print: 'Pulsa aquí para imprimir tu factura si no sucede automáticamente.'
 
 menu:
     invoice_index: 'Facturas'
@@ -54,6 +55,8 @@ form:
     terms: 'Términos'
     notes: 'Notas'
     submit: 'Guardar'
+    submit_draft: 'Guardar como borrador'
+    submit_close: 'Guardar y cerrar'
     submit_print: 'Guardar e imprimir'
     submit_pdf: 'Guardar y descargar como PDF'
     submit_email: 'Guardar y enviar por email'
