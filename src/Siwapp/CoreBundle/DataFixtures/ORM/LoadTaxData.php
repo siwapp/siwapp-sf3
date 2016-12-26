@@ -24,19 +24,19 @@ class LoadTaxData extends AbstractFixture implements OrderedFixtureInterface, Co
         $taxes = [
             'Tax_1' => [
                 'name' => 'IVA',
-                'value' => 16,
+                'value' => 21,
                 'active' => true,
                 'is_default' => true,
             ],
             'Tax_2' => [
                 'name' => 'IVA',
-                'value' => 4,
+                'value' => 10,
                 'active' => true,
                 'is_default' => false,
             ],
             'Tax_3' => [
                 'name'=>'IVA',
-                'value'=>7,
+                'value'=>4,
                 'active'=>false,
                 'is_default'=>false
             ],
