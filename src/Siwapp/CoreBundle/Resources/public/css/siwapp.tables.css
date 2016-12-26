@@ -1,37 +1,47 @@
 table.horizontal th {
   border-bottom: 0;
 }
+
 table.horizontal tr + tr th {
   border-top: 1px solid #ddd;
 }
+
 table.horizontal th + td {
   border-left: 1px solid #ddd;
 }
+
 table.align-middle td {
   vertical-align: middle !important;
 }
+
 table td.cell-align-left,
 table th.cell-align-left {
   text-align: left;
 }
+
 table td.cell-align-right,
 table th.cell-align-right {
   text-align: right;
 }
+
 table td.cell-align-center,
 table th.cell-align-center {
   text-align: center;
 }
+
 table.table-striped[data-type] tbody td {
   cursor: pointer;
 }
+
 table.table-striped[data-type] tbody tr.selected td,
 table.table-striped[data-type] tbody tr:hover td {
   background-color: #fdf1e0;
 }
+
 table.table-striped[data-type] tbody tr.selected:nth-child(odd) td {
   background-color: #fbe6c8;
 }
+
 table td.table-action .form-group,
 table td.table-action .checkbox,
 table td.table-action .checkbox label,

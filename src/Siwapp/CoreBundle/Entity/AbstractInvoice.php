@@ -41,7 +41,8 @@ abstract class AbstractInvoice implements Timestampable
     /**
      * @var string $customer_name
      *
-     * @ORM\Column(name="customer_name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="customer_name", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $customer_name;
 
@@ -55,7 +56,8 @@ abstract class AbstractInvoice implements Timestampable
     /**
      * @var string $customer_email
      *
-     * @ORM\Column(name="customer_email", type="string", length=255, nullable=true)
+     * @ORM\Column(name="customer_email", type="string", length=255)
+     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $customer_email;
