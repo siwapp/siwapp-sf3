@@ -92,4 +92,8 @@
     margin: 5px 0 0 0;
   }
 
+  .btn-group #search-reset {
+    margin-left: 5px;
+  }
+
 }

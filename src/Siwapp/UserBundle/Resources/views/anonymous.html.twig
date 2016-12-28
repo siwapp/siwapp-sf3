@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  {% stylesheets 'bundles/siwappuser/css/login.css' filter='cssrewrite' %}
+  {% stylesheets 'bundles/siwappuser/css/login.css' 'bundles/siwappuser/css/responsive.login.css' filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
 {% endblock %}

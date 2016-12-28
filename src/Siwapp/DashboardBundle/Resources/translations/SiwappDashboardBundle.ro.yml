@@ -10,6 +10,6 @@ list:
     balance_total: 'Total'
     balance_net: 'Net'
     balance_taxes: 'Impozite'
-    taxes: 'Impozitele reținute la sursă'
+    taxes: 'Impozite reținute la sursă'
     invoices_latest: 'Facturi recente'
     invoices_due: 'Facturi restanțe'
