@@ -44,7 +44,9 @@
 
     <nav class="user">
       <ul class="list-unstyled">
-        <li>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</li>
+        <li><span class="glyphicon glyphicon-user"></span>
+          {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+        </li>
         <li>
           <a href="{{ path('global_settings') }}" data-shortcut="alt+g, s">
             <span class="glyphicon glyphicon-cog"></span>
