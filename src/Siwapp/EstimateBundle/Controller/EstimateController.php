@@ -106,7 +106,7 @@ class EstimateController extends AbstractInvoiceController
             throw $this->createNotFoundException('Unable to find Estimate entity.');
         }
 
-        return new Response($this->getEstimatePrintPdfHtml($estimate));
+        return new Response($this->getEstimatePrintPdfHtml($estimate, true));
     }
 
     /**
