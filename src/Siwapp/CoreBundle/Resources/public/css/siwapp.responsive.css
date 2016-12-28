@@ -52,6 +52,8 @@
     color: #FFF;
     text-decoration: none;
     border: none;
+    font-size: 15.6px;
+    font-weight: bold;
   }
 
   .toggle span.glyphicon {
