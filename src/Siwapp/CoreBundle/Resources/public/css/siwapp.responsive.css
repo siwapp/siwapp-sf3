@@ -84,7 +84,8 @@
 @media screen and (max-width: 480px) {
 
   #hd nav.main #create-button,
-  .form-group.float-right.btn-toolbar {
+  .form-group.float-right.btn-toolbar,
+  #hd nav.user {
     float: left;
   }
 
