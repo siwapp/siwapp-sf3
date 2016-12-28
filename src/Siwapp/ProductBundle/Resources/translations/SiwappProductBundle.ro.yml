@@ -4,20 +4,20 @@ menu:
 
 flash:
     nothing_selected: 'Vă rog selectați ceva.'
-    added: 'Produs adăugat.'
-    updated: 'Produs actualizat.'
-    deleted: 'Produsul s-a șters.'
-    bulk_deleted: 'Produse s-au șters.'
+    added: 'Produsul a fost adăugat.'
+    updated: 'Produsul a fost actualizat.'
+    deleted: 'Produsul a fost șters.'
+    bulk_deleted: 'Produse au fost șterse.'
 
 search:
-    terms: 'Termeni'
+    terms: 'Termeni de căutare'
     series: 'Serie'
     submit: 'Căutare'
     reset: 'Reset'
 
 list:
     bulk_delete: 'Șterge selecția'
-    reference: 'Referinţă'
+    reference: 'Cod produs'
     description: 'Descriere'
     price: 'Preț'
     num_sold: 'Articole vândute'
@@ -26,7 +26,7 @@ list:
 
 form:
     product: 'Produs'
-    reference: 'Referinţă'
+    reference: 'Cod produs'
     description: 'Descriere'
     price: 'Preț'
     submit: 'Salvează'

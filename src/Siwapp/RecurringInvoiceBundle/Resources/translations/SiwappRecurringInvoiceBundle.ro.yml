@@ -11,19 +11,19 @@ menu:
 
 flash:
     nothing_selected: 'Vă rog selectați ceva.'
-    added: 'Factura recurenta s-a adăugat.'
-    updated: 'Factura recurenta s-a actualizat.'
-    deleted: 'Factura recurenta s-a șters.'
-    bulk_deleted: 'Facturi recurente s-au șters.'
-    invoices_generated: '%count% facturi s-au generat.'
-    invoices_pending: 'Aveți %count% facturi recurent care nu s-au executat.'
+    added: 'Factura recurenta a fost adăugata.'
+    updated: 'Factura recurenta a fost actualizata.'
+    deleted: 'Factura recurenta a fost ștearsa.'
+    bulk_deleted: 'Facturi recurente au fost șterse.'
+    invoices_generated: '%count% facturi au fost generate.'
+    invoices_pending: 'Aveți %count% facturi recurent care nu au fost executate.'
 
 list:
     average_turnover: 'Cifra de afaceri medie'
-    day: 'Zi'
-    week: 'Săptamâmă'
-    month: 'Luna'
-    year: 'An'
+    day: 'zi'
+    week: 'săptamâmă'
+    month: 'lună'
+    year: 'an'
     series: 'Serie'
     customer_name: 'Client'
     period_type: 'Periodă'
@@ -34,7 +34,7 @@ list:
     bulk_delete: 'Șterge selecția.'
 
 search:
-    terms: 'Termeni'
+    terms: 'Termeni de căutare'
     status: 'Status'
     customer: 'Client'
     series: 'Serie'
