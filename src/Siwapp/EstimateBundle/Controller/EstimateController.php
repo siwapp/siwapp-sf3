@@ -106,7 +106,7 @@ class EstimateController extends AbstractInvoiceController
             throw $this->createNotFoundException('Unable to find Estimate entity.');
         }
 
-        return new Response($this->getEstimatePrintPdfHtml($estimate));
+        return new Response($this->getEstimatePrintPdfHtml($estimate, true));
     }
 
     /**
@@ -153,6 +153,11 @@ class EstimateController extends AbstractInvoiceController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($request->request->has('save_draft')) {
+                $estimate->setStatus(Estimate::DRAFT);
+            } elseif ($request->request->has('save')) {
+                $estimate->setStatus(Estimate::PENDING);
+            }
             $em->persist($estimate);
             $em->flush();
             $this->addTranslatedMessage('flash.added');

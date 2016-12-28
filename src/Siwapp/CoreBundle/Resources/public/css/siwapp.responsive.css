@@ -26,10 +26,8 @@
 
   #hd nav.main .nav-tabs a {
     display: block;
-    padding: 0 20px;
+    padding: 6px 12px;
     color: #fff;
-    font-size: 20px;
-    line-height: 60px;
     text-decoration: none;
     margin: 0;
     border-radius: 0;
@@ -50,16 +48,13 @@
   .toggle {
     display: block;
     background: #d74714;
-    padding: 0 20px;
+    padding: 6px 12px;
     color: #FFF;
-    font-size: 20px;
-    line-height: 60px;
     text-decoration: none;
     border: none;
   }
 
   .toggle span.glyphicon {
-    font-size: 18px;
     margin-right: 2px;
   }
 

@@ -8,7 +8,7 @@
   {% if app.request.session.get('estimate_auto_print') %}
   <div class="alert alert-warning fade in js-hide">
     <a href="#" class="close" data-dismiss="alert">&times;</a>
-    <a href="{{ path('invoice_show_print', {'id': app.request.session.remove('estimate_auto_print')}) }}" class="js-auto-click">{% trans %}flash.no_js_estimate_print{% endtrans %}</a>
+    <a href="{{ path('estimate_show_print', {'id': app.request.session.remove('estimate_auto_print')}) }}" class="js-auto-click">{% trans %}flash.no_js_estimate_print{% endtrans %}</a>
   </div>
   {% endif %}
 {% endblock %}
