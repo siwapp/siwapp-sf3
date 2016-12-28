@@ -153,6 +153,11 @@ class EstimateController extends AbstractInvoiceController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($request->request->has('save_draft')) {
+                $estimate->setStatus(Estimate::DRAFT);
+            } elseif ($request->request->has('save')) {
+                $estimate->setStatus(Estimate::PENDING);
+            }
             $em->persist($estimate);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
