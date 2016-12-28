@@ -3,6 +3,7 @@ html:
 
 menu:
     settings: 'Settings'
+    help: 'Help'
 
 item:
     form:

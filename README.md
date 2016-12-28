@@ -6,33 +6,11 @@
 
 **Online Invoice Management**
 
-## Installation
+The unofficial port of the old version to Symfony version 3.
 
-See [here](https://github.com/siwapp/siwapp-sf3/wiki/Installation).
+The initial siwapp project was based on Symfony version 1, but the founders
+decided to switch the project from PHP to Ruby on Rails, something you can find
+here: https://github.com/siwapp/siwapp
 
-### Upgrading from v0.4.x
-
-Replace the DB_* values with the one of your old database and then run:
-
-    $ php bin/console siwapp:upgrade-db:0.4-1.0 DB_DRIVER DB_USER DB_PASSWORD DB_NAME
-
-
-### Loading demo data
-
-    $ php bin/console doctrine:fixtures:load
-
-### Overriding templates
-
-See [here](https://github.com/siwapp/siwapp-sf3/wiki/The-templates).
-
-### Automating recurring invoices generation
-
-Just add a cronjob that runs `php bin/console siwapp:recurring:generate-pending`
-
-### Interface language
-
-To have the siwapp interface in another language you will need the php-intl extension installed.
-
-Visit your profile page, change your locale and then log out. When you log back in the interface language should be switched.
-
-Siwapp is translated to Spanish, Greek, and Romanian for now, feel free to contribute more translations!
+You can find the documentation of this project in the github wiki here:
+https://github.com/siwapp/siwapp-sf3/wiki

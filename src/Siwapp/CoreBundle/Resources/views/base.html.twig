@@ -51,8 +51,14 @@
             {{ 'menu.settings_index'|trans({}, 'SiwappConfigBundle') }}
           </a>
         </li>
+        <li><a href="https://github.com/siwapp/siwapp" target="_blank">
+            <span class="glyphicon glyphicon-question-sign"></span>
+            {{ 'menu.help'|trans }}</a>
+        </li>
         <li>
-          <a href="{{ path('fos_user_security_logout') }}" data-shortcut="alt+g, q">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+          <a href="{{ path('fos_user_security_logout') }}" data-shortcut="alt+g, q">
+            <span class="glyphicon glyphicon-log-out"></span>
+            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
         </li>
       </ul>
     </nav>
