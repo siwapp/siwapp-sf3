@@ -3,6 +3,7 @@ html:
 
 menu:
     settings: 'Setări'
+    help: 'Ajutor'
 
 item:
     form:

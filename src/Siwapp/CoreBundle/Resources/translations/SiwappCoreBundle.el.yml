@@ -3,6 +3,7 @@ html:
 
 menu:
     settings: 'Ρυθμίσεις'
+    help: 'Βοήθεια'
 
 item:
     form:
