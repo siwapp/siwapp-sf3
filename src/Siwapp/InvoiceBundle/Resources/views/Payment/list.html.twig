@@ -1,5 +1,6 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 {% trans_default_domain 'SiwappInvoiceBundle' %}
+{% set is_add_form_expanded = add_form.vars.errors.count() == 0 %}
 
 {% block searchform %}
 {% endblock %}
@@ -52,11 +53,12 @@
   </table>
   <div class="form-actions buttons">
     <button type="submit" class="btn btn-default btn-danger float-left" name="remove"><span class="glyphicon glyphicon-trash"></span> {% trans %}payment.list.bulk_delete{% endtrans %}</button>
-    <a href="#payment-add-form" class="btn btn-default btn-info" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span> {% trans %}form.payment_add{% endtrans %}</a>
+    <a href="#payment-add-form" class="btn btn-default btn-info" data-toggle="collapse"{% if is_add_form_expanded %} aria-expanded="true"{% endif %}><span class="glyphicon glyphicon-plus"></span> {% trans %}form.payment_add{% endtrans %}</a>
   </div>
   {{ form_end(list_form)}}
 
-  {{ form_start(add_form, {'attr': {'id': 'payment-add-form', 'class': 'collapse form-inline' }}) }}
+  {% set classes = is_add_form_expanded ? 'collapse in form-inline' : 'collapse form-inline' %}
+  {{ form_start(add_form, {'attr': {'id': 'payment-add-form', 'class': classes }}) }}
     {{ form_row(add_form.date) }}
     {{ form_row(add_form.amount) }}
     {{ form_row(add_form.notes) }}
