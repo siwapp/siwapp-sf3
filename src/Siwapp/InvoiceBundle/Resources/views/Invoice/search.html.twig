@@ -18,7 +18,7 @@
         </a>
       </div>
       <div class="btn-group">
-        <a id="search-reset" href="{{ path('invoice_index') }}" class="btn btn-default btn-warning">{% trans %}search.reset{% endtrans %}</a>
+        <a id="search-reset" href="{{ path(app.request.attributes.get('_route')) }}" class="btn btn-default btn-warning">{% trans %}search.reset{% endtrans %}</a>
       </div>
     </div>
 
