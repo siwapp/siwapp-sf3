@@ -6,7 +6,7 @@
 
 **Online Invoice Management**
 
-The unofficial port of the old version to Symfony version 3.
+The unofficial port of the old 0.4.x version to Symfony 3.x and PHP 7.x.
 
 The initial siwapp project was based on Symfony version 1, but the founders
 decided to switch the project from PHP to Ruby on Rails, something you can find
