@@ -6,6 +6,7 @@ menu:
     settings_index: 'Settings'
     global_settings: 'Global settings'
     my_settings: 'My settings'
+    change_password: 'Change password'
 
 form:
     company: 'Company'

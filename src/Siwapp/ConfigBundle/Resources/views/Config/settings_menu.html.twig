@@ -5,5 +5,6 @@
     <li class="{{ routename|menu_active_tab('global_settings') }}"><a href="{{ path('global_settings') }}">{% trans %}menu.global_settings{% endtrans %}</a></li>
     {% if bundle_exists('SiwappUserBundle') %}
     <li class="{{ routename|menu_active_tab('fos_user_profile_edit') }}"><a href="{{ path('fos_user_profile_edit') }}">{% trans %}menu.my_settings{% endtrans %}</a></li>
+    <li class="{{ routename|menu_active_tab('fos_user_change_password') }}"><a href="{{ path('fos_user_change_password') }}">{% trans %}menu.change_password{% endtrans %}</a></li>
     {% endif %}
 </ul>
