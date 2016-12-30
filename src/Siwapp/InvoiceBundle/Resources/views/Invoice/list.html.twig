@@ -107,7 +107,7 @@
           {{ form_row(list_form.invoices[key]) }}
         </td>
         {% endif %}
-        <td class="cell-size-medium cell-align-center">{{ entity.label() }}</td>
+        <td class="cell-size-medium">{{ entity.label() }}</td>
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.issueDate|localizeddate('short', 'none', app.request.locale) }}</td>
         <td>{{ entity.dueDate|localizeddate('short', 'none', app.request.locale) }}</td>

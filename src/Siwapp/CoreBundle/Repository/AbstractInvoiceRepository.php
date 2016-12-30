@@ -137,7 +137,7 @@ class AbstractInvoiceRepository extends EntityRepository
                 continue;
             }
             if ($field == 'terms') {
-                $qb->join('i.series', 's', 'WITH', 'i.series = s.id');
+                $qb->join('i.series', 's');
                 $terms = $qb->expr()->literal("%$value%");
                 $qb->andWhere($qb->expr()->orX(
                     $qb->expr()->like('i.number', $terms),
