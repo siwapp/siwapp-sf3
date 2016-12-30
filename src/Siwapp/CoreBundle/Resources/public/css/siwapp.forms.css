@@ -26,6 +26,6 @@ form.search #search-advanced.active .caret {
 .form-actions {
   margin: 20px 0;
 }
-.col-md-1 {
-    width: 9.0%;
+#invoice-like-items .col-md-1 {
+    width: 8.78%;
 }
