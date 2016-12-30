@@ -3,6 +3,7 @@ html:
 
 menu:
     settings: 'Ajustes'
+    help: 'Ayuda'
 
 item:
     form:
