@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
+use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\CoreBundle\Entity\Series;
 
@@ -139,11 +140,18 @@ class AbstractInvoiceRepository extends EntityRepository
             if ($field == 'terms') {
                 $qb->join('i.series', 's');
                 $terms = $qb->expr()->literal("%$value%");
-                $qb->andWhere($qb->expr()->orX(
-                    $qb->expr()->like('i.number', $terms),
-                    $qb->expr()->like('s.name', $terms),
-                    $qb->expr()->like("CONCAT(s.name, ' ', i.number)", $terms)
-                ));
+                if ($this->getEntityName() == Invoice::class) {
+                    $expr = $qb->expr()->orX(
+                        $qb->expr()->like('i.number', $terms),
+                        $qb->expr()->like('s.name', $terms),
+                        $qb->expr()->like("CONCAT(s.value, i.number)", $terms)
+                    );
+                }
+                else {
+                    $expr = $qb->expr()->like('s.name', $terms);
+                }
+
+                $qb->andWhere($expr);
             } elseif ($field == 'date_from') {
                 $qb->andWhere('i.issue_date >= :date_from');
                 $qb->setParameter('date_from', $value);
