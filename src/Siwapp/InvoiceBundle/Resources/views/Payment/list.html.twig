@@ -1,6 +1,6 @@
 {% extends "SiwappCoreBundle::base.html.twig" %}
 {% trans_default_domain 'SiwappInvoiceBundle' %}
-{% set is_add_form_expanded = add_form.vars.errors.count() == 0 %}
+{% set is_add_form_expanded = not add_form.vars.valid %}
 
 {% block searchform %}
 {% endblock %}
