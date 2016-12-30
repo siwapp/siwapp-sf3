@@ -93,7 +93,7 @@ list:
     issue_date: 'Data'
     due_date: 'Data scadenta'
     status: 'Status'
-    due_amount: 'Suma datorată'
+    due_amount: 'Suma datorata'
     gross_amount: 'Total'
     payments: 'Plați'
     no_results: 'Nu s-au găsit facturi.'
