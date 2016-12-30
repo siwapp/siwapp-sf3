@@ -90,6 +90,8 @@ fos_user:
     profile:
         form:
             type: Siwapp\UserBundle\Form\ProfileFormType
+    service:
+        mailer: siwapp_user.mailer.siwapp
 
 stof_doctrine_extensions:
     orm:
