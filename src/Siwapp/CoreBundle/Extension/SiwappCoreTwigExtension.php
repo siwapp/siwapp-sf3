@@ -26,9 +26,10 @@ class SiwappCoreTwigExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('bundle_exists', array($this, 'bundleExists')),
-        );
+        return [
+            new \Twig_SimpleFunction('siwapp_version', [$this, 'version']),
+            new \Twig_SimpleFunction('bundle_exists', [$this, 'bundleExists']),
+        ];
     }
 
     /**
@@ -51,5 +52,10 @@ class SiwappCoreTwigExtension extends \Twig_Extension
     public function bundleExists($bundle)
     {
         return array_key_exists($bundle, $this->bundles);
+    }
+
+    public function version(): string
+    {
+        return \Siwapp\CoreBundle\SiwappCoreBundle::version;
     }
 }
