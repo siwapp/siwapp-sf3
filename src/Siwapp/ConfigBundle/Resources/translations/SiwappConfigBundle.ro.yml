@@ -6,6 +6,7 @@ menu:
     settings_index: 'Setări'
     global_settings: 'Setări generale'
     my_settings: 'Setările mele'
+    change_password: 'Schimbare parola'
 
 form:
     company: 'Companie'

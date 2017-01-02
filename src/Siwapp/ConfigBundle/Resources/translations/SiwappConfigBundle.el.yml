@@ -6,6 +6,7 @@ menu:
     settings_index: 'Ρυθμίσεις'
     global_settings: 'Γενικές ρυθμίσεις'
     my_settings: 'Οι ρυθμίσεις μου'
+    change_password: 'Αλλαγή κωδικού'
 
 form:
     company: 'Εταιρεία'
