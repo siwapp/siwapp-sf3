@@ -403,6 +403,7 @@ class EstimateController extends AbstractInvoiceController
             'estimate'  => $estimate,
             'settings' => $em->getRepository('SiwappConfigBundle:Property')->getAll(),
         ));
+        $text = Html2Text\Html2Text::convert($html);
         $pdf = $this->getPdf($html);
         $attachment = new \Swift_Attachment($pdf, $estimate->getId().'.pdf', 'application/pdf');
         $subject = '[' . $this->get('translator')->trans('estimate.estimate', [], 'SiwappEstimateBundle') . ': ' . $estimate->label() . ']';
