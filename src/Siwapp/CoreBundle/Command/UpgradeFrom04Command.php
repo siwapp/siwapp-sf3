@@ -153,6 +153,11 @@ class UpgradeFrom04Command extends ContainerAwareCommand
         $sth = $dbh->prepare('SELECT * FROM customer');
         $sth->execute();
         foreach ($sth->fetchAll(\PDO::FETCH_ASSOC) as $row) {
+            if (empty($row['name']) && empty($row['email'])) {
+                // If there is no name and email available, then its trash; skip it.
+                continue;
+            }
+
             if (empty($row['name'])) {
                 // In previous version name was optional.
                 $name = 'Upgradefrom04 Default Name';
