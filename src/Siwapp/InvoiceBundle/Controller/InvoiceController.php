@@ -443,6 +443,7 @@ class InvoiceController extends AbstractInvoiceController
             ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
             ->setTo($invoice->getCustomerEmail(), $invoice->getCustomerName())
             ->setBody($html, 'text/html')
+            ->addPart($text, 'text/plain')
             ->attach($attachment);
 
         return $message;
