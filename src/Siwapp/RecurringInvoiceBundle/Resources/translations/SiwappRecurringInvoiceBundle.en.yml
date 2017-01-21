@@ -3,10 +3,11 @@ recurring_invoice:
     inactive: 'Inactive'
     pending: 'Pending'
     finished: 'Finished'
+    recurring_invoice: 'Recurring invoice'
 
 menu:
     recurring_index: 'Recurring invoices'
-    recurring_add: 'New Recurring Invoice'
+    recurring_add: 'New recurring invoice'
 
 flash:
     nothing_selected: 'Please select something.'

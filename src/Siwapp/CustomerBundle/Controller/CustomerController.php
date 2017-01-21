@@ -31,7 +31,7 @@ class CustomerController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -45,7 +45,7 @@ class CustomerController extends Controller
             'action' => $this->generateUrl('customer_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isValid()) {
+        if ($listForm->isSubmitted() && $listForm->isValid()) {
             $data = $listForm->getData();
             if ($request->request->has('delete')) {
                 if (empty($data['customers'])) {
@@ -66,7 +66,7 @@ class CustomerController extends Controller
 
         return array(
             'customers' => $pagination,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
         );
@@ -98,7 +98,7 @@ class CustomerController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($customer);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
@@ -129,7 +129,7 @@ class CustomerController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($customer);
             $em->flush();
             $this->addTranslatedMessage('flash.updated');

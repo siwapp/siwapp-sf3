@@ -1,4 +1,4 @@
-jQuery(function($){
+jQuery(function($) {
 
   // HTML5 Placeholders for forms
   $('input, textarea').placeholder();
@@ -55,5 +55,10 @@ jQuery(function($){
     var $form = $(this).parents('form');
     $form.attr('target', '_blank');
     setTimeout(function () {$form.attr('target', null);}, 200);
+  });
+
+  $('.js-auto-click').each(function () {
+    var $link = $(this);
+    window.open($link.attr('href'), $link.attr('target'));
   });
 });

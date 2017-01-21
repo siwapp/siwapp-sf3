@@ -6,8 +6,8 @@ cache:
         - $HOME/.composer/cache
 
 php:
-    - '5.6'
     - '7.0'
+    - '7.1'
 
 before_install:
     - phpenv config-rm xdebug.ini
@@ -17,3 +17,6 @@ before_install:
 install:
     - composer install
     - php bin/console doctrine:schema:create
+
+script:
+    - vendor/bin/phpunit --colors

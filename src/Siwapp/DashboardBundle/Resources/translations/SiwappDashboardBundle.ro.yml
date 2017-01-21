@@ -1,0 +1,15 @@
+menu:
+    dashboard_index: 'Bord'
+
+list:
+    payments: 'Rezumat plăți'
+    payments_received: 'Încasări'
+    payments_due: 'Plăți întârziate'
+    payments_overdue: 'Plăți expirate'
+    balance: 'Balanța contabilă'
+    balance_total: 'Total'
+    balance_net: 'Net'
+    balance_taxes: 'Impozite'
+    taxes: 'Impozite reținute la sursă'
+    invoices_latest: 'Facturi recente'
+    invoices_due: 'Facturi restanțe'

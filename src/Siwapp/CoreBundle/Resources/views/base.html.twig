@@ -1,7 +1,8 @@
 {% trans_default_domain 'SiwappCoreBundle' %}<!DOCTYPE html>
-<html>
+<html class="no-js">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% trans %}html.title{% endtrans %}{% endblock %} | Siwapp</title>
   {% block stylesheets %}
   {% stylesheets
@@ -13,8 +14,8 @@
     'bundles/siwappcore/css/siwapp.forms.css'
     'bundles/siwappcore/css/siwapp.patterns.css'
     'bundles/siwappcore/css/siwapp.autocomplete.css'
+    'bundles/siwappcore/css/siwapp.responsive.css'
     filter='cssrewrite'
-    filter='?yui_css'
   %}
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}
@@ -24,7 +25,6 @@
     'bundles/siwappcore/vendor/jquery-2.2.3.min.js'
     'bundles/siwappcore/vendor/modernizr-custom.js'
     output='js/core.js'
-    filter='?yui_js'
   %}
   <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
   {% endjavascripts %}
@@ -39,40 +39,41 @@
     <h1>
       <a href="{{ bundle_exists('SiwappDashboardBundle') ? path('dashboard_index') : path('invoice_index') }}">
         <img src="{{ asset('bundles/siwappcore/img/logo.png') }}" alt="Siwapp" />
-        <span class="version">v.1.0-DEV</span>
+        <span class="version">v{{ siwapp_version() }}</span>
       </a>
     </h1>
 
     <nav class="user">
       <ul class="list-unstyled">
-        <li>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</li>
+        <li><span class="glyphicon glyphicon-user"></span>
+          {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+        </li>
         <li>
           <a href="{{ path('global_settings') }}" data-shortcut="alt+g, s">
             <span class="glyphicon glyphicon-cog"></span>
             {{ 'menu.settings_index'|trans({}, 'SiwappConfigBundle') }}
           </a>
         </li>
+        <li><a href="https://github.com/siwapp/siwapp-sf3/wiki" target="_blank">
+            <span class="glyphicon glyphicon-question-sign"></span>
+            {{ 'menu.help'|trans }}</a>
+        </li>
         <li>
-          <a href="{{ path('fos_user_security_logout') }}" data-shortcut="alt+g, q">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+          <a href="{{ path('fos_user_security_logout') }}" data-shortcut="alt+g, q">
+            <span class="glyphicon glyphicon-log-out"></span>
+            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
         </li>
       </ul>
     </nav>
 
     <nav class="main">
 
-      <div id="create-button" class="btn-group">
-        {% block actionlink %}
-        <a href="{{ path('invoice_add') }}" class="btn btn-default btn-primary">
-          <span class="glyphicon glyphicon-plus"></span>
-          {{ 'menu.invoice_add'|trans({}, 'SiwappInvoiceBundle') }}
-        </a>
-        {% endblock %}
-      </div>
-
-
       {% set routename = app.request.attributes.get('_route') %}
 
-      <ul class="nav nav-tabs">
+      <label for="drop" class="toggle"><span class="glyphicon glyphicon-menu-hamburger"></span>MENU</label>
+      <input type="checkbox" id="drop" />
+
+      <ul class="nav nav-tabs menu">
         {% if bundle_exists('SiwappDashboardBundle') %}
         <li class="{{ routename|menu_active_tab('dashboard_') }}">
           <a href="{{ path('dashboard_index') }}">{{ 'menu.dashboard_index'|trans({}, 'SiwappDashboardBundle') }}</a>
@@ -102,6 +103,16 @@
         </li>
         {% endif %}
       </ul>
+
+      <div id="create-button" class="btn-group">
+        {% block actionlink %}
+        <a href="{{ path('invoice_add') }}" class="btn btn-default btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>
+          {{ 'menu.invoice_add'|trans({}, 'SiwappInvoiceBundle') }}
+        </a>
+        {% endblock %}
+      </div>
+
     </nav>
 
     </div>
@@ -123,6 +134,7 @@
     {% endblock %}
 
     <div class="container">
+      {% block page_messages %}
       {% for type, flashes in app.session.flashbag.all %}
         {% for flash in flashes %}
           <div class="alert alert-{{ type }} fade in">
@@ -131,6 +143,8 @@
           </div>
         {% endfor %}
       {% endfor %}
+      {% endblock %}
+
       {% block body %}{% endblock %}
     </div>
   </section>
@@ -145,7 +159,6 @@
     'bundles/siwappcore/vendor/select2/js/select2.min.js'
     'bundles/siwappcore/js/global.js'
     output='js/frameworks.js'
-    filter='?yui_js'
   %}
   <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
   {% endjavascripts %}

@@ -1,0 +1,15 @@
+menu:
+    dashboard_index: 'Πίνακας διαχείρησης'
+
+list:
+    payments: 'Περίληψη πληρωμών'
+    payments_received: 'Εισπράξεις'
+    payments_due: 'Εκπρόθεσμες οφειλές'
+    payments_overdue: 'Ληξιπρόθεσμες οφειλές'
+    balance: 'Ισολογισμός'
+    balance_total: 'Σύνολο'
+    balance_net: 'Καθαρό υπόλοιπο'
+    balance_taxes: 'Φόροι'
+    taxes: 'Παρακρατηθέντες φόροι'
+    invoices_latest: 'Πρόσφατα τιμολόγια'
+    invoices_due: 'Παλαιότερα ληξιπρόθεσμα τιμολόγια'

@@ -2,13 +2,15 @@
 
 namespace Siwapp\InvoiceBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\CoreBundle\Controller\AbstractInvoiceController;
 use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\InvoiceBundle\Entity\Payment;
@@ -17,7 +19,7 @@ use Siwapp\InvoiceBundle\Form\InvoiceType;
 /**
  * @Route("/invoice")
  */
-class InvoiceController extends Controller
+class InvoiceController extends AbstractInvoiceController
 {
     /**
      * @Route("", name="invoice_index")
@@ -36,7 +38,7 @@ class InvoiceController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -50,7 +52,7 @@ class InvoiceController extends Controller
             'action' => $this->generateUrl('invoice_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isValid()) {
+        if ($listForm->isSubmitted() && $listForm->isValid()) {
             $data = $listForm->getData();
             if (empty($data['invoices'])) {
                 $this->addTranslatedMessage('flash.nothing_selected', 'warning');
@@ -70,7 +72,7 @@ class InvoiceController extends Controller
 
         return array(
             'invoices' => $pagination,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
         );
@@ -95,7 +97,7 @@ class InvoiceController extends Controller
 
         return array(
             'entity' => $entity,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -154,7 +156,7 @@ class InvoiceController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($request->request->has('save_draft')) {
                 $invoice->setStatus(Invoice::DRAFT);
             } elseif ($request->request->has('save')) {
@@ -170,7 +172,7 @@ class InvoiceController extends Controller
         return array(
             'form' => $form->createView(),
             'entity' => $invoice,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -190,25 +192,48 @@ class InvoiceController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $redirectRoute = 'invoice_edit';
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Invoice::DRAFT);
             } elseif ($request->request->has('save_close')) {
                 $entity->setForcefullyClosed(true);
-            } elseif ($entity->isDraft() && $request->request->has('save')) {
+            } elseif ($entity->isDraft()) {
+                // Any save action transforms this to opened.
                 $entity->setStatus(Invoice::OPENED);
             }
+            // See if one of PDF/Print buttons was clicked.
+            if ($request->request->has('save_pdf')) {
+                $redirectRoute = 'invoice_show_pdf';
+            } elseif ($request->request->has('save_print')) {
+                $this->get('session')->set('invoice_auto_print', $id);
+            }
+            // Save.
             $em->persist($entity);
             $em->flush();
             $this->addTranslatedMessage('flash.updated');
 
-            return $this->redirect($this->generateUrl('invoice_edit', array('id' => $id)));
+            // Send the email after the invoice is updated.
+            if ($request->request->has('save_email')) {
+                $message = $this->getEmailMessage($entity);
+                $result = $this->get('mailer')->send($message);
+                if ($result) {
+                    $this->addTranslatedMessage('flash.emailed');
+                    if (!$entity->isSentByEmail()) {
+                        $entity->setSentByEmail(true);
+                        $em->persist($entity);
+                        $em->flush();
+                    }
+                }
+            }
+
+            return $this->redirect($this->generateUrl($redirectRoute, array('id' => $id)));
         }
 
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -262,13 +287,16 @@ class InvoiceController extends Controller
         // Return all payments
         $em = $this->getDoctrine()->getManager();
         $invoice = $em->getRepository('SiwappInvoiceBundle:Invoice')->find($invoiceId);
+        if (!$invoice) {
+            throw $this->createNotFoundException('Unable to find Invoice entity.');
+        }
 
         $payment = new Payment;
         $addForm = $this->createForm('Siwapp\InvoiceBundle\Form\PaymentType', $payment, [
             'action' => $this->generateUrl('invoice_payments', ['invoiceId' => $invoiceId]),
         ]);
         $addForm->handleRequest($request);
-        if ($addForm->isValid() && $invoice) {
+        if ($addForm->isSubmitted() && $addForm->isValid()) {
             $invoice->addPayment($payment);
             $em->persist($invoice);
             $em->flush();
@@ -283,7 +311,7 @@ class InvoiceController extends Controller
         ]);
         $listForm->handleRequest($request);
 
-        if ($listForm->isValid() && $invoice) {
+        if ($listForm->isSubmitted() && $listForm->isValid()) {
             $data = $listForm->getData();
             foreach ($data['payments'] as $payment) {
                 $invoice->removePayment($payment);
@@ -300,7 +328,23 @@ class InvoiceController extends Controller
             'invoiceId' => $invoiceId,
             'add_form' => $addForm->createView(),
             'list_form' => $listForm->createView(),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         ];
+    }
+
+    /**
+     * @Route("/form-totals", name="invoice_form_totals")
+     */
+    public function getInvoiceFormTotals(Request $request)
+    {
+        $post = $request->request->get('invoice');
+        if (!$post) {
+            throw new NotFoundHttpException;
+        }
+
+        $response = $this->getInvoiceTotalsFromPost($post, new Invoice, $request->getLocale());
+
+        return new JsonResponse($response);
     }
 
     protected function addTranslatedMessage($message, $status = 'success')
@@ -392,29 +436,14 @@ class InvoiceController extends Controller
         ));
         $pdf = $this->getPdf($html);
         $attachment = new \Swift_Attachment($pdf, $invoice->getId().'.pdf', 'application/pdf');
+        $subject = '[' . $this->get('translator')->trans('invoice.invoice', [], 'SiwappInvoiceBundle') . ': ' . $invoice->label() . ']';
         $message = \Swift_Message::newInstance()
-            ->setSubject($invoice->label())
+            ->setSubject($subject)
             ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
             ->setTo($invoice->getCustomerEmail(), $invoice->getCustomerName())
             ->setBody($html, 'text/html')
             ->attach($attachment);
 
         return $message;
-    }
-
-    protected function getPdf($html)
-    {
-        $config = $this->getDoctrine()->getRepository('SiwappConfigBundle:Property');
-        $pdfSize = $config->get('pdf_size');
-        $pdfOrientation = $config->get('pdf_orientation');
-        $config = [];
-        if ($pdfSize) {
-            $config['page-size'] = $pdfSize;
-        }
-        if ($pdfOrientation) {
-            $config['orientation'] = $pdfOrientation;
-        }
-
-        return $this->get('knp_snappy.pdf')->getOutputFromHtml($html, $config);
     }
 }

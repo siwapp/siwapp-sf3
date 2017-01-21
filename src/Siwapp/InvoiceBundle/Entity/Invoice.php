@@ -137,9 +137,9 @@ class Invoice extends AbstractInvoice
      *
      * @return boolean
      */
-    public function getSentByEmail()
+    public function isSentByEmail(): bool
     {
-        return $this->sent_by_email;
+        return (bool) $this->sent_by_email;
     }
 
     /**
@@ -373,8 +373,12 @@ class Invoice extends AbstractInvoice
         // compute the number of invoice
         if ((!$this->number && $this->status!=self::DRAFT) ||
             ($args instanceof PreUpdateEventArgs && $args->hasChangedField('series') && $this->status!=self::DRAFT)
-            ) {
-            $this->setNumber($args->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice')->getNextNumber($this->getSeries()));
+        ) {
+            $repo = $args->getEntityManager()->getRepository('SiwappInvoiceBundle:Invoice');
+            $series = $this->getSeries();
+            if ($repo && $series) {
+                $this->setNumber($repo->getNextNumber($series));
+            }
         }
     }
 

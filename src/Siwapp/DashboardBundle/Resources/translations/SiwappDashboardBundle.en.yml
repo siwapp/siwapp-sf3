@@ -2,7 +2,7 @@ menu:
     dashboard_index: 'Dashboard'
 
 list:
-    payments: 'Payments Summary'
+    payments: 'Payments summary'
     payments_received: 'Receipts'
     payments_due: 'Due'
     payments_overdue: 'Overdue'
@@ -10,6 +10,6 @@ list:
     balance_total: 'Total'
     balance_net: 'Net'
     balance_taxes: 'Taxes'
-    taxes: 'Withholding Taxes'
+    taxes: 'Withholding taxes'
     invoices_latest: 'Recent invoices'
     invoices_due: 'Past due invoices'

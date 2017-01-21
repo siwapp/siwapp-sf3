@@ -153,12 +153,19 @@ class UpgradeFrom04Command extends ContainerAwareCommand
         $sth = $dbh->prepare('SELECT * FROM customer');
         $sth->execute();
         foreach ($sth->fetchAll(\PDO::FETCH_ASSOC) as $row) {
-            if (empty($row['name'])) {
-                // Do not import records with empty name.
+            if (empty($row['name']) && empty($row['email'])) {
+                // If there is no name and email available, then its trash; skip it.
                 continue;
             }
+
+            if (empty($row['name'])) {
+                // In previous version name was optional.
+                $name = 'Upgradefrom04 Default Name';
+            } else {
+                $name = $row['name'];
+            }
             $customer = new Customer;
-            $customer->setName($row['name']);
+            $customer->setName($name);
             if ($row['identification'] && $row['identification'] !== 'Client Legal Id') {
                 $customer->setIdentification($row['identification']);
             }
@@ -215,6 +222,7 @@ class UpgradeFrom04Command extends ContainerAwareCommand
                 $status--;
             }
             $estimate->setStatus($status);
+            $estimate->setNumber($row['number']);
             $estimate->setSentByEmail($row['sent_by_email']);
             $estimate->setIssueDate($row['issue_date']);
 

@@ -1,0 +1,69 @@
+estimate:
+    draft: 'Ciornă'
+    pending: 'În aşteptare'
+    approved: 'Aprobat'
+    rejected: 'Respins'
+    not_sent_by_email: 'Nu a fost trimis prin e-mail'
+    sent_by_email: 'Trimis prin e-mail'
+    estimate: 'Estimăre'
+
+menu:
+    estimate_index: 'Estimări'
+    estimate_add: 'Estimăre nouă'
+
+flash:
+    nothing_selected: 'Vă rog selectăți ceva.'
+    added: 'Estimărea a fost adăugata.'
+    updated: 'Estimărea a fost actualizată.'
+    deleted: 'Estimărea a fost ștearsa.'
+    emailed: 'Estimărea a fost trimisă prin e-mail'
+    bulk_emailed: 'Estimările au fost trimise prin e-mail'
+    bulk_deleted: 'Estimările au fost șterse.'
+    invoice_generated: 'Factura a fost generata.'
+
+search:
+    terms: 'Termeni de căutare'
+    date_from: 'Din'
+    date_to: 'până la'
+    status: 'Stare'
+    customer: 'Client'
+    series: 'Serie'
+    submit: 'Căutare'
+    advanced: 'Avansată'
+    reset: 'Reset'
+
+list:
+    bulk_delete: 'Șterge selecția'
+    bulk_print: 'Imprimare selectate'
+    bulk_pdf: 'Descărca selectate ca PDF'
+    bulk_email: 'E-mail selectat'
+    series: 'Serie'
+    customer_name: 'Client'
+    issue_date: 'Data'
+    status: 'Status'
+    gross_amount: 'Total'
+    no_results: 'Nu s-au găsit estimări.'
+
+show:
+    print: 'Imprimare'
+    pdf: 'PDF'
+    email: 'Salvează e-mail'
+    generate_invoice: 'Generare Factura'
+    issue_date: 'Data emiterii'
+    status: 'Status'
+    series: 'Serie'
+    edit: 'Editați'
+    delete: 'Șterge'
+
+form:
+    issue_date: 'Data emiterii'
+    sent_by_email: 'Marchează ca trimis prin e-mail'
+    status: 'Status'
+    submit: 'Salvează'
+    submit_draft: 'Salvează ca ciornă'
+    submit_close: 'Salvează și inchide'
+    submit_pdf: 'Salvează și descărca ca PDF'
+    submit_print: 'Salvează și imprimare'
+    submit_email: 'Salvează și trimite prin e-mail'
+    submit_generate: 'Salvează și generează Factura'
+    submit_delete: 'Șterge'

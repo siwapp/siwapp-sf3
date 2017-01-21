@@ -6,92 +6,11 @@
 
 **Online Invoice Management**
 
-## Installation
+The unofficial port of the old 0.4.x version to Symfony 3.x and PHP 7.x.
 
-The following will ask you to setup the database info, so make sure you have one
-ready.
+The initial siwapp project was based on Symfony version 1, but the founders
+decided to switch the project from PHP to Ruby on Rails, something you can find
+here: https://github.com/siwapp/siwapp
 
-    $ composer create-project --stability=dev siwapp/siwapp-sf3 my_siwapp; cd my_siwapp
-
-You will need to have Java installed and available in your path (for yuicompressor).
-On Debian/Ubuntu-based systems you can install it using the following:
-
-    $ sudo apt-get install default-jre-headless
-
-Then you can dump the assets:
-
-    $ php bin/console assetic:dump --env=prod
-
-Creating the database schema:
-
-    $ php bin/console doctrine:schema:create
-
-Creating the first (admin) user:
-
-    $ php bin/console fos:user:create admin mail@example.com 1234 --super-admin
-
-Make sure that the `var/` and `web/uploads` folders are writable by the webserver:
-
-    $ sudo chown www-data:www-data -R var/
-    $ sudo chown www-data:www-data -R web/uploads
-
-or check [this](https://symfony.com/doc/current/book/installation.html#book-installation-permissions).
-
-Finally, you need [wkhtmltopdf](http://wkhtmltopdf.org/) installed for PDF generation
-to work.
-On Debian/Ubuntu-based systems you can install it using the following:
-
-    $ sudo apt-get install wkhtmltopdf
-
-Although the above should work, sometimes the alpha version of wkhtmltopdf
-produces better results. You can [download](http://wkhtmltopdf.org/downloads.html)
-and try it.
-
-If you are on a shared host you can require the binaries locally [using composer](https://github.com/KnpLabs/snappy#wkhtmltopdf-binary-as-composer-dependencies),
-change the `knp_snappy.pdf.binary` path in `app/config/config.yml` to
-
-    "%kernel.root_dir%/../vendor/bin/wkhtmltopdf-amd64"
-
-if you required the 64bit one, or
-
-    "%kernel.root_dir%/../vendor/bin/wkhtmltopdf-i386"
-
-for the 32bit and then upload siwapp to your host.
-
-
-Thats it!
-The siwapp installation should be reachable and working now.
-Check `/config.php` or `/web/config.php` to make sure that everything in your
-enviroment is ok.
-
-### Upgrading from v0.4.x
-
-Replace the DB_* values with the one of your old database and then run:
-
-    $ php bin/console siwapp:upgrade-db:0.4-1.0 DB_DRIVER DB_USER DB_PASSWORD DB_NAME
-
-
-### Loading demo data
-
-    $ php bin/console doctrine:fixtures:load
-
-### Overriding templates
-
-To override templates, eg. the invoice print one, copy
-`src/Siwapp/InvoiceBundle/Resources/views/Invoice/print.html.twig` to `app/Resources/SiwappInvoiceBundle/views/Invoice/print.html.twig` and clear the
-cache:
-
-    $ php bin/console cache:clear
-
-The above applies to [any template](https://symfony.com/doc/current/book/templating.html#overriding-bundle-templates),
-(probably the print and email ones are those that you are more insterested to).
-
-### Automating recurring invoices generation
-
-Just add a cronjob that runs `php bin/console siwapp:recurring:generate-pending`
-
-### Interface language
-
-To have the siwapp interface in another language you will need the php intl extension installed.
-Then visit your profile page, change your locale and then log out. When you log back in the interface language should be switched.
-Siwapp is translated only to Spanish for now, feel free to contribute more translations!
+You can find the documentation of this project in the github wiki here:
+https://github.com/siwapp/siwapp-sf3/wiki

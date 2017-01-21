@@ -1,0 +1,102 @@
+@media screen and (max-width: 768px) {
+
+  #hd {
+    background: #fff;
+    border-bottom: 0;
+  }
+
+  #hd nav.main #create-button {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    float: right;
+    clear: both;
+    margin: 10px 0;
+  }
+
+  #hd nav.main label {
+    margin-bottom: 0;
+  }
+
+  #hd nav.main .nav-tabs {
+    margin: 0;
+    padding: 0;
+    background: #222;
+  }
+
+  #hd nav.main .nav-tabs a {
+    display: block;
+    padding: 6px 12px;
+    color: #fff;
+    text-decoration: none;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+  }
+
+  #hd nav.main .nav-tabs > li.active > a,
+  #hd nav.main .nav-tabs > li > a:hover {
+    background: #353535;
+    border: none;
+    color: #fff;
+  }
+
+  .toggle + a, .menu {
+    display: none;
+  }
+
+  .toggle {
+    display: block;
+    background: #d74714;
+    padding: 6px 12px;
+    color: #FFF;
+    text-decoration: none;
+    border: none;
+    font-size: 15.6px;
+    font-weight: bold;
+  }
+
+  .toggle span.glyphicon {
+    margin-right: 2px;
+  }
+
+  [id^=drop]:checked + ul {
+    display: block;
+  }
+
+  #hd nav.main .nav-tabs > li {
+    display: block;
+    width: 100%;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+
+  #bd #dashboard-summary table {
+    clear: both;
+    margin: 0 0 10px 0 !important;
+  }
+
+  table {
+    overflow-x: auto;
+    display: block;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+
+  #hd nav.main #create-button,
+  .form-group.float-right.btn-toolbar,
+  #hd nav.user {
+    float: left;
+  }
+
+  .form-group.float-right.btn-toolbar .btn-group {
+    margin: 5px 0 0 0;
+  }
+
+  .btn-group #search-reset {
+    margin-left: 5px;
+  }
+
+}

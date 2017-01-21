@@ -1,6 +1,6 @@
 menu:
     product_index: 'Products'
-    product_add: 'New Product'
+    product_add: 'New product'
 
 flash:
     nothing_selected: 'Please select something.'
@@ -17,7 +17,7 @@ search:
 
 list:
     bulk_delete: 'Remove selected'
-    reference: 'Reference'
+    reference: 'Product code'
     description: 'Description'
     price: 'Price'
     num_sold: 'Items sold'
@@ -25,7 +25,8 @@ list:
     no_results: 'No products found.'
 
 form:
-    reference: 'Reference'
+    product: 'Product'
+    reference: 'Product code'
     description: 'Description'
     price: 'Price'
     submit: 'Save'

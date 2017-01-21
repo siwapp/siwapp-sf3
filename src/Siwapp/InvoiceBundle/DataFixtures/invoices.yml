@@ -239,6 +239,8 @@ Invoice:
     sent_by_email: false
     Series: Series_1
     number: 5
+    customer_name: 'Socks Corp.'
+    customer_email: 'info@sockscorp.com'
     terms: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.'
     notes: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.'
     issue_date: '2008-01-23'

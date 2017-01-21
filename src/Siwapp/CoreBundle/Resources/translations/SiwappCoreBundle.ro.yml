@@ -1,0 +1,66 @@
+html:
+    title: 'Software de facturare'
+
+menu:
+    settings: 'Setări'
+    help: 'Ajutor'
+
+item:
+    form:
+        product: 'Produs'
+        description: 'Descriere'
+        unitary_cost: 'Preț'
+        quantity: 'Cantitate/Ore'
+        discount: 'Reducere'
+        taxes: 'Impozite'
+        total: 'Total'
+        remove: 'Ștergere'
+    show:
+        description: 'Descriere'
+        unitary_cost: 'Preț'
+        quantity: 'Cantitate/Ore'
+        discount: 'Reducere'
+        taxes: 'Impozite'
+        total: 'Total'
+
+abstract_invoice:
+    show:
+        customer: 'Date client'
+        customer_name: 'Nume client'
+        customer_identification: 'Cod client'
+        customer_email: 'E-mail client'
+        contact_person: 'Persoana de contact'
+        invoicing_address: 'Adresa de facturare'
+        shipping_address: 'Adresa de livrare'
+        properties: 'Proprietăţi'
+        items: 'Articole'
+        subtotal: 'Subtotal'
+        total_net: 'Net'
+        total_discount: 'Reducere'
+        total_taxes: 'Impozite'
+        total: 'Total (%currency%)'
+        terms: 'Termeni'
+        notes: 'Notițe'
+    form:
+        customer: 'Date client'
+        properties: 'Proprietăţi'
+        items: 'Articole'
+        item_add: 'Adăugare articol'
+        subtotal: 'Subtotal'
+        total_taxes: 'Impozite'
+        total: 'Total (%currency%)'
+
+tax:
+    form:
+        name: 'Nume'
+        value: 'Valoare'
+        first_number: 'Primul număr'
+        is_default: 'Preselectat'
+        active: 'Activat'
+
+series:
+    form:
+        name: 'Nume'
+        value: 'Serie'
+        first_number: 'Primul număr'
+        enabled: 'Activat'

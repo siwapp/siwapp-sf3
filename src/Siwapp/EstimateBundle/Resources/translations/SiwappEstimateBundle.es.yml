@@ -5,6 +5,7 @@ estimate:
     rejected: 'Rechazado'
     not_sent_by_email: 'No enviado por correo electrónico'
     sent_by_email: 'Enviado por correo electrónico'
+    estimate: 'Presupuesto'
 
 menu:
     estimate_index: 'Presupuestos'
@@ -19,6 +20,7 @@ flash:
     bulk_emailed: 'Presupuesto(s) enviado(s) por correo electrónico.'
     bulk_deleted: 'Presupuesto(s) borrado(s).'
     invoice_generated: 'Factura generada.'
+    no_js_estimate_print: 'Pulsa aquí para imprimir tu presupuesto si no sucede automáticamente.'
 
 search:
     terms: 'Términos'
@@ -34,7 +36,7 @@ search:
 list:
     bulk_delete: 'Borrar seleccionados'
     bulk_print: 'Imprimir seleccionados'
-    bulk_pdf: 'Descargar como PDF'
+    bulk_pdf: 'Descargar seleccionados como PDF'
     bulk_email: 'Correo electrónico seleccionado'
     series: 'Serie'
     customer_name: 'Cliente'
@@ -42,7 +44,6 @@ list:
     status: 'Estado'
     gross_amount: 'Total'
     no_results: 'No se han encontrado presupuestos.'
-    bulk_delete: 'Borrar seleccionados'
 
 show:
     print: 'Imprimir'
@@ -57,8 +58,13 @@ show:
 
 form:
     issue_date: 'Fecha de creación'
+    sent_by_email: 'Marcar como enviado por email'
     status: 'Estado'
-    submit: 'Guarar'
+    submit: 'Guardar'
     submit_draft: 'Guardar como borrador'
     submit_close: 'Guardar y cerrar'
+    submit_pdf: 'Guardar y descargar como PDF'
+    submit_print: 'Guardar e imprimir'
+    submit_email: 'Guarda y enviar por email'
+    submit_generate: 'Guardar y generar factura'
     submit_delete: 'Borrar'

@@ -22,19 +22,19 @@
         <input type="checkbox" name="all" />
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(estimates, 'list.series'|trans, 'e.series') }}
+        {{ 'list.series'|trans }}
       </th>
       <th>
-        {{ knp_pagination_sortable(estimates, 'list.customer_name'|trans, 'e.customer_name') }}
+        {{ knp_pagination_sortable(estimates, 'list.customer_name'|trans, 'i.customer_name') }}
       </th>
       <th class="cell-size-medium">
-        {{ knp_pagination_sortable(estimates, 'list.issue_date'|trans, 'e.issue_date') }}
+        {{ knp_pagination_sortable(estimates, 'list.issue_date'|trans, 'i.issue_date') }}
       </th>
       <th class="cell-size-small-medium cell-align-center">
-        {{ knp_pagination_sortable(estimates, 'list.status'|trans, 'e.status') }}
+        {{ knp_pagination_sortable(estimates, 'list.status'|trans, 'i.status') }}
       </th>
       <th class="cell-size-medium cell-align-right">
-        {{ knp_pagination_sortable(estimates, 'list.gross_amount'|trans, 'e.gross_amount') }}
+        {{ knp_pagination_sortable(estimates, 'list.gross_amount'|trans, 'i.gross_amount') }}
       </th>
     </tr>
   </thead>
@@ -49,7 +49,7 @@
         <td class="table-action cell-align-center no-link">
           {{ form_row(list_form.estimates[key]) }}
         </td>
-        <td class="cell-size-medium cell-align-center">{{ entity.series }}</td>
+        <td class="cell-size-medium">{{ entity.series }}</td>
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.issueDate|localizeddate('short', 'none', app.request.locale) }}</td>
         <td class="cell-align-center">

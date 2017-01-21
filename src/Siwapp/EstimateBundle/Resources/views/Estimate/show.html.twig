@@ -27,10 +27,10 @@
 
 
 {% block invoice_label %}
-  <h2>Estimate {{ entity.label() }}</h2>
+  <h2>{% trans %}estimate.estimate{% endtrans %} {{ entity.label() }}</h2>
   <ul class="list-inline list-unstyled">
     <li>
-      <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
+      <span class="label {{ entity.statusString }}">{{ ('estimate.' ~ entity.statusString)|trans }}</span>
     </li>
     <li>
       {% if entity.sentByEmail %}
@@ -51,10 +51,6 @@
   <div class="col-md-12">
     <label>{% trans %}show.issue_date{% endtrans %}:</label>
     {{ entity.issue_date|localizeddate('medium', 'none', app.request.locale) }}
-  </div>
-  <div class="col-md-12">
-    <label>{% trans %}show.status{% endtrans %}:</label>
-    {{ entity.status }}
   </div>
 {% endblock %}
 

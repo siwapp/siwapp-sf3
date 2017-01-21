@@ -1,0 +1,35 @@
+menu:
+    customer_index: 'Πελάτες'
+    customer_add: 'Νέος πελάτης'
+
+flash:
+    nothing_selected: 'Παρακαλώ επιλέξτε κάτι.'
+    added: 'Ο πελάτης προστέθηκε.'
+    updated: 'Τα στοιχεία του πελάτη ανανεώθηκαν.'
+    deleted: 'Ο πελάτης διαγράφτηκε.'
+    bulk_deleted: 'Οι πελάτες διαγράφτηκαν.'
+
+search:
+    terms: 'Λέξεις κλειδιά'
+    submit: 'Αναζήτηση'
+    reset: 'Καθαρισμός'
+
+form:
+    customer: 'Πελάτης'
+    name: 'Όνομα'
+    identification: 'Κωδικός'
+    email: 'E-mail'
+    contact_person: 'Επαφή επικοινωνίας'
+    invoicing_address: 'Διεύθυνση τιμολόγισης'
+    shipping_address: 'Διεύθυνση αποστολής'
+    submit: 'Αποθήκευση'
+    submit_delete: 'Διαγραφή'
+
+list:
+    bulk_delete: 'Διαγραφή επιλεγμένων'
+    name: 'Ονοματεπώνυμο'
+    identification: 'Κωδικός'
+    due_amount: 'Ληξιπρόθεσμες οφειλές'
+    gross_amount: 'Σύνολο'
+    invoices: 'Τιμολόγια'
+    no_results: 'Δεν βρέθηκαν πελάτες.'

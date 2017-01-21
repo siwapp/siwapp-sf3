@@ -16,10 +16,10 @@
 
 
 {% block invoice_label %}
-  <h2>Invoice {{ entity.label() }}</h2>
+  <h2>{% trans %}invoice.invoice{% endtrans %} {{ entity.label() }}</h2>
   <ul id="invoice-like-status" class="list-unstyled">
     <li>
-      <span class="label {{ entity.statusString }}">{{ entity.statusString|capitalize }}</span>
+      <span class="label {{ entity.statusString }}">{{ ('invoice.' ~ entity.statusString)|trans }}</span>
     </li>
     <li>
       {% if entity.sentByEmail %}

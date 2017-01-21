@@ -1,9 +1,9 @@
 html:
-    title: 'Aplicación de facturación'
+    title: 'Sistema de facturación'
 
 menu:
     settings: 'Ajustes'
-
+    help: 'Ayuda'
 item:
     form:
         product: 'Producto'
@@ -34,6 +34,8 @@ abstract_invoice:
         properties: 'Propiedades'
         items: 'Líneas de artículos'
         subtotal: 'Subtotal'
+        total_net: 'Neto'
+        total_discount: 'Descuento'
         total_taxes: 'Impuestos'
         total: 'Total (%currency%)'
         terms: 'Términos'

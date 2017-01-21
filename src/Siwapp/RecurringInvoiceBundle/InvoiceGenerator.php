@@ -57,6 +57,8 @@ class InvoiceGenerator
             if ($d = $recurring->getDaysToDue()) {
                 $invoice->setDueDate(new \DateTime('+ ' . $d . ' days'));
             }
+            // Set invoice as Opened.
+            $invoice->setStatus(Invoice::OPENED);
 
             $recurring->addInvoice($invoice);
             $generated++;

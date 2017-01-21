@@ -6,6 +6,7 @@ menu:
     settings_index: 'Ajustes'
     global_settings: 'Ajustes globales'
     my_settings: 'Mis ajustes'
+    change_password: 'Cambiar contraseña'
 
 form:
     company: 'Empresa'
@@ -30,3 +31,12 @@ form:
     series: 'Series de facturación'
     add: 'Añadir'
     save: 'Guardar'
+
+show:
+    company_name: 'Nombre de la empresa'
+    company_identification: 'Identificación de la empresa'
+    company_address: 'Dirección de la empresa'
+    company_phone: 'Teléfono de la empresa'
+    company_fax: 'Fax de la empresa'
+    company_email: 'Correo electrónico de la empresa'
+    company_url: 'Sitio web de la empresa'

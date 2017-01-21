@@ -42,7 +42,7 @@
         <td>{{ entity.identification }}</td>
         <td class="cell-align-right">{{ result.due_amount|localizedcurrency(currency, app.request.locale) }}</td>
         <td class="cell-align-right">{{ result.gross_amount|localizedcurrency(currency, app.request.locale) }}</td>
-        <td class="cell-align-right"><a href="{{ path('invoice_index', {'search_invoice': {'customer': entity.identification}}) }}" class="btn btn-default btn-info"><span class="glyphicon glyphicon-book"></span> {% trans %}list.invoices{% endtrans %}</a></td>
+        <td class="cell-align-right"><a href="{{ path('invoice_index', {'search_invoice': {'customer': entity.name}}) }}" class="btn btn-default btn-info"><span class="glyphicon glyphicon-book"></span> {% trans %}list.invoices{% endtrans %}</a></td>
       </tr>
     {% endfor %}
   </tbody>

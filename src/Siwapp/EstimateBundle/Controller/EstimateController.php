@@ -2,13 +2,14 @@
 
 namespace Siwapp\EstimateBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Siwapp\CoreBundle\Controller\AbstractInvoiceController;
 use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\EstimateBundle\Entity\Estimate;
 use Siwapp\EstimateBundle\Form\EstimateType;
@@ -16,7 +17,7 @@ use Siwapp\EstimateBundle\Form\EstimateType;
 /**
  * @Route("/estimate")
  */
-class EstimateController extends Controller
+class EstimateController extends AbstractInvoiceController
 {
     /**
      * @Route("", name="estimate_index")
@@ -35,7 +36,7 @@ class EstimateController extends Controller
             'method' => 'GET',
         ]);
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $pagination = $repo->paginatedSearch($form->getData(), $limit, $request->query->getInt('page', 1));
         } else {
             $pagination = $repo->paginatedSearch([], $limit, $request->query->getInt('page', 1));
@@ -45,7 +46,7 @@ class EstimateController extends Controller
             'action' => $this->generateUrl('estimate_index'),
         ]);
         $listForm->handleRequest($request);
-        if ($listForm->isValid()) {
+        if ($listForm->isSubmitted() && $listForm->isValid()) {
             $data = $listForm->getData();
             if (empty($data['estimates'])) {
                 $this->addTranslatedMessage('flash.nothing_selected', 'warning');
@@ -65,7 +66,7 @@ class EstimateController extends Controller
 
         return array(
             'estimates' => $pagination,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
             'search_form' => $form->createView(),
             'list_form' => $listForm->createView(),
         );
@@ -89,7 +90,7 @@ class EstimateController extends Controller
 
         return array(
             'entity' => $entity,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -105,7 +106,7 @@ class EstimateController extends Controller
             throw $this->createNotFoundException('Unable to find Estimate entity.');
         }
 
-        return new Response($this->getEstimatePrintPdfHtml($estimate));
+        return new Response($this->getEstimatePrintPdfHtml($estimate, true));
     }
 
     /**
@@ -151,7 +152,12 @@ class EstimateController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($request->request->has('save_draft')) {
+                $estimate->setStatus(Estimate::DRAFT);
+            } elseif ($request->request->has('save')) {
+                $estimate->setStatus(Estimate::PENDING);
+            }
             $em->persist($estimate);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
@@ -162,7 +168,7 @@ class EstimateController extends Controller
         return array(
             'form' => $form->createView(),
             'entity' => $estimate,
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -182,25 +188,53 @@ class EstimateController extends Controller
         ]);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $redirectRoute = 'estimate_edit';
             if ($request->request->has('save_draft')) {
                 $entity->setStatus(Estimate::DRAFT);
             } elseif ($request->request->has('save_close')) {
                 $entity->setStatus(Estimate::REJECTED);
-            } elseif ($entity->isDraft() && $request->request->has('save')) {
+            } elseif ($entity->isDraft()) {
                 $entity->setStatus(Estimate::APPROVED);
+            }
+            // See if one of PDF/Print buttons was clicked.
+            if ($request->request->has('save_pdf')) {
+                $redirectRoute = 'estimate_show_pdf';
+            } elseif ($request->request->has('save_print')) {
+                $this->get('session')->set('estimate_auto_print', $id);
             }
             $em->persist($entity);
             $em->flush();
             $this->addTranslatedMessage('flash.updated');
 
-            return $this->redirect($this->generateUrl('estimate_edit', array('id' => $id)));
+            // Send the email after the estimate is updated.
+            if ($request->request->has('save_email')) {
+                $message = $this->getEmailMessage($entity);
+                $result = $this->get('mailer')->send($message);
+                if ($result) {
+                    $this->addTranslatedMessage('flash.emailed');
+                    if (!$entity->isSentByEmail()) {
+                        $entity->setSentByEmail(true);
+                        $em->persist($entity);
+                        $em->flush();
+                    }
+                }
+            }
+            // Generate the invoice.
+            if ($request->request->has('save_generate')) {
+                $invoice = $this->get('siwapp_estimate.invoice_generator')->generate($entity);
+                if ($invoice) {
+                    $this->addTranslatedMessage('flash.invoice_generated');
+                }
+            }
+
+            return $this->redirect($this->generateUrl($redirectRoute, array('id' => $id)));
         }
 
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
-            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency'),
+            'currency' => $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR'),
         );
     }
 
@@ -265,6 +299,21 @@ class EstimateController extends Controller
         $this->addTranslatedMessage('flash.deleted');
 
         return $this->redirect($this->generateUrl('estimate_index'));
+    }
+
+    /**
+     * @Route("/form-totals", name="estimate_form_totals")
+     */
+    public function getInvoiceFormTotals(Request $request)
+    {
+        $post = $request->request->get('estimate');
+        if (!$post) {
+            throw new NotFoundHttpException;
+        }
+
+        $response = $this->getInvoiceTotalsFromPost($post, new Estimate, $request->getLocale());
+
+        return new JsonResponse($response);
     }
 
     protected function addTranslatedMessage($message, $status = 'success')
@@ -356,29 +405,14 @@ class EstimateController extends Controller
         ));
         $pdf = $this->getPdf($html);
         $attachment = new \Swift_Attachment($pdf, $estimate->getId().'.pdf', 'application/pdf');
+        $subject = '[' . $this->get('translator')->trans('estimate.estimate', [], 'SiwappEstimateBundle') . ': ' . $estimate->label() . ']';
         $message = \Swift_Message::newInstance()
-            ->setSubject($estimate->label())
+            ->setSubject($subject)
             ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
             ->setTo($estimate->getCustomerEmail(), $estimate->getCustomerName())
             ->setBody($html, 'text/html')
             ->attach($attachment);
 
         return $message;
-    }
-
-    protected function getPdf($html)
-    {
-        $config = $this->getDoctrine()->getRepository('SiwappConfigBundle:Property');
-        $pdfSize = $config->get('pdf_size');
-        $pdfOrientation = $config->get('pdf_orientation');
-        $config = [];
-        if ($pdfSize) {
-            $config['page-size'] = $pdfSize;
-        }
-        if ($pdfOrientation) {
-            $config['orientation'] = $pdfOrientation;
-        }
-
-        return $this->get('knp_snappy.pdf')->getOutputFromHtml($html, $config);
     }
 }

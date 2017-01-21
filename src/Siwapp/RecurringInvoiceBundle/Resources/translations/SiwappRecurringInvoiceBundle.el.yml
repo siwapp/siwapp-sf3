@@ -1,0 +1,60 @@
+recurring_invoice:
+    active: 'Ενεργό'
+    inactive: 'Ανενεργό'
+    pending: 'Εκκρεμές'
+    finished: 'Εξοφλημένο'
+    recurring_invoice: 'Επαναλαμβανόμενο τιμολόγιο'
+
+menu:
+    recurring_index: 'Επαναλαμβανόμενα τιμολόγια'
+    recurring_add: 'Νέο επαναλαμβανόμενο τιμολόγιο'
+
+flash:
+    nothing_selected: 'Παρακαλώ επιλέξτε κάτι.'
+    added: 'Το επαναλαμβανόμενο τιμολόγιο προστέθηκε.'
+    updated: 'Το επαναλαμβανόμενο τιμολόγιο ανανεώθηκε.'
+    deleted: 'Το επαναλαμβανόμενο τιμολόγιο διαγράφηκε.'
+    bulk_deleted: 'Το επαναλαμβανόμενα τιμολόγια διαγράφηκαν.'
+    invoices_generated: '%count% τιμολόγια δημιουργήθηκαν.'
+    invoices_pending: 'Υπήρξαν %count% επαναλαμβανόμενα τιμολόγια που δεν εκτελέστηκαν.'
+
+list:
+    average_turnover: 'Μέσος όρος τζίρου'
+    day: 'ημέρα'
+    week: 'εβδομάδα'
+    month: 'μήνας'
+    year: 'χρόνος'
+    series: 'Ονομασία'
+    customer_name: 'Πελάτης'
+    period_type: 'Περίοδος'
+    period: 'Συχνότητα'
+    status: 'Κατάσταση'
+    gross_amount: 'Σύνολο'
+    no_results: 'Δεν βρέθηκαν επαναλαμβανόμενα τιμολόγια.'
+    bulk_delete: 'Διαγραφή επιλεγμένων'
+
+search:
+    terms: 'Λέξεις κλειδιά'
+    status: 'Κατάσταση'
+    customer: 'Πελάτης'
+    series: 'Ονομασία'
+    submit: 'Αναζήτηση'
+    reset: 'Καθαρισμός'
+
+generate:
+    submit: 'Δημιουργία όλων των εκκρεμών τιμολογίων τώρα'
+
+form:
+    enabled: 'Ενεργοποιημένο'
+    days_to_due: 'Χρόνος μέχρι την λήξη'
+    starting_date: 'Αρχή'
+    finishing_date: 'Τέλος'
+    max_occurrences: 'Μέγιστος αριθμός επαναλήψεων'
+    dates: 'Χρόνος εκτέλεσης'
+    period: 'Δημιουργία κάθε'
+    day: 'Ημέρες'
+    week: 'Εβδομάδες'
+    month: 'Μήνες'
+    year: 'Χρόνια'
+    submit: 'Αποθήκευση'
+    submit_delete: 'Διαγραφή'

@@ -1,0 +1,42 @@
+flash:
+    logo_upload_error: 'Logo-ul nu a fost stocat. Asigurați-vă că folderul web/uploads există și este inscriptibil.'
+    updated: 'Setări actualizate.'
+
+menu:
+    settings_index: 'Setări'
+    global_settings: 'Setări generale'
+    my_settings: 'Setările mele'
+    change_password: 'Schimbare parola'
+
+form:
+    company: 'Companie'
+    company_name: 'Nume companie'
+    company_identification: 'C.I.F. (C.U.I.)'
+    company_address: 'Adresa companie'
+    company_phone: 'Tel. companie'
+    company_fax: 'Fax companie'
+    company_email: 'E-mail companie'
+    company_url: 'Site web companie'
+    company_logo: 'Logo companie'
+    current_logo: 'Logo curent'
+    currency: 'Monedă'
+    legal: 'Texte juridice'
+    legal_terms: 'Termeni legali'
+    pdf: 'Setări PDF'
+    pdf_size: 'Mărime PDF'
+    pdf_orientation: 'Orientare PDF'
+    pdf_landscape: 'Peisaj'
+    pdf_portrait: 'Portret'
+    taxes: 'Impozite'
+    series: 'Seria factura'
+    add: 'Add'
+    save: 'Save'
+
+show:
+    company_name: 'Nume companie'
+    company_identification: 'C.I.F. (C.U.I.)'
+    company_address: 'Adresa companie'
+    company_phone: 'Tel. companie'
+    company_fax: 'Fax companie'
+    company_email: 'E-mail companie'
+    company_url: 'Site-ul web companie'

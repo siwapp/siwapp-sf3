@@ -1,0 +1,60 @@
+recurring_invoice:
+    active: 'Activat'
+    inactive: 'Inactivat'
+    pending: 'În aşteptare'
+    finished: 'Terminat'
+    recurring_invoice: 'Factura recurenta'
+
+menu:
+    recurring_index: 'Facturi recurente'
+    recurring_add: 'Factura recurenta nouă'
+
+flash:
+    nothing_selected: 'Vă rog selectați ceva.'
+    added: 'Factura recurenta a fost adăugata.'
+    updated: 'Factura recurenta a fost actualizata.'
+    deleted: 'Factura recurenta a fost ștearsa.'
+    bulk_deleted: 'Facturi recurente au fost șterse.'
+    invoices_generated: '%count% facturi au fost generate.'
+    invoices_pending: 'Aveți %count% facturi recurent care nu au fost executate.'
+
+list:
+    average_turnover: 'Cifra de afaceri medie'
+    day: 'zi'
+    week: 'săptamâmă'
+    month: 'lună'
+    year: 'an'
+    series: 'Serie'
+    customer_name: 'Client'
+    period_type: 'Periodă'
+    period: 'Frecvență'
+    status: 'Status'
+    gross_amount: 'Total'
+    no_results: 'Nu s-au găsit facturi recurente.'
+    bulk_delete: 'Șterge selecția.'
+
+search:
+    terms: 'Termeni de căutare'
+    status: 'Status'
+    customer: 'Client'
+    series: 'Serie'
+    submit: 'Căutare'
+    reset: 'Reset'
+
+generate:
+    submit: 'Generează toate facturiile în așteptare acum.'
+
+form:
+    enabled: 'Activat'
+    days_to_due: 'Timpul până la expirare'
+    starting_date: 'Data începerii'
+    finishing_date: 'Data terminarii'
+    max_occurrences: 'Numărul maxim de apariții'
+    dates: 'Timpul de execuție'
+    period: 'Crează tot'
+    day: 'Zile'
+    week: 'Săptamâni'
+    month: 'Luni'
+    year: 'Ani'
+    submit: 'Salvează'
+    submit_delete: 'Șterge'

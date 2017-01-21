@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% trans %}html.title{% endtrans %}{% endblock %} | Siwapp</title>
   {% block stylesheets %}
   {% stylesheets
@@ -9,7 +10,6 @@
     'bundles/siwappcore/css/siwapp.layout.css'
     'bundles/siwappcore/css/siwapp.forms.css'
     filter='cssrewrite'
-    filter='?yui_css'
   %}
     <link rel="stylesheet" href="{{ asset_url }}" />
   {% endstylesheets %}

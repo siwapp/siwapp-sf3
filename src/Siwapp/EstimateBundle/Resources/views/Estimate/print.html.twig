@@ -1,8 +1,10 @@
-<!doctype html">
+{#
+  See https://github.com/siwapp/siwapp-sf3/wiki/Estimate-print-pdf-template
+#}{% trans_default_domain 'SiwappCoreBundle' %}<!doctype html>
 <html lang="{{ app.request.locale }}">
 <head>
   <meta charset="utf-8" />
-  <title>Estimate</title>
+  <title>{% trans from 'SiwappEstimateBundle' %}estimate.estimate{% endtrans %}</title>
   <style type="text/css">
     /* Custom CSS code */
     table {border-spacing:0; border-collapse: collapse;}
@@ -52,34 +54,35 @@
     </div>
   {% endif %}
   <div class="h2">
-    <h2>Estimate #{{estimate}}</h2>
+    <h2>{% trans from 'SiwappEstimateBundle' %}estimate.estimate{% endtrans %} #{{estimate}}</h2>
   </div>
   <div class="section">
     <div class="company-data">
       <ul>
-        <li>Company: {{settings.company_name}}</li>
-        <li>Address: {{settings.company_address|nl2br}}</li>
-        <li>Phone: {{settings.company_phone}}</li>
-        <li>Fax: {{settings.company_fax}}</li>
-        <li>Email: {{settings.company_email}}</li>
-        <li>Web: {{settings.company_url}}</li>
+        <li>{% trans from 'SiwappConfigBundle' %}show.company_name{% endtrans %}: {{settings.company_name}}</li>
+        <li>{% trans from 'SiwappConfigBundle' %}show.company_identification{% endtrans %}: {{settings.company_identification}}</li>
+        <li>{% trans from 'SiwappConfigBundle' %}show.company_address{% endtrans %}: {{settings.company_address|nl2br}}</li>
+        <li>{% trans from 'SiwappConfigBundle' %}show.company_phone{% endtrans %}: {{settings.company_phone}}</li>
+        <li>{% trans from 'SiwappConfigBundle' %}show.company_fax{% endtrans %}: {{settings.company_fax}}</li>
+        <li>{% trans from 'SiwappConfigBundle' %}show.company_email{% endtrans %}: {{settings.company_email}}</li>
+        <li>{% trans from 'SiwappConfigBundle' %}show.company_url{% endtrans %}: {{settings.company_url}}</li>
       </ul>
     </div>
   </div>
   <div class="section">
-    <h3>Client info</h3>
+    <h3>{% trans %}abstract_invoice.show.customer{% endtrans %}</h3>
     <div class="customer-data">
       <table cellspacing="0" cellpadding="0" width="100%">
         <tr>
           <td>
             <span class="left">
-              <label>Customer:</label>
+              <label>{% trans %}abstract_invoice.show.customer_name{% endtrans %}:</label>
               {{estimate.customer_name}}
             </span>
           </td>
           <td>
             <span class="right">
-              <label>Customer identification:</label>
+              <label>{% trans %}abstract_invoice.show.customer_identification{% endtrans %}:</label>
               {{estimate.customer_identification}}
             </span>
           </td>
@@ -87,13 +90,13 @@
         <tr>
           <td>
             <span class="left">
-              <label>Contact person:</label>
+              <label>{% trans %}abstract_invoice.show.contact_person{% endtrans %}:</label>
               {{estimate.contact_person}}
             </span>
           </td>
           <td>
             <span class="right">
-              <label>Email:</label>
+              <label>{% trans %}abstract_invoice.show.customer_email{% endtrans %}:</label>
               {{estimate.customer_email}}
             </span>
           </td>
@@ -101,13 +104,13 @@
         <tr>
           <td>
             <span class="left">
-              <label>Invoicing address:</label>
+              <label>{% trans %}abstract_invoice.show.invoicing_address{% endtrans %}:</label>
               {{estimate.invoicing_address|nl2br}}
             </span>
           </td>
           <td>
             <span class="right">
-              <label>Shipping address:</label>
+              <label>{% trans %}abstract_invoice.show.shipping_address{% endtrans %}:</label>
               {{estimate.shipping_address|nl2br}}
             </span>
           </td>
@@ -116,24 +119,24 @@
     </div>
   </div>
   <div class="section">
-    <h3>Payment details</h3>
+    <h3>{% trans %}abstract_invoice.show.items{% endtrans %}</h3>
     <div class="payment-data">
       <table>
         <thead>
           <tr>
-            <th>Description</th>
-            <th class="right">Unit Cost</th>
-            <th class="right">Qty</th>
-            <th class="right">Taxes</th>
+            <th>{% trans %}item.show.description{% endtrans %}</th>
+            <th class="right">{% trans %}item.show.unitary_cost{% endtrans %}</th>
+            <th class="right">{% trans %}item.show.quantity{% endtrans %}</th>
+            <th class="right">{% trans %}item.show.taxes{% endtrans %}</th>
             {# show discounts only if there is some discount #}
             {% if estimate.discount_amount %}
-            <th class="right">Discount</th>
+            <th class="right">{% trans %}item.show.discount{% endtrans %}</th>
             {% endif %}
-            <th class="right">Price</th>
+            <th class="right">{% trans %}item.show.total{% endtrans %}</th>
           </tr>
         </thead>
         <tbody>
-          {% for item in estimate.Items %}
+          {% for item in estimate.items %}
             <tr>
               <td>
                 {{item.description}}
@@ -141,8 +144,8 @@
               <td class="right">{{item.unitary_cost|localizedcurrency(settings.currency, app.request.locale)}}</td>
               <td class="right">{{item.quantity}}</td>
               <td class="right">
-                {% for tax in item.Taxes %}
-                  <span class="tax">{{tax.name}}</span>
+                {% for tax in item.taxes %}
+                  <span class="tax">{{tax}}</span>
                 {% endfor %}
               </td>
               {% if estimate.discount_amount %}
@@ -155,29 +158,29 @@
         <tfoot>
           <tr>
             <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
-            <th class="right">Base</th>
+            <th class="right">{% trans %}abstract_invoice.show.subtotal{% endtrans %}</th>
             <td class="right">{{estimate.base_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           {% if estimate.discount_amount %}
           <tr>
             <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
-            <th class="right">Discount</th>
+            <th class="right">{% trans %}abstract_invoice.show.total_discount{% endtrans %}</th>
             <td class="td_global_discount right">{{estimate.discount_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           {% endif %}
           <tr>
             <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
-            <th class="right">Subtotal</th>
+            <th class="right">{% trans %}abstract_invoice.show.total_net{% endtrans %}</th>
             <td class="td_subtotal right">{{estimate.net_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           <tr>
             <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
-            <th class="right">Taxes</th>
+            <th class="right">{% trans %}abstract_invoice.show.total_taxes{% endtrans %}</th>
             <td class="td_total_taxes right">{{estimate.tax_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           <tr class="strong">
             <td class="bottomleft" colspan="{% if estimate.discount_amount %}4{% else %}3{% endif %}"></td>
-            <th class="right">Total</th>
+            <th class="right">{% trans with {'%currency%': settings.currency} %}abstract_invoice.show.total{% endtrans %}</th>
             <td class="td_total right">{{estimate.gross_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
         </tfoot>
@@ -185,7 +188,7 @@
     </div>
   </div>
   <div class="section">
-    <h3>Terms & conditions</h3>
+    <h3>{% trans %}abstract_invoice.show.terms{% endtrans %}</h3>
     <div class="terms">
       {{estimate.terms|nl2br}}
     </div>

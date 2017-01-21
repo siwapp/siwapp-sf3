@@ -25,7 +25,7 @@
     <button type="submit" name="print" class="btn btn-default" title="{% trans %}list.bulk_print{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
   </li>
   <li>
-    <button type="submit" name="pdf" class="btn btn-default" title="{% trans %}list.bulk_print{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
+    <button type="submit" name="pdf" class="btn btn-default" title="{% trans %}list.bulk_pdf{% endtrans %}"><span class="glyphicon glyphicon-download-alt"></span></button>
   </li>
   <li>
     <button type="submit" name="email" class="btn btn-default" title="{% trans %}list.bulk_email{% endtrans %}"><span class="glyphicon glyphicon-envelope"></span></button>
@@ -107,7 +107,7 @@
           {{ form_row(list_form.invoices[key]) }}
         </td>
         {% endif %}
-        <td class="cell-size-medium cell-align-center">{{ entity.label() }}</td>
+        <td class="cell-size-medium">{{ entity.label() }}</td>
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.issueDate|localizeddate('short', 'none', app.request.locale) }}</td>
         <td>{{ entity.dueDate|localizeddate('short', 'none', app.request.locale) }}</td>
