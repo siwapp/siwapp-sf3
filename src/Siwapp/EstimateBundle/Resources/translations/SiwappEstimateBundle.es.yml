@@ -37,7 +37,7 @@ list:
     bulk_delete: 'Borrar seleccionados'
     bulk_print: 'Imprimir seleccionados'
     bulk_pdf: 'Descargar seleccionados como PDF'
-    bulk_email: 'Correo electrónico seleccionado'
+    bulk_email: 'Enviar por email seleccionados'
     series: 'Serie'
     customer_name: 'Cliente'
     issue_date: 'Fecha'

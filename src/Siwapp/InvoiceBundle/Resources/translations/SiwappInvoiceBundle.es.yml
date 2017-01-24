@@ -16,7 +16,7 @@ payment:
         date: 'Fecha'
         description: 'Descripción'
         amount: 'Importe'
-        bulk_delete: 'Borrar seleccionadas'
+        bulk_delete: 'Borrar seleccionados'
         add: 'Añadir pago'
     form:
         date: 'Fecha'
