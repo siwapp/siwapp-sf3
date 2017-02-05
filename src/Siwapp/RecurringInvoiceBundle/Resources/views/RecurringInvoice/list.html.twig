@@ -44,7 +44,7 @@
         </td>
         <td class="cell-size-medium">{{ entity.series }}</td>
         <td>{{ entity.getCustomerName }}</td>
-        <td>{{ entity.periodType }}</td>
+        <td>{{ ('list.' ~ entity.periodType)|trans }}</td>
         <td>{{ entity.period }}</td>
         <td class="cell-align-center">
           <span class="label {{ entity.statusString }}">{{ ('recurring_invoice.' ~ entity.statusString)|trans }}</span>
