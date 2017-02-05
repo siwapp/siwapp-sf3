@@ -32,6 +32,7 @@ list:
     gross_amount: 'Total'
     no_results: 'No recurring invoices found.'
     bulk_delete: 'Remove selected'
+    bulk_delete_confirm: 'Are you sure you want to remove the selected recurring invoices?'
 
 search:
     terms: 'Terms'
@@ -58,3 +59,4 @@ form:
     year: 'Years'
     submit: 'Save'
     submit_delete: 'Delete'
+    submit_delete_confirm: 'Are you sure you want to delete the recurring invoice?'

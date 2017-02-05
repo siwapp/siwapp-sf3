@@ -17,6 +17,7 @@ payment:
         description: 'Description'
         amount: 'Amount'
         bulk_delete: 'Remove selected'
+        bulk_delete_confirm: 'Are you sure you want to remove selected payments?'
         add: 'Add payment'
     form:
         date: 'Date'
@@ -61,6 +62,7 @@ form:
     submit_pdf: 'Save and download PDF'
     submit_email: 'Save and send by e-mail'
     submit_delete: 'Delete'
+    submit_delete_confirm: 'Are you sure you want to delete the invoice?'
 
 show:
     print: 'Print'
@@ -72,6 +74,7 @@ show:
     series: 'Series'
     edit: 'Edit'
     delete: 'Delete'
+    delete_confirm: 'Are you sure you want to delete the invoice?'
 
 search:
     terms: 'Terms'
@@ -86,6 +89,7 @@ search:
 
 list:
     bulk_delete: 'Remove selected'
+    bulk_delete_confirm: 'Are you sure you want to remove selected invoices?'
     bulk_email: 'E-mail selected'
     bulk_pdf: 'Download selected as PDF'
     bulk_print: 'Print selected'

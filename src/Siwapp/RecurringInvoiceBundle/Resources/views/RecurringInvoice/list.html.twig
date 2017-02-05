@@ -2,7 +2,7 @@
 {{ form_start(list_form) }}
 <ul id="toolbar" class="table-actions list-inline list-unstyled">
   <li>
-    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}" data-confirm="{% trans %}list.bulk_delete_confirm{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
   </li>
 </ul>
 <table class="table table-condensed table-striped align-middle" data-type="recurring-invoices">

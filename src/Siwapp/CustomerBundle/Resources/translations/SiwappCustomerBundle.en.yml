@@ -24,9 +24,11 @@ form:
     shipping_address: 'Shipping address'
     submit: 'Save'
     submit_delete: 'Delete'
+    submit_delete_confirm: 'Are you sure you want to delete the customer?'
 
 list:
     bulk_delete: 'Remove selected'
+    bulk_delete_confirm: 'Are you sure you want to remove the selected customers?'
     name: 'Name'
     identification: 'Identification'
     due_amount: 'Due'

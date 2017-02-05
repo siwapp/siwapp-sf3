@@ -31,7 +31,7 @@
   <input type="submit" class="btn btn-default btn-primary" name="save" value="{% trans %}form.submit{% endtrans %}">
   <div class="float-right">
     {% if entity.id %}
-    <a class="btn btn-default btn-danger" href="{{ path('recurring_delete', {'id': entity.id}) }}">{% trans %}form.submit_delete{% endtrans %}</a>
+    <a class="btn btn-default btn-danger" href="{{ path('recurring_delete', {'id': entity.id}) }}" data-confirm="{% trans %}form.submit_delete_confirm{% endtrans %}">{% trans %}form.submit_delete{% endtrans %}</a>
     {% endif %}
   </div>
 {% endblock %}
