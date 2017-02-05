@@ -259,12 +259,12 @@ class Invoice extends AbstractInvoice
         return $this->label();
     }
 
-    public function label()
+    public function label(string $draftLabel = '[draft]')
     {
         $series = $this->getSeries();
         $label = '';
         $label .= $series ? $series->getValue() : '';
-        $label .= $this->isDraft() ? '[draft]' : $this->getNumber();
+        $label .= $this->isDraft() ? $draftLabel : $this->getNumber();
 
         return $label;
     }

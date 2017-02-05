@@ -1,4 +1,5 @@
 invoice:
+    draft_label: '[draft]'
     draft: 'Draft'
     opened: 'Opened'
     overdue: 'Overdue'

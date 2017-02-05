@@ -16,7 +16,7 @@
 
 
 {% block invoice_label %}
-  <h2>{% trans %}invoice.invoice{% endtrans %} {{ entity.label() }}</h2>
+  <h2>{% trans %}invoice.invoice{% endtrans %} {{ entity.label('invoice.draft_label'|trans) }}</h2>
   <ul id="invoice-like-status" class="list-unstyled">
     <li>
       <span class="label {{ entity.statusString }}">{{ ('invoice.' ~ entity.statusString)|trans }}</span>

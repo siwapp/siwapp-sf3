@@ -1,4 +1,5 @@
 estimate:
+    draft_label: '[draft]'
     draft: 'Draft'
     pending: 'Pending'
     approved: 'Approved'

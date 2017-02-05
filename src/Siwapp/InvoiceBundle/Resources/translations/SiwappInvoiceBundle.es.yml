@@ -1,4 +1,5 @@
 invoice:
+    draft_label: '[borrador]'
     draft: 'Borrador'
     opened: 'Abierta'
     overdue: 'Vencida'
