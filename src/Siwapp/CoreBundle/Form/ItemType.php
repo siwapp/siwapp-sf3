@@ -33,6 +33,7 @@ class ItemType extends AbstractType
             ->add('description')
             ->add('unitary_cost', MoneyType::class, [
                 'currency' => $currency,
+                'grouping' => true,
             ])
         ;
 

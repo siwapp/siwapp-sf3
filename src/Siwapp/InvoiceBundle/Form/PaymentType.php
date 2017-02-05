@@ -21,6 +21,7 @@ class PaymentType extends AbstractType
             ->add('amount', MoneyType::class, [
                 'label' => 'payment.form.amount',
                 'translation_domain' => 'SiwappInvoiceBundle',
+                'grouping' => true,
             ])
             ->add('notes', null, [
                 'label' => 'payment.form.notes',
