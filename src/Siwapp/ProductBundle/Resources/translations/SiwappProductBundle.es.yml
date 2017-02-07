@@ -17,6 +17,7 @@ search:
 
 list:
     bulk_delete: 'Borrar seleccionados'
+    bulk_delete_confirm: '¿Estás seguro de querer eliminar los productos seleccionados?'
     reference: 'Referencia'
     description: 'Descripción'
     price: 'Precio'
@@ -31,3 +32,4 @@ form:
     price: 'Precio'
     submit: 'Guardar'
     submit_delete: 'Borrar'
+    submit_delete_confirm: '¿Estás seguro de querer eliminar el producto?'

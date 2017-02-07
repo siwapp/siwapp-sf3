@@ -18,6 +18,7 @@ payment:
         description: 'Descripción'
         amount: 'Importe'
         bulk_delete: 'Borrar seleccionados'
+        bulk_delete_confirm: '¿Estás seguro de querer eliminar los pagos seleccionados?'
         add: 'Añadir pago'
     form:
         date: 'Fecha'
@@ -62,6 +63,7 @@ form:
     submit_pdf: 'Guardar y descargar como PDF'
     submit_email: 'Guardar y enviar por email'
     submit_delete: 'Borrar'
+    submit_delete_confirm: '¿Estás seguro de querer eliminar la factura?'
 
 show:
     print: 'Imprimir'
@@ -73,6 +75,7 @@ show:
     series: 'Serie'
     edit: 'Editar'
     delete: 'Borrar'
+    delete_confirm: '¿Estás seguro de querer eliminar la factura?'
 
 search:
     terms: 'Términos'
@@ -87,6 +90,7 @@ search:
 
 list:
     bulk_delete: 'Borrar seleccionadas'
+    bulk_delete_confirm: '¿Estás seguro de querer eliminar las facturas seleccionadas?'
     bulk_email: 'Enviar por email seleccionadas'
     bulk_pdf: 'Descargar seleccionadas como PDF'
     bulk_print: 'Imprimir seleccionadas'

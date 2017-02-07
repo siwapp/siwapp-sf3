@@ -32,6 +32,7 @@ list:
     gross_amount: 'Total'
     no_results: 'No se han encontrado facturas periódicas.'
     bulk_delete: 'Borrar seleccionadas'
+    bulk_delete_confirm: '¿Estás seguro de querer eliminar las facturas periódicas seleccionadas?'
 
 search:
     terms: 'Términos'
@@ -58,3 +59,4 @@ form:
     year: 'Años'
     submit: 'Guardar'
     submit_delete: 'Borrar'
+    submit_delete_confirm: '¿Estás seguro de querer eliminar la factura periódica?'

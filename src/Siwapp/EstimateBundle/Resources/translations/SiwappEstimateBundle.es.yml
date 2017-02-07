@@ -36,6 +36,7 @@ search:
 
 list:
     bulk_delete: 'Borrar seleccionados'
+    bulk_delete_confirm: '¿Estás seguro de querer eliminar los presupuestos seleccionados?'
     bulk_print: 'Imprimir seleccionados'
     bulk_pdf: 'Descargar seleccionados como PDF'
     bulk_email: 'Enviar por email seleccionados'
@@ -56,6 +57,7 @@ show:
     series: 'Serie'
     edit: 'Editar'
     delete: 'Borrar'
+    delete_confirm: '¿Estás seguro de querer eliminar el presupuesto?'
 
 form:
     issue_date: 'Fecha de creación'
@@ -69,3 +71,5 @@ form:
     submit_email: 'Guarda y enviar por email'
     submit_generate: 'Guardar y generar factura'
     submit_delete: 'Borrar'
+    submit_delete_confirm: '¿Estás seguro de querer eliminar el presupuesto?'
+    

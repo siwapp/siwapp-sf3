@@ -24,9 +24,11 @@ form:
     shipping_address: 'Dirección de envío'
     submit: 'Guardar'
     submit_delete: 'Borrar'
+    submit_delete_confirm: '¿Estás seguro de querer eliminar el cliente?'
 
 list:
     bulk_delete: 'Borrar seleccionados'
+    bulk_delete_confirm: '¿Estás seguro de querer eliminar los clientes seleccionados?'
     name: 'Nombre'
     identification: 'Identificación'
     due_amount: 'Pendiente'
