@@ -27,7 +27,7 @@
 
 
 {% block invoice_label %}
-  <h2>{% trans %}estimate.estimate{% endtrans %} {{ entity.label() }}</h2>
+  <h2>{% trans %}estimate.estimate{% endtrans %} {{ entity.label('estimate.draft_label'|trans) }}</h2>
   <ul class="list-inline list-unstyled">
     <li>
       <span class="label {{ entity.statusString }}">{{ ('estimate.' ~ entity.statusString)|trans }}</span>
@@ -58,6 +58,6 @@
 {% block invoice_edit_actions %}
   <ul class="list-inline float-right">
     <li><a class="btn btn-default" href="{{ path('estimate_edit', {'id': entity.id}) }}"><span class="glyphicon glyphicon-pencil"></span> {% trans %}show.edit{% endtrans %}</a></li>
-    <li><a class="btn btn-default btn-danger" href="{{ path('estimate_delete', {'id': entity.id}) }}"><span class="glyphicon glyphicon-trash"></span> {% trans %}show.delete{% endtrans %}</a></li>
+    <li><a class="btn btn-default btn-danger" href="{{ path('estimate_delete', {'id': entity.id}) }}" data-confirm="{% trans %}show.delete_confirm{% endtrans %}"><span class="glyphicon glyphicon-trash"></span> {% trans %}show.delete{% endtrans %}</a></li>
   </ul>
 {% endblock %}

@@ -2,7 +2,7 @@
 {{ form_start(list_form) }}
 <ul id="toolbar" class="table-actions list-inline list-unstyled">
   <li>
-    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}" data-confirm="{% trans %}list.bulk_delete_confirm{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
   </li>
 </ul>
 <table class="table table-condensed table-striped align-middle" data-type="recurring-invoices">
@@ -44,7 +44,7 @@
         </td>
         <td class="cell-size-medium">{{ entity.series }}</td>
         <td>{{ entity.getCustomerName }}</td>
-        <td>{{ entity.periodType }}</td>
+        <td>{{ ('list.' ~ entity.periodType)|trans }}</td>
         <td>{{ entity.period }}</td>
         <td class="cell-align-center">
           <span class="label {{ entity.statusString }}">{{ ('recurring_invoice.' ~ entity.statusString)|trans }}</span>

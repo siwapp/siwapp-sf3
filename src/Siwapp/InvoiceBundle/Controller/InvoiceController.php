@@ -159,12 +159,27 @@ class InvoiceController extends AbstractInvoiceController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->request->has('save_draft')) {
                 $invoice->setStatus(Invoice::DRAFT);
-            } elseif ($request->request->has('save')) {
+            } else {
+                // Any save action transforms this to opened.
                 $invoice->setStatus(Invoice::OPENED);
             }
             $em->persist($invoice);
             $em->flush();
             $this->addTranslatedMessage('flash.added');
+
+            // Send the email after the invoice is updated.
+            if ($request->request->has('save_email')) {
+                $message = $this->getEmailMessage($invoice);
+                $result = $this->get('mailer')->send($message);
+                if ($result) {
+                    $this->addTranslatedMessage('flash.emailed');
+                    if (!$invoice->isSentByEmail()) {
+                        $invoice->setSentByEmail(true);
+                        $em->persist($invoice);
+                        $em->flush();
+                    }
+                }
+            }
 
             return $this->redirect($this->generateUrl('invoice_edit', array('id' => $invoice->getId())));
         }
@@ -202,6 +217,7 @@ class InvoiceController extends AbstractInvoiceController
                 // Any save action transforms this to opened.
                 $entity->setStatus(Invoice::OPENED);
             }
+
             // See if one of PDF/Print buttons was clicked.
             if ($request->request->has('save_pdf')) {
                 $redirectRoute = 'invoice_show_pdf';

@@ -17,6 +17,7 @@ search:
 
 list:
     bulk_delete: 'Remove selected'
+    bulk_delete_confirm: 'Are you sure you want to remove the selected products?'
     reference: 'Product code'
     description: 'Description'
     price: 'Price'
@@ -31,3 +32,4 @@ form:
     price: 'Price'
     submit: 'Save'
     submit_delete: 'Delete'
+    submit_delete_confirm: 'Are you sure you want to delete the product?'

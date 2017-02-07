@@ -52,7 +52,7 @@
     </tbody>
   </table>
   <div class="form-actions buttons">
-    <button type="submit" class="btn btn-default btn-danger float-left" name="remove"><span class="glyphicon glyphicon-trash"></span> {% trans %}payment.list.bulk_delete{% endtrans %}</button>
+    <button type="submit" class="btn btn-default btn-danger float-left" name="remove" data-confirm="{% trans %}payment.list.bulk_delete_confirm{% endtrans %}"><span class="glyphicon glyphicon-trash"></span> {% trans %}payment.list.bulk_delete{% endtrans %}</button>
     <a href="#payment-add-form" class="btn btn-default btn-info" data-toggle="collapse"{% if is_add_form_expanded %} aria-expanded="true"{% endif %}><span class="glyphicon glyphicon-plus"></span> {% trans %}form.payment_add{% endtrans %}</a>
   </div>
   {{ form_end(list_form)}}

@@ -19,7 +19,7 @@
 {{ form_start(list_form) }}
 <ul id="toolbar" class="table-actions list-inline list-unstyled">
   <li>
-    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
+    <button type="submit" name="delete" class="btn btn-default btn-danger" title="{% trans %}list.bulk_delete{% endtrans %}" data-confirm="{% trans %}list.bulk_delete_confirm{% endtrans %}"><span class="glyphicon glyphicon-trash"></span></button>
   </li>
   <li>
     <button type="submit" name="print" class="btn btn-default" title="{% trans %}list.bulk_print{% endtrans %}"><span class="glyphicon glyphicon-print"></span></button>
@@ -107,7 +107,7 @@
           {{ form_row(list_form.invoices[key]) }}
         </td>
         {% endif %}
-        <td class="cell-size-medium">{{ entity.label() }}</td>
+        <td class="cell-size-medium">{{ entity.label('invoice.draft_label'|trans) }}</td>
         <td>{{ entity.getCustomerName }}</td>
         <td>{{ entity.issueDate|localizeddate('short', 'none', app.request.locale) }}</td>
         <td>{{ entity.dueDate|localizeddate('short', 'none', app.request.locale) }}</td>
