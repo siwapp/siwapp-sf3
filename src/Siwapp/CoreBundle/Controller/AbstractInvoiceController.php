@@ -4,6 +4,7 @@ namespace Siwapp\CoreBundle\Controller;
 
 use Siwapp\CoreBundle\Entity\AbstractInvoice;
 use Siwapp\CoreBundle\Entity\Item;
+use Symfony\Component\Form\Extension\Core\DataTransformer\MoneyToLocalizedStringTransformer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class AbstractInvoiceController extends Controller
@@ -31,11 +32,12 @@ abstract class AbstractInvoiceController extends Controller
         $taxRepo = $em->getRepository('SiwappCoreBundle:Tax');
         $currency = $em->getRepository('SiwappConfigBundle:Property')->get('currency', 'EUR');
         $formatter = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
+        $transformer = new MoneyToLocalizedStringTransformer(2, true);
 
         $totals = [];
         foreach ($post['items'] as $index => $postItem) {
             $item = new Item;
-            $item->setUnitaryCost($postItem['unitary_cost']);
+            $item->setUnitaryCost($transformer->reverseTransform($postItem['unitary_cost']));
             $item->setQuantity($postItem['quantity']);
             $item->setDiscount($postItem['discount_percent']);
             if (isset($postItem['taxes'])) {
