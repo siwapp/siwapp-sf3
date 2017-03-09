@@ -35,14 +35,14 @@ class ConfigController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $data = $form->getData();
-                $series = $data['series'];
-                $taxes = $data['taxes'];
-                unset($data['series'], $data['taxes']);
+                $formData = $form->getData();
+                $series = $formData['series'];
+                $taxes = $formData['taxes'];
+                unset($formData['series'], $formData['taxes']);
 
-                if (!empty($data['company_logo'])) {
+                if (!empty($formData['company_logo'])) {
                     /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-                    $file = $data['company_logo'];
+                    $file = $formData['company_logo'];
                     // Generate a unique name for the file before saving it
                     $fileName = 'logo.' . $file->guessExtension();
                     // Move the file to the uploads directory.
@@ -50,15 +50,18 @@ class ConfigController extends Controller
                     try {
                         $newFile = $file->move($uploadsDir, $fileName);
                         // Update the property to the new file name.
-                        $data['company_logo'] = 'uploads/' . $newFile->getFileName();
+                        $formData['company_logo'] = 'uploads/' . $newFile->getFileName();
                     }
                     catch (FileException $e) {
                         $msg = $translator->trans('flash.logo_upload_error', [], 'SiwappConfigBundle');
                         $this->get('session')->getFlashBag()->add('warning', $msg);
                     }
+                } else {
+                    // Unset the key otherwise the previous logo will be deleted.
+                    unset($formData['company_logo']);
                 }
 
-                $property_repository->setPropertiesFromArray($data);
+                $property_repository->setPropertiesFromArray($formData);
                 // Save series.
                 foreach ($series as $item) {
                     $em->persist($item);
