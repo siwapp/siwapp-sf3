@@ -130,7 +130,7 @@
             <th class="right">{% trans %}item.show.quantity{% endtrans %}</th>
             <th class="right">{% trans %}item.show.taxes{% endtrans %}</th>
             {# show discounts only if there is some discount #}
-            {% if invoice.discount_amount %}
+            {% if invoice.discount_amount > 0 %}
             <th class="right">{% trans %}item.show.discount{% endtrans %}</th>
             {% endif %}
             <th class="right">{% trans %}item.show.total{% endtrans %}</th>
@@ -149,7 +149,7 @@
                   <span class="tax">{{tax}}</span>
                 {% endfor %}
               </td>
-              {% if invoice.discount_amount %}
+              {% if invoice.discount_amount > 0 %}
               <td class="right">{{item.discount_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
               {% endif %}
               <td class="right">{{item.gross_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
@@ -158,29 +158,29 @@
         </tbody>
         <tfoot>
           <tr>
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if invoice.discount_amount > 0 %}4{% else %}3{% endif %}"></td>
             <th class="right">{% trans %}abstract_invoice.show.subtotal{% endtrans %}</th>
             <td class="right">{{invoice.base_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
-          {% if invoice.discount_amount %}
+          {% if invoice.discount_amount > 0 %}
           <tr>
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if invoice.discount_amount > 0 %}4{% else %}3{% endif %}"></td>
             <th class="right">{% trans %}abstract_invoice.show.total_discount{% endtrans %}</th>
             <td class="td_global_discount right">{{invoice.discount_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           {% endif %}
           <tr>
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if invoice.discount_amount > 0 %}4{% else %}3{% endif %}"></td>
             <th class="right">{% trans %}abstract_invoice.show.total_net{% endtrans %}</th>
             <td class="td_subtotal right">{{invoice.net_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           <tr>
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if invoice.discount_amount > 0 %}4{% else %}3{% endif %}"></td>
             <th class="right">{% trans %}abstract_invoice.show.total_taxes{% endtrans %}</th>
             <td class="td_total_taxes right">{{invoice.tax_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
           <tr class="strong">
-            <td class="bottomleft" colspan="{% if invoice.discount_amount %}4{% else %}3{% endif %}"></td>
+            <td class="bottomleft" colspan="{% if invoice.discount_amount > 0 %}4{% else %}3{% endif %}"></td>
             <th class="right">{% trans with {'%currency%': settings.currency} %}abstract_invoice.show.total{% endtrans %}</th>
             <td class="td_total right">{{invoice.gross_amount|localizedcurrency(settings.currency, app.request.locale)}}</td>
           </tr>
