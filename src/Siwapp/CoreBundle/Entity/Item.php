@@ -29,9 +29,9 @@ class Item implements \JsonSerializable
     private $id;
 
     /**
-     * @var integer $quantity
+     * @var decimal $quantity
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=15, scale=2)
      * @Assert\NotBlank()
      */
     private $quantity;
