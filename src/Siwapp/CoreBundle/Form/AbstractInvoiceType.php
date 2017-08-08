@@ -2,6 +2,7 @@
 
 namespace Siwapp\CoreBundle\Form;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Siwapp\CoreBundle\Entity\Item;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -15,6 +16,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbstractInvoiceType extends AbstractType
 {
+    private $manager;
+
+    public function __construct(ObjectManager $manager)
+    {
+        $this->manager = $manager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -63,7 +71,7 @@ class AbstractInvoiceType extends AbstractType
             'prototype' => true,
             'by_reference' => false,
             'label' => false,
-            'prototype_data' => new Item(),
+            'prototype_data' => new Item($this->manager->getRepository('SiwappCoreBundle:Tax')->findBy(['is_default' => 1])),
         ));
 
         $builder->add('series', EntityType::class, array(

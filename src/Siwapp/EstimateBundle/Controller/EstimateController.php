@@ -141,7 +141,8 @@ class EstimateController extends AbstractInvoiceController
     {
         $em = $this->getDoctrine()->getManager();
         $estimate = new Estimate();
-        $estimate->addItem(new Item());
+        $newItem = new Item($em->getRepository('SiwappCoreBundle:Tax')->findBy(['is_default' => 1]));
+        $estimate->addItem($newItem);
         $terms = $em->getRepository('SiwappConfigBundle:Property')->get('legal_terms');
         if ($terms) {
             $estimate->setTerms($terms);

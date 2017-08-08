@@ -19,3 +19,9 @@ services:
         class: Siwapp\RecurringInvoiceBundle\EventListener\ItemListener
         tags:
             - { name: doctrine.event_listener, event: onFlush }
+
+    siwapp_recurring_invoice.form.type.recurring_invoice:
+        class: Siwapp\RecurringInvoiceBundle\Form\RecurringInvoiceType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type }

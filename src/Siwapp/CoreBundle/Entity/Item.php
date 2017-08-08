@@ -339,9 +339,13 @@ class Item implements \JsonSerializable
         return (string) $this->description.': '.$this->quantity;
     }
 
-    public function __construct()
+    public function __construct(array $taxes = [])
     {
         $this->taxes = new ArrayCollection();
+        foreach ($taxes as $tax) {
+            $this->addTax($tax);
+        }
+
         $this->quantity = 1;
         $this->discount = 0;
     }

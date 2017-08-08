@@ -8,3 +8,9 @@ services:
         class: Siwapp\EstimateBundle\EventListener\ItemListener
         tags:
             - { name: doctrine.event_listener, event: onFlush }
+
+    siwapp_estimate.form.type.estimate:
+        class: Siwapp\EstimateBundle\Form\EstimateType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type }

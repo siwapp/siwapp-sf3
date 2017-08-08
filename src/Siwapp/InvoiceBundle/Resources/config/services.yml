@@ -3,3 +3,9 @@ services:
         class: Siwapp\InvoiceBundle\EventListener\ItemListener
         tags:
             - { name: doctrine.event_listener, event: onFlush }
+
+    siwapp_invoice.form.type.invoice:
+        class: Siwapp\InvoiceBundle\Form\InvoiceType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type }

@@ -89,7 +89,8 @@ class RecurringInvoiceController extends AbstractInvoiceController
     {
         $em = $this->getDoctrine()->getManager();
         $invoice = new RecurringInvoice();
-        $invoice->addItem(new Item());
+        $newItem = new Item($em->getRepository('SiwappCoreBundle:Tax')->findBy(['is_default' => 1]));
+        $invoice->addItem($newItem);
         $terms = $em->getRepository('SiwappConfigBundle:Property')->get('legal_terms');
         if ($terms) {
             $invoice->setTerms($terms);
