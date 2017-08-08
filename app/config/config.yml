@@ -92,6 +92,9 @@ fos_user:
             type: Siwapp\UserBundle\Form\ProfileFormType
     service:
         mailer: siwapp_user.mailer.siwapp
+    from_email:
+        address: "webmaster@example.com"
+        sender_name: "webmaster"
 
 stof_doctrine_extensions:
     orm:
