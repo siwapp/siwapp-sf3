@@ -451,6 +451,7 @@ class InvoiceController extends AbstractInvoiceController
             'invoice'  => $invoice,
             'settings' => $em->getRepository('SiwappConfigBundle:Property')->getAll(),
         ));
+        $text = Html2Text\Html2Text::convert($html);
         $pdf = $this->getPdf($html);
         $attachment = new \Swift_Attachment($pdf, $invoice->getId().'.pdf', 'application/pdf');
         $subject = '[' . $this->get('translator')->trans('invoice.invoice', [], 'SiwappInvoiceBundle') . ': ' . $invoice->label() . ']';
@@ -459,6 +460,7 @@ class InvoiceController extends AbstractInvoiceController
             ->setFrom($configRepo->get('company_email'), $configRepo->get('company_name'))
             ->setTo($invoice->getCustomerEmail(), $invoice->getCustomerName())
             ->setBody($html, 'text/html')
+            ->addPart($text, 'text/plain')
             ->attach($attachment);
 
         return $message;
