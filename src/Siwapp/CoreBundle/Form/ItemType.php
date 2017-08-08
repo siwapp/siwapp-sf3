@@ -3,6 +3,7 @@
 namespace Siwapp\CoreBundle\Form;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityRepository;
 use Siwapp\CoreBundle\Entity\Tax;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -41,6 +42,10 @@ class ItemType extends AbstractType
             'class' => 'SiwappCoreBundle:Tax',
             'choice_label' => function (Tax $value, $key, $index) {
                 return $value->label();
+            },
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('t')
+                    ->where('t.active = 1');
             },
             'multiple' => true,
             'required' => false,
