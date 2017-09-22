@@ -5,7 +5,7 @@ namespace Siwapp\CoreBundle\Tests\Entity;
 use Siwapp\CoreBundle\Entity\Item;
 use Siwapp\CoreBundle\Entity\Tax;
 
-class ItemTest extends \PHPUnit_Framework_TestCase
+class ItemTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetBaseAmount()
     {

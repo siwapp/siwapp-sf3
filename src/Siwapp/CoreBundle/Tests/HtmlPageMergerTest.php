@@ -4,7 +4,7 @@ namespace Siwapp\CoreBundle\Tests;
 
 use Siwapp\CoreBundle\HtmlPageMerger;
 
-class HtmlPageMergerTest extends \PHPUnit_Framework_TestCase
+class HtmlPageMergerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider providerTestMerge

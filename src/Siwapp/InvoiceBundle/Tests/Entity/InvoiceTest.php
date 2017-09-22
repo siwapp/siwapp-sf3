@@ -5,7 +5,7 @@ namespace Siwapp\InvoiceBundle\Tests\Entity;
 use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\CoreBundle\Entity\Item;
 
-class InvoiceTest extends \PHPUnit_Framework_TestCase
+class InvoiceTest extends \PHPUnit\Framework\TestCase
 {
     public function testCheckAmounts()
     {

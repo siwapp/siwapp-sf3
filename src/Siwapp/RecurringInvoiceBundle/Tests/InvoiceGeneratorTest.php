@@ -7,7 +7,7 @@ use Siwapp\InvoiceBundle\Entity\Invoice;
 use Siwapp\RecurringInvoiceBundle\InvoiceGenerator;
 use Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice;
 
-class InvoiceGeneratorTest extends \PHPUnit_Framework_TestCase
+class InvoiceGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider generatePendingProvider
@@ -27,14 +27,14 @@ class InvoiceGeneratorTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $recurring = $this->getMock('Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice');
+        $recurring = $this->createMock('Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice');
         $cases[] = [$em, $recurring, 0];
 
-        $itemMock = $this->getMock('Siwapp\CoreBundle\Entity\Item');
+        $itemMock = $this->createMock('Siwapp\CoreBundle\Entity\Item');
         $itemMock->expects($this->once())
             ->method('getTaxes')
             ->will($this->returnValue([]));
-        $recurring = $this->getMock('Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice');
+        $recurring = $this->createMock('Siwapp\RecurringInvoiceBundle\Entity\RecurringInvoice');
         $recurring->expects($this->at(0))
             ->method('countPendingInvoices')
             ->will($this->returnValue(1));
@@ -43,7 +43,7 @@ class InvoiceGeneratorTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(2));
         $recurring->expects($this->once())
             ->method('getSeries')
-            ->will($this->returnValue($this->getMock('Siwapp\CoreBundle\Entity\Series')));
+            ->will($this->returnValue($this->createMock('Siwapp\CoreBundle\Entity\Series')));
         $recurring->expects($this->once())
             ->method('getItems')
             ->will($this->returnValue([$itemMock]));
